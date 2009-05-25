@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 12: RPC and AJAX concepts - November 18th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-12-rpc-and-ajax-concepts-november-18th-2008">
+<h1 class="title">Lecture 12: RPC and AJAX concepts - November 18th, 2008</h1>
+<p>My innate wonderfulness doesn't extend to clairvoyance.  This last HW
+I couldn't find a lot of files because people didn't name them
+properly.  From now on, I will take a point off for not following
+instructions on <strong>file names</strong> and <strong>command-line arguments</strong>.</p>
+<p>(Yes, it's stupid, but I usually spend 1/3 of my grading time tracking
+down issues like this.)</p>
+<div class="section">
+<h1><a id="sql-strategies" name="sql-strategies">SQL Strategies</a></h1>
+<p>A lot of people had trouble with <em>results</em> and <em>speed</em> in movie
+searching.  I didn't track down these problems for you.</p>
+<p>However, I implemented a few different schemas and tried them out.  It
+seems likely that there were a few different problems:</p>
+<blockquote>
+<ul class="simple">
+<li>first, people didn't actually look at the data being inserted;</li>
+<li>second, several people didn't test their entire process;</li>
+<li>third, the central machines (arctic and adriatic) are freakin' slow;</li>
+</ul>
+</blockquote>
+<p>This problem reappears on HW #12, and this time in a form that will actually
+make it gradeable :).  Also, you only need to load through the 'A's.</p>
+<p>A few tips/changes/thoughts:</p>
+<blockquote>
+<ul>
+<li><p class="first">don't check in actor/actresses lists or your final db; they're too
+big.  (my fault, sorry)</p>
+</li>
+<li><p class="first">primary keys are critical;</p>
+</li>
+<li><p class="first">actor names and movie names are UNIQUE, e.g.</p>
+<pre class="literal-block">
+name TEXT UNIQUE
+</pre>
+<p>this can help speed things up.</p>
+</li>
+<li><p class="first">test your code with realistic data;</p>
+</li>
+<li><p class="first">test your code all the way through (by making fake data files)</p>
+</li>
+<li><p class="first">run your code against a locally-stored file ('/tmp' on Linux)
+and on a faster machine.</p>
+</li>
+<li><p class="first">try actor 'Aakash' and actress 'Agarwal'.</p>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="subversion" name="subversion">Subversion</a></h1>
+<p><strong>Working copy</strong> vs <strong>central server</strong></p>
+<p><em>Check out</em> a working copy from the server.</p>
+<p>Each working copy changes independendently of the central server until
+you do a <em>commit</em> or an <em>update</em>.  'commit' transmits changes from the
+working copy to the server, 'update' transmits changes from the server to
+the working copy.</p>
+<p>The &quot;state&quot; of each working copy is kept in the '.svn' directories.</p>
+<p>Copying these between subdirectories is Bad and results in weird
+svn conflicts, as many of you have noticed.</p>
+<p>Tips for <strong>fixing subversion problems</strong>:</p>
+<blockquote>
+<ul class="simple">
+<li>if you can't commit changed files, check out a new working copy
+into a new directory, and then make the changes again to the
+individual files.</li>
+<li><strong>do not drag and drop whole directories</strong>, ever, because you will
+then be keeping all the associated versioning info -- which was
+probably the cause of your problems in the first place</li>
+<li>if checking out a new working copy &amp; re-making your modifications
+doesn't work, e-mail me <em>before</em> HW is due.</li>
+</ul>
+</blockquote>
+<p>If you want to get a clean copy (sans '.svn' subdirs) do an 'export'
+instead of a 'checkout'.  (This is for e.g. deployment or releases of
+the software, but it also produces directories that you can drag &amp;
+drop across working versions.)</p>
+<p>Note, svn is hierarchical (URLs!), so you can do things hierarchically, e.g.</p>
+<pre class="literal-block">
+svn co http://class.ged.idyll.org/svn/files/lab-10/oswd/
+</pre>
+<p>Hint, this means that you can check out <em>just</em> your HW 10 to test it...</p>
+<div class="section">
+<h2><a id="thinking-about-version-control" name="thinking-about-version-control">Thinking about version control</a></h2>
+<p>Subversion is a version control system -- that means it keeps copies
+of <em>everything submitted</em>; as long as you have committed files once,
+you can always go back and retrieve them: see</p>
+<pre class="literal-block">
+svn log &lt;filename&gt;
+</pre>
+<p>and</p>
+<pre class="literal-block">
+svn update -r &lt;revision or date&gt;
+</pre>
+<p>For this reason it is very important to back up version control systems:
+they store every change, including changes that introduced bugs (for
+example).</p>
+<p>Therefore, you don't want to store easily-reproduced or
+inconsequential files in subversion, because that chokes up the
+subversion server with crud.  Think:</p>
+<blockquote>
+<ul class="simple">
+<li>.pyc files (Python byte code, generated from .py)</li>
+<li>data files (actors, actresses) &amp; products (databases)</li>
+<li>program downloads (twill)</li>
+</ul>
+</blockquote>
+<p>Part of the reason for this is that these files may change frequently
+(.pyc files) or infrequently (actors, actresses):</p>
+<blockquote>
+<ul class="simple">
+<li>spurious differences between versions</li>
+<li>increase the size of backups and the load on the version control server</li>
+</ul>
+</blockquote>
+<p>If you check this stuff in when you are working for a company, big people
+with bats will come around and break your knees.</p>
+<p>I don't have that option so I will merely put it on the homework.</p>
+</div>
+<div class="section">
+<h2><a id="branching" name="branching">Branching</a></h2>
+<p>One of my more annoying screwups: not having you use version control properly.</p>
+<p>Ideally you would be working in something like</p>
+<pre class="literal-block">
+/username/trunk/
+</pre>
+<p>and then submitting your homework by making branches off of 'trunk'
+like</p>
+<pre class="literal-block">
+/username/homework10/
+</pre>
+<p>This way for the homeworks since 'webserve.py' started you would have
+continuous version control history.  But I wasn't smart enough to do
+that up front.  There are also reasons why you might want to do it
+differently for homeworks, and I don't want you guys to spend too much
+time screwing around with it.  So here's the new strategy: branch off
+of the last homework, when you're starting to work on the new one.</p>
+<p>SO, do:</p>
+<blockquote>
+<dl class="docutils">
+<dt>svn copy <a class="reference" href="http://class.ged.idyll.org/$username/homework11/">http://class.ged.idyll.org/$username/homework11/</a> </dt>
+<dd><a class="reference" href="http://class.ged.idyll.org/$username/homework12/">http://class.ged.idyll.org/$username/homework12/</a></dd>
+</dl>
+<p>svn update</p>
+</blockquote>
+<p>and then work in homework12.</p>
+<p>What are the advantages?</p>
+<blockquote>
+<ul class="simple">
+<li>the main one is that you don't have to manually copy file around:
+subversion will do it all for you.  This means you won't mess up
+your working repositories so much.</li>
+<li>more generally, version control and history are maintained.</li>
+<li>in particular, you can merge &quot;fixes&quot; to homework11/ into your homework12/
+code, if you want.</li>
+</ul>
+</blockquote>
+<p>PLEASE PLEASE PLEASE do things this way.  I won't make you but it will
+cut down on problems (and these problems are now YOUR responsibility
+anyway).</p>
+</div>
+<div class="section">
+<h2><a id="why-why-why" name="why-why-why">Why, why, why?</a></h2>
+<p>Learning to deal with version control properly is as important as
+knowing how to program effectively.  So, tough.  But I do apologize
+for not anticipating some of these problems better.</p>
+<p><a class="reference" href="http://svnbook.red-bean.com/">http://svnbook.red-bean.com/</a> - free Subversion book.</p>
+</div>
+<div class="section">
+<h2><a id="making-sure-you-handed-stuff-in" name="making-sure-you-handed-stuff-in">Making sure you handed stuff in</a></h2>
+<p>It is your responsibility to make sure that your files have been submitted,
+too! Two ways to do that:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Look on the Web.  (Quick &amp; easy, but you may miss details)</li>
+<li>Check out a new working version into a temporary directory and
+make sure that it works.  (This is what I do to grade your
+homework.)</li>
+</ol>
+</blockquote>
+</div>
+</div>
+<div class="section">
+<h1><a id="remote-procedure-calls-over-http" name="remote-procedure-calls-over-http">Remote Procedure Calls over HTTP</a></h1>
+<p>Idea: call functions remotely.</p>
+<p>Spec:</p>
+<blockquote>
+<ul class="simple">
+<li>call multiple functions</li>
+<li>zero or more arguments</li>
+<li>return values as well</li>
+<li>cross language would be nice</li>
+</ul>
+</blockquote>
+<p>Basic idea: should look like Just Another Function Call</p>
+<p>How would you design such a thing?</p>
+<p>---</p>
+<p>XML-RPC and JSON-RPC</p>
+<p>Advantages --</p>
+<blockquote>
+<ul class="simple">
+<li>cross language</li>
+<li>go through firewalls</li>
+<li>relatively simple protocol</li>
+<li>text data</li>
+</ul>
+</blockquote>
+<p>Disadvantages:</p>
+<blockquote>
+<ul class="simple">
+<li>cross language</li>
+<li>slow (high latency)</li>
+</ul>
+</blockquote>
+<div class="section">
+<h2><a id="ajax" name="ajax">AJAX</a></h2>
+<p>&quot;Asynchronous JavaScript and XML&quot;</p>
+<p>Used to load data (raw HTML, CSV data from database, etc.) dynamically
+into a Web document.</p>
+<p>Uses XMLHttpRequest or other ways of doing HTTP requests.</p>
+<p>Enables really interactive Web pages, data retrieval, manipulation,
+and submission w/o reloading entire page, etc.  Lowers apparent
+latency.</p>
+<p>Restrictions on cross-site scripting: same-origin policy prevents AJAX
+calls to other domains!  So, your AJAX functionality (data source,
+etc.)  must be tied into the same Web site that your Web pages are
+loaded from.</p>
+</div>
+<div class="section">
+<h2><a id="comet-and-orbited" name="comet-and-orbited">Comet and Orbited</a></h2>
+<p>How do you &quot;push&quot; information to a Web browser?</p>
+<p>AJAX has scalability issues: don't want to poll server!  (High
+latency; &amp; expensive to create/destroy connections from the network &amp;
+process perspective)</p>
+<p>One common technique: long-lived HTTP connection that is polled by JS.
+Managing such a thing from the server side is complicated, especially
+for 100k+ connections...</p>
+<p>Another technique: run a TCP server in your browser to receive
+messages &quot;pushed&quot; by another server.</p>
+<p>Componentized: Web app framework + Orbited server + browser.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

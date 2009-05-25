@@ -1,0 +1,90 @@
+-----------
+Homework 11
+-----------
+
+Due Thursday, November 13th, at the beginning of class.
+
+Please put everything in homework11.zip in the root of your svn.
+(This should not include the raw actor/actresses lists, please!)
+
+Loading & searching large amounts of data
+-----------------------------------------
+
+(2.5 points)
+
+The files 'actors.list.gz' and 'actresses.list.gz' at
+
+    ftp://ftp.fu-berlin.de/pub/misc/movies/database/
+
+(see the Comprehensive Knowledge Archive Network for more information,
+at http://ckan.net/package/read/imdb) contain actor/movie and
+actress/movie pairs.  Download these two lists and load them into
+the database schema you developed for last week.
+
+You can feel free to write your own parsing code, or you can use mine,
+available in the usual place:
+
+    http://class.ged.idyll.org/svn/files/hw-11/imdb/
+
+The IMDB database is quite large so I'd suggest developing your db
+loading and search data in the context of a few thousand records
+rather than the full database!  However, please be sure to load
+in records up to 'C' in what you check in; 
+
+(And please check in a fully-working webserve.py and webserve-info.db;
+yes, I know they're big.)
+
+You don't need to add any functionality to your actor/actress searching
+code, other than loading the data in and making sure it all works.
+
+Sessions and session IDs
+------------------------
+
+(2.5 points)
+
+If you think about the user handling code I asked you to write for
+earlier homeworks, you'll realize how stupid and pointless it is.
+It's incredibly easy for you to log in as some other user by
+just changing the cookie, which is client-based!  Let's fix that,
+by using a randomly generated string, so that people would have to
+be able to guess the cookie value in order to masquerade as another
+user.
+
+Create a new table in your database, 'sessions', that contains an
+integer user_id and a text session_id.  When people log in, create a
+new entry in this table with a new session_id, generated from the
+following function: ::
+
+    import random, crypt
+
+    # per-site secret; only first two characters are used.
+    secret = 'ZZ'
+
+    # initialize random number generator from the system time on import.
+    random.seed()
+
+    def generate_session_id(user):
+        """
+        Generate a unique session ID based on the user name with the given
+        site-specific secret.  How secure is this, really?
+        """
+        salt = secret[:2]
+        return crypt.crypt(user + str(random.random()), salt)
+
+Then set this session ID as the value for the client cookie named
+'session'.
+
+Change all your user-based code to retrieve the username by looking
+the session ID up in the database; your code *should not pay attention
+to any other client-side data*, i.e. don't use the 'user' cookie any
+more!
+
+(As before, /auth/print should print out the username based on the
+session ID, and /auth/logout should clear the session ID.)
+
+Note, the user-cookie specific unit tests have been deleted; see the new
+test file,
+
+      http://class.ged.idyll.org/svn/files/hw-11/webserve-test.py
+
+Your twill and Selenium tests should all still work.

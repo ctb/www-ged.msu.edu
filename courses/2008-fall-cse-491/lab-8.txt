@@ -1,0 +1,322 @@
+===================================
+Lab 8 Material / October 16th, 2008
+===================================
+
+Full documentation for the Python interface to sqlite, the sqlite3 module,
+here:
+
+   http://www.python.org/doc/2.5.2/lib/module-sqlite3.html
+
+Documentation for sqlite's query language is here:
+
+   http://www.sqlite.org/lang.html
+
+Note that sqlite3 is not installed under the central Python
+distribution on arctic.  So, unless you're using one of the Windows or
+Linux machines in the lab, you'll need to set your environment to
+look in my home account for sqlite; you can do that by typing ::
+
+   source ~ctb/python-env.csh
+
+sqlite basics
+-------------
+
+First, load in a database with 'connect':
+
+   >>> import sqlite3
+   >>> conn = sqlite3.connect('test.db')
+
+Now, get a *cursor* that lets you interact with the database:
+
+   >>> c = conn.cursor()
+
+Let's start by creating a simple table:
+
+   >>> c.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL)")
+
+Now let's insert some data into it:
+
+   >>> c.execute("INSERT INTO users (username, password) VALUES ('tim', 'xxx')")
+
+We can immediately retrieve this with a SELECT:
+
+   >>> c.execute("SELECT * FROM users")
+   >>> print c.fetchall()
+   [(1, u'tim', u'xxx')]
+
+We get the strings back as Unicode strings; that's what the "u" means.
+You can treat these as regular strings for all intents and purposes.
+
+Note here that the primary index value 'id' was automatically
+assigned; we didn't specify a value on the INSERT, but sqlite knows
+that primary key values should be automatically set.
+
+What happens if we don't specify a value on an INSERT?  Well, by
+default, unspecified values are set to NULL; in this case, however, we
+specified that the username and password *can't* be NULL.  What happens?
+
+Well, let's see:
+
+  >>> c.execute("INSERT INTO users (username) VALUES ('fiddledy')")
+  Traceback (most recent call last):
+     ...
+  IntegrityError: users.password may not be NULL
+
+Yep, an exception...
+
+All right, let's create another table, this one with a key that references
+'users':
+
+   >>> c.execute('CREATE TABLE fruits (user_id INTEGER REFERENCES users, fruit TEXT NOT NULL)')
+
+Now we can assign 'tim', our lone user, a fruit:
+
+   >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (1, 'orange')")
+
+and we can retrieve Tim's fruit preferences using a join:
+
+  >>> c.execute('SELECT * FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> print c.fetchall()
+  [(1, u'tim', u'xxx', 1, u'orange')]
+
+So what are these values?  Well, the 'SELECT \*' just tells sqlite to pull
+out all of the values in both tables, joining them into one big row -- so
+the first three values are users.id, users.username, and users.password,
+and the last two values are fruits.user_id and fruits.fruit.  You can clean
+this up a bit by specifying exactly what you want to be retrieved:
+
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> for x in c:
+  ...    print x
+  (u'tim', u'xxx', u'orange')
+
+We can also change the name of the fruit if we want to, by doing an UPDATE:
+
+  >>> c.execute("UPDATE fruits SET fruit='Orangen' WHERE fruit='orange'")
+
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> for x in c:
+  ...    print x
+  (u'tim', u'xxx', u'Orangen')
+
+What if we want to delete things?   Simplicity itself:
+
+  >>> c.execute("DELETE FROM fruits WHERE fruit='Orangen'")
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> print c.fetchall()
+  []
+
+Yep, nothing left!
+
+OK, let's set up some more complicated examples.  Three users, four fruits...
+
+  >>> c.execute("INSERT INTO users (username, password) VALUES ('beth', 'foo')")
+  >>> c.execute("INSERT INTO users (username, password) VALUES ('chet', 'fib')")
+
+  >>> c.execute("SELECT id FROM users WHERE username='tim'")
+  >>> (tim_id,) = c.fetchone()
+
+  >>> c.execute("SELECT id FROM users WHERE username='beth'")
+  >>> (beth_id,) = c.fetchone()
+
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')", (tim_id,))
+
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'apple')", (beth_id,))
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')", (beth_id,))
+
+OK, so we've set things up so that tim likes oranges, beth likes
+apples and oranges, and chet doesn't like any fruit.  Let's start by
+doing a simple query to retrieve all of this info:
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+
+Good so far!
+
+In class I mentioned that joins are done using a Cartesian cross product; what does that mean?  Well, let's see what happens without a WHERE clause:
+
+  >>> c.execute('SELECT users.id, username, fruit FROM users, fruits')
+  >>> for (id, username, fruit) in c:
+  ...   print id, username, fruit
+  1 tim orange
+  1 tim apple
+  1 tim orange
+  2 beth orange
+  2 beth apple
+  2 beth orange
+  3 chet orange
+  3 chet apple
+  3 chet orange
+
+What!?  Well, what's happening here is that without a WHERE clause,
+the join by default takes all rows from both tables, and combines
+them.  If you ever find yourself getting unexpected results from a SELECT,
+this may be one of the reasons.
+
+Let's go back to the correct join:
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+
+Note how the results are in order of ID: that's an accident. sqlite
+gives no guarantees on the order of the output from a SELECT query,
+**unless** you specify an ORDER BY clause.  So, for example, we can
+arrange things here by fruit and then by id by specifying that fruit
+should be sorted in ascending order (abbreviated ASC), and equal fruit
+rows should then be secondarily sorted on the id in descending order
+(DESC):
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id ORDER BY fruit ASC, id DESC")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  2 beth apple
+  2 beth orange
+  1 tim orange
+
+OK, now let's do something a bit different -- let's count the number of fruits that each person likes.
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users, fruits WHERE fruits.user_id = users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2)]
+
+What does the GROUP BY do?  Well, COUNT is an aggregate function that
+works *across* multiple rows; GROUP BY says that rows should be
+grouped together on the basis of their users.id value, so COUNT is
+only run across the grouped-by rows.
+
+Hmm, but wait a sec -- where's chet?  Chet doesn't like any fruits, so
+we should get a zero for him, right?  Well, yes, but you might have
+noticed that chet doesn't actually appear in *any* of the queries above.
+What's up?
+
+Well, with a default join, SQL doesn't represent nonexistent joined
+rows!  That is, it's hard for SQL to report rows that don't exist --
+unless you tell it to put NULLs there.  That's what a LEFT JOIN does:
+
+  >>> c.execute("SELECT id, username, fruit FROM users LEFT JOIN fruits ON fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+  3 chet None
+
+Hey, look, there's chet!  What happens if we do the GROUP BY again?
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+
+COUNT understands that a NULL means nothin' there, so that's good.
+
+Transactions
+~~~~~~~~~~~~
+
+sqlite does support transactions; how does this work?
+
+Let's start with our last example:
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+
+Now let's delete 'tim':
+
+  >>> c.execute("DELETE FROM users WHERE username='tim'")
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2), (u'chet', 0)]
+
+OK, so tim isn't in there any more; excellent.  But we haven't saved it, so
+if we opened the sqlite database from another program, 'tim' would still be
+there.  We can save it for public view by doing a 'conn.commit()':
+
+  >>> conn.commit()
+
+What if we decided for some reason that we didn't want to commit the change,
+but rather wanted to reverse it?  Well, let's try deleting 'chet':
+
+  >>> c.execute("DELETE FROM users WHERE username='chet'")
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2)]
+
+..but oops, we didn't want to save that -- rollback!
+
+  >>> conn.rollback()
+
+Is chet still there?
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2), (u'chet', 0)]
+
+Yep!
+
+For now, all you really need to do is to be sure to call
+'conn.commit()' in order to save any actions that you want saved.
+
+SQL injection
+~~~~~~~~~~~~~
+
+In class I mentioned SQL injection.  That can happen when you create
+queries without sanitizing input variables: for example, suppose you were
+inserting a new username and password into the users table
+
+  >>> username="robert'); DROP TABLE users; --"
+  >>> password="foo"
+  >>> sql = "INSERT INTO users (username, password) VALUES (%s, %s)" % (username, password)
+  >>> print sql
+  INSERT INTO users (username, password) VALUES (robert'); DROP TABLE users; --, foo)
+
+Now if you execute that, what happens?  (Nothing, in this case - but
+in other databases, it will drop the users table.)
+
+So, the general problem is that user-specified data may well be badly
+formatted and can screw up (intentionally or unintentionally) your SQL
+queries.  How do you deal with this?!
+
+Well, almost all SQL interfaces in all languages offer safe variable
+interpolation via *placeholders*, that is, you just a '?' in as a place
+holder and the SQL interface inserts the values safely:
+
+  >>> c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password,))
+
+  >>> c.execute('SELECT username FROM users ORDER BY username')
+  >>> print c.fetchall()
+  [(u'beth',), (u'chet',), (u"robert'); DROP TABLE users; --",), (u'tim',)]
+
+---
+
+We can clean up after ourselves by deleting the tables.
+
+  >>> c.execute("DROP TABLE fruits")
+  >>> c.execute("DROP TABLE users")
+
+
+Lab problems
+------------
+
+Using 'lab8_utils.py' as a starting point,
+
+ 1. Write an SQL query that returns all usernames, ordered alphabetically.
+
+ 2. Write an SQL query that returns all users associated with the fruits they like, using a regular join.
+
+ 3. Write an SQL query that returns all users associated with all fruits and meats that they like, using a regular join.
+
+ 4. Write an SQL query that returns all users together with the number of fruits and meats that they like, including 0 for those that don't like any fruits or don't like any meats.
+
+ 5. Add a new user 'robin', who likes pork, chicken, and cherries.  Make sure that she shows up appropriately in the previous queries.
+
+.. week9: multiple connections; multiple cursors

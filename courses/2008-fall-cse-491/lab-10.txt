@@ -1,0 +1,101 @@
+------------------------------------
+Lab 10 Material - October 30th, 2008
+------------------------------------
+
+Files under ::
+
+  http://class.ged.idyll.org/svn/files/lab-10/
+
+figleaf
+-------
+
+figleaf is a code coverage recording and analysis tool.  Basically,
+it "watches" Python execute code, records which lines are executed,
+and then annotates your program with the results.
+
+(I installed it on arctic; you'll need to do ``source ~ctb/python-env.csh``
+to be able to run it.)
+
+Basic usage: to record, ::
+
+   figleaf <program> <arguments>
+
+To annotate, ::
+
+   figleaf2html
+
+So, for example, try running ::
+
+   figleaf import_example.py
+
+and then ::
+
+   figleaf2html
+
+Now open the 'html/index.html' file in your browser to see what lines of
+code were executed.
+
+Coverage info is saved in the file ``.figleaf``, and automatically aggregated;
+to start fresh, rm this file.
+
+Now try running ::
+
+   rm .figleaf
+   figleaf coverage_example.py 0 0
+   figleaf2html -d html-0
+
+and
+
+   rm .figleaf
+   figleaf coverage_example.py 1 0
+   figleaf2html -d html-1
+
+and
+
+   rm .figleaf
+   figleaf coverage_example.py 1 1
+   figleaf2html -d html-2
+
+and look at the various differences.  (The -d flag specifies what output
+directory to use for the annotation output.)
+
+Coverage analysis is a useful way to target your testing efforts: code
+that is not executed by any tests is, by definition, untested...
+You'll see more about this in the next few weeks.
+
+CSS (Cascading Style Sheets)
+----------------------------
+
+(a.k.a. the Shortest Introduction to CSS You'll Ever Have)
+
+content (HTML) vs presentation (CSS) vs behavior (JavaScript)
+
+HTML documents consist of head and body: ::
+
+   <html>
+    <head>
+    ...
+    </head>
+
+    <body>
+    ...
+    </body>
+   </html>
+
+The body contains the page content and is what is shown; the head contains
+information *about* the page, including things like title: ::
+
+   <title>this is my page title</title>
+
+and CSS stylesheets to apply to this document: ::
+
+   <link rel="stylesheet" type="text/css" href="style.css">
+
+We'll play around with the example 'example.html' and 'style.css' in
+the lab-10/ files directory a bit.
+
+The book "The Ultimate CSS Reference" (Olsson & O'Brien) is very good:
+see http://www.sitepoint.com/books/cssref1/
+
+Personally I recommend using http://oswd.org/, the Open Source Web Design
+site, as a source for basic CSS styles.  (Be careful of their licenses tho.)

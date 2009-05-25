@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 8 Material / October 16th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-8-material-october-16th-2008">
+<h1 class="title">Lab 8 Material / October 16th, 2008</h1>
+<p>Full documentation for the Python interface to sqlite, the sqlite3 module,
+here:</p>
+<blockquote>
+<a class="reference" href="http://www.python.org/doc/2.5.2/lib/module-sqlite3.html">http://www.python.org/doc/2.5.2/lib/module-sqlite3.html</a></blockquote>
+<p>Documentation for sqlite's query language is here:</p>
+<blockquote>
+<a class="reference" href="http://www.sqlite.org/lang.html">http://www.sqlite.org/lang.html</a></blockquote>
+<p>Note that sqlite3 is not installed under the central Python
+distribution on arctic.  So, unless you're using one of the Windows or
+Linux machines in the lab, you'll need to set your environment to
+look in my home account for sqlite; you can do that by typing</p>
+<pre class="literal-block">
+source ~ctb/python-env.csh
+</pre>
+<div class="section">
+<h1><a id="sqlite-basics" name="sqlite-basics">sqlite basics</a></h1>
+<p>First, load in a database with 'connect':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import sqlite3
+&gt;&gt;&gt; conn = sqlite3.connect('test.db')
+</pre>
+</blockquote>
+<p>Now, get a <em>cursor</em> that lets you interact with the database:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = conn.cursor()
+</pre>
+</blockquote>
+<p>Let's start by creating a simple table:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL)&quot;)
+</pre>
+</blockquote>
+<p>Now let's insert some data into it:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('tim', 'xxx')&quot;)
+</pre>
+</blockquote>
+<p>We can immediately retrieve this with a SELECT:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT * FROM users&quot;)
+&gt;&gt;&gt; print c.fetchall()
+[(1, u'tim', u'xxx')]
+</pre>
+</blockquote>
+<p>We get the strings back as Unicode strings; that's what the &quot;u&quot; means.
+You can treat these as regular strings for all intents and purposes.</p>
+<p>Note here that the primary index value 'id' was automatically
+assigned; we didn't specify a value on the INSERT, but sqlite knows
+that primary key values should be automatically set.</p>
+<p>What happens if we don't specify a value on an INSERT?  Well, by
+default, unspecified values are set to NULL; in this case, however, we
+specified that the username and password <em>can't</em> be NULL.  What happens?</p>
+<p>Well, let's see:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username) VALUES ('fiddledy')&quot;)
+Traceback (most recent call last):
+   ...
+IntegrityError: users.password may not be NULL
+</pre>
+</blockquote>
+<p>Yep, an exception...</p>
+<p>All right, let's create another table, this one with a key that references
+'users':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('CREATE TABLE fruits (user_id INTEGER REFERENCES users, fruit TEXT NOT NULL)')
+</pre>
+</blockquote>
+<p>Now we can assign 'tim', our lone user, a fruit:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (1, 'orange')&quot;)
+</pre>
+</blockquote>
+<p>and we can retrieve Tim's fruit preferences using a join:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT * FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; print c.fetchall()
+[(1, u'tim', u'xxx', 1, u'orange')]
+</pre>
+</blockquote>
+<p>So what are these values?  Well, the 'SELECT *' just tells sqlite to pull
+out all of the values in both tables, joining them into one big row -- so
+the first three values are users.id, users.username, and users.password,
+and the last two values are fruits.user_id and fruits.fruit.  You can clean
+this up a bit by specifying exactly what you want to be retrieved:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; for x in c:
+...    print x
+(u'tim', u'xxx', u'orange')
+</pre>
+</blockquote>
+<p>We can also change the name of the fruit if we want to, by doing an UPDATE:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;UPDATE fruits SET fruit='Orangen' WHERE fruit='orange'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; for x in c:
+...    print x
+(u'tim', u'xxx', u'Orangen')
+</pre>
+</blockquote>
+<p>What if we want to delete things?   Simplicity itself:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM fruits WHERE fruit='Orangen'&quot;)
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; print c.fetchall()
+[]
+</pre>
+</blockquote>
+<p>Yep, nothing left!</p>
+<p>OK, let's set up some more complicated examples.  Three users, four fruits...</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('beth', 'foo')&quot;)
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('chet', 'fib')&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id FROM users WHERE username='tim'&quot;)
+&gt;&gt;&gt; (tim_id,) = c.fetchone()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id FROM users WHERE username='beth'&quot;)
+&gt;&gt;&gt; (beth_id,) = c.fetchone()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')&quot;, (tim_id,))
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'apple')&quot;, (beth_id,))
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')&quot;, (beth_id,))
+</pre>
+</blockquote>
+<p>OK, so we've set things up so that tim likes oranges, beth likes
+apples and oranges, and chet doesn't like any fruit.  Let's start by
+doing a simple query to retrieve all of this info:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+</pre>
+</blockquote>
+<p>Good so far!</p>
+<p>In class I mentioned that joins are done using a Cartesian cross product; what does that mean?  Well, let's see what happens without a WHERE clause:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.id, username, fruit FROM users, fruits')
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...   print id, username, fruit
+1 tim orange
+1 tim apple
+1 tim orange
+2 beth orange
+2 beth apple
+2 beth orange
+3 chet orange
+3 chet apple
+3 chet orange
+</pre>
+</blockquote>
+<p>What!?  Well, what's happening here is that without a WHERE clause,
+the join by default takes all rows from both tables, and combines
+them.  If you ever find yourself getting unexpected results from a SELECT,
+this may be one of the reasons.</p>
+<p>Let's go back to the correct join:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+</pre>
+</blockquote>
+<p>Note how the results are in order of ID: that's an accident. sqlite
+gives no guarantees on the order of the output from a SELECT query,
+<strong>unless</strong> you specify an ORDER BY clause.  So, for example, we can
+arrange things here by fruit and then by id by specifying that fruit
+should be sorted in ascending order (abbreviated ASC), and equal fruit
+rows should then be secondarily sorted on the id in descending order
+(DESC):</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id ORDER BY fruit ASC, id DESC&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+2 beth apple
+2 beth orange
+1 tim orange
+</pre>
+</blockquote>
+<p>OK, now let's do something a bit different -- let's count the number of fruits that each person likes.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users, fruits WHERE fruits.user_id = users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2)]
+</pre>
+</blockquote>
+<p>What does the GROUP BY do?  Well, COUNT is an aggregate function that
+works <em>across</em> multiple rows; GROUP BY says that rows should be
+grouped together on the basis of their users.id value, so COUNT is
+only run across the grouped-by rows.</p>
+<p>Hmm, but wait a sec -- where's chet?  Chet doesn't like any fruits, so
+we should get a zero for him, right?  Well, yes, but you might have
+noticed that chet doesn't actually appear in <em>any</em> of the queries above.
+What's up?</p>
+<p>Well, with a default join, SQL doesn't represent nonexistent joined
+rows!  That is, it's hard for SQL to report rows that don't exist --
+unless you tell it to put NULLs there.  That's what a LEFT JOIN does:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id, username, fruit FROM users LEFT JOIN fruits ON fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+3 chet None
+</pre>
+</blockquote>
+<p>Hey, look, there's chet!  What happens if we do the GROUP BY again?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>COUNT understands that a NULL means nothin' there, so that's good.</p>
+<div class="section">
+<h2><a id="transactions" name="transactions">Transactions</a></h2>
+<p>sqlite does support transactions; how does this work?</p>
+<p>Let's start with our last example:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>Now let's delete 'tim':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM users WHERE username='tim'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>OK, so tim isn't in there any more; excellent.  But we haven't saved it, so
+if we opened the sqlite database from another program, 'tim' would still be
+there.  We can save it for public view by doing a 'conn.commit()':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; conn.commit()
+</pre>
+</blockquote>
+<p>What if we decided for some reason that we didn't want to commit the change,
+but rather wanted to reverse it?  Well, let's try deleting 'chet':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM users WHERE username='chet'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2)]
+</pre>
+</blockquote>
+<p>..but oops, we didn't want to save that -- rollback!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; conn.rollback()
+</pre>
+</blockquote>
+<p>Is chet still there?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>Yep!</p>
+<p>For now, all you really need to do is to be sure to call
+'conn.commit()' in order to save any actions that you want saved.</p>
+</div>
+<div class="section">
+<h2><a id="sql-injection" name="sql-injection">SQL injection</a></h2>
+<p>In class I mentioned SQL injection.  That can happen when you create
+queries without sanitizing input variables: for example, suppose you were
+inserting a new username and password into the users table</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; username=&quot;robert'); DROP TABLE users; --&quot;
+&gt;&gt;&gt; password=&quot;foo&quot;
+&gt;&gt;&gt; sql = &quot;INSERT INTO users (username, password) VALUES (%s, %s)&quot; % (username, password)
+&gt;&gt;&gt; print sql
+INSERT INTO users (username, password) VALUES (robert'); DROP TABLE users; --, foo)
+</pre>
+</blockquote>
+<p>Now if you execute that, what happens?  (Nothing, in this case - but
+in other databases, it will drop the users table.)</p>
+<p>So, the general problem is that user-specified data may well be badly
+formatted and can screw up (intentionally or unintentionally) your SQL
+queries.  How do you deal with this?!</p>
+<p>Well, almost all SQL interfaces in all languages offer safe variable
+interpolation via <em>placeholders</em>, that is, you just a '?' in as a place
+holder and the SQL interface inserts the values safely:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password,))
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT username FROM users ORDER BY username')
+&gt;&gt;&gt; print c.fetchall()
+[(u'beth',), (u'chet',), (u&quot;robert'); DROP TABLE users; --&quot;,), (u'tim',)]
+</pre>
+</blockquote>
+<p>---</p>
+<p>We can clean up after ourselves by deleting the tables.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DROP TABLE fruits&quot;)
+&gt;&gt;&gt; c.execute(&quot;DROP TABLE users&quot;)
+</pre>
+</blockquote>
+</div>
+</div>
+<div class="section">
+<h1><a id="lab-problems" name="lab-problems">Lab problems</a></h1>
+<p>Using 'lab8_utils.py' as a starting point,</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Write an SQL query that returns all usernames, ordered alphabetically.</li>
+<li>Write an SQL query that returns all users associated with the fruits they like, using a regular join.</li>
+<li>Write an SQL query that returns all users associated with all fruits and meats that they like, using a regular join.</li>
+<li>Write an SQL query that returns all users together with the number of fruits and meats that they like, including 0 for those that don't like any fruits or don't like any meats.</li>
+<li>Add a new user 'robin', who likes pork, chicken, and cherries.  Make sure that she shows up appropriately in the previous queries.</li>
+</ol>
+</blockquote>
+<!-- week9: multiple connections; multiple cursors -->
+</div>
+</div>
+</body>
+</html>

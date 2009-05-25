@@ -1,0 +1,94 @@
+Homework 4: Writing a Web server, part 2
+----------------------------------------
+
+Due Thursday, Sep 25th, at 12:40pm (class start).
+
+
+Homework grading comments
+-------------------------
+
+Your code, as checked into svn, must parse and run as described below!
+No partial credit will be given to programs that simply don't run
+because of a typo or indentation error.
+
+Section 0: Cleanup
+------------------
+
+Deal with my comments on the third homework: fix problems, etc. (Be sure
+to check for ``@CTB`` text throughout the file even if you
+didn't lose any points!)
+
+Section 1: Handle query strings
+-------------------------------
+
+Extend your Web server from HW #3 to properly parse the URLs and query
+strings in GET requests. You should use the urlsplit function from the
+urllib library module to extract the parameters from the URL:
+
+    http://docs.python.org/lib/module-urlparse.html
+
+and you should use the parse_qs function from the cgi library module to
+parse the query string:
+
+    http://docs.python.org/lib/node562.html#l2h-3818
+
+The page returned by the Web server should contain, at a minimum,
+
+        * the URL.
+        * the text 'key=KEY; value=VALUE;' for each key/value pair in
+          the GET request, with KEY and VALUE replaced by the actual key
+          and value text.
+
+So, for example, if the Web server is accessed at ::
+
+  http://localhost:<port>/some/random/url?name=test&name=test2&blah=foo
+
+then the returned page content should be something like ::
+
+  hello, /some/random/url; key=name; value=test; key=name; value=test2;
+  name=blah; value=foo
+
+Spacing is important, here; e.g. please be sure to put ``' '`` after each ';'.
+
+The returned status code should be 200 and the returned content-type
+should be text/html.
+
+The HTTP server should also ignore any non-GET requests; it's ok to
+leave the behavior undefined for non-GET requests (i.e. don't bother
+putting in error-handling for them unless you want to).
+
+Section 2: Write a threaded Web server
+--------------------------------------
+
+Extend your Web server from section 1 to do threaded dispatch, that is,
+the server main thread should accept a connection and then spawn a new
+thread to handle each connection.
+
+A few parameters and suggestions:
+
+        * Use the 'threading' module to do threading, and the 'socket'
+          module to handle network connections.
+        * Make sure that your connection-handling code is as
+          encapsulated as possible; only the code that calls 'accept'
+          should call the threading module, and the code that processes
+          each connection should know nothing about threading.
+        * Be sure to catch and report exceptions /in the thread/ rather
+          than letting them fall through.
+        * Put everything in functions; don't have any top-level code
+          other than your function/class definitions and a call to a
+          'main()' function.
+        * Don't use any global data and share no information (variables,
+          objects, etc.) between connections.
+        * Your sockets should be *blocking*, not non-blocking.
+
+The Web server should be submitted via your Subversion server under the
+directory homework4/ and be in a file named webserve -- *note*, there's
+no '.py' extension on that file!
+
+webserve must take exactly one parameter, the port number on which to
+serve HTTP. So, from the top of your svn repository, ::
+
+   python homework4/webserve 5000
+
+must start the Web server on port 5000.
+

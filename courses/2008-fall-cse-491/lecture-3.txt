@@ -1,0 +1,257 @@
+Lecture 3 Outline / September 9th, 2008
+=======================================
+
+"There is always an easy solution to every problem -- neat, plausible
+and wrong." -- H.L. Mencken
+
+Homework Stuff
+==============
+
+Office hours switched to Wednesday, 8:30-10pm.  Homeworks will still
+be handed out on Tuesday, but will be due on the following Thursday
+instead of Tuesday.  Let me know if that's a problem.
+
+There's a formatting error in HW #2: to end the echo server, it should
+be ``\n.\n`` instead of ``n.n``.
+
+Grading will **not** be on a curve unless it's good for all students.
+
+Iterators
+---------
+
+Consider iterating over stacks vs lists -- one would be re-entrant,
+one is not.
+
+Resetting the count does not count, because you cannot iterate over it
+multiple times: ::
+
+   class Iterator(object):
+      def next(self):
+         if self.count > self.max_count:
+             self.count = -1			# or __init__
+             raise StopIteration
+         ...
+
+(Among other things, it doesn't pass the dual for-loop test.)
+
+Think of the object returned by __iter__ as the counter information;
+you can return a *new* counter for every iterator request, *or* you
+can return the same one.  The first makes things re-entrant.
+
+Also, minimize unnecessary code if you can: several people did this, ::
+
+   class ReentrantFibonacciIterator(object):
+      ...
+      def __iter__(self):
+        return FibonacciIterator(self.n)
+      def next(self):
+        ...
+
+The 'next' function is now completely useless and never called --
+**why is it there**?  This sort of thing offends me and makes me
+grouchy.
+
+Generators
+----------
+
+For generators, look at this example: ::
+
+  def fn():
+     print 'at 0'
+     yield 0
+     print 'at 1'
+     yield 1
+     print 'at 2'
+     yield 2
+     print 'at 3'
+     yield 3
+
+When you call 'fn', you get a **generator object** that holds internal
+state (basically a pointer to the next line of code to be executed,
+plus a copy of the local variables).  Each successive call to ``next()``
+advances the pointer to the next ``yield``.
+
+Thoughts on doing homework
+--------------------------
+
+Stringing together code examples may be easier than reinventing, or
+not - YMMV.  No penalty for swiping code in this class; heck, it's
+encouraged.
+
+Note I did give you most of the necessary code.  If you're having
+trouble with the primes for HW #2, try taking the fib stuff I sent out
+and adapting that.
+
+Networking
+==========
+
+Blocking vs non-blocking I/0
+
+  - blocking I/O **blocks** the thread of execution until input/output
+    is available.  This means that you must use multiple threads of
+    execution (threading, multiprocess) OR special monitoring functions
+    (select) to handle multiple connections with blocking I/O in a single
+    thread of execution.
+
+  - non-blocking I/O doesn't block, but returns immediately with data
+    OR aborts and signals an error ("no data available, boss").
+
+    (how do you distinguish between "data available" and error? guesses?)
+
+Synchronous vs asynchronous I/O
+
+  - synchronous is like a conversation: you speak, then I speak.
+
+  - asynchronous is like an unfriendly argument: everyone speaking at
+    once.
+
+Synchronous vs asynchronous **processing**
+
+  - synchronous processing waits for one "conversation" to be over before
+    starting another one.
+
+  - synchronous processing is BAD: inefficient, doesn't scale,
+    resource intensive...
+
+  - asynchronous processing relies on built-in language or OS features
+    to "keep track" of several connections at once.  It can be done
+    inefficiently (see HW #3, "busy wait") or efficiently
+    (threading/processes, or select); the latter depends more on
+    language/OS features.
+
+HTTP and the Web
+================
+
+The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.  Note, HTTP can be used to transport any content,
+not just "hypertext" (e.g. HTML) but also things like large
+files. However, HTTP servers are usually optimized for many
+connections sending fairly small loads of data.
+
+URLs:
+
+  http://machine:port/path/to/resource?query_stuff
+
+ - http is the protocol
+ - machine is a DNS name or an IP address
+ - port is a TCP port
+ - /path/to/resource is the on-server path, can be anything you want, although
+   many Web servers have canonical URL schemes (e.g. CGI scripts).
+ - query_stuff is a way of passing in values
+
+The HTTP protocol:
+
+  - synchronous (query, response transaction pairs); AJAX adds
+    asynchrony.
+
+  - client/server in design, not peer to peer (although again
+    JavaScript is changing things)
+
+  - note, all header lines etc. end in <CR><LF> (carriage return/line
+    feed), or ``\r\n``
+
+  - basic protocol: port 80, requests like ::
+
+       <command> <url> <protocol version>\r\n
+       [ <other optional stuff> ]
+
+    ended by blank line; for example ::
+
+       GET / HTTP/0.9\r\n
+       \r\n
+
+  - answer is in format ::
+
+       <protocol> <status code> <message>\r\n
+       <header line(s)>\r\n
+       \r\n
+
+    for example ::
+
+       HTTP/1.1 200 OK\r\n
+       Content-length: 4567\r\n
+       \r\n
+
+  - GET, retrieval of page content; generally full URL is specified.
+
+  - content-type specification (MIME types: 'text/html', 'image/jpeg')
+
+  - data passing via query strings: query_string is set of pairs of 
+
+            name, value
+
+    data, encoded suitably: name=value2&name2=value2
+
+    Obvious limitations for large data (submitting files!)...
+
+  - POST, retrieval of page content AFTER data passing.
+
+    data is passed after the header, as one long encoded stream of bytes.
+
+  - "cookies" are small bits of data that are specific to a URL
+    hierarchy, and are a name,value pair.  They are stored on the
+    client side -- really the *only* persistent thing stored on the
+    client.
+
+  - markup, html, forms
+
+  - HTML ("HyperText Markup Language") is a bastardized XML-ish language: ::
+
+       <markup_tag option1='value' option2='value2'>plain text</markup_tag>
+
+    There's a specific document format that we will mostly be ignoring ::
+
+      <html>
+       <head>
+         <title>...</title>
+         [ other stuff ]
+       </head>
+       <body>
+         [ actual content ]
+       </body>
+      </html>
+
+  - note, HTTP is actually a very simple protocol, and HTML is quite
+    simple (and "open source").  This drove the spread of both!
+
+Statelessness
+-------------
+
+HTTP is designed around *statelessness* -- the only persistent state
+on the client side is in the cookies, and those contain only data
+relevant to the *server* (so you can e.g. switch IP addresses and
+clients easily).  Connections are designed to be transient (request,
+receive, end) although there are optimizations on top of that now
+(HTTP/1.1).
+
+Online purchase example.
+
+Think of iterator and how annoying it is to hold state...
+
+See Wikipedia, `Stateless server
+<http://en.wikipedia.org/wiki/Stateless_server>`__; each transaction
+is treated independently, with cookies being the only thing kept
+across conversations.  Thus HTTP is actually not just a synchronous
+protocol/conversation, it is a very *brief* conversation :).
+
+(POST connections, and GET connections with query strings, do retain
+some additional state - can cause problems in bookmarks & reload.  These
+are **design issues** you will confront in building Web apps.)
+
+This design allows **separation in time (and space)**, and also drives
+you to design your Web app in such a way as to permit client side
+**loose coupling**, which is a good architectural principle for
+distributed systems, esp. when issues of intermittent connectivity,
+low bandwidth, etc. arise.  **Strong** or **tight coupling** often
+seems very convenient (simpler to program!) but is, generally, a bad
+idea architecturally.
+
+(Remember, "easy to design and implement" often means you're painting
+yourself into a corner when it comes to the larger issues!)
+
+The Web has driven a shift in mass-market applications to loose
+coupling and distributed systems.
+
+Canalizing thought patterns in this way is ... good?  Well, it's happening,
+anyway.
+

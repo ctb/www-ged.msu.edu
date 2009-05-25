@@ -1,0 +1,22 @@
+Homework 6: Writing a Web server, part 4
+----------------------------------------
+
+Due Thursday, Oct 9th, at 12:40pm (class start).
+
+----
+
+Download the new webserve test code here: ::
+
+  http://class.ged.idyll.org/svn/files/hw-6/webserve-test.py
+
+and modify your 'webserve.py' from HW #5 to make the tests pass by
+fixing the URL handling for '/some/' and putting in proper cookie
+handling under '/auth/'.  Put the resulting 'webserve.py' file in
+'homework6/'.
+
+I would suggest using the Cookie module
+(http://docs.python.org/lib/module-Cookie.html) included with Python
+to do your cookie handling, but it's not a requirement.
+
+Note that cookie handling *should* work properly under a Real Browser
+once the unittest tests work.  Let me know if it doesn't, please!

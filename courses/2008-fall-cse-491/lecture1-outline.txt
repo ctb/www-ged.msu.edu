@@ -1,0 +1,235 @@
+Lecture 1 Outline / August 26th, 2008
+=====================================
+
+Introduction to Database-backed Web Programming
+
+CSE 491, fall 2008; http://ged.msu.edu/courses/2008-fall-cse-491/
+
+Introduction
+------------
+
+Class objectives, structure, policies, & outline.
+
+**This is not an HTML or Web site design class.**
+
+Polls
+-----
+
+years of programming experience?
+
+who here has taken CSE 231 with Python?  What other languages
+(C, C++, Java, C#)?
+
+Linux/UNIX, Windows, Mac OS X?
+
+emacs, vi, something else?
+
+Programming and experience
+--------------------------
+
+Not-so-hidden agenda: expose you to more programming, techniques,
+jargon, and technologies.
+
+The more you program, the better.
+
+If you don't like programming or enjoy picking up new technologies
+every week, abandon ship...
+
+You will have to learn "on your feet" and use online resources (often
+only partially correct... difficult to read... etc.) to your
+advantage.
+
+Attempt to structure class as "real life", with a nod to actually grading
+people, too.
+
+Choice of technologies matters less than thought patterns, techniques:
+the programming languages you learn here are unlikely to still be
+"dominant" in 10 years, with the exception of C and a bit of C++.
+
+(I've been programming for over 15 years, and I still learn new stuff
+every week.  First C, then Tcl, Java, Perl, SQL, etc. etc.  Python is
+actually the most recent language I picked up :))
+
+Why Python?
+-----------
+
+I like Python.
+
+From Wikipedia:
+
+  Python is a general-purpose, high-level programming language. Its
+  design philosophy emphasizes programmer productivity and code
+  readability. Python's core syntax and semantics are minimalist,
+  while the standard library is large and comprehensive. It is unusual
+  among popular programming languages in using whitespace as block
+  delimiters.
+
+  Python supports multiple programming paradigms (primarily object
+  oriented, imperative, and functional) and features a fully dynamic
+  type system and automatic memory management; similar to Perl, Ruby,
+  Scheme, and Tcl.
+
+  Python was first released by Guido van Rossum in 1991. The
+  language has an open, community-based development model managed by
+  the non-profit Python Software Foundation. While various parts of
+  the language have formal specifications and standards, the language
+  as a whole is not formally specified. The de facto standard for the
+  language is the CPython implementation.
+
+Python is freely available for most platforms; http://www.python.org/
+
+Probably a good idea to review through section 9 of the `Python
+Tutorial <http://docs.python.org/tut/>`__.
+
+"Significant" whitespace: indentation matters.
+
+Dynamic.
+
+Introspection.
+
+Duck typing: if it looks like a duck, and quacks like a duck... maybe
+it's a duck?
+
+Good coding hygiene
+-------------------
+
+Programming as a form of communication, with yourself and with others.
+
+To comment, or not to comment?  Use docstrings.
+
+Using the "proper" style -- see `PEP 8
+<http://www.python.org/dev/peps/pep-0008/>`__ (Python code) and `PEP
+256 <http://www.python.org/dev/peps/pep-0257/>`__.  In the beginning I
+will comment; towards the end I will deduct points for poor style.
+
+Version control
+---------------
+
+We will use Subversion for this class; all homework assignments will
+be submitted via subversion, and the only code that we will look at for
+grading purposes is what is in Subversion.
+
+Subversion is freely available and nice graphical clients are
+available for Windows (TortoiseSVN) and probably for Mac.
+
+Subversion is a centralized version control system that is the successor
+to CVS.
+
+The idea behind (centralized) version control is simple: you "check
+out" one or more copies of code from a "master" central server into a
+local "working copy", make one or more changes, and "commit" those changes
+back to the server.
+
+All revisions are kept, time/date stamped.  Full history of code is available.
+
+Working copies are kept distinct until explicitly "update"d.
+
+"Merging" of potentially incompatible changes is done as automatically
+as possible.
+
+Commit often -- there is no penalty associated with committing!
+
+Note that "the dog ate my homework" will not be an acceptable excuse :).
+
+Great collaboration tool if you're working with other people.  Can
+even "branch" and have multiple independent lines of work if you like.
+
+Note that I don't care when you commit your code as long as it works.
+Only the version as of the homework due time will be graded.
+
+(If people are interested in using 'git' or another distributed
+version control system, I'd be happy to discuss that as an option.)
+
+Defensive programming, debugging, and KISSing it
+------------------------------------------------
+
+**Defensive programming:** program to minimize likely or possible errors,
+by yourself and by others using your code.
+
+Name variables appropriately.
+
+Use simple flow control, short functions as possible, break functionality
+up, use "idiomatic" Python.
+
+'assert' rocks.  Use assert.  A lot.  (See automated testing, below,
+as well.)
+
+**Debugging and the mighty "print" statement.**
+
+There is no more effective debugging tool than print, in my opinion.  If you
+ever find yourself staring at your code wondering what could *possibly* be
+going wrong, just throw in a few print statements to see **is** going wrong.
+
+Python especially lends itself to this, because you can print almost
+anything.
+
+   The most effective debugging tool is still careful thought, coupled
+   with judiciously placed print statements. -- *Brian Kernighan, The
+   paper Unix for Beginners (1979)*
+
+**Writing vs debugging: clever code is actually dumb.**
+
+   Debugging is twice as hard as writing the code in the first
+   place. Therefore, if you write the code as cleverly as possible,
+   you are, by definition, not smart enough to debug it.  -- *Brian Kernighan*
+
+Clever code is harder to understand, 6 months down the line!  (Or by
+your fellow group-ee.)
+
+**Keeping It Simple (KISS): complex code is more likely to contain errors.**
+
+   Controlling complexity is the essence of computer programming. --
+   *Brian Wilson Kernighan*
+
+.. image:: http://www.geeksaresexy.net/wp-content/uploads/2008/08/softwaredesign.jpg
+
+(`via <http://www.geeksaresexy.net/2008/08/25/cartoon-something-is-wrong-with-your-software-design/>`__)
+
+Automated testing
+-----------------
+
+The truth is that no compiler can catch even the majority of "interesting"
+program errors, both for formal reasons (Halting Problem) and informal
+reasons (what did you *actually* want the code to do??)
+
+Compilers and type checking are (in my opinion) a poor proxy for actually
+*running the code*.  And Python doesn't have a compiler, anyway.
+
+Just run the darn code!
+
+**Several types of automated tests:**
+
+Exploratory and "smoke" testing: does the program "emit smoke" when you
+run it?
+
+Unit and functional testing: do the little bits of code do the right
+thing?
+
+Acceptance testing: do the bigger bits of code do what the customer
+wants?
+
+User interface testing: does the interface work properly?
+
+Integration testing: does the code work when it's hooked up to The Real World?
+
+**Testing tools**
+
+Test discovery and execution frameworks.
+
+Web testing: automating Web actions.
+
+Code coverage analysis: what lines of code are actually run?
+(Necessary, but not sufficient.)
+
+We'll be using unittest/nose (for unit and functional testing), twill
+and Selenium (for functional Web testing), and figleaf (code coverage
+analysis).
+
+The Internet and the Web
+------------------------
+
+How the Internet works.
+
+How the Web works: HTTP 1.0, transport protocol for stuff; synchronous
+individual connections; "stateless"; GET, POST; cookies; content
+negotiation.

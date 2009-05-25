@@ -1,0 +1,14 @@
+=======================================
+Lecture 10 Outline / October 28th, 2008
+=======================================
+
+.. image:: xkcd-sql-inject.jpg
+
+Brief outline:
+
+  More on "why test?"
+
+  Unit vs functional tests (vs GUI tests)
+
+  Talk about syllabus, office hours, due dates for essay & final project
+

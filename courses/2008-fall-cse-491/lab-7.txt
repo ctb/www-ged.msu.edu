@@ -1,0 +1,261 @@
+==================================
+Lab 7 Material / October 9th, 2008
+==================================
+
+Files, filenames, and paths
+---------------------------
+
+For HW #7, you need to open files and read them into memory so
+that you can return them in response to HTTP queries.
+
+First, let's create a file and write to it, so that we have something
+to work with:
+
+  >>> fp = open('test-file.txt', 'w')
+  >>> fp.write("hello, world.")
+  >>> fp.close()
+
+OK, now we have a file 'test-file.txt' in the current directory.  How
+do we access it?
+
+  >>> fp = open('test-file.txt')
+  >>> contents = fp.read()
+  >>> print contents
+  hello, world.
+
+Note that 'fp.read()' returns a string containing the entire contents
+of the file.  It can be binary data, too, but printing that kind of
+data to the screen can be unpleasant...
+
+For HW #7, you'll be taking file names and paths (directory + file names)
+from users on the Web, e.g. ::
+
+   http://localhost:5000/some/file/name.txt
+
+will return the contents of the file
+
+   ./files/some/file/name.txt
+
+(if it exists).  There are two things you might want to think about here:
+first, can users access any files they shouldn't be able to?  And do
+you want your Web server to work on Windows, too?
+
+The first is a security issue, of course: you don't want to give
+remote users access to just any file on your system!  Generally you
+want to make sure that they can access only files under a certain
+directory.  To do that on UNIX, you need to get rid of any leading '/'
+and then join it into a complete path.  Here is one bit of code
+that might work.
+
+Suppose we want to convert the URL '/some/file/name.txt' into a safe
+path.
+
+  >>> url = '/some/file/name.txt'
+
+First, strip off any leading '/':
+
+  >>> url = url.lstrip('/')
+
+This is important because a '/' at the beginning of a path in UNIX
+means 'start from the root', and you want to use this as a *relative*,
+not an *absolute*, path.
+
+Second, convert the 'files' subdirectory into a full path name:
+
+  >>> import os.path
+  >>> FILES_PATH = os.path.abspath('./files')
+  >>> FILES_PATH
+  '/Users/t/Desktop/week7/files'
+
+Now, join the 'files/' path with the filename:
+
+  >>> fullpath = os.path.join(FILES_PATH, url)
+  >>> fullpath
+  '/Users/t/Desktop/week7/files/some/file/name.txt'
+
+...and that's the path to open!
+
+One last note -- to make this work properly on Windows, you need to
+change the path separator from '/' to '\\'.  Conveniently,
+'os.path.join' will figure out what the right path separator is; since
+URLs always contain forward slashes ('/'), you can just split on them
+and then join the result, like so:
+
+  >>> urllist = url.split('/')
+  >>> path = os.path.join(*urllist)
+
+On Windows, 'path' will now be ``some\file\name.txt``, and on UNIX it
+will correctly be 'some/file/name.txt'.
+
+One last good security check -- get rid of all the '..' and
+double-backslashes by converting the path into an absoute path:
+
+  >>> fullpath = os.path.abspath(fullpath)
+
+and then *check* that it's actually underneath the FILES_PATH:
+
+  >>> assert fullpath.startswith(FILES_PATH)
+
+This will make *sure* that you're not letting remote users stray
+off the reservation.
+
+Nifty Python tricks
+-------------------
+
+Here are some useful Python tricks, for those of you who are into such
+things...
+
+Dynamic replacement of functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions are objects, too!  So you can mess with them in various ways.
+
+For example, as you may have seen in my tests, you can replace
+functions with other functions very easily.
+
+  >>> def subtract_one(number):
+  ...   return number - 1
+
+  >>> def add_one(number):
+  ...   return number + 1
+
+  >>> operator_fn = subtract_one
+  >>> print operator_fn(5)
+  4
+
+  >>> operator_fn = add_one
+  >>> print operator_fn(5)
+  6
+
+There's really no good way to tell what function you're calling, except
+to use 'print' on 'fn.__name__':
+
+  >>> print operator_fn.__name__
+  add_one
+
+Calling functions with dynamically constructed arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you have a function that takes keyword arguments, and you want
+to only pass in certain ones, but you want to make that decision dynamically.
+
+For example, consider this function:
+
+  >>> def print_sound(cat=None, dog=None):
+  ...   if cat is not None:
+  ...      print 'meow!'
+  ...   if dog is not None:
+  ...      print 'woof!'
+
+Now, I can call this either way:
+
+  >>> print_sound(cat=True)
+  meow!
+  >>> print_sound(dog=True)
+  woof!
+
+but suppose someone is giving us the *name* of the animal!  We could use
+'if' statements:
+
+  >>> def do_print_sound(animal_type):
+  ...   if animal_type == 'dog':
+  ...      print_sound(dog=True)
+  ...   if animal_type == 'cat':
+  ...      print_sound(cat=True)
+
+but that's ugly and long.  Instead, you can use a dictionary and pass
+it into the print_sound function using ``**``:
+
+  >>> def do_print_sound(animal_type):
+  ...   d = { animal_type : True }
+  ...   print_sound(**d)
+
+This passes 'cat=True' into print_sound if animal_type is 'cat', and
+'dog=True' into print_sound if animal_type is 'dog':
+
+  >>> do_print_sound('cat')
+  meow!
+  >>> do_print_sound('dog')
+  woof!
+
+You can see the utility of this in taking in form arguments, for example...
+think about the '/auth/login' function from this HW -- now you can write
+it as ::
+
+  def login(username=None, password=None):
+    ...
+
+and have your form values automatically turned into a dictionary as
+appropriate.  (This is how CherryPy, a popular Web framework, does
+things, if you're interested in seeing it at work.
+
+Writing functions that take arbitrary arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OK, but what if you don't want to specify how many arguments there are
+going to be, or you don't want to explicitly give defaults, or you want
+to just forward arguments on to another function in a wrapper function?
+
+You can use ``*`` and ``**`` to do this:
+
+  >>> def print_my_args(*arg_list, **args_dict):
+  ...   print arg_list
+  ...   print args_dict
+
+Now you can do
+
+  >>> print_my_args('foo', 'bar', 'baz', x=5, y='hello', z='fib')
+  ('foo', 'bar', 'baz')
+  {'y': 'hello', 'x': 5, 'z': 'fib'}
+
+(There are many uses for this; look up 'decorators', for example.)
+
+Dynamic access to local and global name spaces, and object dicts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python uses dictionaries for everything -- including local and global
+name spaces and object attributes.  Try:
+
+   >>> x = 5
+   >>> d = locals()
+   >>> d['x']
+   5
+
+   >>> def fn():
+   ...   y = 6
+   ...   d = locals()
+   ...   e = globals()
+   ...   print d['y']
+   ...   print e['x']
+   >>> fn()
+   6
+   5
+
+If you create an object, you can access its attributes through ``__dict__``:
+
+   >>> class A(object):
+   ...   def __init__(self):
+   ...     self.z = 'foo'
+   >>> a = A()
+   >>> a.z
+   'foo'
+   >>> print a.__dict__
+   {'z': 'foo'}
+
+Dynamic retrieval of attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can also use 'getattr' to retrieve object values by their name.
+It works like the dictionary 'get' function:
+
+   >>> getattr(a, 'z')
+   'foo'
+
+You can also specify a default value:
+
+   >>> getattr(a, 'XXX', 'fiddle')
+   'fiddle'
+
+'getattr' will work on any object where you would normally access
+attributes with a period, e.g. 'X.Y' is equivalent to getattr(X, 'Y').
+It is the safest way to check for attributes.

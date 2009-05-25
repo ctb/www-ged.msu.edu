@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 11 Material - November 6th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-11-material-november-6th-2008">
+<h1 class="title">Lab 11 Material - November 6th, 2008</h1>
+<p>Files for this lab are in svn, at:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-11/">http://class.ged.idyll.org/svn/files/lab-11/</a></blockquote>
+<p>or you can copy them from</p>
+<blockquote>
+~ctb/lab-11/</blockquote>
+<p>on the CSE cluster.</p>
+<p>---</p>
+<p>Accurately and reproducibly measuring programs is a tough issue in its
+own right.  Here are some simple techniques that you can use to get a
+rough handle on program performance.</p>
+<div class="section">
+<h1><a id="measuring-program-runtime-on-linux-unix" name="measuring-program-runtime-on-linux-unix">Measuring program runtime on Linux/UNIX</a></h1>
+<p>The 'time' utility will give you numbers for runtime, user-space
+time (think &quot;computation&quot;), and kernel time (disk and network I/O).  Try
+it out on arctic:</p>
+<pre class="literal-block">
+/bin/time python simple-loop.py 500000
+</pre>
+<p>(This program just adds together all the numbers between 1 and 500000.)</p>
+<p><strong>NOTE: 'time' alone will use the built-in shell utility; on arctic and
+other Linux boxes, be sure to use '/bin/time', otherwise you'll get
+weird-looking output.</strong></p>
+<p>The output should be something like this:</p>
+<pre class="literal-block">
+real    0m0.240s
+user    0m0.211s
+sys     0m0.019s
+</pre>
+<p>The 'real' number is the wall-clock seconds (how long YOU thought it
+took to run).  The 'user' number is the number of seconds spent in
+user-space, and the 'sys' number is the number of seconds spent in
+kernel-space, accessing the disk etc.</p>
+<p>(I don't know how to get numbers like this in Windows; any thoughts?)</p>
+<p>If you run 10x more loops, you should see a roughly 10x increase in the
+time:</p>
+<pre class="literal-block">
+/bin/time python simple-loop.py 5000000
+
+real    0m2.372s
+user    0m2.107s
+sys     0m0.113s
+</pre>
+<p>Note how the numbers add up -- is that always the case?</p>
+<div class="section">
+<h2><a id="sleeping" name="sleeping">Sleeping</a></h2>
+<p>No!  Try this:</p>
+<pre class="literal-block">
+/bin/time python simple-wait.py 2
+
+real    0m2.031s
+user    0m0.015s
+sys     0m0.015s
+</pre>
+<p>This program just executes a simple 'sleep', telling the OS to wake it
+up after 2 seconds.  So, the &quot;wall clock&quot; time is 2 seconds, but the
+OS recorded essentially no actual time spent doing anything -- because
+all it had to do was wake it up after 2 seconds!</p>
+<p>In particular, this is what you'll see if a program is I/O bound --
+if it spends a lot of time waiting for data.  That's because on something
+like a blocking 'socket.recv' call, or on a 'read' of a file from
+a slow disk, the OS just puts the program to sleep until data arrives.</p>
+<p><strong>Q: What does this measurement look like for your blocking echo
+server, vs your non-blocking echo server, vs your threaded blocking
+echo server, from earlier HWs &amp; labs?</strong></p>
+<p><strong>Q: What if you switch to using the 'multitask' module to do
+cooperative multitasking -- how does that compare to non-blocking,
+blocking, threaded-blocking, etc. in terms of overall speed?</strong></p>
+<p><strong>Q: What happens if you vary the number of threads in your threaded
+echo server -- what's the &quot;most efficient&quot; number of threads, and why?</strong></p>
+<p><strong>Q: What happens if you vary the amount of data being sent by your
+echo server from 1 byte to 100k to 5mb?  (Vary across blocking,
+non-blocking, threaded, etc.)</strong></p>
+<p><strong>Q: What happens if you run your echo server code on 127.0.0.1, and
+only connect from the local machine, vs connecting to the external
+interface (the public IP address, which you find with ipconfig
+(Windows) or '/sbin/ifconfig -a' (Linux)), vs connecting across
+machines?</strong></p>
+</div>
+<div class="section">
+<h2><a id="overachieving" name="overachieving">Overachieving</a></h2>
+<p>Here's a weirder case for you to consider.  Try:</p>
+<pre class="literal-block">
+python thread-compress.py ecoli.fa 5
+
+real    0m0.629s
+user    0m1.079s
+sys     0m0.031s
+</pre>
+<p>Hmmmmm... the <em>real</em> time elapsed was .6 seconds, but the <em>user</em> time
+is more than that -- 1.08 seconds.  What's going on here?</p>
+<p>It's threading!  The code is using threads to do the heavy lifting (each
+thread is compressing the first 100kb of the E. coli genome...) and
+so it takes less wallclock time to do the work than the work it actually
+does.</p>
+<p><strong>Q: How do these numbers change when you increase the size of the file
+being read, the amount of sequence being compressed, and the number of
+threads doing the compression?</strong></p>
+<p>(Note, you can generate different size files by concatenating the ecoli
+genome multiple times into a single, bigger file.)</p>
+<p><strong>Q: How would these numbers change when you run it on a single-CPU machine?  Can you think of a way to emulate that?</strong></p>
+<p>(Hint, look up the Semaphore object in the threading module.)</p>
+<p>OK, so that's understandable: things are running in parallel.  Neat!
+So what happens if you run this?</p>
+<pre class="literal-block">
+/bin/time python thread-loop.py 500000 5
+
+real    0m1.056s
+user    0m0.826s
+sys     0m0.312s
+</pre>
+<p>This uses threads to run the 'simple-loop' code above -- why is 'real'
+more or less equal to the sum of 'user' and 'sys here?</p>
+<p><strong>Q: What if you use the multiprocess module available in Python 2.6
+to run the compress and loop code in different processes rather than
+in different threads?  Does this change your numbers (yes) -- and why?
+(Hint, look up the GIL...)</strong></p>
+<p><strong>Q: how does the compression code speed scale with number of threads?</strong></p>
+<p><strong>Q: What happens if you run all of this on Windows, in comparison to
+Linux?</strong></p>
+</div>
+</div>
+<div class="section">
+<h1><a id="measuring-program-runtime-from-python" name="measuring-program-runtime-from-python">Measuring program runtime from Python</a></h1>
+<p>While you can use the 'timeit' module,</p>
+<blockquote>
+<a class="reference" href="http://www.python.org/doc/2.5.2/lib/module-timeit.html">http://www.python.org/doc/2.5.2/lib/module-timeit.html</a></blockquote>
+<p>it's not meant for anything other than CPU-intensive stuff,
+from what I can tell; if you try to use it to measure network
+or disk I/O, it may not help.</p>
+<p>The simplest way to measure actual program performance on &quot;slow&quot; tasks
+like I/O (as opposed to algorithm performance) is to use 'time.time':</p>
+<pre class="literal-block">
+start_time = time.time()
+... # do stuff
+end_time = time.time()
+print '%f seconds', end_time - start_time
+</pre>
+<p>Warning, 'time.time' is not particularly accurate for sub-second information!</p>
+</div>
+<div class="section">
+<h1><a id="locking-of-centralized-resources" name="locking-of-centralized-resources">Locking of centralized resources</a></h1>
+<p>You can use 'twill-fork' or urllib to run a bunch of simultaneous
+queries against your Web server; if you modify your sqlite3 interface
+to work in threads (by using locks and opening/closing the database
+connection inside the locked area) you can look at the impact of
+locking on throughput and CPU usage, too.</p>
+</div>
+<div class="section">
+<h1><a id="more-essay-notes" name="more-essay-notes">More essay notes</a></h1>
+<p>This is meant to be a <em>hypothesis</em> paper -- do a set of measurements,
+and try to explain them to yourself (and me) in a paper.  I expect to
+see a graph or three, along with a legitimate and thoughtful attempt
+to explain the trends that you see.  (Three points don't make a trend
+unless you're an astrophysicist, BTW.)  You DON'T NEED TO BE CORRECT,
+but it helps, of course.</p>
+<p>If your paper is too short (&lt; 3-5 pages double-spaced Times-Roman 12pt
+with 1&quot; margins and no more than a 3 inch masthead), do more
+measurements.  Explanatory diagrams can substitute for some text but
+graphs do not add to the page count.</p>
+<p>Do cite Web resources you use, if only informally; e.g.</p>
+<blockquote>
+This neat discussion (<a class="reference" href="http://foo.com/some-threading-stuff">http://foo.com/some-threading-stuff</a>) explains why
+I get the results I do.  Basically, fib does foo and bar, so...</blockquote>
+<p>It is entirely appropriate to speculate wildly on how you might tune
+or otherwise adjust your Web server to deal with tens or hundreds or
+even thousands of simultaneous users.</p>
+<p><strong>PLEASE</strong> don't use arctic or the other centralized machines to run
+CPU, disk, or network-intensive stuff more than a few times, please;
+i.e. do all your code development and testing somewhere else and then
+use adriatic or arctic for benchmarking measurements only.</p>
+<p>In terms of an essay proposal, I would like to see a sentence or two
+like this:</p>
+<blockquote>
+I propose to measure performance across non-blocking, threading,
+and multiprocess echo servers.  I will also vary the total amount
+of data sent to see how network performance degrades with data
+size.</blockquote>
+<p>Please check the essay proposal in by Tuesday evening on November 11th
+into 'essay/proposal.txt'.  The final essay is due <strong>December 2nd</strong>.</p>
+<p>English (grammar) and spelling and logic all matter!  Feel free to
+check in your source code under 'essay' and refer to the files by name
+in your paper if you want sympathy points for your partial work.</p>
+</div>
+<div class="section">
+<h1><a id="writing-c-code-that-python-can-call" name="writing-c-code-that-python-can-call">Writing C code that Python can call</a></h1>
+<p>Suppose you want to call C code from Python -- how do you do that?
+You can go through a full tutorial here,</p>
+<blockquote>
+<a class="reference" href="http://docs.python.org/extending/index.html">http://docs.python.org/extending/index.html</a></blockquote>
+<p>but here's a quick demo of extending Python with a simple addition
+function in C.</p>
+<p>Under 'lab-11/c-embed', there are two important files: 'module.c', which
+is our extension module, and 'setup.py', which tells Python how to compile
+'module'. First, let's take a look at module.c.</p>
+<p>module.c has three components: the function ('add') that we want to
+make available to Python; the methods table, that tells Python what
+the <em>name</em> of the 'add' function is; and the module init function,
+which initializes the module on import.  (In this case, it just tells
+Python to load the methods in the methods table.)</p>
+<p>The 'add' function does three things:</p>
+<blockquote>
+<ul class="simple">
+<li>it unpacks arguments from a Python object into two integers;</li>
+<li>it sums the integers;</li>
+<li>and it packs the result back into a Python object, which it then returns.</li>
+</ul>
+</blockquote>
+<p>Now, try</p>
+<pre class="literal-block">
+python setup.py build_ext -i
+</pre>
+<p>This tells Python to build the module, and put the result in the current
+directory; otherwise it hides it away under the build/ directory.</p>
+<p>Now you can run python and try</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import module
+&gt;&gt;&gt; module.add(5, 6)
+11
+</pre>
+</blockquote>
+<p>I've put this code in the 'test-module.py' file so you can try running
+that if you like.</p>
+<p><strong>Q: What happens if you put the looping code in this C function and
+then run it in multiple threads -- will it run in parallel?  (A:
+No. Talk to me if you want to get it to run in parallel.)</strong></p>
+</div>
+<div class="section">
+<h1><a id="using-pyrex-to-wrap-c-code" name="using-pyrex-to-wrap-c-code">Using pyrex to wrap C code</a></h1>
+<p>There are a bunch of options for wrapping C and C++ in Python;
+go to this URL for more info:</p>
+<blockquote>
+<a class="reference" href="http://ivory.idyll.org/articles/advanced-swc/#wrapping-c-c-for-python">http://ivory.idyll.org/articles/advanced-swc/#wrapping-c-c-for-python</a></blockquote>
+<p>I've started to use 'pyrex' quite a bit.  Pyrex is an intermediate
+language that can speak to both C and Python code; this intermediate
+language gets translated into C code with a Python interface
+automatically.</p>
+<p>If you look under 'lab-11/pyrex', you'll see a few files:</p>
+<pre class="literal-block">
+module.c
+module.h
+module_wrap.pyx
+setup.py
+</pre>
+<p>The module.c and module.h files just contain the C implementation of
+the 'add' function, and are straight C code.  setup.py is just another
+module telling Python how to compile the code.  The 'module_wrap'
+function contains a bit more interesting stuff, though:</p>
+<pre class="literal-block">
+cdef extern from &quot;module.h&quot;:
+     long add(long, long)
+
+# this function can call arbitrary C code, and where possible will be
+# compiled into efficient C code itself.
+
+def wrapped_add(a, b):
+    return add(a, b)
+</pre>
+<p>What this does is tell pyrex where to get the function 'add' -- from
+C code -- and then defines the 'wrapped_add' function to call 'add'
+and return the result.</p>
+<p>To build this, type</p>
+<pre class="literal-block">
+python setup.py build_ext -i
+</pre>
+<p>and watch the monkeys go... then run</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import module_wrap
+&gt;&gt;&gt; module_wrap.wrapped_add(5,6)
+</pre>
+</blockquote>
+<p>The important thing here is that 'wrapped_add' (and other Pyrex
+functions) can call <em>any</em> C code that they want, so this is a good
+simple way to wrap a small set of C functions.</p>
+<p>If you want to wrap lots of C code, or wrap C++ code, there are other
+tricks and options.</p>
+</div>
+<div class="section">
+<h1><a id="calling-external-programs-and-keeping-the-output" name="calling-external-programs-and-keeping-the-output">Calling external programs and keeping the output</a></h1>
+<p>Try:</p>
+<pre class="literal-block">
+import subprocess
+cmd = 'ls'
+
+p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                     stderr=subprocess.PIPE)
+(output, error_output) = p.communicate()
+
+print output
+</pre>
+<p>(This code is in 'lab-11/subprocess-run.py')</p>
+<p>This will let you run any UNIX or Windows command and get the output
+and error output into a Python string.</p>
+</div>
+</div>
+</body>
+</html>

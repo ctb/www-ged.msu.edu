@@ -1,0 +1,100 @@
+----------------
+Homeworks 9 & 10
+----------------
+
+Due Thursday, November 6th, at the beginning of class.
+
+(No office hours this week (Oct 29th); I'll be in Toronto on Wednesday.)
+
+Put all files under homework10/.  The tests and support files are all
+available at http://class.ged.idyll.org/svn/files/hw-10/.
+
+A fully working Web server for HW #8 is here:
+
+  http://class.ged.idyll.org/svn/files/hw-10/webserve-ctb-hw8.py
+
+Fixing HW #8
+------------
+
+(2 points)
+
+Due in no small measure to my own mistakes (hey, it's in writing!)
+there were a number of problems with HWs #7 and #8; I'll discuss these
+in class today.  Sorry!  I've updated webserve-test.py to catch some
+of the more problematic ones; please make sure that your code passes
+all of the new tests.
+
+Also update your user tests from HW #8 to check that
+
+  - commit is called after adding a user
+
+  - correct cookies are returned appropriately from login
+
+  - /auth/print prints out the right username when a user cookie
+    is passed in
+
+Make darn sure that your tests are in the file
+'homework10/webserve-user-tests.py', capiche?  Thank you for your
+cooperation.
+
+Adding twill and Selenium testing
+---------------------------------
+
+(3 points)
+
+Copy the twill and Selenium tests from hw-10/ into your svn
+repository.  Verify that they run correctly against your Web server
+(and fix your Web server if they don't!)  Note, this may require
+disabling threading for now...
+
+Then, copy the twill test file into 'test-login-escaping.twill' and change it
+to verify that the username ::
+
+     my name=foo (and I'm happy with it)
+
+with the password ::
+
+     <it's secret!>
+
+can log in, see the correct username via /auth/print, and log out.
+(You should add that user to your database, of course!)
+
+Finally, add a Selenium test to do the same thing in the Selenium test
+suite; put it in the file 'files/tests/LoginTestWeird.html' and link
+it into the test suite file 'files/tests/suite.html'.
+
+Please make sure that all of the code can be run with a straight
+checkout from your svn repository, i.e. that the full 'files/'
+directory is under your homework10/ directory; it contains all your
+Selenium tests; and the sqlite db 'webserve-info.db' is in your main
+directory.
+    
+Intersecting movies
+-------------------
+
+(2.5 points)
+
+Design an SQL schema to hold a list of actors and the movies they've
+been in, as well as a separate list of actresses and the movies
+*they've* been in.  Then fill in the simple Web interface specified in
+'files/search-for-movies.html' so that you can search for an actor
+and an actress and then see all of the movies that they've been in
+together.
+
+I'll give you some sample data and some twill tests in lab on
+Thursday.
+
+Using markup and CSS
+--------------------
+
+(2.5 points)
+
+Make your web site look good, or at least stylize it, by choosing a
+design from Open Source Web Design, http://www.oswd.org/, and applying
+it to your movie search site.  You can change, add, and remove HTML
+files as long as your site continues to pass all of your (and my) unit
+and functional tests.
+
+Note that you may have to add appropriate MIME types for png and/or
+gif files to your file serving module.  I'll leave that up to you;
+Google is your friend.

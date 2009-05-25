@@ -1,0 +1,193 @@
+Lecture 2 Outline / September 2nd, 2008
+=======================================
+
+Introduction to Database-backed Web Programming
+
+CSE 491, fall 2008; http://ged.msu.edu/courses/2008-fall-cse-491/
+
+Most of you are familiar with the virtues of a programmer. There are
+three, of course: laziness, impatience, and hubris. -- *Larry Wall*
+
+
+
+Syntax vs logic
+---------------
+
+Most of HW 1 is about *syntax*, not *logic* -- you should all be able
+to write a basic Fibonacci sequence function in your sleep, and even
+if you can't, you can look it up online!
+
+Each function/construct does the same thing in the homework: it's about
+adapting your program logic to different syntax requirements.
+
+(And learning that syntax is in fact quite important in programming.
+How many more lines of code would this assignment have been in a
+non-dynamic/statically typed programming language?  Which of your
+solutions is easiest to understand?  Easiest to use?  And why?)
+
+Work with others, ask for help, google, etc... There's no penalty in
+this course for casting as wide a net as you can.
+
+Try doing section 1 of HW #2 by yourselves, though.  (It's the same as
+HW #1.)  No requirement, but you should be *able* to do it by yourself.
+
+Methods of problem solving
+--------------------------
+
+Code "substitution" a la algebra.
+
+print -- figure out what's going on by *looking*
+
+Reductio ad absurdum -- reducing to the absurd:
+
+ - hard-coded responses
+ - 'assert 0' to see if certain code is ever run
+
+assert -- use it!  But don't use it "with side effects" like I'm doing.
+
+Re-entrancy and iterators
+-------------------------
+
+Re-entrancy will become very important later on; `re-entrant functions
+<http://en.wikipedia.org/wiki/Reentrant>`__ are useful for parallel
+processing.
+
+Critical component of re-entrancy from your perspective is *no global
+data*, and *no internal data that changes*.  My tests (list(x) ==
+list(x), and double-for-loops) are a stupid proxy for this, but
+nonetheless important: point is that ::
+
+  fib = ReentrantFibonacciIterator(8)
+  for x in fib:
+      for y in fib:
+        ...
+
+is also similar to multi-threaded case where you have multiple functions
+running concurrently and all accessing 'fib'.  If you can pass the 'for'
+loop test then you probably have written it so that it can *also* pass
+the concurrency test.  We will discuss this more, later, in a week or two.
+
+Two hints for this (presumably the hard) part of the HW: from lab notes,
+
+ The iterator protocol is pretty simple, but has a fair amount of
+ syntax associated with it. Your class has to define an __iter__
+ method, and that method has to return an object with a 'next'
+ function on it; then to iterate, Python calls the 'next' function
+ until it raises a StopIteration exception.
+
+and also this: in the following code, ::
+
+
+    class Enumerator(object):
+      def __init__(self, thing):
+          self.thing = iter(thing)
+	  self.count = -1
+      def __iter__(self):
+          return self
+      def next(self):
+          val = self.thing.next()
+          self.count += 1
+	  return self.count, val
+
+what is the __iter__ function doing?  If it always returns self (as in
+all my examples) isn't it just boilerplate that we can remove?
+
+To reiterate, the point here is to understand how the syntax and the
+logic fit together.
+
+TCP/IP and network programming -- basic concepts
+------------------------------------------------
+
+IP (v4)
+  - "Internet Protocol"
+  - send packets/datagrams containing data
+  - abstraction allows these packets to be routed over many types of networks
+    (think cell phones...)
+  - connectionless: no circuit needs to be established before sending
+  - unreliable (data corruption, out-of-order, duplicates, lost/dropped)
+  - header is checksummed
+  - addressing and routing: there be dragons
+
+Internet addresses: dotted quad (A.B.C.D) of 8-bit numbers.
+
+UDP
+  - "User Datagram Protocol" a.k.a. "Unreliable Datagram Protocol"
+  - built on top of IP
+  - no guarantees
+  - applications: DNS (name service; below); VoIP; games (NetTrek)
+  - stateless; broadcast; multicast
+  - app-to-app communication through ports (as with TCP)
+
+TCP
+  - "Transmission Control Protocol"
+  - stream-oriented: send multiple bytes through channel, TCP handles
+    encoding etc.
+  - applications: HTTP, SMTP, SSH, etc.
+  - app-to-app communication through ports (as with UDP, but different ports!)
+  - reliable, guaranteed order, **easy to program** (relatively speaking)
+
+DNS
+  - names to IP addresses
+
+Special IP addresses: 127.0.0.1 (localhost); 192.168.x.y and 10.0.x.y (private networks)
+
+Gateways, firewalls, and NAT (network address translation); going in vs
+coming out.
+
+ping and traceroute
+
+Connecting to hosts
+
+Specifying a port, "reserved" ports, and "standard" ports
+
+ - bind a port to define an "address"
+ - ports under 1024 are reserved for 'root' on Linux boxes; don't know
+   about Windows.  Generally users cannot bind to these ports.
+ - SMTP (mail) - 25; HTTP (Web) - 80; ssh - 22; HTTPS (secure Web) - 443
+
+Firewalls may make HW tricky.  Port forwarding with ssh...?  Or just 
+turn off the darn thing, and/or stay with 127.0.0.1.
+
+Network *latency* vs *throughput*
+
+Mechanics of processing network connections
+-------------------------------------------
+
+(socket module in Python; see http://docs.python.org/lib/socket-objects.html)
+
+Creating a socket - 'socket', SOCK_STREAM or SOCK_DGRAM 
+
+Binding to an address - 'bind', host & port
+
+Listening for connections - 'listen', backlog
+
+Handling new connections synchronously and asynchronously
+
+  - connection comes in
+  - while processing data for that conn, another connection attempt is
+    made; what now?
+  - can handle:
+     - "in order", or synchronously (send; receive; send; receive);
+     - asynchronously (send 1; receive 2; send 2; receive 1; etc.)
+  - synchronous programming is more *predictable*
+  - asynchronous programming is more difficult but much *faster* in terms
+    of response
+
+The Web - basics
+----------------
+
+'HTTP' (v1.0) - hypertext transport protocol
+
+Simple content-delivery system
+
+Synchronous transactions
+
+URL/URI
+
+"Stateless" & cookies
+
+GET, POST
+
+Status codes
+
+(We'll revisit all of this next week.)

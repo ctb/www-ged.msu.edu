@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 1 Outline / August 26th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-1-outline-august-26th-2008">
+<h1 class="title">Lecture 1 Outline / August 26th, 2008</h1>
+<p>Introduction to Database-backed Web Programming</p>
+<p>CSE 491, fall 2008; <a class="reference" href="http://ged.msu.edu/courses/2008-fall-cse-491/">http://ged.msu.edu/courses/2008-fall-cse-491/</a></p>
+<div class="section">
+<h1><a id="introduction" name="introduction">Introduction</a></h1>
+<p>Class objectives, structure, policies, &amp; outline.</p>
+<p><strong>This is not an HTML or Web site design class.</strong></p>
+</div>
+<div class="section">
+<h1><a id="polls" name="polls">Polls</a></h1>
+<p>years of programming experience?</p>
+<p>who here has taken CSE 231 with Python?  What other languages
+(C, C++, Java, C#)?</p>
+<p>Linux/UNIX, Windows, Mac OS X?</p>
+<p>emacs, vi, something else?</p>
+</div>
+<div class="section">
+<h1><a id="programming-and-experience" name="programming-and-experience">Programming and experience</a></h1>
+<p>Not-so-hidden agenda: expose you to more programming, techniques,
+jargon, and technologies.</p>
+<p>The more you program, the better.</p>
+<p>If you don't like programming or enjoy picking up new technologies
+every week, abandon ship...</p>
+<p>You will have to learn &quot;on your feet&quot; and use online resources (often
+only partially correct... difficult to read... etc.) to your
+advantage.</p>
+<p>Attempt to structure class as &quot;real life&quot;, with a nod to actually grading
+people, too.</p>
+<p>Choice of technologies matters less than thought patterns, techniques:
+the programming languages you learn here are unlikely to still be
+&quot;dominant&quot; in 10 years, with the exception of C and a bit of C++.</p>
+<p>(I've been programming for over 15 years, and I still learn new stuff
+every week.  First C, then Tcl, Java, Perl, SQL, etc. etc.  Python is
+actually the most recent language I picked up :))</p>
+</div>
+<div class="section">
+<h1><a id="why-python" name="why-python">Why Python?</a></h1>
+<p>I like Python.</p>
+<p>From Wikipedia:</p>
+<blockquote>
+<p>Python is a general-purpose, high-level programming language. Its
+design philosophy emphasizes programmer productivity and code
+readability. Python's core syntax and semantics are minimalist,
+while the standard library is large and comprehensive. It is unusual
+among popular programming languages in using whitespace as block
+delimiters.</p>
+<p>Python supports multiple programming paradigms (primarily object
+oriented, imperative, and functional) and features a fully dynamic
+type system and automatic memory management; similar to Perl, Ruby,
+Scheme, and Tcl.</p>
+<p>Python was first released by Guido van Rossum in 1991. The
+language has an open, community-based development model managed by
+the non-profit Python Software Foundation. While various parts of
+the language have formal specifications and standards, the language
+as a whole is not formally specified. The de facto standard for the
+language is the CPython implementation.</p>
+</blockquote>
+<p>Python is freely available for most platforms; <a class="reference" href="http://www.python.org/">http://www.python.org/</a></p>
+<p>Probably a good idea to review through section 9 of the <a class="reference" href="http://docs.python.org/tut/">Python
+Tutorial</a>.</p>
+<p>&quot;Significant&quot; whitespace: indentation matters.</p>
+<p>Dynamic.</p>
+<p>Introspection.</p>
+<p>Duck typing: if it looks like a duck, and quacks like a duck... maybe
+it's a duck?</p>
+</div>
+<div class="section">
+<h1><a id="good-coding-hygiene" name="good-coding-hygiene">Good coding hygiene</a></h1>
+<p>Programming as a form of communication, with yourself and with others.</p>
+<p>To comment, or not to comment?  Use docstrings.</p>
+<p>Using the &quot;proper&quot; style -- see <a class="reference" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a> (Python code) and <a class="reference" href="http://www.python.org/dev/peps/pep-0257/">PEP
+256</a>.  In the beginning I
+will comment; towards the end I will deduct points for poor style.</p>
+</div>
+<div class="section">
+<h1><a id="version-control" name="version-control">Version control</a></h1>
+<p>We will use Subversion for this class; all homework assignments will
+be submitted via subversion, and the only code that we will look at for
+grading purposes is what is in Subversion.</p>
+<p>Subversion is freely available and nice graphical clients are
+available for Windows (TortoiseSVN) and probably for Mac.</p>
+<p>Subversion is a centralized version control system that is the successor
+to CVS.</p>
+<p>The idea behind (centralized) version control is simple: you &quot;check
+out&quot; one or more copies of code from a &quot;master&quot; central server into a
+local &quot;working copy&quot;, make one or more changes, and &quot;commit&quot; those changes
+back to the server.</p>
+<p>All revisions are kept, time/date stamped.  Full history of code is available.</p>
+<p>Working copies are kept distinct until explicitly &quot;update&quot;d.</p>
+<p>&quot;Merging&quot; of potentially incompatible changes is done as automatically
+as possible.</p>
+<p>Commit often -- there is no penalty associated with committing!</p>
+<p>Note that &quot;the dog ate my homework&quot; will not be an acceptable excuse :).</p>
+<p>Great collaboration tool if you're working with other people.  Can
+even &quot;branch&quot; and have multiple independent lines of work if you like.</p>
+<p>Note that I don't care when you commit your code as long as it works.
+Only the version as of the homework due time will be graded.</p>
+<p>(If people are interested in using 'git' or another distributed
+version control system, I'd be happy to discuss that as an option.)</p>
+</div>
+<div class="section">
+<h1><a id="defensive-programming-debugging-and-kissing-it" name="defensive-programming-debugging-and-kissing-it">Defensive programming, debugging, and KISSing it</a></h1>
+<p><strong>Defensive programming:</strong> program to minimize likely or possible errors,
+by yourself and by others using your code.</p>
+<p>Name variables appropriately.</p>
+<p>Use simple flow control, short functions as possible, break functionality
+up, use &quot;idiomatic&quot; Python.</p>
+<p>'assert' rocks.  Use assert.  A lot.  (See automated testing, below,
+as well.)</p>
+<p><strong>Debugging and the mighty &quot;print&quot; statement.</strong></p>
+<p>There is no more effective debugging tool than print, in my opinion.  If you
+ever find yourself staring at your code wondering what could <em>possibly</em> be
+going wrong, just throw in a few print statements to see <strong>is</strong> going wrong.</p>
+<p>Python especially lends itself to this, because you can print almost
+anything.</p>
+<blockquote>
+The most effective debugging tool is still careful thought, coupled
+with judiciously placed print statements. -- <em>Brian Kernighan, The
+paper Unix for Beginners (1979)</em></blockquote>
+<p><strong>Writing vs debugging: clever code is actually dumb.</strong></p>
+<blockquote>
+Debugging is twice as hard as writing the code in the first
+place. Therefore, if you write the code as cleverly as possible,
+you are, by definition, not smart enough to debug it.  -- <em>Brian Kernighan</em></blockquote>
+<p>Clever code is harder to understand, 6 months down the line!  (Or by
+your fellow group-ee.)</p>
+<p><strong>Keeping It Simple (KISS): complex code is more likely to contain errors.</strong></p>
+<blockquote>
+Controlling complexity is the essence of computer programming. --
+<em>Brian Wilson Kernighan</em></blockquote>
+<img alt="http://www.geeksaresexy.net/wp-content/uploads/2008/08/softwaredesign.jpg" src="http://www.geeksaresexy.net/wp-content/uploads/2008/08/softwaredesign.jpg" />
+<p>(<a class="reference" href="http://www.geeksaresexy.net/2008/08/25/cartoon-something-is-wrong-with-your-software-design/">via</a>)</p>
+</div>
+<div class="section">
+<h1><a id="automated-testing" name="automated-testing">Automated testing</a></h1>
+<p>The truth is that no compiler can catch even the majority of &quot;interesting&quot;
+program errors, both for formal reasons (Halting Problem) and informal
+reasons (what did you <em>actually</em> want the code to do??)</p>
+<p>Compilers and type checking are (in my opinion) a poor proxy for actually
+<em>running the code</em>.  And Python doesn't have a compiler, anyway.</p>
+<p>Just run the darn code!</p>
+<p><strong>Several types of automated tests:</strong></p>
+<p>Exploratory and &quot;smoke&quot; testing: does the program &quot;emit smoke&quot; when you
+run it?</p>
+<p>Unit and functional testing: do the little bits of code do the right
+thing?</p>
+<p>Acceptance testing: do the bigger bits of code do what the customer
+wants?</p>
+<p>User interface testing: does the interface work properly?</p>
+<p>Integration testing: does the code work when it's hooked up to The Real World?</p>
+<p><strong>Testing tools</strong></p>
+<p>Test discovery and execution frameworks.</p>
+<p>Web testing: automating Web actions.</p>
+<p>Code coverage analysis: what lines of code are actually run?
+(Necessary, but not sufficient.)</p>
+<p>We'll be using unittest/nose (for unit and functional testing), twill
+and Selenium (for functional Web testing), and figleaf (code coverage
+analysis).</p>
+</div>
+<div class="section">
+<h1><a id="the-internet-and-the-web" name="the-internet-and-the-web">The Internet and the Web</a></h1>
+<p>How the Internet works.</p>
+<p>How the Web works: HTTP 1.0, transport protocol for stuff; synchronous
+individual connections; &quot;stateless&quot;; GET, POST; cookies; content
+negotiation.</p>
+</div>
+</div>
+</body>
+</html>

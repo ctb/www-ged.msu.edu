@@ -1,0 +1,134 @@
+=====================================
+Lab 5 Material / September 25th, 2008
+=====================================
+
+"I don't do test-driven development; I do stupidity-driven
+testing. When I do something stupid, I write a test to make sure I
+don't do it again." -- me, at PyCon '07.
+
+---
+
+Files for this lab are all located here, under Subversion:
+
+   http://class.ged.idyll.org/svn/files/lab-5/
+
+GET, POST, and HTML forms
+-------------------------
+
+We've talked a fair bit about how HTTP has GET and POST requests;
+you've dealt with GET requests now, and you'll be dealing with POSTs
+for HW #5.  How do you actually generate them?
+
+The HTML to generate a GET request with a query string is this: ::
+
+  <form action='url' method='GET'>
+    k1: <input type='text' name='k1'>
+    k2: <input type='text' name='k2'>
+    <input type='submit'>
+  </form>
+
+(see http://class.ged.idyll.org/svn/files/lab-5/form-GET.html)
+
+Note, if you omit the 'method', it defaults to GET.
+
+The URL is the URL of your Web server, e.g. ::
+
+   http://localhost:5000/
+
+The HTML to generate a POST is nearly identical: ::
+
+  <form action='url' method='POST'>
+    k1: <input type='text' name='k1'>
+    k2: <input type='text' name='k2'>
+    <input type='submit'>
+  </form>
+
+(http://class.ged.idyll.org/svn/files/lab-5/form-POSt.html)
+
+The difference for you in handling a GET and a POST is that a GET places
+everything on the URL as part of a query string, while POST requests
+send everything as a string following the headers.
+
+Try using http://class.ged.idyll.org/svn/files/lab-5/socket-print.py
+to examine the server-side traffic from a POST command.  Note
+especially the 'Content-Length' header: that is what tells you how
+many bytes the POST data is going to be.
+
+Your job for HW #5 is to properly parse a POST command by grabbing
+both the headers AND the 'POST' content.
+
+Writing unit tests, and unittest
+--------------------------------
+
+Unit tests are simply tests for small 'units' of code.  The Python stdlib
+includes the 'unittest' library,
+
+	 http://docs.python.org/lib/module-unittest.py
+
+Unit tests look something like this: ::
+
+  import unittest
+
+  class ExampleTestCase(unittest.TestCase):
+     def setUp(self):
+       # ... do stuff that should be done before every test: initialize, etc.
+
+     def tearDown(self):
+       # ... do stuff that should be done after every test: delete, etc.
+
+     def test_function_a(self):
+       # actually test something -- assert, etc.
+
+     def test_function_b(self):
+       # actually test something else -- assert, etc.
+
+  if __name__ == '__main__':
+     unittest.main()
+
+The import points to note here are:
+
+ - setUp and tearDown are "special" names that are run *before* and *after*
+   each test function, respectively.  They differ from ``__init__`` in that
+   they are run *each* time rather than just once (when the object is
+   constructed).
+
+ - any function starting with ``test_`` is a test function, and is discovered
+   and run automatically.
+
+ - even if any one test function fails, the rest are still run.  So you can
+   quickly see your overall progress in fixing the tests by simply counting
+   how many work.
+
+(This is pretty typical of unit testing frameworks from other languages,
+too, like Java/JUnit, Perl, Ruby, etc.)
+
+For some simple unit test examples, see
+
+   http://class.ged.idyll.org/svn/files/lab-5/unittest-example.py
+
+Try running them.  You should see one "OK" test, one "failure", and one
+error.  Try fixing these errors (however you want) and running the file
+again.  Now you should get no output other than '...'...
+
+Note that you can easily disable unit tests by putting a 'return' in
+the first line.  This will come in handy for HW #5:
+
+I've supplied a bunch of unit tests for your ``webserve.py`` file for HW #5,at
+
+   http://class.ged.idyll.org/svn/files/hw-5/webserve-test.py
+
+A lot of these tests won't pass at first, so you may want to just disable
+them until you get the basic tests working.
+
+Mock objects
+------------
+
+Check out 
+
+   http://class.ged.idyll.org/svn/files/lab-5/hc.py
+
+and
+
+   http://class.ged.idyll.org/svn/files/lab-5/unittest-hc.py
+
+We'll work through writing appropriate tests in class.

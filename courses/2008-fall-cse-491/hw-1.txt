@@ -1,0 +1,65 @@
+Homework 1: Iterators and Generators
+====================================
+
+Due Thursday, Sep 4th, 12:40pm (just after noon).  Information on how to hand
+it in TBD.
+
+----
+
+Create a Python file 'homework1' that contains the following objects:
+
+  make_fib(n) -- a function that returns the first n elements in the Fibonacci
+    series.
+
+  FibonacciIterator(n) -- an iterator implementation of the Fibonacci
+    series that generates the first n elements in the Fibonacci series.
+    It should be non-reentrant, that is, __iter__ should return self.
+
+  ReentrantFibonacciIterator(n) - a re-entrant version of the fib iterator,
+    i.e. something that can be iterated over multiple times.
+
+  fibonacci_generator(n) -- a generator implementation of the fib iterator.
+
+  FibonacciListLike(max_n) -- a class that implements a dynamic list-like
+    interface (through the sequence protocol), such that item 'i' is the
+    i'th Fibonacci number, while i < 'max_n'.
+
+  FibonacciDictLike(max_n) -- a class that implements a dynamic dict-like
+    interface (through the mapping protocol) such that indexing with the
+    key 'fibN' retrieves the Nth Fibonacci number.
+
+Note: the list-like and dict-like interfaces can use the other classes
+and functions, of course. Also, elegance and speed of implementation
+are not a consideration; go for correctness and simplicity, *first*.
+
+Your code should minimally pass the following tests: ::
+
+    import homework1
+    import types
+
+    fib8 = [0, 1, 1, 2, 3, 5, 8, 13, 21]
+
+    x = homework1.make_fib(8)
+    assert fib8 == x
+
+    x = homework1.FibonacciIterator(8)
+    assert list(x) == fib8
+    assert list(x) == []
+
+    x = homework1.ReentrantFibonacciIterator(8)
+    assert list(x) == list(x)
+    assert list(x) == fib8
+
+    x = homework1.fibonacci_generator(8)
+    assert isinstance(x, types.GeneratorType)
+    assert list(x) == fib8
+
+    x = homework1.FibonacciListLike(9)
+    assert x[0] == 0
+    assert x[6] == 8
+    assert fib8 == [ x[i] for i in range(0, 9) ]
+
+    x = homework1.FibonacciDictLike(9)
+    assert x['fib0'] == 0
+    assert x['fib6'] == 8
+    assert fib8 == [ x['fib%d' % (i,)] for i in range(0, 9) ]

@@ -1,0 +1,226 @@
+Lecture 8 Outline / October 14th, 2008
+======================================
+
+Two quotes this week:
+
+  If You Haven't Got the Time to Do It Right, When Will You Find the
+  Time to Do It?
+
+  One part of a programmer’s job is solving today’s problem. Another,
+  and perhaps more important, part of the job is to prepare for
+  solving tomorrow’s problems.  - Programming Pearls, Jon Bentley
+
+Homework 7, and office hours
+----------------------------
+
+I will be gone Wed-Fri of this week.  Dr. Charles Ofria will be
+covering lab, and Kaben Nanlohy will be covering office hours.
+
+Layers
+------
+
+How I think about the layers:
+
+  serve -- handles receiving connections, threading vs. ...
+
+  handle_connection -- handles all HTTP communication over a single connection
+  
+  delegate -- handles all "interesting stuff"
+
+So, in particular, handle_connection is responsible for speaking **correct**
+HTTP.
+
+
+Organizing your Web site
+------------------------
+
+"Literate" URLs: the URLs should be readable.  (One reason to
+use POSTs over GETs for transmitting info: info is not tacked onto
+the end of a POST url.)
+
+Traditionally, URLs are organized hierarchically: think directory
+structure.
+
+(This is less common now that most Web sites are dynamically generated.)
+
+Hierarchical organization does have certain advantages; think about
+a user forum site: ::
+
+   /forums/  		       -- read-only accessible to all
+   /forums/<forum name>		
+   /images                     -- commonly used images; cache, handle specially
+   /user/<user name>	       -- accessible only to <user>
+   /admin/     		       -- accessible only to administrative users
+
+Cookies can be restricted to certain paths, too, so you can say things
+like "only send the admin cookie to the server when /admin/ is accessed".
+Minor optimization, but it potentially makes things simpler.
+
+More importantly, if your practice is to only put admin pages under /admin/,
+and you slap access control on /admin/, then you never have to worry about
+unauthorized access.  This kind of convention is an excellent way to
+help keep your Web site secure.
+
+Also, keeping things hierarchical means that you can delegate
+responsibility for different sections of the site to different people
+without worrying so much about crosstalk.  e.g.
+
+   http://domain.com/~someuser/blah/
+
+Apache/IIS knows how to handle '~someuser' and you can restrict
+permissions on a user-specific basis.
+
+---
+
+Data
+----
+
+So far, we've been mostly concerned with generating data in your Python code.
+
+Next HW, serving *read-only* data from the file system.
+
+After that, we'll talk about read-write data.  Once we can modify
+data through the Web server, we have to worry about controlling
+modification access -- both permissions and data integrity.
+
+ACID: Atomicity; consistency; isolation; durability.
+
+Standard example is bank account: how would you transfer money from
+one account to another? ::
+
+   withdraw from account A
+   credit to account B
+
+Atomicity: ::
+
+   withdraw from account A
+   <power outage>
+
+Operations should be *grouped together* into a single transaction.
+
+Consistency: ::
+
+   credit to acc<power outage>
+
+What state is your account left in??  (consistency)
+
+Isolation: ::
+
+   withdraw from account A
+      <someone else requests bank account info>
+   credit to account B
+
+Durability:  ::
+
+   withdraw from account A
+   credit to account B
+   <server dies>
+   
+Think *session info*, e.g. a shopping cart & purchasing...
+
+Want to be able to check out the shopping cart *once*, and make sure
+that (you've been charged AND the order goes through).
+
+Databases
+~~~~~~~~~
+
+Generally, databases need to be ACID to be taken seriously.
+
+The idea behind a database is that it serves as an abstract data
+repository, usually with some structure to the data.  Data can
+be queried, retrieved, updated, and added.
+
+Most-used databases are based on Structured Query Language, or SQL:
+Oracle, SQLServer, MySQL, PostgreSQL... so the SQL language is
+*almost* a standard except where everyone makes slight changes to the
+language.
+
+We will be using SQLite, an embedded SQL server that is *mostly* ACID
+compliant and comes with Python.  It is probably the most deployed SQL
+system in existence (comes with Mac OS X, built into Skype).
+
+Usually SQL databases are remote, and you connect to them, send and
+receive data, etc. over a connection.  This is how you should *think*
+about SQL.  (SQLite, however, will be accessed locally.)
+
+Having the database not be directly accessible by the user is good for
+a number of reasons:
+
+ -- abstraction: prevents you from thinking about data as data-on-disk.
+    (downside: must work through abstract interface, which adds
+    impedance to data use)
+
+ -- "thin client" model: honkin' big server can contain all data, have
+    lots of memory, etc.
+
+    (downside: server is often the bottleneck for scalability)
+
+ -- security: read/write/delete/admin access can be provided on a fine-
+    grain (*table*) level
+
+Basic SQL concepts:
+
+Start by creating/defining a "schema"
+
+Schema contains a description of each table (collection of related data)
+in terms of *columns* (names/types of data).  Each table can then have
+multiple *rows*.  (...a bit like a spreadsheet)
+
+ - strong types: INT, TEXT, FLOAT
+ - pickiness
+ - non-default values
+
+   CREATE TABLE x (a TYPE, b TYPE, c TYPE)
+
+Adding, updating, and deleting data
+
+  INSERT
+
+  UPDATE
+
+  DELETE FROM
+
+Selecting data from a single table 'a'
+
+  SELECT * FROM a 
+
+Selecting data from multiple tables 'a', 'b', 'c'
+
+  SELECT * FROM a, b, c WHERE a.id = b.id AND b.id = c.id
+
+Cartesian join (all x all) vs ...
+
+Primary keys
+
+References between tables --
+
+  "referential constraint" -- "if a row in this table exists, a corresponding
+    row in this other table must also exist"
+
+  enables speedup/indexing on SELECT, as well
+
+Transactions and isolation between transactions
+
+  BEGIN TRANSACTION
+  COMMIT
+  ROLLBACK
+
+SQL injection attacks
+
+  If you let someone remote inject SQL queries then you will regret it :) --
+  imagine,
+
+     DELETE FROM users
+ 
+  or 
+
+     INSERT INTO users (username, is_admin) VALUES ('me', 't')
+
+Thinks to think about:
+
+Where does the processing happen?
+
+Permissions/access to database & file
+
+Constraints on data.
+

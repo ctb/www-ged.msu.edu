@@ -1,0 +1,345 @@
+Lab 2 Material / September 4th, 2008
+====================================
+
+Short note on homework & associated tests
+-----------------------------------------
+
+Eternal optimism is good, but if another person comes up to me and says ::
+
+  assert list(x) == list(x)
+
+is failing!! but it shouldn't! My code works! I will (metaphorically)
+slap them silly if they **haven't** broken the code down like this: ::
+
+  a = list(x)
+  print a
+  b = list(x)
+  print b
+  assert a == b
+
+Just a warning.
+
+Handing in your homework
+------------------------
+
+You'll be using Subversion to hand in your homework.
+
+For homework #1, this involves:
+
+ - checking out a (blank!) working copy of your subversion repository:
+
+      ``http://class.ged.idyll.org/svn/<username>``
+
+ - creating a directory 'homework1' in your working copy
+
+ - adding that directory to the list of files to commit
+
+ - putting your code in a file named 'homework1.py', in that directory
+
+ - adding the file to the list of files to commit
+
+ - committing your changes
+
+Under UNIX, here are the commands: ::
+
+ % svn checkout http://class.ged.idyll.org/svn/<username>
+ % cd <username>
+ % mkdir homework1
+ % svn add homework1
+ % cd homework1
+ % cp /some/other/path/homework-file ./homework1.py
+ % svn add homework1.py
+ % svn commit -m "my first homework"
+
+(If you have a different SVN username than your login account, you may
+need to specify 'svn checkout --username <username> ...'.)
+
+Under Windows, you can use `TortoiseSVN
+<http://tortoisesvn.tigris.org/>`__ (installed on all the lab Windows
+machines) to do this with a GUI; we can run through it in class.
+
+Once you've done the commit, **check out a new copy** and make sure
+that the file is there and correct.  (You can also browse your
+repository online, at the same URL.)  A convenient way to do this checkout
+under UNIX is ::
+
+  svn checkout http://class.ged.idyll.org/svn/<username> TEST
+
+This puts the new 'working copy' in the 'TEST/' directory.
+
+For homework2, just put all the files in the 'homework2/' top-level
+subversion directory, with filenames as given in the homework handout.
+
+For office hours and e-mailing me questions, you can use subversion
+('svn' for short) to send me the files you want to ask me about: check
+in whatever you're working on and tell me the URL, e.g.
+
+  http://class.ged.idyll.org/svn/<username>/homework1/homework1.py
+
+For those who want to use git, please just start by using subversion
+to hand in the homework.  I'll set up git repos soon, sorry :).
+
+Homework review
+---------------
+
+We'll do a brief homework review on Tuesday in class, once I've had a
+chance to look at your homework and send you suggestions for
+changes/fixes.  (I'll try to do that by Friday evening.)
+
+Scripts vs importable files
+---------------------------
+
+First, see the Wiki page `Creating and running Python scripts <http://msu-cse491-fall-2008.wikidot.com/creatingandrunningpythonscripts>`__ for basic info.
+
+*Scripts* are Python files that do something more than just define
+stuff -- they contain execution instructions.  E.g., ::
+
+ script.py:
+   print 'hello, world'
+
+The name of a script file can be anything that's a valid filename.  On
+UNIX, this is anything that doesn't contain a forward slash ('/').  On
+Windows, it's something similar.  In general I suggest making things
+cross-OS-friendly and typing-friendly, e.g. no spaces, backslashes, or
+funny characters; 'my-favorite-script-name' is fine.  There's no requirement
+that the filename end in '.py' although if it does than various operating
+systems may let you double-click on it to run it.
+
+A neat UNIX/Mac OS X trick is to put this magic code: ::
+
+  #! /usr/bin/env python2.5
+
+at the top of your script file, and then do 'chmod +x scriptfile'.  This
+will make it a shell-executable script than be run simply by doing ::
+
+  ./scriptfile
+
+*Modules* are importable Python files.  We can talk later about the
+precise rules that import uses, but things in the same directory as a
+script are generally importable by Python.  However, module files *must*
+end in '.py' and have to be valid Python identifiers, e.g. ::
+
+  import modulefile
+
+or ::
+
+  import module_file
+
+will find 'modulefile.py' or 'module_file.py' appropriately, but you can't
+do ::
+
+  import module-file
+
+to get 'module-file.py' because that's not a legal Python name ('-' isn't
+allowed in variable names.)
+
+Generally I recommend writing modules so that they are both modules *and*
+scripts; the scripts do some basic testing of the code in the module.  So,
+for example, ::
+
+ hello.py:
+  def hello(world):
+    return 'hello ' + world
+
+  assert hello('world') == 'hello world'
+
+will define 'hello' and also run a test on it: it can be imported as a module, ::
+
+  import hello
+  print hello.hello('steve')
+
+or run as a script: ::
+
+  % python hello.py
+
+You may not always want stuff to be run on import, especially if you
+have time-consuming tests, so you can use this trick (documented on the
+Wiki page, too) to differentiate between code that should be executed on
+import vs on command-line execution: ::
+
+ hello.py:
+  def hello(world):
+     return 'hello ' + world
+
+  if __name__ == '__main__':
+     assert hello('eva') == 'hello eva'
+
+The 'assert' command will only be run when the file is executed as a script
+by doing ::
+
+  python hello.py
+
+This kind of thing is really convenient when you're writing and
+testing code: put your test code at the bottom of the file and then
+just run the module every time you make a change (F5 in IDLE).
+
+To recap, here's my recommended format for Python modules: ::
+
+  module.py:
+    #! /usr/bin/env python2.5
+    
+    # ... define functions/classes/etc. ...
+
+    if __name__ == '__main__':
+       # ... define tests of functions/classes etc ...
+       #
+       #   OR
+       #
+       # ... define script-like behavior ...
+    
+
+Two more command-line thoughts
+------------------------------
+
+If you use the '-i' flag to the Python interpreter when running a
+script, you'll be left at the Python prompt after the script runs: ::
+
+  % python -i scriptfile
+  ... scriptfile runs ...
+  >>>
+
+This Python prompt will have all your functions defined for interactive
+testing, etc.  Very useful.
+
+If you want to write an actual script that takes in arguments, use
+'sys.argv'.  It is a list of all of the arguments to your script: ::
+
+  scriptfile.py:
+    print sys.argv
+
+so that ::
+
+  % python scriptfile.py arg1 arg2 arg3 arg4
+
+will print out ::
+
+   scriptfile.py arg1 arg2 arg3 arg4
+
+You'll need this for the homework.  
+
+TCP/IP socket stuff
+-------------------
+
+Connecting out
+~~~~~~~~~~~~~~
+
+Creating a socket: ::
+
+   import 
+   sock = socket.socket()
+
+Connecting that socket to a remote server: ::
+
+   remote_address = 'teckla.idyll.org'
+   port = 25
+   sock.connect((remote_address, port))
+
+Reading from the socket: ::
+
+   data = sock.recv(4096)
+
+You will get *up to* bufsize=4096 bytes, and if there is nothing
+available, 'sock.recv' will block (wait) until either there *is* something
+available, or the socket closes, or you hit CTRL-C.
+
+Writing to the socket: ::
+
+   data = sock.sendall('HELO foo.msu.edu')
+
+Here's a sample SMTP (mail) session: ::
+
+  >>> import socket
+  >>> sock = socket.socket()
+
+Connect to the server:
+
+  >>> sock.connect(('teckla.idyll.org', 25))
+  >>> sock.recv(4096)			#doctest: +ELLIPSIS
+  '220 teckla.idyll.org ESMTP Exim 4.63 ...\r\n'
+
+Say hello:
+
+  >>> sock.sendall("HELO foo.msu.edu\n")
+  >>> sock.recv(4096)			#doctest: +ELLIPSIS
+  '250 teckla.idyll.org Hello ....msu.edu [...]\r\n'
+
+Identify the sender address:
+
+  >>> sock.sendall("MAIL FROM: t@foo.msu.edu\n")
+  >>> sock.recv(4096)
+  '250 OK\r\n'
+
+Identify the recipient address:
+
+  >>> sock.sendall("RCPT TO: null@idyll.org\n")
+  >>> sock.recv(4096)
+  '250 Accepted\r\n'
+
+OK, greetings are over; set up to send the actual message:
+
+  >>> sock.sendall('DATA\n')
+  >>> sock.recv(4096)
+  '354 Enter message, ending with "." on a line by itself\r\n'
+
+Aaaaaaaaaaaaand send!
+
+  >>> sock.sendall('foo bar baz\n.\n')
+  >>> sock.recv(4096)	    #doctest: +ELLIPSIS
+  '250 OK...\r\n'
+
+Be nice & 'quit' before closing.
+
+  >>> sock.sendall('quit\n')
+  >>> sock.close()
+
+Allowing connections in
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a socket: ::
+
+  import socket
+  sock = socket.socket()
+
+If 'interface' is a blank string, connections are allowed in to all
+IP addresses on this host; if it's non-blank, e.g. e.g. '127.0.0.1',
+then only connections to that network interface are allowed. ::
+
+  interface = ''
+  port = 5555
+
+  sock.bind( (interface, port) )
+
+Allow up to 5 "backlogged" connections: ::
+
+  sock.listen(5)
+
+Handle incoming connections until they die: ::
+
+ while 1:
+    (client_sock, client_address) = sock.accept()
+ 
+     while 1:
+         data = client_sock.recv(4096)
+         if not data:
+             break
+ 
+         print 'got data:', data
+
+For example, if you run this in IDLE, you can try using your Web browser to
+connect to
+
+  http://localhost:5555/
+
+to see what's printed out on your screen by both sides...
+
+Two final notes -- 'bind' is sometimes a bit sticky, and you may have to
+wait for a while (10-20 seconds) before rebinding a socket after hitting
+CTRL-C.  One way around this is just to change the port number.
+
+Also, if you can find a 'telnet' program (installed on many UNIXes by
+default; not available on Windows by default -- enable `like this
+<http://windowsitpro.com/article/articleid/93952/where-is-the-telnet-client-in-windows-vista.html>`__) then you can talk directly to TCP ports; just do ::
+
+  telnet teckla.idyll.org 25
+
+to connect to port 25 on teckla.idyll.org...

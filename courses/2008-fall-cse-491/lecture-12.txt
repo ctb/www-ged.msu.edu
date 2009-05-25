@@ -1,0 +1,273 @@
+============================================
+Lecture 12: JavaScript - November 11th, 2008
+============================================
+
+My laziness continues:
+
+I haven't graded your HW from last week yet!
+
+Office hours -- move to Thursday night, 9-11pm.
+
+HW due Friday 5pm.
+
+Sessions & session cookies
+==========================
+
+User cookies are under user control!
+
+With our current implementation, users can simply change their cookies
+to gain access to another person's account.
+
+How to prevent this?
+
+Hash the user info into a big space of strings that is both sparse and
+too big to search effectively (=> 'session identifier')
+
+Then keep a record of what session identifier matches to what user.
+
+(What are the security flaws inherent in *this* model...?
+Eavesdropping, for one.)
+
+Loading the IMDB
+================
+
+For scripts that take a long time:
+
+ - try removing the database calls
+ - put in progress indicators
+ - 'commit' may take a long time (-> disk access)
+
+JavaScript
+==========
+
+Good JS tutorial: http://www.w3schools.com/js/default.asp
+
+JavaScript != Java.  In fact, they're completely different.
+
+JavaScript == ECMAScript.
+
+JavaScript adds "behavior" to Web pages:
+
+ - dynamic text
+ - events
+ - data validation
+ - cookie creation
+
+Object oriented, dynamic, in-browser scripting language. ::
+
+  <html>
+  <body>
+
+  <script type="text/javascript">
+  document.write("Hello World!");
+  </script>
+
+  </body>
+  </html>
+
+JS factoids:
+
+Dynamic.  Interpreted.
+
+CaseSensitive
+
+Return of the semicolons!!
+
+Return of the squigglies: { } used to denote blocks
+
+// - C++ like comments
+``/* */`` - C like comments
+
+Loosely typed: ::
+
+  var x
+
+is now a variable.
+
+No need to declare a variable, either.  (But it's "good practice")
+
+C-like operators (addition, subtraction, etc.) and comparisons (<, >, ==).
+
+Logical operators are also C like -- "||", "&&"
+
+Strings + numbers => strings.
+
+Return of the round brackets: ::
+
+   if (condition) { block to be executed }
+
+Object-oriented, but in a weird way: "bag of properties" with methods!  ::
+
+   function some_function(...) {
+      ... can reference 'this.foo' ...
+   }
+
+   function SomeClass(param1) {
+      this.foo = param1;
+      this.method = some_function;
+   }
+
+   var some_object = new SomeClass("fib");
+
+   some_object.foo
+   some_object.some_function(...)
+
+(Can do 'for (property in object)' to iterate over properties, incl method)
+
+Function declaration: ::
+
+   function name(var1, var2, ...) { block }
+
+For loops as in C: for (var = starval; var < endval; var = var + inc) { }
+
+While: while (condition) { ... }
+
+do-while: do { ... } while (condition);
+
+break/continue
+
+for-in: for (variable in object) { ... } - loops through array, or
+properties of an object.
+
+JS properties on HTML elements: ::
+
+  onload and onUnload
+  onFocus, onBlur
+  onSubmit
+  onMouseOver and onMouseOut
+
+try/catch/throw: ::
+
+  try { ... } catch (x) { ... use x ... }
+
+throw can throw any type of object, which can then be caught & used.
+
+Object model
+
+ - properties
+ - methods
+
+"undefined"
+
+useful classes: String, Date, Array, Boolean, Math, RegExp
+
+Accessing the Document Object Model (DOM): ::
+
+   function change_title() {
+       var x = document.getElementById("my_input");
+       document.write('my value is ' + x.value);
+       document.title = x.value;
+   }
+
+  document.write("The title is: " + document.title + "<p>");
+  </script>
+
+  <form>
+
+  New title: <input type="text" id='my_input'>
+  <input type="submit" value='change title' onclick='change_title()' >
+
+  </form>
+
+Practical issues
+~~~~~~~~~~~~~~~~
+
+JS code in <head> of document guaranteed to be executed before anything
+in <body>.
+
+Can load scripts from elsewhere: ::
+
+   <script src='hello.js'></script>
+
+JavaScript security:
+
+   http://www.windowsitlibrary.com/Content/1160/22/1.html
+
+Running arbitrary programs written by other people on your local computer
+is dangerous (duh).
+
+For example, JS could redirect your page to your bank's login page,
+intercept your username and password and send them to someone else
+while logging you into your bank site, and then unload itself.  Yay,
+your bank account for everyone!
+
+(I'm not kidding.)
+
+No access to local file systems, user data, or network capabilities, either.
+(Exception to this discussed next week, "AJAX")
+
+"Same-Origin policy" - scripts loaded from one Web site *cannot* access
+data from pages loaded from another Web site. ::
+
+   var w = window.open("http://www.google.com");
+
+   // Now wait a while, hoping they'll start using the newly opened window.
+   // After 10 seconds, let's try to see what URL they're looking at!
+
+   var snoopedURL;
+   setTimeout("snoopedURL = w.location.href)", 10 * 1000);
+
+(Can still reference external scripts, which will come in handy next
+week.)
+
+What about "site farms", e.g. the CSE user accounts?  Yes,
+'www.cse.msu.edu' counts as the same site, so my Web page vs your Web
+page can do nasty things to each other.
+
+Also, cross-site scripting (XSS) becomes an interesting problem... examples
+in a few weeks.
+
+Can also bomb browsers:
+
+ - infinite loops
+ - memory hog
+ - infinite recursion of frame elements
+ - annoyances!  (popup windows, etc.)
+
+This is why Google Chrome runs browser tabs in different processes!
+
+Concluding thoughts on JavaScript-the-language
+----------------------------------------------
+
+Negatives
+~~~~~~~~~
+
+(Taken without apology from: http://www.phonk.net/Gedachten/JavaScript)
+
+JS can make Web pages and forms behave very differently from user
+expectations.  One of the big reasons that the Web was adopted so
+quickly is that the user interface is relatively straightforward
+and simple; JS can change that.  It also means that in order to write
+an interesting Web site you need to become a UI designer, too, and
+frankly most programmers suck at UI design.
+
+Content generation via JS can make it more difficult to "reduce" Web
+pages into searchable archives of information.
+
+Scripting JS-heavy Web pages gets quite ugly, as you'll see with
+Selenium next week.
+
+Tying behavior into the browser so closely makes it difficult to build
+browser-neutral and *platform*-neutral sites (think mobile phones).
+The solution seems to be to build bigger & more powerful cell phones
+:)
+
+It's easy to hack stuff together in JS, but to build anything big
+requires Real Programming.
+
+JavaScript security is always something to think about.
+
+Positives
+~~~~~~~~~
+
+JS removes (or, with AJAX, reduces) the latency inherent in having to
+do a page request to a remote server by putting the behavior on the page.
+
+It's the only cross-platform cross-browser solution to doing this, and
+(unlike Flash) it's also open source, so you can go reverse-engineer
+other people's Web pages.  (Definitely good for the growth of the Web!)
+
+You guys already know how to program, so the Real Programming requirement
+isn't a problem for you.
+
+.. JS chaining

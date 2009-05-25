@@ -1,0 +1,46 @@
+Homework 8: Speaking SQL
+------------------------
+
+Due Thursday, Oct 23rd, at 12:40pm (lab start).
+
+Acquire the sqlite database at
+
+    http://class.ged.idyll.org/svn/files/hw-8/webserve-info.db
+
+The database schema has a table 'users' containing username/password
+pairs: ::
+
+  CREATE TABLE users (username TEXT NOT NULL, password TEXT NOT NULL);
+
+Change your authentication code to authenticate by checking **both**
+username and password against the contents of this table.  (1 point)
+
+Also, provide a Python function accessible directly from webserve.py
+that adds users; the function should be named 'add_user', and it
+should take a username and a password and add them to your local copy
+of the sqlite database.  (1 point)
+
+You should make sure that all of the unit tests in this file
+
+    http://class.ged.idyll.org/svn/files/hw-8/webserve-test.py   
+
+pass; I've updated them to include tests for add_user.  (1 point)
+
+Now create a new file, webserve-user-tests.py, in the homework8/
+subdirectory.  These tests should be unit tests (i.e. in the same
+format as webserve-test.py) that check to make sure that usernames
+can contain strange characters like these:
+
+  '!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~'
+
+*in addition to* a-z, A-Z, and 0-9.  The tests must rely only on the
+"public" API of webserve, that is, they should only use
+``handle_connection``, ``delegate``, and ``add_user`` -- **not** any
+intermediate functions you may have written.  (1 point)
+
+Finally, make sure that the auth functionality (login/logout, password
+checking, etc.) works properly with Firefox.  (1 point)
+
+I'm running an example Web server that passes all the tests here:
+
+  http://class.ged.idyll.org:8080/

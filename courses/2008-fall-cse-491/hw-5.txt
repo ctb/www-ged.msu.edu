@@ -1,0 +1,156 @@
+Homework 5: Writing a Web server, part 3
+----------------------------------------
+
+Due Thursday, Oct 2nd, at 12:40pm (class start).
+
+Refactor
+--------
+
+Break your code from HW #4 down into (at least) three functions, named
+exactly as below, and placed in the file 'homework5/webserve.py'. You
+can use the following as a template: ::
+
+    import socket
+    import urlparse
+    import traceback
+    import cgi
+    import httplib
+    import threading
+
+    def serve(interface, port):
+        """
+        'serve' processes HTTP connections on the given interface/port.
+
+        serve(interface, port) creates & binds a socket to the given
+        interface/port, and processes connections to that port as a
+        single HTTP request.  'handle_connection' is used to process each
+        connection in a thread.
+
+        'serve' never returns.
+        """
+	# ...
+
+    def handle_connection(client_sock, client_address):
+        """
+        'handle_connection' is called for each client connection to the server.
+
+        handle_connection(client_sock, client_address) takes the socket
+        and client address information returned by 'accept' and handles
+        exactly one HTTP exchange.
+
+        'delegate' is called to process the actual HTTP request.
+
+        This function returns nothing (a.k.a 'return', a.k.a 'return None').
+
+        No assumptions are made about the size of the input data; data should
+        be read until the headers have been completely received.  Any data
+        following that should be parsed as POST data.
+
+        In case an exception is raised in 'delegate', an HTTP error 500
+        (internal server error) is returned.
+
+        'handle_connection' traps all exceptions.
+        """
+	# ...
+
+        return
+
+    def delegate(request_type, path, received_headers, GET_data, POST_data=None):
+        """
+        'delegate' is called to process each HTTP request.
+
+        delegate(request_type, path, received_headers, get_data, post_data)
+        takes an HTTP request (string; 'GET' or 'POST'), the associated
+        URL path (string), a list of header tuples [(key, value), ...],
+        and any GET_data or POST data (as returned by parse_qs).  GET_data
+        and POST_data can both be None if no such data is available.
+
+        Returns HTTP status code, a list of (key, value) headers to send,
+        and the data (string) to send.
+        """
+	# ...
+
+        return code, return_headers, return_data
+
+    if __name__ == '__main__':
+        # call 'serve'
+
+Please make sure that 'webserve.py has no 'side effects' on import,
+that is, that nothing other than function/class definitions and the
+final 'if' block are run on import.  This will allow you to run the
+tests.
+
+At the end of the refactoring, your code must still work as in
+HW #4, i.e. it should be multithreaded AND it should properly
+display the URL and any query data.
+
+Note that you still must use the socket library to do all of the
+network communication -- no cheating and using Python's built-in Web
+server modules, please...
+
+Accepting POST data
+-------------------
+
+Modify your 'handle_connection' function to accept POST data, i.e.
+data sent with a POST, after the request headers.  You can use
+'cgi.parse_qs' to parse this.  The results should be passed into
+the 'delegate' function.
+
+I'll provide tests and an example of how to construct a POST on
+Thursday in lab.
+
+(You don't need to parse multipart/form-data POST data, only
+application/x-www-form-urlencoded POST data.)
+
+Testing
+-------
+
+Test code is available here: ::
+
+  http://class.ged.idyll.org/svn/files/hw-5/webserve-test.py
+
+Your 'webserve.py' file should pass all of these tests, as well as function
+as a regular Web server.
+
+Tips & tricks
+-------------
+
+A few other tips - 
+
+ - you can use the dictionary 'httplib.responses' to return the proper
+   status message for each numeric code, e.g. ``httplib.responses[200]``
+   is 'OK'.
+
+ - You can use ``headers, content = buffer.split('\r\n\r\n', 1)`` to
+   split the header data from any incoming POST data.
+
+ - The size of the POST data is specified in the incoming 'Content-Length'
+   header; you can rely on that to specify the size, in bytes, of all
+   data following the ``\r\n\r\n`` header boundary.
+
+Helpful suggestion (ignore if stubborn)
+---------------------------------------
+
+This could be a lot of work if you do things in the wrong order.
+
+I would suggest doing things as below, and testing (at least by hand)
+at each step.
+
+ 1. write a 'delegate' function that returns constant data, independent
+    of what is passed into it.
+
+ 2. refactor your existing 'webserve' code from HW 3 to call 'delegate'.
+
+ 3. separate out your client connection handling code into a function
+    'handle_connection'.
+
+ 4. rework your main 'while' loop into the 'serve' function.
+
+ 5. change your 'delegate' function to one that displays the URL and query
+    that it is called with in a GET (as in HW #4).
+
+ 6. update your code to handle POST data.
+
+Note that if you do this, you only need to write new (untested) code
+in steps #1 and #6; the rest is simply refactoring of existing,
+working code.

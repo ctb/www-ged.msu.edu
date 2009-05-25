@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 5 Material / September 25th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-5-material-september-25th-2008">
+<h1 class="title">Lab 5 Material / September 25th, 2008</h1>
+<p>&quot;I don't do test-driven development; I do stupidity-driven
+testing. When I do something stupid, I write a test to make sure I
+don't do it again.&quot; -- me, at PyCon '07.</p>
+<p>---</p>
+<p>Files for this lab are all located here, under Subversion:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/">http://class.ged.idyll.org/svn/files/lab-5/</a></blockquote>
+<div class="section">
+<h1><a id="get-post-and-html-forms" name="get-post-and-html-forms">GET, POST, and HTML forms</a></h1>
+<p>We've talked a fair bit about how HTTP has GET and POST requests;
+you've dealt with GET requests now, and you'll be dealing with POSTs
+for HW #5.  How do you actually generate them?</p>
+<p>The HTML to generate a GET request with a query string is this:</p>
+<pre class="literal-block">
+&lt;form action='url' method='GET'&gt;
+  k1: &lt;input type='text' name='k1'&gt;
+  k2: &lt;input type='text' name='k2'&gt;
+  &lt;input type='submit'&gt;
+&lt;/form&gt;
+</pre>
+<p>(see <a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/form-GET.html">http://class.ged.idyll.org/svn/files/lab-5/form-GET.html</a>)</p>
+<p>Note, if you omit the 'method', it defaults to GET.</p>
+<p>The URL is the URL of your Web server, e.g.</p>
+<pre class="literal-block">
+http://localhost:5000/
+</pre>
+<p>The HTML to generate a POST is nearly identical:</p>
+<pre class="literal-block">
+&lt;form action='url' method='POST'&gt;
+  k1: &lt;input type='text' name='k1'&gt;
+  k2: &lt;input type='text' name='k2'&gt;
+  &lt;input type='submit'&gt;
+&lt;/form&gt;
+</pre>
+<p>(<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/form-POSt.html">http://class.ged.idyll.org/svn/files/lab-5/form-POSt.html</a>)</p>
+<p>The difference for you in handling a GET and a POST is that a GET places
+everything on the URL as part of a query string, while POST requests
+send everything as a string following the headers.</p>
+<p>Try using <a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/socket-print.py">http://class.ged.idyll.org/svn/files/lab-5/socket-print.py</a>
+to examine the server-side traffic from a POST command.  Note
+especially the 'Content-Length' header: that is what tells you how
+many bytes the POST data is going to be.</p>
+<p>Your job for HW #5 is to properly parse a POST command by grabbing
+both the headers AND the 'POST' content.</p>
+</div>
+<div class="section">
+<h1><a id="writing-unit-tests-and-unittest" name="writing-unit-tests-and-unittest">Writing unit tests, and unittest</a></h1>
+<p>Unit tests are simply tests for small 'units' of code.  The Python stdlib
+includes the 'unittest' library,</p>
+<blockquote>
+<a class="reference" href="http://docs.python.org/lib/module-unittest.py">http://docs.python.org/lib/module-unittest.py</a></blockquote>
+<p>Unit tests look something like this:</p>
+<pre class="literal-block">
+import unittest
+
+class ExampleTestCase(unittest.TestCase):
+   def setUp(self):
+     # ... do stuff that should be done before every test: initialize, etc.
+
+   def tearDown(self):
+     # ... do stuff that should be done after every test: delete, etc.
+
+   def test_function_a(self):
+     # actually test something -- assert, etc.
+
+   def test_function_b(self):
+     # actually test something else -- assert, etc.
+
+if __name__ == '__main__':
+   unittest.main()
+</pre>
+<p>The import points to note here are:</p>
+<blockquote>
+<ul class="simple">
+<li>setUp and tearDown are &quot;special&quot; names that are run <em>before</em> and <em>after</em>
+each test function, respectively.  They differ from <tt class="docutils literal"><span class="pre">__init__</span></tt> in that
+they are run <em>each</em> time rather than just once (when the object is
+constructed).</li>
+<li>any function starting with <tt class="docutils literal"><span class="pre">test_</span></tt> is a test function, and is discovered
+and run automatically.</li>
+<li>even if any one test function fails, the rest are still run.  So you can
+quickly see your overall progress in fixing the tests by simply counting
+how many work.</li>
+</ul>
+</blockquote>
+<p>(This is pretty typical of unit testing frameworks from other languages,
+too, like Java/JUnit, Perl, Ruby, etc.)</p>
+<p>For some simple unit test examples, see</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/unittest-example.py">http://class.ged.idyll.org/svn/files/lab-5/unittest-example.py</a></blockquote>
+<p>Try running them.  You should see one &quot;OK&quot; test, one &quot;failure&quot;, and one
+error.  Try fixing these errors (however you want) and running the file
+again.  Now you should get no output other than '...'...</p>
+<p>Note that you can easily disable unit tests by putting a 'return' in
+the first line.  This will come in handy for HW #5:</p>
+<p>I've supplied a bunch of unit tests for your <tt class="docutils literal"><span class="pre">webserve.py</span></tt> file for HW #5,at</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/hw-5/webserve-test.py">http://class.ged.idyll.org/svn/files/hw-5/webserve-test.py</a></blockquote>
+<p>A lot of these tests won't pass at first, so you may want to just disable
+them until you get the basic tests working.</p>
+</div>
+<div class="section">
+<h1><a id="mock-objects" name="mock-objects">Mock objects</a></h1>
+<p>Check out</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/hc.py">http://class.ged.idyll.org/svn/files/lab-5/hc.py</a></blockquote>
+<p>and</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab-5/unittest-hc.py">http://class.ged.idyll.org/svn/files/lab-5/unittest-hc.py</a></blockquote>
+<p>We'll work through writing appropriate tests in class.</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+body
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	margin: 0;
+	padding: 0;
+	font-size: 12pt;
+}
+
+#theContent
+{
+	margin: 20pt;
+	position: relative;
+}
+
+.theMasthead
+{
+	position: relative;
+	margin: 24px 0 0 0;
+}
+
+.theTitle
+{
+	padding: 0;
+	width: 75%;
+}
+
+.theEmail
+{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 120px;
+	padding: 10px 0 10px 10px;
+	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: right;
+	border-left: #999999;
+	border-width: 0 0 0 1px;
+	border-style: none none none solid;
+}
+
+
+.theTitle h1
+{
+	margin: 0;
+	color: black;
+	font-size: 1.5em;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: normal;
+	font-weight: normal;
+}
+
+.theTitle h2
+{
+	margin: 0;
+	color: #666666;
+	font-size: 1em;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: normal;
+	font-weight: normal;
+}
+
+.contentGroup
+{
+	margin: 2em 0 0 0;
+	clear: both;
+}
+
+.insideText
+
+{
+	border-width: 1px;
+	padding: 10px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	line-height: 1.5em;
+	border-color: #999999;
+	border-style: solid;
+}
+
+.insideText h4
+
+{
+	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+	font-size: 1em;
+}
+
+.insideText h3
+{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.5em;
+	margin: 0 0 .3em 0;
+	padding: 0 0 .3em 0;
+	border-width: 0 0 1px 0;
+	border-style: none none dashed none;
+	border-color: #CCCCCC;
+}
+
+.insideSubscribe
+{
+    background-color: #ECECEC;
+    padding: 5px;
+    margin: 1em 0 1em 0;
+    font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+}
+
+.insideBox
+{
+    background-color: #ECECEC;
+    padding: 5px;
+    margin: 1em 0 1em 0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+
+#theNav
+{
+
+display: none;
+
+}
+
+

@@ -1,0 +1,245 @@
+Lecture 7 Outline / October 7th, 2008
+=====================================
+
+On software development:
+
+   Good, Fast, Cheap. Pick two.
+
+-- Attributed to many, including Larry Wall (creator of Perl).
+
+Homework 5 and more
+-------------------
+
+Mailing list archives are here: ::
+
+   http://lists.idyll.org/pipermail/cse491-fall-2008/
+
+In the future, I will make a functioning Web server available for all
+but the JavaScript homeworks :).
+
+HW 5 format is the format that most future homeworks will be in: tests
+that must be satisfied and that will strive to be thorough...
+
+"Test Driven Development" -- someone (you? partner?) writes the tests,
+you fill in the code.
+
+**Code to pass the tests, one by one.**
+
+Writing the tests is the difficult part, but they can reflect an
+incomplete requirement and then be iteratively refined (see HW 7 vs HW
+6 vs HW 5).
+
+Significant part of HW #7 is refining code from HW #5 to pass my new,
+stricter tests.  It may not be a bad idea to do *easy* HW #6 and
+work a bit on HW #7... hint hint.
+
+I will try to write the tests so that if your tests pass, your code is
+correct.  This is hard to do, and some "smoke testing" is a good idea
+on your part.
+
+Each independent test will generally test one "feature"; granularity
+of the feature tells you what kind of test it is.  For example, "unit
+tests" are as simple as you can get; "functional tests" are more
+complicated; etc.
+
+Also, **code review** -- ask someone else in the class, NOT someone
+with whom you wrote your code, to quickly review your code; walk them
+through it.
+
+(Do I need to say: start early?)
+
+Refactoring code: iterative refinement to pass the tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pick one test (simplest?) to pass.
+
+Rewrite code so at least that test passes.
+
+Rinse, lather, repeat.
+
+(Show with HW #4.)
+
+Testing and Debugging: the 1byte examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pick a broken test.
+
+Look at the line number of the traceback.
+
+Try to understand the basics of what the test is asking.  **Test code
+should try to be simpler than "real" code**.
+
+Write "stub" code that passes that test, minimally; can hard code stuff.
+
+Once the test is passing, refine your code to be more generally correct.
+
+The essay; class project; final project?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I'm thinking of switching to one essay -- on multiprocessing,
+handed out next week, outline due in three weeks, full essay due in
+five? -- and a final project, which will involve adding one of a set
+of features to the class project.
+
+The class project: I'm thinking a new/better interface to the MSU
+Personnel database, with a remote API, AJAX, tagging, better keyword
+searching, etc.  Thoughts?
+
+---
+
+**Code review**
+
+Web programming, so far
+-----------------------
+
+HTTP is client-server architecture.
+
+Mostly we've been talking about server-side processing.
+
+We will be talking about client-side work wrt JavaScript, in a few weeks.
+
+Next few weeks will focus on **serving actual content**: HTML, data from
+database.
+
+Note, in abstract terms, HTTP provides a mechanism for content delivery,
+with some (limited) metadata and some (limited) mechanisms of sending
+information back from client to server.
+
+Note: your options for sending information are limited! --
+
+  1. url
+  2. GET and POST data
+  3. cookies
+
+Synchronous, stateless conversation means that you don't need to retain
+any state other than URL, GET, and cookies on the client side.
+Browsers are now retaining form data as well.
+
+Content-Type headers emitted by *server* tell *client* what to expect: ::
+
+   text/html
+   image/jpeg
+   text/plain
+
+(These are generally "MIME" types, Multipurpose Internet Mail Extensions.)
+
+How does the server know what content type to choose for each page??
+
+Answer: it's up to the server.  For static files, here's a lookup table;
+c.f. Apache and IIS Web servers, MIME types...
+
+Other important HTTP trivia:
+
+  - 404 pages to be returned if page does not exist; message can say whatever.
+
+  - 30x redirects: ::
+
+       HTTP/1.0 301 Moved permanently
+       Location: http://some/other/URL
+
+  301 is "moved permanently"
+  302 is "moved temporarily"
+
+Why redirect?
+
+  - First, obviously useful for reorganizing Web sites (this URL *was*
+    here... go here now)
+
+  - Second, think about reloads and POST data.:
+
+    On a reload after a POST, browsers will resend POST data.  This may
+    not be what you want... ("buy a car", x 2!)
+
+    One technique for preventing this is to receive a POST, and then
+    (if successful) respond with a redirect.
+
+---
+
+Organizing your Web site
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+"Literate" URLs: the URLs should mean something.  (One reason to
+use POSTs over GETs for transmitting info: info is not tacked onto
+the end of a POST url.)
+
+URLs work well hierarchically: think directory structure.  
+
+(This is less common now that most Web sites are dynamically generated.)
+
+Hierarchical organization does have certain advantages; think about
+a user forum site: ::
+
+   /forums/  		       -- read-only accessible to all
+   /forums/<forum name>		
+   /images                     -- commonly used images; cache, handle specially
+   /user/<user name>	       -- accessible only to <user>
+   /admin/     		       -- accessible only to administrative users
+
+Cookies can be restricted to certain paths, too, so you can say things
+like "only send the admin cookie to the server when /admin/ is accessed".
+Minor optimization, but it potentially makes things simpler.
+
+More importantly, if your practice is to only put admin pages under /admin/,
+and you slap access control on /admin/, then you never have to worry about
+unauthorized access.  This kind of convention is an excellent way to
+help keep your Web site secure.
+
+Also, keeping things hierarchical means that you can delegate
+responsibility for different sections of the site to different people
+without worrying so much about crosstalk.  e.g.
+
+   http://domain.com/~someuser/blah/
+
+Apache/IIS knows how to handle '~someuser' and you can restrict
+permissions on a user-specific basis.
+
+---
+
+Data
+~~~~
+
+So far, we've been mostly concerned with generating data in your Python code.
+
+Next HW, serving *read-only* data from the file system.
+
+After that, we'll talk about read-write data.  Once we can modify
+data through the Web server, we have to worry about controlling
+modification access -- both permissions and data integrity.
+
+ACID: Atomicity; consistency; isolation; durability.
+
+Standard example is bank account: how would you transfer money from
+one account to another? ::
+
+   withdraw from account A
+   credit to account B
+
+Atomicity: ::
+
+   withdraw from account A
+   <power outage>
+
+Operations should be *grouped together* into a single transaction.
+
+Consistency: ::
+
+   credit to acc<power outage>
+
+What state is your account left in??  (consistency)
+
+Isolation: ::
+
+   withdraw from account A
+      <someone else requests bank account info>
+   credit to account B
+
+Durability:  ::
+
+   withdraw from account A
+   credit to account B
+   <server dies>
+   
+Think *session info*, e.g. a shopping cart & purchasing...
+
+Want to be able to check out the shopping cart *once*, and make sure
+that (you've been charged AND the order goes through).

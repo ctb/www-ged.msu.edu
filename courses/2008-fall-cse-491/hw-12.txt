@@ -1,0 +1,76 @@
+-----------
+Homework 12
+-----------
+
+Due Friday, November 21st, at 5pm.
+
+Please put everything under homework12/ in the root of your svn.
+Rather than creating and adding a new directory, please try doing an
+'svn copy': ::
+
+   svn copy http://class.ged.idyll.org/$username/homework11/ \
+            http://class.ged.idyll.org/$username/homework12/
+
+and then do an 'svn update' to update your working copy with the
+new homework12/ subdirectory.  Please talk to me ASAP if you need
+some help getting your homework11 directory in shape!
+
+**Note:** Up to one point will be *removed* from your HW score if you
+don't name things properly.  I can't figure out any other way to,
+ahem, encourage people to not waste my time by hiding their homework
+solutions in weird places.
+
+Cleaning up Subversion
+----------------------
+
+(1 point)
+
+Clean up your Subversion archive under homework12/ by removing all of
+your .pyc files, twill, and any IMDB data files you may have lying
+around.  Make sure that everything necessary to run your Web server
+and pass the various tests (including the weird user name tests) is
+present in Subversion; you might consider doing a clean checkout of a
+new working copy to make sure...
+ 
+Creating and loading users & movie databases; fix movie search
+--------------------------------------------------------------
+
+(1.5 points)
+
+Write a script 'create-db.py' that takes two arguments, ::
+
+   create-db.py actors-filename actresses-filename
+
+and loads these files into the database 'webserve-info.db'.
+The script should assume that webserve-info.db doesn't exist
+already and do things like create the necessary user and session
+tables, too.
+
+Then make sure that movie search works reasonably well on some
+sizeable data: for this, you can use the files in
+
+   ~ctb/imdb-data/
+
+on the CSE cluster.  Please don't check copies of big files, or big
+databases, into your svn archive.
+
+Remember to think about the various things I mentioned in lecture #13:
+use temporary local space to do tests on big files, etc.
+
+Some JavaScript programming
+---------------------------
+
+(2.5 points)
+
+Add some JavaScript code to search-for-movies.html to check the
+contents of the form before submission.  Your JS should check to make
+sure that both actor and actress are non-empty, and if they are both
+filled in, let the submit proceed.  If either one is empty then put in
+a note on the page saying that both have to be filled in before
+submission.  (Please don't use an alert box or a popup of any kind --
+just make a red-colored text note appear.)
+
+Then write a Selenium test called 'MovieFormTest.html' to check that
+this message appears whenever either form field is empty.  Place this
+test file in files/tests/ and link it into the rest of your Selenium
+tests.

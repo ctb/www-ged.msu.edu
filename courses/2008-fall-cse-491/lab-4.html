@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 4 Material / September 18th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-4-material-september-18th-2008">
+<h1 class="title">Lab 4 Material / September 18th, 2008</h1>
+<div class="section">
+<h1><a id="handling-text-in-python" name="handling-text-in-python">Handling text in Python</a></h1>
+<p>A few useful tips for string handling etc. in Python.</p>
+<p>First, string interpolation:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;put a placeholder %s in a string&quot;
+&gt;&gt;&gt; print s % 'some value'
+put a placeholder some value in a string
+</pre>
+</blockquote>
+<p>If you substitute for more than one '%s', use a tuple:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;p1: %s p2: %s&quot;
+&gt;&gt;&gt; print s % ('value1', 'value2')
+p1: value1 p2: value2
+</pre>
+</blockquote>
+<p>String interpolation using a dictionary (good for any long examples):</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;you can put in named placeholders %(name1)s %(name2)s&quot;
+&gt;&gt;&gt; d = {}
+&gt;&gt;&gt; d['name1'] = 'bert'
+&gt;&gt;&gt; d['name2'] = 'ernie'
+</pre>
+</blockquote>
+<p>Now use that dictionary to fill in the named placeholders:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print s % d
+you can put in named placeholders bert ernie
+</pre>
+</blockquote>
+<p>For parsing, I find 'split' to be quite useful.  By default, 'split'
+breaks on whitespace:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;some string&quot;
+&gt;&gt;&gt; s.split()
+['some', 'string']
+</pre>
+</blockquote>
+<p>but you can make it split on anything:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;foobarbaz&quot;
+&gt;&gt;&gt; s.split('bar')
+['foo', 'baz']
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="threading-and-concurrency" name="threading-and-concurrency">Threading and concurrency</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">threading</span></tt> module is the default Python API for threading:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import threading
+</pre>
+</blockquote>
+<p>Let's try a simple example of starting another thread.  First, define
+a function to run:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def say(what):
+...   print 'SAY?', what
+</pre>
+</blockquote>
+<p>OK, now let's run that function in a separate thread of execution by
+creating a thread object:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; t = threading.Thread(target=say, args=('hello, world',))
+</pre>
+</blockquote>
+<p>This thread, when started, will now call <tt class="docutils literal"><span class="pre">say('hello,</span> <span class="pre">world')</span></tt>.
+(You can pass as many arguments as you want into the function via the
+<tt class="docutils literal"><span class="pre">args</span></tt> tuple.)</p>
+<p>Now, start the thread!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; t.start()
+SAY? hello, world
+</pre>
+</blockquote>
+<p>OK, not very impressive yet... but I assure you that the 'say' function
+is being run in a different thread of execution.  Let's try altering the
+'say' function to do something a bit more interesting, and then run
+two threads.</p>
+<p>First, define the 'say' function to pause for a specified amount of time:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import time
+&gt;&gt;&gt; def say(what, pause=0):
+...   time.sleep(pause)
+...   print 'SAY?', what
+</pre>
+</blockquote>
+<p>and create two threads, one which will run 'say' with a pause of half
+a second, the other which will run 'say' with a pause of 0.2 seconds.
+Now start 'em, and wait for the first one to finish.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; t1 = threading.Thread(target=say, args=('THREAD 1', 0.5))
+&gt;&gt;&gt; t2 = threading.Thread(target=say, args=('THREAD 2', 0.2))
+&gt;&gt;&gt; t1.start()
+&gt;&gt;&gt; t2.start()
+&gt;&gt;&gt; t1.join()
+SAY? THREAD 2
+SAY? THREAD 1
+</pre>
+</blockquote>
+<p>So, even though you started them in the right order (1, then 2) you
+got the output in the reverse order, because the pause in the second
+thread was shorter than the pause in the first thread.</p>
+<p>Also note that both threads are printing to the same stdout here, so
+if you are running things at the same time you'll get output collision.
+For example, try copy &amp; pasting this example into Python:</p>
+<pre class="literal-block">
+import threading, time
+def loop_print(ch):
+
+   for i in range(50):
+     time.sleep(.0001)
+     print ch,
+
+t1 = threading.Thread(target=loop_print, args=('a',))
+t2 = threading.Thread(target=loop_print, args=('b',))
+t1.start()
+t2.start()
+</pre>
+<p>This will print out a bunch of overlapping 'a's and 'b's (and not
+always in the same order, either, because there's no guarantee on
+order of execution here).</p>
+<p>Now, consider incrementing a variable in a stupid way:</p>
+<pre class="literal-block">
+x = 0
+def increment_x_by_1000():
+  global x
+  for i in range(5):
+     time.sleep(0.01)
+     current_value = x
+     next_value = current_value + 1
+     x = next_value
+
+t1 = threading.Thread(target=increment_x_by_1000)
+t2 = threading.Thread(target=increment_x_by_1000)
+t1.start()
+t2.start()
+
+print x
+</pre>
+<p>versus using a lock:</p>
+<pre class="literal-block">
+lock = threading.Lock()
+
+x = 0
+def increment_x_by_1000():
+  global x
+  for i in range(5):
+     time.sleep(0.01)
+     lock.acquire()
+     try:
+       current_value = x
+       next_value = current_value + 1
+       x = next_value
+     finally:
+       lock.release()
+
+t1 = threading.Thread(target=increment_x_by_1000)
+t2 = threading.Thread(target=increment_x_by_1000)
+t1.start()
+t2.start()
+
+print x
+</pre>
+<div class="section">
+<h2><a id="threading-and-locks-summary" name="threading-and-locks-summary">Threading and locks summary</a></h2>
+<p>So, in summary, threads:</p>
+<pre class="literal-block">
+t = threading.Thread(target=&lt;function&gt;, args=&lt;tuple of args for target&gt;)
+
+t.start() # run the thread
+t.join()  # block execution until the thread is done
+</pre>
+<p>See the <a class="reference" href="http://docs.python.org/lib/thread-objects.html">thread object documentation</a> for more info.</p>
+<p>locks:</p>
+<pre class="literal-block">
+lock = threading.Lock()
+
+lock.acquire()    # grabs a lock, blocking until it's available
+lock.release()    # releases a lock that you &quot;own&quot;
+</pre>
+<p>Make sure you <em>always</em> release locks, e.g.</p>
+<pre class="literal-block">
+lock.acquire()
+try:
+  ...
+finally:
+  lock.release()
+</pre>
+<p>See the <a class="reference" href="http://docs.python.org/lib/lock-objects.html">lock object documentation</a> for more info.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="lab-problem-1-threaded-echo-server" name="lab-problem-1-threaded-echo-server">Lab problem #1: threaded echo server</a></h1>
+<p>Take the blocking echo server from HW 2; you can use mine if you like:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/hw-2/echo-server">http://class.ged.idyll.org/svn/files/hw-2/echo-server</a></blockquote>
+<p>Make it use threads to handle connections.</p>
+<p>For each of your three echo servers (blocking, non-blocking, and
+threaded) run the following three scripts and write down the time each
+script takes to run (it's reported by each script).</p>
+<blockquote>
+<p><a class="reference" href="http://class.ged.idyll.org/svn/files/lab-4/single-request">http://class.ged.idyll.org/svn/files/lab-4/single-request</a></p>
+<p><a class="reference" href="http://class.ged.idyll.org/svn/files/lab-4/several-requests">http://class.ged.idyll.org/svn/files/lab-4/several-requests</a></p>
+<p><a class="reference" href="http://class.ged.idyll.org/svn/files/lab-4/many-requests">http://class.ged.idyll.org/svn/files/lab-4/many-requests</a></p>
+</blockquote>
+<p>If you want, use 'time on Linux to measure the CPU usage of each echo
+server, too: for example,</p>
+<pre class="literal-block">
+% time python echo-server '' 5000
+</pre>
+<p>will report &quot;real&quot; time, user time, and system (OS) time spent handling
+the requests.</p>
+</div>
+<div class="section">
+<h1><a id="lab-problem-2-logging-threaded-echo-server" name="lab-problem-2-logging-threaded-echo-server">Lab problem #2: logging threaded echo server</a></h1>
+<p>Take your threaded echo server and modify it so that it appends each
+message received to a file 'log.txt'.  For example, if two connections
+were each sending three messages, <tt class="docutils literal"><span class="pre">foo\n</span></tt>, <tt class="docutils literal"><span class="pre">bar\n</span></tt>, and <tt class="docutils literal"><span class="pre">baz\n</span></tt>,
+then the log file could look something like this:</p>
+<pre class="literal-block">
+foo
+bar
+foo
+baz
+bar
+baz
+</pre>
+<p>Your code <em>must</em> use the following function to write to the log file:</p>
+<pre class="literal-block">
+_fp = None
+def write_message(message):
+   global _fp
+   if _fp is None:
+     _fp = open('log.txt', 'w')
+
+   for ch in message:
+      _fp.write(ch)
+</pre>
+<p>You can use the test echo server, here</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/hw-3/test-echo-server">http://class.ged.idyll.org/svn/files/hw-3/test-echo-server</a></blockquote>
+<p>to test your code if you like, or any of the test scripts above.</p>
+</div>
+</div>
+</body>
+</html>

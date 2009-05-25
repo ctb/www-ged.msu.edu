@@ -1,0 +1,305 @@
+=====================================
+Lab 3 Material / September 11th, 2008
+=====================================
+
+Homework #2 Stuff
+=================
+
+Handing in HW
+-------------
+
+Anyone who hasn't handed in HW #2 should either check it in
+immediately or send it to me in e-mail right now.  If you can't go to
+your Subversion server Web URL and get the latest (correct) version of
+things right now, then it's not handed in -- make sure I have it in
+e-mail.
+
+Copying code examples
+---------------------
+
+Several people caused problems for themselves by not paying sufficient
+attention to the exact order in which I was doing things in my SMTP
+examples.
+
+First, I run most code that I hand out; if it's in a doctest format,
+then I *do* run it.  So if there's a problem, it's *probably* not in
+my code.
+
+Second, all of the lecture and lab notes, as well as the homeworks, are
+available online, under this URL:
+
+    http://ged.msu.edu/courses/2008-fall-cse-491/materials.html
+
+They are all available in text format, so you should seriously consider
+*copying and pasting* the code from those pages first, to make sure that
+works.  If you copy and paste code and it doesn't work, then the odds are
+slightly higher that I'm at fault.
+
+Print statements
+----------------
+
+I had several people come talk to me last night about code that looked
+like this: ::
+
+  while 1:
+    data = socket.recv(...)
+    if data == '\n.\n':
+      break
+
+They said, "it's never breaking out of the loop."  I said, "that must
+be because your if statement is never true."  They said, "but I'm sure
+it is! I'm sending ``\n.\n`` from the other end!"
+
+Usually, they weren't.
+
+And in any case, you need to put in print statements to make sure you
+know what is going on.  In this case, I'd rewrite the code to this: ::
+
+  print '** entering while loop'
+  while 1:
+    print '** asking for data'
+    data = socket.recv(...)
+    print 'received data:', (data,)
+
+    if data == '\n.\n':
+      print 'TRUE! breaking.'
+      break
+
+Note that use of ``(data,)``... what does this do?
+
+Synchronous I/O
+---------------
+
+A number of people had problems with the spambot where they received
+a "synchronization error" from the server.
+
+This was often because they either sent wrong data to the server and
+didn't eyeball what the server returned (an error message...) before
+sending more data, OR they messed up the conversation (see "Copying
+code examples", above).  Remember, SMTP and HTTP are *synchronous*
+protocols so you need to send and receive the right messages in the
+right order: ::
+
+   server: Hello!
+   client: Hi!
+
+   server: Welcome!
+   client: Here's my from address.
+
+   server: Excellent!  We take that here.
+   client: Good -- here's an address I'm sending *to*.
+
+   server: OK.  Looks good to me.
+   client: Here's the data, then.
+
+etc.  If you omit any step in this conversation the server will
+justifiably be upset at you for being rude.
+
+Data breakup etc.
+-----------------
+
+I sort of glossed over this in description of TCP, but you need to be
+aware that clients and servers are under no particular requirement to
+send their data in the right chunks.  Thus, one problem that people had
+was in this comparison: ::
+
+   data = sock.recv(4096)
+   if data == '\n.\n':
+      ...
+
+If you used telnet to test this code, then you'd find two things:
+first, telnet uses '\r\n' instead of '\n'; and second, telnet sends
+each line individually, so data would first be ::
+
+   \r\n
+
+and then ::
+
+   .\r\n
+
+second.  Thus the above 'if' statement would never be true.  Did you
+receive a newline followed by a period followed by a newline?  Sure!
+You just didn't keep track of it properly.
+
+One way to think about this for future work is that your code should
+work just as well (if a bit slower) if you change the size of the receive
+buffer from '4096' to '1': so, instead of the obviously ridiculous ::
+
+   data = sock.recv(1)
+   if data == '\n.\n':
+      ...
+
+(which will *never* be true, since 'data' will at most be one character
+in length) you should do ::
+
+   data_so_far = ''
+   while 1:
+      data = sock.recv(1)
+      data_so_far += data
+      if '\n.\n' in data_so_far:
+         ...
+
+Does this make sense?
+
+Running things on UNIX
+----------------------
+
+Windows may have firewall issues.  You should, in general, run your
+network code on UNIX; use 'cse.msu.edu' to do so.
+
+More Subversion
+===============
+
+I'm not kidding when I tell you that version control, and proper use
+of version control, is really really important.  It will save you many
+times in the future if you use it well.
+
+You should think of your checked out "working copies" as playgrounds
+for you to try out new code and fix old code; nothing you do there
+is visible to anyone else, until you check it in (and then it's only
+visible to me).  But there are some useful things you can do.
+
+So, let's introduce four new commands.
+
+svn diff
+--------
+
+'svn diff' will by default compare your working copy to the last version
+that you checked out. That is, if you do a checkout and change one line,
+and then type 'svn diff', you'll see a modification in that one line.
+
+By default 'svn diff' will look at *all* files in Subversion; you can
+use 'svn diff <filename>' to have it just report on differences in
+that file.
+
+With different command-line options (the '-r' revision flag) you can
+also use 'svn diff' to look at differences between versions in the
+actual Subversion system; see below.
+
+svn revert
+----------
+
+'svn revert <filename>' will reset all changes in that file to the
+version that you checked out.  This has two implications: first, be
+careful!  You can work for an hour and then lose all your changes by
+doing an 'svn revert'.  Second, commit often!  Every time you get one
+step closer to a working solution, do a 'svn commit'.  Then even if
+you mess things up in the next step, you can always go back to that
+intermediate functioning step by doing a 'svn revert'.
+
+svn update
+----------
+
+'svn update' will pull all of the *latest* changes from the Subversion
+repository into your working copy.  This is how you can get my comments
+on your HW #1, for example... It's most useful when you're working with
+other people, and not just by yourself; but it can also be useful when
+you have multiple working directories, perhaps on multiple machines.
+
+svn log
+-------
+
+'svn log' will give you a log history of all of your commits, along
+with specific revision information that you can use in 'svn diff' and
+'svn revert'.  For example, 'svn log' in my test repository returns this: ::
+
+ % svn log
+ ------------------------------------------------------------------------
+ r3 | t | 2008-09-11 08:34:16 -0700 (Thu, 11 Sep 2008) | 3 lines
+ 
+ added a new line
+ 
+ 
+ ------------------------------------------------------------------------
+ r2 | t | 2008-09-04 06:21:12 -0700 (Thu, 04 Sep 2008) | 2 lines
+ 
+ this is my homework1 whatever
+ 
+ ------------------------------------------------------------------------
+ r1 | t | 2008-09-03 19:20:49 -0700 (Wed, 03 Sep 2008) | 3 lines
+ 
+ hello, world!
+
+and I can look at the differences between r2 and r3 by doing ::
+
+ % svn diff -r2:3
+ Index: README.txt
+ ===================================================================
+ --- README.txt  (revision 2)
+ +++ README.txt  (revision 3)
+ @@ -1 +1,3 @@
+  this is a test
+ +
+ +this is a new line!
+
+Non-blocking network I/O
+========================
+
+For the next HW, you must use ``socket.setnonblocking(0)`` on all
+of your sockets to make a non-blocking echo server.  This need to
+be done on the bound socket as well as on all client connection sockets.
+
+If you set the sockets to non-blocking, then you will get an exception
+almost every time you try to accept a connection or read from a connection:
+that is, ::
+
+  sock.recv(...)
+
+will raise a ``socket.error``.
+
+To handle this case, wrap it in a try/except statement body: ::
+
+  try:
+     sock.recv(...)
+  except socket.error:
+     # handle error
+
+The code in 'handle error' can be whatever you want it to be; see below
+for three examples.
+
+Exception handling
+------------------
+
+Consider these three examples:
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     pass			# silently ignore error
+  ...   print i
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     break			# exit loop
+  ...   print i
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     continue		# jump to 'for'
+  ...   print i
+  1
+  2
+  4
+  5
+
+Why do you get these results?
+
+.. http protocol

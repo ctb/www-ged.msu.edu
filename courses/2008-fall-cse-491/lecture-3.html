@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lecture-3-outline-september-9th-2008" name="lecture-3-outline-september-9th-2008">Lecture 3 Outline / September 9th, 2008</a></h1>
+<p>&quot;There is always an easy solution to every problem -- neat, plausible
+and wrong.&quot; -- H.L. Mencken</p>
+</div>
+<div class="section">
+<h1><a id="homework-stuff" name="homework-stuff">Homework Stuff</a></h1>
+<p>Office hours switched to Wednesday, 8:30-10pm.  Homeworks will still
+be handed out on Tuesday, but will be due on the following Thursday
+instead of Tuesday.  Let me know if that's a problem.</p>
+<p>There's a formatting error in HW #2: to end the echo server, it should
+be <tt class="docutils literal"><span class="pre">\n.\n</span></tt> instead of <tt class="docutils literal"><span class="pre">n.n</span></tt>.</p>
+<p>Grading will <strong>not</strong> be on a curve unless it's good for all students.</p>
+<div class="section">
+<h2><a id="iterators" name="iterators">Iterators</a></h2>
+<p>Consider iterating over stacks vs lists -- one would be re-entrant,
+one is not.</p>
+<p>Resetting the count does not count, because you cannot iterate over it
+multiple times:</p>
+<pre class="literal-block">
+class Iterator(object):
+   def next(self):
+      if self.count &gt; self.max_count:
+          self.count = -1                    # or __init__
+          raise StopIteration
+      ...
+</pre>
+<p>(Among other things, it doesn't pass the dual for-loop test.)</p>
+<p>Think of the object returned by __iter__ as the counter information;
+you can return a <em>new</em> counter for every iterator request, <em>or</em> you
+can return the same one.  The first makes things re-entrant.</p>
+<p>Also, minimize unnecessary code if you can: several people did this,</p>
+<pre class="literal-block">
+class ReentrantFibonacciIterator(object):
+   ...
+   def __iter__(self):
+     return FibonacciIterator(self.n)
+   def next(self):
+     ...
+</pre>
+<p>The 'next' function is now completely useless and never called --
+<strong>why is it there</strong>?  This sort of thing offends me and makes me
+grouchy.</p>
+</div>
+<div class="section">
+<h2><a id="generators" name="generators">Generators</a></h2>
+<p>For generators, look at this example:</p>
+<pre class="literal-block">
+def fn():
+   print 'at 0'
+   yield 0
+   print 'at 1'
+   yield 1
+   print 'at 2'
+   yield 2
+   print 'at 3'
+   yield 3
+</pre>
+<p>When you call 'fn', you get a <strong>generator object</strong> that holds internal
+state (basically a pointer to the next line of code to be executed,
+plus a copy of the local variables).  Each successive call to <tt class="docutils literal"><span class="pre">next()</span></tt>
+advances the pointer to the next <tt class="docutils literal"><span class="pre">yield</span></tt>.</p>
+</div>
+<div class="section">
+<h2><a id="thoughts-on-doing-homework" name="thoughts-on-doing-homework">Thoughts on doing homework</a></h2>
+<p>Stringing together code examples may be easier than reinventing, or
+not - YMMV.  No penalty for swiping code in this class; heck, it's
+encouraged.</p>
+<p>Note I did give you most of the necessary code.  If you're having
+trouble with the primes for HW #2, try taking the fib stuff I sent out
+and adapting that.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="networking" name="networking">Networking</a></h1>
+<p>Blocking vs non-blocking I/0</p>
+<blockquote>
+<ul>
+<li><p class="first">blocking I/O <strong>blocks</strong> the thread of execution until input/output
+is available.  This means that you must use multiple threads of
+execution (threading, multiprocess) OR special monitoring functions
+(select) to handle multiple connections with blocking I/O in a single
+thread of execution.</p>
+</li>
+<li><p class="first">non-blocking I/O doesn't block, but returns immediately with data
+OR aborts and signals an error (&quot;no data available, boss&quot;).</p>
+<p>(how do you distinguish between &quot;data available&quot; and error? guesses?)</p>
+</li>
+</ul>
+</blockquote>
+<p>Synchronous vs asynchronous I/O</p>
+<blockquote>
+<ul class="simple">
+<li>synchronous is like a conversation: you speak, then I speak.</li>
+<li>asynchronous is like an unfriendly argument: everyone speaking at
+once.</li>
+</ul>
+</blockquote>
+<p>Synchronous vs asynchronous <strong>processing</strong></p>
+<blockquote>
+<ul class="simple">
+<li>synchronous processing waits for one &quot;conversation&quot; to be over before
+starting another one.</li>
+<li>synchronous processing is BAD: inefficient, doesn't scale,
+resource intensive...</li>
+<li>asynchronous processing relies on built-in language or OS features
+to &quot;keep track&quot; of several connections at once.  It can be done
+inefficiently (see HW #3, &quot;busy wait&quot;) or efficiently
+(threading/processes, or select); the latter depends more on
+language/OS features.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="http-and-the-web" name="http-and-the-web">HTTP and the Web</a></h1>
+<p>The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.  Note, HTTP can be used to transport any content,
+not just &quot;hypertext&quot; (e.g. HTML) but also things like large
+files. However, HTTP servers are usually optimized for many
+connections sending fairly small loads of data.</p>
+<p>URLs:</p>
+<blockquote>
+<blockquote>
+<a class="reference" href="http://machine:port/path/to/resource?query_stuff">http://machine:port/path/to/resource?query_stuff</a></blockquote>
+<ul class="simple">
+<li>http is the protocol</li>
+<li>machine is a DNS name or an IP address</li>
+<li>port is a TCP port</li>
+<li>/path/to/resource is the on-server path, can be anything you want, although
+many Web servers have canonical URL schemes (e.g. CGI scripts).</li>
+<li>query_stuff is a way of passing in values</li>
+</ul>
+</blockquote>
+<p>The HTTP protocol:</p>
+<blockquote>
+<ul>
+<li><p class="first">synchronous (query, response transaction pairs); AJAX adds
+asynchrony.</p>
+</li>
+<li><p class="first">client/server in design, not peer to peer (although again
+JavaScript is changing things)</p>
+</li>
+<li><p class="first">note, all header lines etc. end in &lt;CR&gt;&lt;LF&gt; (carriage return/line
+feed), or <tt class="docutils literal"><span class="pre">\r\n</span></tt></p>
+</li>
+<li><p class="first">basic protocol: port 80, requests like</p>
+<pre class="literal-block">
+&lt;command&gt; &lt;url&gt; &lt;protocol version&gt;\r\n
+[ &lt;other optional stuff&gt; ]
+</pre>
+<p>ended by blank line; for example</p>
+<pre class="literal-block">
+GET / HTTP/0.9\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">answer is in format</p>
+<pre class="literal-block">
+&lt;protocol&gt; &lt;status code&gt; &lt;message&gt;\r\n
+&lt;header line(s)&gt;\r\n
+\r\n
+</pre>
+<p>for example</p>
+<pre class="literal-block">
+HTTP/1.1 200 OK\r\n
+Content-length: 4567\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">GET, retrieval of page content; generally full URL is specified.</p>
+</li>
+<li><p class="first">content-type specification (MIME types: 'text/html', 'image/jpeg')</p>
+</li>
+<li><p class="first">data passing via query strings: query_string is set of pairs of</p>
+<blockquote>
+<p>name, value</p>
+</blockquote>
+<p>data, encoded suitably: name=value2&amp;name2=value2</p>
+<p>Obvious limitations for large data (submitting files!)...</p>
+</li>
+<li><p class="first">POST, retrieval of page content AFTER data passing.</p>
+<p>data is passed after the header, as one long encoded stream of bytes.</p>
+</li>
+<li><p class="first">&quot;cookies&quot; are small bits of data that are specific to a URL
+hierarchy, and are a name,value pair.  They are stored on the
+client side -- really the <em>only</em> persistent thing stored on the
+client.</p>
+</li>
+<li><p class="first">markup, html, forms</p>
+</li>
+<li><p class="first">HTML (&quot;HyperText Markup Language&quot;) is a bastardized XML-ish language:</p>
+<pre class="literal-block">
+&lt;markup_tag option1='value' option2='value2'&gt;plain text&lt;/markup_tag&gt;
+</pre>
+<p>There's a specific document format that we will mostly be ignoring</p>
+<pre class="literal-block">
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;title&gt;...&lt;/title&gt;
+   [ other stuff ]
+ &lt;/head&gt;
+ &lt;body&gt;
+   [ actual content ]
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li><p class="first">note, HTTP is actually a very simple protocol, and HTML is quite
+simple (and &quot;open source&quot;).  This drove the spread of both!</p>
+</li>
+</ul>
+</blockquote>
+<div class="section">
+<h2><a id="statelessness" name="statelessness">Statelessness</a></h2>
+<p>HTTP is designed around <em>statelessness</em> -- the only persistent state
+on the client side is in the cookies, and those contain only data
+relevant to the <em>server</em> (so you can e.g. switch IP addresses and
+clients easily).  Connections are designed to be transient (request,
+receive, end) although there are optimizations on top of that now
+(HTTP/1.1).</p>
+<p>Online purchase example.</p>
+<p>Think of iterator and how annoying it is to hold state...</p>
+<p>See Wikipedia, <a class="reference" href="http://en.wikipedia.org/wiki/Stateless_server">Stateless server</a>; each transaction
+is treated independently, with cookies being the only thing kept
+across conversations.  Thus HTTP is actually not just a synchronous
+protocol/conversation, it is a very <em>brief</em> conversation :).</p>
+<p>(POST connections, and GET connections with query strings, do retain
+some additional state - can cause problems in bookmarks &amp; reload.  These
+are <strong>design issues</strong> you will confront in building Web apps.)</p>
+<p>This design allows <strong>separation in time (and space)</strong>, and also drives
+you to design your Web app in such a way as to permit client side
+<strong>loose coupling</strong>, which is a good architectural principle for
+distributed systems, esp. when issues of intermittent connectivity,
+low bandwidth, etc. arise.  <strong>Strong</strong> or <strong>tight coupling</strong> often
+seems very convenient (simpler to program!) but is, generally, a bad
+idea architecturally.</p>
+<p>(Remember, &quot;easy to design and implement&quot; often means you're painting
+yourself into a corner when it comes to the larger issues!)</p>
+<p>The Web has driven a shift in mass-market applications to loose
+coupling and distributed systems.</p>
+<p>Canalizing thought patterns in this way is ... good?  Well, it's happening,
+anyway.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

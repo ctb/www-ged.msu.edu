@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lecture-4-outline-september-16th-2008" name="lecture-4-outline-september-16th-2008">Lecture 4 Outline / September 16th, 2008</a></h1>
+</div>
+<div class="section">
+<h1><a id="homework-stuff" name="homework-stuff">Homework stuff</a></h1>
+<p>Questions on blocking vs non-blocking, and how to handle?</p>
+</div>
+<div class="section">
+<h1><a id="get-vs-post" name="get-vs-post">GET vs POST</a></h1>
+<p>GET puts queries on the URL</p>
+<p>POST puts queries on the URL <strong>and</strong> sends them in the body of the HTTP
+request.</p>
+<p>We'll talk about how to deal with that <em>next</em> week.</p>
+</div>
+<div class="section">
+<h1><a id="multitasking-concurrency-and-pre-emptiveness" name="multitasking-concurrency-and-pre-emptiveness">Multitasking, concurrency, and pre-emptiveness</a></h1>
+<p>How do you do more than one thing at a time on a computer!?</p>
+<dl class="docutils">
+<dt>The friendly approach:</dt>
+<dd><ul class="first last simple">
+<li>say, are you done yet?  excellent!  may I have some CPU?  (Windows 3.1)</li>
+<li>&quot;non-preemptive&quot;</li>
+<li>doesn't work well with &quot;bad actors&quot; (WANT CPU!) or bad programmers</li>
+<li>actually <em>more</em> complicated to do right, in some ways</li>
+<li>e.g. think about your nonblocking code due Thursday...</li>
+</ul>
+</dd>
+<dt>The less friendly approach: the traffic cop (scheduler)</dt>
+<dd><ul class="first last simple">
+<li>pre-emptive</li>
+<li>task scheduler coordinates things</li>
+<li>less up-front work for you, but <strong>no guarantees</strong> on order of execution</li>
+<li>how almost everything works nowadays</li>
+</ul>
+</dd>
+</dl>
+<p>The bottom line is that as soon as you start using multitasking, you lose
+predictability &amp; gain stochasticity (randomness) in your execution.</p>
+<p>Atomicity:</p>
+<p>'atomic' operations are indivisible operations, i.e. they (look like they)
+take precisely one CPU tick.</p>
+<p>Do basic operations get interrupted?  Imagine a simple algorithm for
+inserting into a list:</p>
+<pre class="literal-block">
+get slot number (slot = length)
+add one element slot to list (array.add_one_slot() -&gt; length++)
+fill slot with data (array[slot] = data)
+</pre>
+<p>This is not guaranteed to perform correctly as written, in presence of
+threading!  Need to use locks:</p>
+<pre class="literal-block">
+grab the lock:
+  get slot number (slot = length)
+  add one element slot to list (array.add_one_slot() -&gt; length++)
+  fill slot with data (array[slot] = data)
+release lock
+</pre>
+<p>Locking of resources:</p>
+<p>Locks provide a guaranteed atomic way to execute a piece of code
+nonconcurrently.</p>
+<dl class="docutils">
+<dt>Fine grained vs coarse-grained locks:</dt>
+<dd><ul class="first last simple">
+<li>more locks are better, because they let you subdivide tasks
+and do more concurrently</li>
+<li>fewer locks are better because they are easier to manage and understand</li>
+</ul>
+</dd>
+</dl>
+<p>Deadlock - two tasks are waiting for each other to release a lock.</p>
+<p>(<em>always release the lock</em>; try/finally!)</p>
+<p>This can get arbitrarily complicated.  There be dragons.  Avoid at all
+costs until you know what you're doing (-&gt; never use).</p>
+</div>
+<div class="section">
+<h1><a id="processes-vs-threads" name="processes-vs-threads">Processes vs Threads</a></h1>
+<p>Processes:</p>
+<blockquote>
+<ul class="simple">
+<li>heavyweight concurrency</li>
+<li>less shared state between processes (disk, etc., but not memory)</li>
+</ul>
+</blockquote>
+<p>os.fork() on UNIX; also see 'multiprocessing' in Python 2.6.</p>
+<p>How do you communicate between processes?  Through the OS.  But it's slow:</p>
+<dl class="docutils">
+<dt>Interprocess Communication (IPC) techniques:</dt>
+<dd><ul class="first last simple">
+<li>shared memory</li>
+<li>pipes</li>
+<li>domain or network sockets</li>
+<li>files</li>
+</ul>
+</dd>
+</dl>
+<p>Threads:</p>
+<blockquote>
+<ul class="simple">
+<li>lighterweight concurrency</li>
+<li>shared memory space <strong>DANGER WILL ROBINSON</strong></li>
+<li><em>atomicity</em> suddenly becomes important</li>
+</ul>
+</blockquote>
+<p>'threading' module on Python 2.2+.</p>
+<p>create, start, do stuff, 'join'</p>
+</div>
+<div class="section">
+<h1><a id="avoiding-shared-state" name="avoiding-shared-state">Avoiding shared state</a></h1>
+<p>Concurrency and stochasticity will only bite you when you need to
+<em>communicate</em> either explicitly (IPC) or implicitly.</p>
+<p>Any <strong>writeable</strong>, <strong>shared state</strong> must be protected: &quot;threadsafe&quot;.</p>
+<p>Module globals, class globals, shared namespaces...  anything that can
+be accessed outside of the function that creates it is <em>bad</em>.  Local
+variables are isolated and hence safe, until you say otherwise.</p>
+<p>(This is why reentrancy came up in iterators: only the calling process
+could get a handle on the iterator object!)</p>
+</div>
+<div class="section">
+<h1><a id="python-concurrency-atomicity-and-locking" name="python-concurrency-atomicity-and-locking">Python, concurrency, atomicity, and locking</a></h1>
+<p>Python-&gt;C calls are automatically atomic, so most &quot;low-level&quot; Python
+data type operations are atomic.</p>
+<p>All other Python calls are not, so e.g. functions in threads may execute
+in parallel (that's the point!)</p>
+<p>...well, not really.  It's complicated.</p>
+<p>Digression: I/O vs CPU-intensive multitasking</p>
+<blockquote>
+<ul class="simple">
+<li>blocking or slow I/O calls are one reason to use multitasking</li>
+<li>executing CPU-intensive tasks in parallel are another</li>
+</ul>
+</blockquote>
+<p>Python multithreading is good for the first, NOT good for the second, because
+only specially written C code actually runs in parallel.</p>
+<p>---</p>
+<p>Bottom line: concurrency is not for the faint-hearted and is best done
+as simply as possible.</p>
+</div>
+</div>
+</body>
+</html>

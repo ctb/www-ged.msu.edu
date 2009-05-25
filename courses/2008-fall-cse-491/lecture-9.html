@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 9 Outline / October 21st, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-9-outline-october-21st-2008">
+<h1 class="title">Lecture 9 Outline / October 21st, 2008</h1>
+<blockquote>
+<ul class="simple">
+<li>go over hw</li>
+<li>URL mapping options, example code</li>
+</ul>
+</blockquote>
+<p>HW: please make sure that your Web server will serve <em>all files</em> under
+the 'files/' subdirectory!</p>
+<p>--</p>
+<p>Databases, again -- why use them?</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Abstraction</li>
+<li>Complex relationships between data</li>
+<li>Transactions</li>
+<li>Simultaneous access &amp; data isolation</li>
+<li>Performance</li>
+<li>Accessible from multiple languages</li>
+</ol>
+</blockquote>
+<p>Also read <a class="reference" href="http://philip.greenspun.com/sql/introduction.html">http://philip.greenspun.com/sql/introduction.html</a></p>
+<p>Where does the processing happen?  Where do you <em>want</em> it to happen?</p>
+<blockquote>
+<ul class="simple">
+<li>where does the data actually reside?</li>
+<li>which (client or server) has access to detailed knowledge of
+relationships between data?</li>
+<li>which is more controllable from a hardware/software perspective,
+client or server?</li>
+</ul>
+</blockquote>
+<p>Constraints on data; schemas.</p>
+<blockquote>
+<dl class="docutils">
+<dt>&quot;referential constraint&quot; -- &quot;if a row in this table exists, a corresponding</dt>
+<dd><p class="first">row in this other table must also exist&quot;</p>
+<blockquote class="last">
+(sqlite does not enforce, but most SQL databases <em>do</em>.)</blockquote>
+</dd>
+</dl>
+<p>NOT NULL, or other constraints on specific values, or ...</p>
+</blockquote>
+<p>We won't talk about it here, but most databases have somewhat db-specific
+internal programming languages, too, so that more complex queries can be
+run server side.</p>
+<p>So there's this idea that as much as possible (<strong>everything?</strong>) your
+relationships and data constraints should be reflected within the database
+structure.  Then you can always <em>guarantee</em> that your data is &quot;correct&quot; in
+terms of its relationships.</p>
+<p>If your data fits cleanly within a straightforward SQL data structure, this
+is an excellent idea.  However this is not true of all data...</p>
+<div class="section">
+<h1><a id="when-should-we-not-use-a-sql-database" name="when-should-we-not-use-a-sql-database">When should we <em>not</em> use a SQL database?</a></h1>
+<p>SQL is great for one-to-one and one-to-many relationships, works OK
+for many-to-many relationships, and can manage attributes on those
+related objects.</p>
+<p>Significant design issues, thought:</p>
+<p>for example, meats &amp; fruits from...  I designed it one way (people -&gt;
+meat (string), people -&gt; fruit (string)) but this is inefficient if
+you want to do queries on meats/fruits.</p>
+<p>You could also imagine having a fruits table, a meats table, and a person
+table, all with their own IDs; and then making a meats_to_person table
+and a fruits_to_person table.</p>
+<p>What are the advantages or disadvantages here?</p>
+<blockquote>
+<ul class="simple">
+<li>have to do duplicate management</li>
+<li>queries become longer and more difficult to understand</li>
+<li>quite a bit faster!</li>
+</ul>
+</blockquote>
+<p>---</p>
+<p>SQL is not so good for other situations...</p>
+<blockquote>
+<ul class="simple">
+<li>how do you do a search across all tables?</li>
+<li>how can you model an inheritance hierarchy or place special
+attributes on rows?<ul>
+<li>attribute extension tables - hard to manage!</li>
+<li>multiple tables - abandon referential integrity, or at least
+make it more difficult or slower</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>Anything that is not a relationship between two rows is more
+difficult to store in a SQL database than anything that <em>is</em>
+a relationship between two rows!</p>
+</div>
+<div class="section">
+<h1><a id="object-databases" name="object-databases">Object databases</a></h1>
+<p>SQL databases &quot;grew up&quot; at a time when procedural languages (like C)
+were prevalent, and object-oriented languages weren't.</p>
+<p>Once OO languages (C++, Java, Python) started becoming commonplace,
+people wanted to make objects persistent across runs.</p>
+<p>(This is a simplistic view; Smalltalk, for example, was objected oriented
+and had persistence built in from the start.)</p>
+<p>So, how about storing objects and links between them on disk?</p>
+<p>e.g.</p>
+<pre class="literal-block">
+person = PersonObject()
+fruit = FruitObject()
+
+person.fruits.append(Fruit)
+person.save()
+</pre>
+<p>Plenty of products that do that, but they:</p>
+<blockquote>
+<ul>
+<li><p class="first">tend to be language-specific (because object-orientation is implemented
+differently in every language: single or multiple inheritance? prototypes/
+interfaces?)</p>
+</li>
+<li><p class="first">tend to be slow: optimization is difficult unless you have a schema
+up front to specify likely interactions...  which then means you
+often have to explicitly manage data structures in both your code
+and in your database.</p>
+<p>(Yes, you have to do this with SQL as well!)</p>
+</li>
+<li><p class="first">have to track arbitrary changes on objects for transaction
+purposes, which can get arbitrarily expensive; SQL is optimized for
+this purpose.</p>
+</li>
+</ul>
+</blockquote>
+<p>This highlights one of the strengths of SQL: it's a standard already,
+and it's worked for decades.  (May be some of oldest direct technology
+you will use :).  Sure, it's annoying in many ways, but there's a
+clear separation between SQL dbs and the language(s) you're talking to
+the db from, and that's good.</p>
+<div class="section">
+<h2><a id="object-relational-mappings" name="object-relational-mappings">Object-relational mappings</a></h2>
+<p>Why not simply map object attributes into a SQL table?</p>
+<p>Works well at first (person.ssn, person.first_name, etc.) but then you
+run into more complicated situations:</p>
+<p>object-relational <em>impedance mismatch</em> - object models vs relational models</p>
+<p>object/inheritance hierarchies don't map cleanly onto SQL databases!</p>
+<p>This then obstructs efforts to use systems that automatically
+&quot;persist&quot; objects by using SQL databases...</p>
+<p>Hard to construct good performing O/R mappings automatically.</p>
+<p>So O/R mappings become an exercise in boundary negotiation: at what
+point do you have to start writing SQL in order to get good performance?
+How do you encode multiple 'WHERE' statements effectively?</p>
+<p>(Check out SQLAlchemy for Python.)</p>
+<p>--</p>
+<p>Databases are also annoying because you have to think about how to
+migrate the data in them between versions of your program(s)!</p>
+<p>This is very difficult, for all the usual reasons:</p>
+<blockquote>
+<ul class="simple">
+<li>phased upgrades are hard to manage and expensive; all-at-once
+upgrades tend to take down your company by mistake</li>
+<li>may have substantial amounts of data to &quot;edit&quot; or refactor</li>
+</ul>
+</blockquote>
+<p>So databases can also be a dead weight that hinders change in your
+code base...</p>
+<p>(Automated testing is a good approach here.)</p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+Lecture 9 Outline / October 21st, 2008
+======================================
+
+ - go over hw
+ - URL mapping options, example code
+
+HW: please make sure that your Web server will serve *all files* under
+the 'files/' subdirectory!
+
+--
+
+Databases, again -- why use them?
+
+ 1. Abstraction
+ 2. Complex relationships between data
+ 3. Transactions
+ 4. Simultaneous access & data isolation
+ 5. Performance
+ 6. Accessible from multiple languages
+
+Also read http://philip.greenspun.com/sql/introduction.html
+
+Where does the processing happen?  Where do you *want* it to happen?
+
+ - where does the data actually reside?
+
+ - which (client or server) has access to detailed knowledge of
+   relationships between data?
+
+ - which is more controllable from a hardware/software perspective,
+   client or server?
+
+Constraints on data; schemas.
+
+  "referential constraint" -- "if a row in this table exists, a corresponding
+    row in this other table must also exist"
+
+     (sqlite does not enforce, but most SQL databases *do*.)
+
+  NOT NULL, or other constraints on specific values, or ...
+
+We won't talk about it here, but most databases have somewhat db-specific
+internal programming languages, too, so that more complex queries can be
+run server side.
+
+So there's this idea that as much as possible (**everything?**) your
+relationships and data constraints should be reflected within the database
+structure.  Then you can always *guarantee* that your data is "correct" in
+terms of its relationships.
+
+If your data fits cleanly within a straightforward SQL data structure, this
+is an excellent idea.  However this is not true of all data...
+
+When should we *not* use a SQL database?
+----------------------------------------
+
+SQL is great for one-to-one and one-to-many relationships, works OK
+for many-to-many relationships, and can manage attributes on those
+related objects.
+
+Significant design issues, thought:
+
+for example, meats & fruits from...  I designed it one way (people ->
+meat (string), people -> fruit (string)) but this is inefficient if
+you want to do queries on meats/fruits.
+
+You could also imagine having a fruits table, a meats table, and a person
+table, all with their own IDs; and then making a meats_to_person table
+and a fruits_to_person table.
+
+What are the advantages or disadvantages here?
+
+ - have to do duplicate management
+ - queries become longer and more difficult to understand
+ - quite a bit faster!
+
+---
+
+SQL is not so good for other situations...
+
+ - how do you do a search across all tables?
+
+ - how can you model an inheritance hierarchy or place special
+   attributes on rows?
+
+   + attribute extension tables - hard to manage!
+   + multiple tables - abandon referential integrity, or at least
+     make it more difficult or slower
+
+Anything that is not a relationship between two rows is more
+difficult to store in a SQL database than anything that *is*
+a relationship between two rows!
+
+Object databases
+----------------
+
+SQL databases "grew up" at a time when procedural languages (like C)
+were prevalent, and object-oriented languages weren't.
+
+Once OO languages (C++, Java, Python) started becoming commonplace,
+people wanted to make objects persistent across runs.
+
+(This is a simplistic view; Smalltalk, for example, was objected oriented
+and had persistence built in from the start.)
+
+So, how about storing objects and links between them on disk?
+
+e.g.  ::
+
+   person = PersonObject()
+   fruit = FruitObject()
+
+   person.fruits.append(Fruit)
+   person.save()
+
+Plenty of products that do that, but they:
+
+ - tend to be language-specific (because object-orientation is implemented
+   differently in every language: single or multiple inheritance? prototypes/
+   interfaces?)
+
+ - tend to be slow: optimization is difficult unless you have a schema
+   up front to specify likely interactions...  which then means you
+   often have to explicitly manage data structures in both your code
+   and in your database.
+
+   (Yes, you have to do this with SQL as well!)
+
+ - have to track arbitrary changes on objects for transaction
+   purposes, which can get arbitrarily expensive; SQL is optimized for
+   this purpose.
+
+This highlights one of the strengths of SQL: it's a standard already,
+and it's worked for decades.  (May be some of oldest direct technology
+you will use :).  Sure, it's annoying in many ways, but there's a
+clear separation between SQL dbs and the language(s) you're talking to
+the db from, and that's good.
+
+Object-relational mappings
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Why not simply map object attributes into a SQL table?
+
+Works well at first (person.ssn, person.first_name, etc.) but then you
+run into more complicated situations:
+
+object-relational *impedance mismatch* - object models vs relational models
+
+object/inheritance hierarchies don't map cleanly onto SQL databases!
+
+This then obstructs efforts to use systems that automatically
+"persist" objects by using SQL databases...
+
+Hard to construct good performing O/R mappings automatically.
+
+So O/R mappings become an exercise in boundary negotiation: at what
+point do you have to start writing SQL in order to get good performance?
+How do you encode multiple 'WHERE' statements effectively?
+
+(Check out SQLAlchemy for Python.)
+
+--
+
+Databases are also annoying because you have to think about how to
+migrate the data in them between versions of your program(s)!
+
+This is very difficult, for all the usual reasons:
+
+ - phased upgrades are hard to manage and expensive; all-at-once
+   upgrades tend to take down your company by mistake
+
+ - may have substantial amounts of data to "edit" or refactor
+
+So databases can also be a dead weight that hinders change in your
+code base...
+
+(Automated testing is a good approach here.)

@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 6 Outline / September 30th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-6-outline-september-30th-2008">
+<h1 class="title">Lecture 6 Outline / September 30th, 2008</h1>
+<p>Quote:</p>
+<blockquote>
+<p>I believe that the following statement is an axiom of software
+development:</p>
+<p><em>It is impossible, by examining any significant piece of completed
+code, to determine within a factor of two how many man-hours it
+took to produce that code.</em></p>
+<p>Corollary:</p>
+<p><em>If you can't tell how long a piece of code would take when you have
+the finished product available, what chance do you think you have
+before the first line of code is written?</em></p>
+<p>Talking about a software development schedule more than a year out is
+like talking about where we go after we die. Everyone has some idea
+where we'll end up, but those ideas differ wildly, and there's a lack
+of solid evidence to support any of them.</p>
+</blockquote>
+<p>-- from Software is Hard, <a class="reference" href="http://www.gamearchitect.net/Articles/SoftwareIsHard.html">http://www.gamearchitect.net/Articles/SoftwareIsHard.html</a>, by Kyle Wilson.</p>
+<hr class="docutils" />
+<div class="section">
+<h1><a id="frameworks-vs-libraries" name="frameworks-vs-libraries">Frameworks vs libraries</a></h1>
+<p>Shifting gear to develop application code.  You will be extending your
+Web framework to handle application needs on your own over the next
+few weeks; the only thing that needs to remain firm is the stack of
+code above the 'delegate' function.</p>
+<p>So what is a framework?</p>
+<p>&quot;Frameworks&quot; call your code, as opposed to libraries:</p>
+<pre class="literal-block">
+user--               user --
+     |                     |
+     v                     v
+ framework             your code
+    ---                   ---
+  your code             library
+</pre>
+<p>To properly design a Web framework while writing an application, you
+must become schizophrenic:</p>
+<p>First, think about what you need to do, as an application programmer.</p>
+<p>Now think about what the framework code (which is sitting between
+you-the-app-programmer, and the network) must do in order to support
+your application needs.</p>
+<p>Now generalize the right amount (not too much, not too little) and
+code that up.</p>
+<p>Now write a bunch more code.  If you were wrong about the correct
+amount of generalization, you will suffer: you will have to (at some
+point) change the framework and then potentially change all of your
+code that interacts with it.  Also, new programmers will have to learn
+your specific framework...</p>
+<p>If you <em>don't</em> write a framework, however, you will suffer every time
+you write code that <em>could</em> have been handled in a framework.  On the
+other hand it will be easy for new programmers to learn... but then
+they will start making subtle modifications to the duplicated code,
+screwing everything up.</p>
+<p>So what do you do?</p>
+<p>Many (experienced) programmers go for (over-?)abstraction, because
+it's more fun than writing code that actually does something:</p>
+<blockquote>
+&quot;First, let's develop a framework!&quot; -- <a class="reference" href="http://jeffreypalermo.com/blog/i-ll-get-to-your-application-in-a-minute-first-we-need-to-build-the-framework/">http://jeffreypalermo.com/blog/i-ll-get-to-your-application-in-a-minute-first-we-need-to-build-the-framework/</a></blockquote>
+<p>It's a tricky topic.  Figuring out the right level of abstraction
+takes a lifetime of experience; might as well get started now.</p>
+<p>So, how does this &quot;framework&quot; stuff apply to you?</p>
+<p>Well, HW #5 asks you to write a function 'delegate' that takes all
+conceivable information contained in an HTTP request and returns all
+possible HTTP response information.  What does this tie you into?</p>
+<blockquote>
+<ul class="simple">
+<li>by framing things in a back &amp; forth conversation (single
+request/response), the framework limits you by: no general
+stream-oriented processing (HTTP/1.1)</li>
+<li>your framework must now protect you against DoS attacks where
+people send multi-gb files at you to overwhelm your server</li>
+<li>your framework must also protect against errors stemming from code
+run by it</li>
+</ul>
+</blockquote>
+<p>So design of frameworks is a big issue.  As soon as you start having
+to repurpose code (take code designed for one purpose, and generalize
+it to fit two purposes) you should think a little bit about the next
+obvious purpose.</p>
+<p>I personally am a big fan of adding features as you need them, and
+that's more or less how the class is going. For example, for HW #6,
+you will be doing cookie manipulation, which involves extracting info
+from headers and publishing new headers.  I <em>could</em> have outlined the
+concept of cookies and had you include cookie handling stubs in HW #5,
+but I'd rather have you evolve your code.</p>
+<p><strong>Fundamentally, in any real project you cannot predict all the uses to
+which your code will be put.</strong></p>
+<p>So, you can <strong>design a lot</strong> -- become very generic -- or <strong>design a
+little</strong> -- eliminate constraints.  For example, consider Alex's
+question on the mailing list; why did I specify that 'delegate' was to
+take both <tt class="docutils literal"><span class="pre">GET_data</span></tt> and <tt class="docutils literal"><span class="pre">POST_data</span></tt>, when they could be combined?</p>
+<blockquote>
+<ul class="simple">
+<li>if you combine them, you cannot pull them apart</li>
+<li>it is easy to combine them in your own code beneath 'delegate', if you
+so choose.</li>
+<li>this is a framework decision; most Web frameworks <em>don't</em> distinguish
+between them.</li>
+<li>It probably won't hurt you but I wanted to leave the option open.</li>
+</ul>
+</blockquote>
+<p>Beneath 'delegate', I will leave you to your own devices.  'delegate'
+is a good choke-point for me to test; I encourage you all to work on
+extending the framework code below 'delegate' to help you.  Right now,
+my own 'delegate' code looks something like this:</p>
+<pre class="literal-block">
+if url == 'something1': call_something1_fn()
+elif url == 'something2': call_something2_fn()
+else: call_error_fn()
+</pre>
+<p>This is clumsy, inelegant, and inefficient (both in your time and in
+processing); every time you add a url you need to add in a new 'if'
+statement.  You also need to pass the same arguments/data around;
+duplicated code is bad!</p>
+<p>What else could you do?  <strong>Implement an abstraction layer</strong></p>
+<p>For example,</p>
+<blockquote>
+<ul>
+<li><p class="first">use a dictionary lookup,</p>
+<pre class="literal-block">
+fn = url_handlers[function_name]
+return fn(method, path, headers, GET_data, POST_data)
+</pre>
+</li>
+<li><p class="first">make an HTTPRequest class that stores headers, cookies in a
+dict-like format.</p>
+</li>
+<li><p class="first">pass in form values as keyword arguments;</p>
+</li>
+<li><p class="first">automatically/dynamically discover functions to call.</p>
+</li>
+</ul>
+</blockquote>
+<p>You already know how to do the first, and I will show you some Python
+approaches to doing the rest on Thursday.</p>
+<p>I'll probably write some framework code to help me write tests, too.</p>
+</div>
+<div class="section">
+<h1><a id="thinking-about-delegate-in-a-slightly-different-way-remote-function-calls" name="thinking-about-delegate-in-a-slightly-different-way-remote-function-calls">Thinking about delegate in a slightly different way: remote function calls</a></h1>
+<p>Client-server.</p>
+<p>HTTP.</p>
+<p>Limited mechanisms of information transfer.</p>
+<p>Basically HTTP is a remote procedure call (RPC) mechanism (as we'll
+see in more detail later).  Think of 'delegate' as being on the
+receiving end of a high-latency function call... that is, this</p>
+<pre class="literal-block">
+client &lt;--&gt; OS &lt;--&gt; network &lt;--&gt; OS &lt;--&gt; 'delegate'
+</pre>
+<p>can be wrapped like so:</p>
+<pre class="literal-block">
+'x = func()' &lt;--&gt; http://server/some/function &lt;--&gt; 'delegate' &lt;--&gt; 'return func()'
+</pre>
+<p>or, in other words,</p>
+<pre class="literal-block">
+x = func()
+</pre>
+<p>can really be calling something on another server. We'll talk about
+this more later with JavaScript &amp; AJAX, as well as REST.</p>
+</div>
+<div class="section">
+<h1><a id="authentication-and-identity" name="authentication-and-identity">Authentication and identity</a></h1>
+<p>How does &quot;identity&quot; transfer with your laptop, when you shift from network
+to network?</p>
+<p>Answer: client-side cookies.</p>
+<p>These are bits of data (limited in size) that browsers send to servers
+based on server name and URL path.</p>
+<p>On the server side, header:</p>
+<pre class="literal-block">
+Set-Cookie: key=value
+</pre>
+<p>Optional 'Path' and 'Expires' attributes, along with a few others:
+'Path' specifies what</p>
+<pre class="literal-block">
+Set-Cookie: key=value; Path=/some/path; Expires &lt;some date&gt;
+</pre>
+<p>These are then stored on the client side and returned to the server,
+when appropriate (right server, URL path, etc.), in the headers:</p>
+<pre class="literal-block">
+Cookie: key=value
+</pre>
+<p>Really simple example: cookie contains a <strong>user name</strong> or a <strong>database
+ID</strong> that lets the server retrieve a user account based on previous
+login info.  (You'll implement this type of cookie for HW #6.)</p>
+<p>What's the main problem with this? You can simply start guessing user
+names... the <strong>only</strong> information that the server can even think about
+trusting is the info contained in cookies and the URL, and the
+originating IP address.  All of those can be manipulated by a
+sufficiently motivated sender.</p>
+<p>(Cookies can be thought of as adjuncts to the URL, in some ways: just
+another way to send information with each transaction.)</p>
+<p>So, servers will often send a <em>key</em> -- a 64-bit hash, or some such
+-- that:</p>
+<blockquote>
+<ul class="simple">
+<li>is big enough that the search space of all possible keys cannot
+readily be enumerated.</li>
+<li>is tied to the client IP address.</li>
+</ul>
+</blockquote>
+<p>This key is then kept in a database and linked to user information.</p>
+<p>Note, someone on your local network with access to unencrypted traffic
+(non-HTTPS/SSL network traffic) can &quot;steal&quot; your identity pretty
+easily.</p>
+<p>These schemes don't protect an individual user much, but they <em>do</em>
+protect the aggregate 'users of your site'.</p>
+<hr class="docutils" />
+<p>Additional topics:</p>
+<blockquote>
+<ul>
+<li><p class="first">SSL &amp; asymmetric cryptography</p>
+<p>Symmetric or &quot;secret key&quot; encryption (how do you transmit the key!?)</p>
+<dl class="docutils">
+<dt>Asymmetric or &quot;public key&quot; encryption - encrypt with public key,</dt>
+<dd><p class="first last">decrypt with private key.  Only the private key holder can decrypt.</p>
+</dd>
+</dl>
+<p>Based on a fundamental <em>asymmetry</em> -- large number factorization.
+<em>Given a large number, what are its prime factors?</em>  Easy to <em>make</em> a
+big number from primes; difficult to factor it into primes.</p>
+<p>So you can think of the public key as a large number used to encrypt
+something; the private key is the set of prime numbers factors of the
+large number.</p>
+<p>See <a class="reference" href="http://en.wikipedia.org/wiki/RSA">http://en.wikipedia.org/wiki/RSA</a></p>
+<p>Python supports SSL, but it adds complexity to debugging, etc. so
+I'm not planning on talking about it much in this course.
+Generally when writing Web apps you can treat it as something
+transparently supported by your server.</p>
+</li>
+<li><p class="first">OpenID</p>
+<p>single sign-on system: lets you have a unique identity among multiple
+Web sites.</p>
+</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+import homework1, types
+
+fib8 = [0, 1, 1, 2, 3, 5, 8, 13, 21]
+x = homework1.make_fib(8)
+assert fib8 == x
+
+###
+
+x = homework1.FibonacciIterator(8)
+assert list(x) == fib8
+assert list(x) == []
+
+x = homework1.FibonacciIterator(3)
+l = []
+for a in x:
+    for b in x:
+      l.append((a, b))
+assert l == [(0, 1), (0, 1), (0, 2)]    # optional, this week
+
+###
+
+x = homework1.ReentrantFibonacciIterator(8)
+assert list(x) == list(x)
+assert list(x) == fib8
+
+x = homework1.ReentrantFibonacciIterator(3)
+l = []
+for a in x:
+    for b in x:
+      l.append((a, b))
+assert l == [(0, 0), (0, 1), (0, 1), (0, 2), (1, 0), (1, 1), \
+             (1, 1), (1, 2), (1, 0), (1, 1), (1, 1), (1, 2), \
+             (2, 0), (2, 1), (2, 1), (2, 2)] # optional, this week
+
+###
+
+x = homework1.fibonacci_generator(8)
+assert isinstance(x, types.GeneratorType)
+assert list(x) == fib8
+
+###
+
+x = homework1.FibonacciListLike(9)
+assert x[0] == 0
+assert x[6] == 8
+assert fib8 == [ x[i] for i in range(0, 9) ]
+
+try:                                    # optional, this week
+    x[9]
+    assert False, "should not reach here; past end of list"
+except IndexError:                      # expect IndexError
+    pass
+
+###
+
+x = homework1.FibonacciDictLike(9)
+assert x['fib0'] == 0
+assert x['fib6'] == 8
+assert fib8 == [ x['fib%d' % (i,)] for i in range(0, 9) ]
+
+try:                                    # optional, this week
+    x['foobarbaz']
+    assert False, "should not reach here; past end of list"
+except KeyError:                        # expect KeyError
+    pass

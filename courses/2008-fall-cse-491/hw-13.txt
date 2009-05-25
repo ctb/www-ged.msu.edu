@@ -1,0 +1,59 @@
+-----------
+Homework 13
+-----------
+
+Due Friday, December 5th, at 5pm.
+
+Please put everything under homework13/ in the root of your svn, and
+make sure that you can run the site correctly from a fresh checkout, i.e.
+that these commands run the correct site: ::
+
+   svn co <...>/homework13/
+   cd homework13
+   python webserve.py 5000
+
+
+Logging in with AJAX
+--------------------
+
+(3 points)
+
+Write a new login form, available through your Web server as
+'/login-js.html', that avoids a full page load and instead uses AJAX
+to confirm that the username and password are correct and then to set
+the login cookie.
+
+The lab-13 'chat' example at
+
+    http://class.ged.idyll.org/svn/files/lab-13/chat/
+
+shows one possible way to return data from the Web server to JS,
+and the file 'cookie-example.html' under
+
+    http://class.ged.idyll.org/svn/files/hw-13/
+
+contains some demo code for setting and retrieving cookies, as does
+
+   http://www.shopdev.co.uk/blog/cookies-with-jquery-designing-collapsible-layouts/
+
+Note, this login code should be compatible with /auth/login -- either
+way should result in a session cookie.
+
+Write Selenium tests
+--------------------
+
+(2 points)
+
+Write a Selenium test that verifies that the login-js page works for a
+correct username/password.  Make sure that the test clears the cookie
+first (e.g. by using /auth/logout), and use /auth/print to check that
+the correct username/password is returned.
+
+Write another Selenium test that verifies that the login-js page does NOT
+set the cookie with an incorrect username/password combination.
+
+Put these tests under 'files/tests/AjaxLoginTestOK.html' and
+'files/tests/AjaxLoginTestFail.html', respectively, and link them into
+your main Selenium test suite under 'suite.html'.
+
+Oh, and please make sure your Selenium tests work under Firefox!

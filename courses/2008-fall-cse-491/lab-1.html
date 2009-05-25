@@ -1,0 +1,1050 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 1 Material / August 28th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-1-material-august-28th-2008">
+<h1 class="title">Lab 1 Material / August 28th, 2008</h1>
+<p>This material is all in doctest format; to run the doctest, do</p>
+<pre class="literal-block">
+import doctest
+doctest.testfile(filename)
+</pre>
+<p>in Python.</p>
+<p>That will run all of the code following '&gt;&gt;&gt;' and '...' and compare the
+actual output to the expected in-line output.  Neat, eh?</p>
+<p>Goals of this lab: get you used to basic Python syntax and some
+moderately complicated constructs; introduce introspection, print, and
+&quot;duck typing&quot;.</p>
+<div class="section">
+<h1><a id="using-complex-data-types-in-python" name="using-complex-data-types-in-python">Using &quot;complex&quot; data types in Python</a></h1>
+<p>Apart from the usual (int, string, etc.) there are some very nice
+complex data types in Python.  The first two that I'd like to draw your
+attention to are lists and dictionaries.</p>
+<p>Lists are just... lists of stuff.  You can create empty ones, append to them,
+etc.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = []
+&gt;&gt;&gt; x.append(5)
+&gt;&gt;&gt; x.append('a')
+&gt;&gt;&gt; x.append(0.1)
+&gt;&gt;&gt; x
+[5, 'a', 0.10000000000000001]
+</pre>
+</blockquote>
+<p>As you can see, there's no requirement to make all of the entries in a list
+the same type of object -- they can be whatever you want.</p>
+<p>You can, of course, index lists by integers; 0 is the starting index, just
+as in C and Java.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x[0]
+5
+&gt;&gt;&gt; x[1]
+'a'
+&gt;&gt;&gt; x[2]
+0.10000000000000001
+</pre>
+</blockquote>
+<p>Note that you can also create empty lists by explicitly calling the
+list constructor:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = list()
+</pre>
+</blockquote>
+<p>and you can also initialize them in place both ways:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = [5, 'a', 0.1]
+</pre>
+</blockquote>
+<p>or</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = list((5, 'a', 0.1))
+</pre>
+</blockquote>
+<p>You can also assign to list elements by index:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x[2] = 'z'
+&gt;&gt;&gt; x
+[5, 'a', 'z']
+</pre>
+</blockquote>
+<p>Dictionaries are even more useful than lists, and they're really at the
+heart of Python.  Dictionaries are basically just hashes, or maps, and they
+store key, value pairs:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y = {}
+&gt;&gt;&gt; y['a'] = 1
+&gt;&gt;&gt; y[2] = 0.2
+&gt;&gt;&gt; y[0.3] = 5
+&gt;&gt;&gt; y
+{'a': 1, 2: 0.20000000000000001, 0.29999999999999999: 5}
+</pre>
+</blockquote>
+<p>As with lists, there's no requirement that you store the same types of
+things in keys or values.  Values can be whatever you want, while keys
+must be hashable (more on that later).</p>
+<p>Instead of indexing dicts by integers, as with lists, you index them by
+key:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y['a']
+1
+&gt;&gt;&gt; y[2]
+0.20000000000000001
+&gt;&gt;&gt; y[0.3]
+5
+</pre>
+</blockquote>
+<p>You can delete and overwrite as well:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; del y[0.3]
+&gt;&gt;&gt; y[2] = 'nada'
+&gt;&gt;&gt; y
+{'a': 1, 2: 'nada'}
+</pre>
+</blockquote>
+<p>You can call 'len' on both lists and dicts to get their length:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; len(x)
+3
+&gt;&gt;&gt; len(y)
+2
+</pre>
+</blockquote>
+<p>and dictionaries support retrieval of keys, values, and key-value
+pairs (&quot;items&quot;):</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y.keys()
+['a', 2]
+&gt;&gt;&gt; y.values()
+[1, 'nada']
+&gt;&gt;&gt; y.items()
+[('a', 1), (2, 'nada')]
+</pre>
+</blockquote>
+<p>Note that all of these are lists; in the last case, they are lists of
+two-tuples (see below), with the first element of each tuple being the
+key and the second the value.  You can access things as you might
+expect:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y.items()[0][1]
+1
+</pre>
+</blockquote>
+<p>One type of Python object that you might confuse with a list is a <em>tuple</em>.
+tuples are just immutable lists, and you use '()' to define them rather
+than '[]'.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; z = (5, 'a', 'z')
+&gt;&gt;&gt; z[0]
+5
+&gt;&gt;&gt; z[0] = 6
+Traceback (most recent call last):
+  ...
+TypeError: 'tuple' object does not support item assignment
+</pre>
+</blockquote>
+<p>One useful difference between lists and tuples is that because tuples
+are immutable, you can use them as keys to dictionaries:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y[z] = 'pony'
+&gt;&gt;&gt; y
+{'a': 1, 2: 'nada', (5, 'a', 'z'): 'pony'}
+</pre>
+</blockquote>
+<p>Lists and tuples are interconvertible, too:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x_tup = tuple(x)
+&gt;&gt;&gt; z_list = list(z)
+</pre>
+</blockquote>
+<p>and you can convert the keys in a dictionary into a list too:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y_keys = list(y)
+</pre>
+</blockquote>
+<p>Technically, anything that is <em>iterable</em> can be passed into both the
+tuple and list constructors; see iterators, below.</p>
+<p>There are a bunch of other Python types that we'll run across.  The
+only really important one to mention at this point is 'object', which
+is the base of all (well, most) Python objects.  To define a new class
+(type of object) you can just do this:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class MyNewClass(object):
+...    def __init__(self, value):
+...       self.v = value
+...
+...    def some_method(self):
+...       print 'my value is', self.v
+</pre>
+</blockquote>
+<p>To create objects of this type, just call the constructor like so:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; a = MyNewClass(5)
+</pre>
+</blockquote>
+<p>and then call methods or access attributes as you might expect:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; a.v
+5
+&gt;&gt;&gt; a.some_method()
+my value is 5
+</pre>
+</blockquote>
+<p>We'll talk more about classes down the road.</p>
+</div>
+<div class="section">
+<h1><a id="iterating-over-lists-and-dicts" name="iterating-over-lists-and-dicts">Iterating over lists and dicts</a></h1>
+<p>As you saw above, you can convert lists and dicts into, well, lists.  How
+would you use this in a loop?</p>
+<p>Let's start with a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = ['a', 'b', 'c']
+</pre>
+</blockquote>
+<p>To iterate over this in a loop, you could imagine doing this:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; i = 0
+&gt;&gt;&gt; while i &lt; len(x):
+...   print x[i]
+...   i += 1
+a
+b
+c
+</pre>
+</blockquote>
+<p>but that's grotesque!  How about:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, len(x)):
+...   print x[i]
+a
+b
+c
+</pre>
+</blockquote>
+<p>but it turns out you can actually do something even cleaner:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for item in x:
+...   print item
+a
+b
+c
+</pre>
+</blockquote>
+<p>What if you want the item indices?  Use 'enumerate':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for n, item in enumerate(x):
+...   print n, item
+0 a
+1 b
+2 c
+</pre>
+</blockquote>
+<p>A couple notes on these last two examples.  First, 'enumerate' wraps
+any iterable -- literally, any object which can be iterated over --
+and simply returns each item count along with the item in a tuple.
+Second, we're actually doing something called &quot;tuple unpacking&quot; in the
+last example: you could rewrite it like this, to be more explicit:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for (n, item) in enumerate(x):
+...   print n, item
+0 a
+1 b
+2 c
+</pre>
+</blockquote>
+<p>(but there's no need to put the parantheses in).  Literally this is just
+unpacking the result of the enumerate, which we can see in list form as:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; list(enumerate(x))
+[(0, 'a'), (1, 'b'), (2, 'c')]
+</pre>
+</blockquote>
+<p>We can do the same sort of thing (iterate with a for loop) to dictionaries,
+except now we're iterating (in no guaranteed order, note!) over the keys:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y = dict(x=1, y=2, z=3)
+&gt;&gt;&gt; for key in y:
+...   print key, y[key]
+y 2
+x 1
+z 3
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="the-sequence-protocol-making-things-look-like-lists" name="the-sequence-protocol-making-things-look-like-lists">The sequence protocol: making things look like lists</a></h1>
+<p>Before we move on to the iterator protocol, let me show you a really
+neat feature of Python: making your own objects look like lists
+(technically &quot;sequences&quot;).</p>
+<p>Let's write a class that squares a list handed to it, but only
+when the elements are actually requested.   By defining one special
+method, and '__getitem__', we can make this class behave
+like a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class SquareMe(object):
+...   def __init__(self, some_numbers):
+...      self.n = some_numbers
+...   def __getitem__(self, index):
+...      print 'ASKING FOR ITEM', index, 'VALUE', self.n[index]
+...      return self.n[index]**2
+</pre>
+</blockquote>
+<p>You can now access this object just as if it's a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = SquareMe([5, 6, 7])
+&gt;&gt;&gt; x[2]
+ASKING FOR ITEM 2 VALUE 7
+49
+</pre>
+</blockquote>
+<p>and of course you can also iterate over it:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in x:
+...   print i
+ASKING FOR ITEM 0 VALUE 5
+25
+ASKING FOR ITEM 1 VALUE 6
+36
+ASKING FOR ITEM 2 VALUE 7
+49
+ASKING FOR ITEM 3 VALUE
+</pre>
+</blockquote>
+<p>Note that here Python understands the kind of error returned by
+accessing an invalid index in a list, and the 'for' loops knows to
+quit at that point.  That's why you get the 'ASKING FOR ITEM 3 VALUE'
+message at the end there.</p>
+<p>Doing this kind of thing with your own objects is a powerful way to
+extend Python, and we'll make use of it in this class occasionally.</p>
+<p>Here's the documentation on what you can or should extend to implement
+a full &quot;container-like&quot; type:</p>
+<blockquote>
+<a class="reference" href="http://docs.python.org/ref/sequence-types.html">http://docs.python.org/ref/sequence-types.html</a></blockquote>
+</div>
+<div class="section">
+<h1><a id="the-mapping-protocol-making-things-look-like-dicts" name="the-mapping-protocol-making-things-look-like-dicts">The mapping protocol: making things look like dicts</a></h1>
+<p>You can also make your own objects look like dictionaries.  This is a bit
+more complicated, because dictionaries have a lot of different methods on
+them, but there is a nice trick to use...</p>
+<p>Let's define a dictionary that, if any number under 100 is used as a key,
+returns the square of that number:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import UserDict
+&gt;&gt;&gt; class MySquareDict(UserDict.DictMixin, object):
+...   def keys(self):
+...     return range(0, 100)
+...   def __getitem__(self, key):
+...     print 'ASKED FOR', key
+...     return key**2
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = MySquareDict()
+&gt;&gt;&gt; x[0]
+ASKED FOR 0
+0
+&gt;&gt;&gt; x[5]
+ASKED FOR 5
+25
+</pre>
+</blockquote>
+<p>OK, so what's really going on here!?  Well, we're using <a class="reference" href="http://docs.python.org/ref/sequence-types.html">DictMixin</a>, which is a <a class="reference" href="http://en.wikipedia.org/wiki/Mixin">mixin
+class</a> that provides a full
+read-only dictionary interface for classes that already possess
+__getitem__ and keys().  (If you provide __delitem__ and __setitem__,
+you get a <em>full</em> dictionary interface.)  Here, keys() just returns
+the list of numbers between 0 and 100 (that's what range returns).</p>
+<p>This means that not only can you call __getitem__ and keys(), but you
+can ask for other dictionary methods like has_key() that you didn't
+explicitly define:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x.has_key(20)
+ASKED FOR 20
+True
+&gt;&gt;&gt; x.has_key(99)
+ASKED FOR 99
+True
+</pre>
+</blockquote>
+<p>Unfortunately in this case we didn't do a great job of defining this
+class, because keys() only returns a subset (0..99) of the actual legal
+keys:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x.has_key(101)
+ASKED FOR 101
+True
+</pre>
+</blockquote>
+<p>As you can see, when you call has_key(), all it's doing is trying to ask
+for key 101 -- and if __getitem__ doesn't kick up a fuss, well, then it
+obviously has that key!  We can redefine __getitem__ appropriately:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class MySquareDict(UserDict.DictMixin, object):
+...   def keys(self):
+...     return range(0, 100)
+...   def __getitem__(self, key):
+...     if key &gt;= 0 and key &lt; 100:
+...        return key**2
+...     raise KeyError
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = MySquareDict()
+&gt;&gt;&gt; x.has_key(101)
+False
+</pre>
+</blockquote>
+<p>and get the right answer.</p>
+<p>One last note -- if we want to pass in a max number through the constructor,
+we can do that, too:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class MySquareDict(UserDict.DictMixin, object):
+...   def __init__(self, max_num):
+...     self.max_num = max_num
+...   def keys(self):
+...     return range(0, self.max_num)
+...   def __getitem__(self, key):
+...     if key &gt;= 0 and key &lt; self.max_num:
+...        return key**2
+...     raise KeyError
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = MySquareDict(500)
+&gt;&gt;&gt; x.has_key(499)
+True
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="iterators-and-the-iterator-protocol" name="iterators-and-the-iterator-protocol">Iterators and the iterator protocol</a></h1>
+<p>In programming, you frequently want to loop over things -- things in
+lists, or dictionaries, or on disk, in databases, over the Web, whatever.
+So Python has formalized this in an 'iterator' protocol, a way for objects
+to let Python know how to iterate over them.</p>
+<p>The iterator protocol is pretty simple, but has a fair amount of syntax
+associated with it.  Your class has to define an __iter__ method, and
+that method has to return an object with a 'next' function on it; then
+to iterate, Python calls the 'next' function until it raises a
+StopIteration exception.  (More on exceptions much later...)</p>
+<p>Here's a really simple and not so useful iterator:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class NullThing(object):
+...   def __iter__(self):
+...     return self
+...   def next(self):
+...     raise StopIteration
+</pre>
+</blockquote>
+<p>(Note that here __iter__ is returning the same object, which is a
+convenient way of not having to define two classes...)</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = NullThing()
+&gt;&gt;&gt; for y in x:
+...   print 'HELLO, WORLD'
+</pre>
+</blockquote>
+<p>Yep, the for loop exits immediately because the 'next' method immediately
+raises StopIteration!</p>
+<p>One thing to keep in mind about about iterators is that they do not
+necessarily know anything in advance.  This means that you can't call
+'len' on an iterator, for example...</p>
+<p>Any finite iterator can be converted into a list like so:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; list(NullThing())
+[]
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="generators-and-maintaining-implicit-state" name="generators-and-maintaining-implicit-state">Generators and maintaining implicit state</a></h1>
+<p>One of the frustrating things about iterators is that with simple
+iterators, you spend a lot of time <em>maintaining state</em> -- that is, if
+you want to just do something to a list, you have to retain the index
+you're using.  For example, consider the following ugly implementation
+of 'enumerate' as an iterator:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class Enumerator(object):
+...   def __init__(self, thing):
+...     self.thing = iter(thing)
+...     self.count = -1
+...   def __iter__(self):
+...     return self
+...   def next(self):
+...     val = self.thing.next()
+...     self.count += 1
+...     return self.count, val
+</pre>
+</blockquote>
+<p>Sure, it works:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for n, item in Enumerator(['a', 'b', 'c']):
+...   print n, item
+0 a
+1 b
+2 c
+</pre>
+</blockquote>
+<p>but that's a lot of code for something so simple!</p>
+<p>It turns out, Python recently added <em>generator</em> functions.  These are
+functions that generate re-entrant instances, by which I mean that
+they implicitly hold local state.  Here's a generator version of
+'enumerate':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def enumerator(thing):
+...   count = 0
+...   for item in thing:
+...     yield count, item
+...     count += 1
+</pre>
+</blockquote>
+<p>Here, the 'yield' statement tells Python that the function
+'enumerator' is actually a generator, and that when you call it, you
+should get back an iterator object that will return values from
+'yield'.</p>
+<p>See, it works!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for n, item in enumerator(['a', 'b', 'c']):
+...   print n, item
+0 a
+1 b
+2 c
+</pre>
+</blockquote>
+<p>But how does the function know when to exit?  The implicit exit
+condition is in the for loop, which will end when the 'thing' can
+no longer be iterated over.</p>
+<p>Literally what is happening is that every time you call 'enumerator',
+Python is making a <em>new</em> generator (a.k.a. complicated iterator) out
+of it and storing the values of 'count' and the status of the 'thing'
+iteration in variables local to that instance of the function.</p>
+<p>One of the fun things about generators and iterators, incidentally,
+is that they can both be <em>infinite</em>: consider this generator,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def squares():
+...   count = 0
+...   while 1:
+...     yield count**2
+...     count += 1
+</pre>
+</blockquote>
+<p>Note the lack of exit condition... you can iterate over that indefinitely!
+You've got to put in your own exit condition:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for x in squares():
+...   print x
+...   if x &gt; 20:
+...     break
+0
+1
+4
+9
+16
+25
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="reimplementing-range" name="reimplementing-range">Reimplementing 'range'</a></h1>
+<p>Just to drive the points home, here are two implementations of the
+same 'range'-like function.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class RangeAsIterator(object):
+...   def __init__(self, min_num, max_num):
+...     self.max_num = max_num
+...     self.curr = min_num - 1
+...   def __iter__(self):
+...     return self
+...   def next(self):
+...     if self.curr &lt; self.max_num - 1:
+...        self.curr += 1
+...        return self.curr
+...     raise StopIteration
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; list(RangeAsIterator(0, 5))
+[0, 1, 2, 3, 4]
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; def range_as_generator(min_num, max_num):
+...   while min_num &lt; max_num:
+...     yield min_num
+...     min_num += 1
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; list(range_as_generator(0, 5))
+[0, 1, 2, 3, 4]
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="list-and-generator-comprehensions-and-scope" name="list-and-generator-comprehensions-and-scope">List and generator comprehensions, and scope</a></h1>
+<p>A few more cute Python tricks: you can generate a list in-place using
+a list comprehension, which returns a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; [ x**2 for x in range(1, 4) ]
+[1, 4, 9]
+</pre>
+</blockquote>
+<p>or what's called a 'generator comprehension':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y = ( x**2 for x in range(1, 4) )
+&gt;&gt;&gt; type(y)
+&lt;type 'generator'&gt;
+&gt;&gt;&gt; for item in y:
+...   print item
+1
+4
+9
+</pre>
+</blockquote>
+<p>As above with lists and generators, the main difference here is that the
+generator values are not calculated until you ask for them.  One minor
+difference is that of scope: variables used in list comprehensions &quot;leak&quot;,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; z = [ x**2 for x in range(0, 100) ]
+&gt;&gt;&gt; x
+99
+</pre>
+</blockquote>
+<p>while variables used in generator comprehensions do not:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; z = list( (x**2 for x in range(0, 500)) )
+&gt;&gt;&gt; x
+99
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="introspection-and-interactivity-in-python" name="introspection-and-interactivity-in-python">Introspection and interactivity in Python</a></h1>
+<p>Python lets you figure out what methods and attributes objects have;
+consider the following way of figuring out what attributes
+dictionaries have:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; d = {}
+&gt;&gt;&gt; attributes = dir(d)
+&gt;&gt;&gt; print &quot;\n&quot;.join(attributes)
+__class__
+__cmp__
+__contains__
+__delattr__
+__delitem__
+__doc__
+__eq__
+__ge__
+__getattribute__
+__getitem__
+__gt__
+__hash__
+__init__
+__iter__
+__le__
+__len__
+__lt__
+__ne__
+__new__
+__reduce__
+__reduce_ex__
+__repr__
+__setattr__
+__setitem__
+__str__
+clear
+copy
+fromkeys
+get
+has_key
+items
+iteritems
+iterkeys
+itervalues
+keys
+pop
+popitem
+setdefault
+update
+values
+</pre>
+</blockquote>
+<p>Yikes, that's a lot!  What do they all do?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; help(d.values)
+Help on built-in function values:
+&lt;BLANKLINE&gt;
+values(...)
+    D.values() -&gt; list of D's values
+&lt;BLANKLINE&gt;
+</pre>
+</blockquote>
+<p>You can generally do that sort of thing (call 'dir', and/or 'help') to
+any Python object.  In fact, if you define your own functions
+properly, you can ask for help on them, too:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def f():
+...   &quot;&quot;&quot;
+...   f prints hello, world
+...   &quot;&quot;&quot;
+...   print 'hello, world'
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; help(f)
+Help on function f:
+&lt;BLANKLINE&gt;
+f()
+    f prints hello, world
+&lt;BLANKLINE&gt;
+</pre>
+</blockquote>
+<p>One more Python jujitsu move: you can (if you <em>really</em> want to) use
+'type' to figure out what things are:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; type(d)
+&lt;type 'dict'&gt;
+&gt;&gt;&gt; type(f)
+&lt;type 'function'&gt;
+</pre>
+</blockquote>
+<p>but Python is all about <a class="reference" href="http://en.wikipedia.org/wiki/Duck_typing">duck typing</a> so you should view this
+as a way to explore code and not use it to confirm types <em>in</em> your
+code.  More on this later.</p>
+</div>
+</div>
+</body>
+</html>

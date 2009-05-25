@@ -1,0 +1,235 @@
+-------------------------------------
+Lab 13 Material - November 13th, 2008
+-------------------------------------
+
+Reminder: office hours tonight, 9-11pm; hw due at 5pm on Friday.
+
+---
+
+Objective: expose you to jQuery and AJAX techniques.
+
+Examples are in
+
+    http://class.ged.idyll.org/svn/files/lab-13/
+
+jQuery resources:
+-----------------
+
+jQuery docs:
+
+  http://docs.jquery.com/Main_Page
+
+15 Resources To Get You Started With jQuery From Scratch:
+
+  http://nettuts.com/javascript-ajax/15-resources-to-get-you-started-with-jquery-from-scratch/
+
+Easy AJAX with jQuery:
+
+  http://www.sitepoint.com/article/ajax-jquery/
+
+Learning jQuery in 30 minutes:
+
+  http://www.slideshare.net/simon/learning-jquery-in-30-minutes
+
+---
+
+What is jQuery?
+---------------
+
+jQuery is a JavaScript library that contains a bunch of utility functions
+to make writing JavaScript easier and **cross-browser-compatible**.
+
+What you will find if you start writing complex JavaScript and CSS is
+that support varies across browsers: IE is the most notorious, but
+Firefox and Opera also have bugs in them and differences across versions.
+
+(This is not much of an issue with server-side HTTP and HTML: every browser
+interprets basic HTML and forms more-or-less properly.  Plus, you can use
+your own language on the server side, which lets me use Python.)
+
+You can think of jQuery as a *layer* on top of JavaScript that lets you
+write JavaScript in a particular way, and provides a certain amount of
+guarantee that as long as you write JS in that way it will work across
+different browsers.
+
+Below, I'll show you how to use jQuery to select and modify HTML elements
+and also how to load data from an external server.
+
+jQuery Basics
+-------------
+
+These are all equivalent ways of running code when the document has been
+loaded.
+
+::
+
+ jQuery(document).ready(function() {
+   // Your code here
+ });
+
+$ is assigned the jQuery object: ::
+
+ $(document).ready(function(){
+   // Your code here
+ });
+
+and, implicitly, calling '$' is the same as running code when the document is
+loaded: ::
+
+ $(function() {
+   // Your code here
+ });
+
+(You want to do this because otherwise your JS is executed as the page is
+loaded, so you have to place your JS *below* any HTML it operates on.)
+
+The most common approach: find stuff, do stuff to it.
+
+CSS selectors and modifying elements
+------------------------------------
+
+Much of jQuery's up-front power lies in its CSS selector-like syntax:
+::
+
+ <style type="text/css">
+    a.test { font-weight: bold; }
+ </style>
+
+ ...
+
+ $("a").addClass("test");
+
+ $("a").removeClass("test");
+
+Here, $("a") returns all links ('<a ...>' tags), and
+addClass/removeClass is applied to the resulting collection.
+
+Note, these CSS-selector-style expressions are cross-browser
+compatible, unlike real CSS (hat tip to Taylor).
+
+Modifying attributes is also easy: ::
+
+  <a id="foo" href='http://www.msu.edu/'>MSU link</a>
+
+  ...
+
+  $("a#foo").attr({ 'href' : 'http://www.umich.edu' })
+
+Also "magic" selectors and filters: ::
+
+  $(":even")
+
+See http://docs.jquery.com/Selectors.
+
+Chaining
+--------
+
+By convention, each jQuery expression returns the object it worked on,
+so you can do ::
+
+  $("a").addClass("test").html("foo")
+
+to first add a class and then set the HTML content of all links ('a'
+elements).  This is known as 'chaining'.
+
+Collections
+-----------
+
+Collections let you iterate over them and "do stuff", using 'each' with
+a function argument: ::
+
+   $("div").each( function(id) {
+      div = $("div").get(id);
+   }
+
+Animation
+---------
+
+jQuery effects: ::
+
+   $('h1').fadeOut(1000).slideDown()
+
+http://docs.jquery.com/Effects
+
+Basic AJAX
+----------
+
+Replace the element content with data loaded from a URL: ::
+
+  element.load(url)
+
+or do a dynamic POST:
+
+  $.post(url, parameters, callback)
+
+where 'parameters' are the list of POST parameters to the url, and
+'callback' is a function to be run against the returned data.
+
+Some jQuery philosophy
+----------------------
+
+Put all the JavaScript code & references up top in the <head> header,
+including 'onclick' assignments etc. For example, rather than putting
+'onclick' in the HTML: ::
+
+   <input type='submit' onclick='...'>
+
+assign based on ID: ::
+
+   $('#subme').click(...)
+
+   ...
+
+   <input type='submit' id='subme'>
+
+This unclutters your HTML and separates your behavior (JavaScript)
+from your data (the HTML) and style (CSS).
+
+Examples
+--------
+
+`example 1 <ex1.html>`__
+
+`example 2 <ex2.html>`__
+
+`example 3 <ex3.html>`__
+
+A Simple Quote Server
+---------------------
+
+Run the Web server in 'quotes': ::
+
+  python webserve.py 5000
+
+and go to http://localhost:5000/
+
+Here, the frontend code in ('quotes/index.html') uses AJAX to call the
+backend code and ask for data.  The backend code ('quotes/webserve.py')
+returns whatever data it wants to.
+
+Note that index2.html uses the 'ready' construct to put the JS code at the
+top of the document; otherwise it's the same code.
+
+A Simple Chat Server
+--------------------
+
+Run the Web server in 'chat': ::
+
+   python webserve.py 5000
+
+and go to http://localhost:5000/
+
+The backend code (in `chat/webserve.py <chat/webserve.py>`__)
+
+  - keeps a simple database structure containing messages with a timestamp
+
+  - provides functions to add a message, and retrieve messages that were
+    added after a certain point in time
+
+The frontend code (in index.html)
+
+  - uses AJAX to initialize the set of messages
+
+  - adds and retrieves messages via AJAX on button clicks
+
+  - uses CSS to make it pretty

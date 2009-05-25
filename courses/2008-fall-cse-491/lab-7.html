@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 7 Material / October 9th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-7-material-october-9th-2008">
+<h1 class="title">Lab 7 Material / October 9th, 2008</h1>
+<div class="section">
+<h1><a id="files-filenames-and-paths" name="files-filenames-and-paths">Files, filenames, and paths</a></h1>
+<p>For HW #7, you need to open files and read them into memory so
+that you can return them in response to HTTP queries.</p>
+<p>First, let's create a file and write to it, so that we have something
+to work with:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; fp = open('test-file.txt', 'w')
+&gt;&gt;&gt; fp.write(&quot;hello, world.&quot;)
+&gt;&gt;&gt; fp.close()
+</pre>
+</blockquote>
+<p>OK, now we have a file 'test-file.txt' in the current directory.  How
+do we access it?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; fp = open('test-file.txt')
+&gt;&gt;&gt; contents = fp.read()
+&gt;&gt;&gt; print contents
+hello, world.
+</pre>
+</blockquote>
+<p>Note that 'fp.read()' returns a string containing the entire contents
+of the file.  It can be binary data, too, but printing that kind of
+data to the screen can be unpleasant...</p>
+<p>For HW #7, you'll be taking file names and paths (directory + file names)
+from users on the Web, e.g.</p>
+<pre class="literal-block">
+http://localhost:5000/some/file/name.txt
+</pre>
+<p>will return the contents of the file</p>
+<blockquote>
+./files/some/file/name.txt</blockquote>
+<p>(if it exists).  There are two things you might want to think about here:
+first, can users access any files they shouldn't be able to?  And do
+you want your Web server to work on Windows, too?</p>
+<p>The first is a security issue, of course: you don't want to give
+remote users access to just any file on your system!  Generally you
+want to make sure that they can access only files under a certain
+directory.  To do that on UNIX, you need to get rid of any leading '/'
+and then join it into a complete path.  Here is one bit of code
+that might work.</p>
+<p>Suppose we want to convert the URL '/some/file/name.txt' into a safe
+path.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; url = '/some/file/name.txt'
+</pre>
+</blockquote>
+<p>First, strip off any leading '/':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; url = url.lstrip('/')
+</pre>
+</blockquote>
+<p>This is important because a '/' at the beginning of a path in UNIX
+means 'start from the root', and you want to use this as a <em>relative</em>,
+not an <em>absolute</em>, path.</p>
+<p>Second, convert the 'files' subdirectory into a full path name:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import os.path
+&gt;&gt;&gt; FILES_PATH = os.path.abspath('./files')
+&gt;&gt;&gt; FILES_PATH
+'/Users/t/Desktop/week7/files'
+</pre>
+</blockquote>
+<p>Now, join the 'files/' path with the filename:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; fullpath = os.path.join(FILES_PATH, url)
+&gt;&gt;&gt; fullpath
+'/Users/t/Desktop/week7/files/some/file/name.txt'
+</pre>
+</blockquote>
+<p>...and that's the path to open!</p>
+<p>One last note -- to make this work properly on Windows, you need to
+change the path separator from '/' to '\'.  Conveniently,
+'os.path.join' will figure out what the right path separator is; since
+URLs always contain forward slashes ('/'), you can just split on them
+and then join the result, like so:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; urllist = url.split('/')
+&gt;&gt;&gt; path = os.path.join(*urllist)
+</pre>
+</blockquote>
+<p>On Windows, 'path' will now be <tt class="docutils literal"><span class="pre">some\file\name.txt</span></tt>, and on UNIX it
+will correctly be 'some/file/name.txt'.</p>
+<p>One last good security check -- get rid of all the '..' and
+double-backslashes by converting the path into an absoute path:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; fullpath = os.path.abspath(fullpath)
+</pre>
+</blockquote>
+<p>and then <em>check</em> that it's actually underneath the FILES_PATH:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; assert fullpath.startswith(FILES_PATH)
+</pre>
+</blockquote>
+<p>This will make <em>sure</em> that you're not letting remote users stray
+off the reservation.</p>
+</div>
+<div class="section">
+<h1><a id="nifty-python-tricks" name="nifty-python-tricks">Nifty Python tricks</a></h1>
+<p>Here are some useful Python tricks, for those of you who are into such
+things...</p>
+<div class="section">
+<h2><a id="dynamic-replacement-of-functions" name="dynamic-replacement-of-functions">Dynamic replacement of functions</a></h2>
+<p>Functions are objects, too!  So you can mess with them in various ways.</p>
+<p>For example, as you may have seen in my tests, you can replace
+functions with other functions very easily.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def subtract_one(number):
+...   return number - 1
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; def add_one(number):
+...   return number + 1
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; operator_fn = subtract_one
+&gt;&gt;&gt; print operator_fn(5)
+4
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; operator_fn = add_one
+&gt;&gt;&gt; print operator_fn(5)
+6
+</pre>
+</blockquote>
+<p>There's really no good way to tell what function you're calling, except
+to use 'print' on 'fn.__name__':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print operator_fn.__name__
+add_one
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="calling-functions-with-dynamically-constructed-arguments" name="calling-functions-with-dynamically-constructed-arguments">Calling functions with dynamically constructed arguments</a></h2>
+<p>Suppose you have a function that takes keyword arguments, and you want
+to only pass in certain ones, but you want to make that decision dynamically.</p>
+<p>For example, consider this function:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def print_sound(cat=None, dog=None):
+...   if cat is not None:
+...      print 'meow!'
+...   if dog is not None:
+...      print 'woof!'
+</pre>
+</blockquote>
+<p>Now, I can call this either way:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print_sound(cat=True)
+meow!
+&gt;&gt;&gt; print_sound(dog=True)
+woof!
+</pre>
+</blockquote>
+<p>but suppose someone is giving us the <em>name</em> of the animal!  We could use
+'if' statements:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def do_print_sound(animal_type):
+...   if animal_type == 'dog':
+...      print_sound(dog=True)
+...   if animal_type == 'cat':
+...      print_sound(cat=True)
+</pre>
+</blockquote>
+<p>but that's ugly and long.  Instead, you can use a dictionary and pass
+it into the print_sound function using <tt class="docutils literal"><span class="pre">**</span></tt>:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def do_print_sound(animal_type):
+...   d = { animal_type : True }
+...   print_sound(**d)
+</pre>
+</blockquote>
+<p>This passes 'cat=True' into print_sound if animal_type is 'cat', and
+'dog=True' into print_sound if animal_type is 'dog':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; do_print_sound('cat')
+meow!
+&gt;&gt;&gt; do_print_sound('dog')
+woof!
+</pre>
+</blockquote>
+<p>You can see the utility of this in taking in form arguments, for example...
+think about the '/auth/login' function from this HW -- now you can write
+it as</p>
+<pre class="literal-block">
+def login(username=None, password=None):
+  ...
+</pre>
+<p>and have your form values automatically turned into a dictionary as
+appropriate.  (This is how CherryPy, a popular Web framework, does
+things, if you're interested in seeing it at work.</p>
+</div>
+<div class="section">
+<h2><a id="writing-functions-that-take-arbitrary-arguments" name="writing-functions-that-take-arbitrary-arguments">Writing functions that take arbitrary arguments</a></h2>
+<p>OK, but what if you don't want to specify how many arguments there are
+going to be, or you don't want to explicitly give defaults, or you want
+to just forward arguments on to another function in a wrapper function?</p>
+<p>You can use <tt class="docutils literal"><span class="pre">*</span></tt> and <tt class="docutils literal"><span class="pre">**</span></tt> to do this:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def print_my_args(*arg_list, **args_dict):
+...   print arg_list
+...   print args_dict
+</pre>
+</blockquote>
+<p>Now you can do</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print_my_args('foo', 'bar', 'baz', x=5, y='hello', z='fib')
+('foo', 'bar', 'baz')
+{'y': 'hello', 'x': 5, 'z': 'fib'}
+</pre>
+</blockquote>
+<p>(There are many uses for this; look up 'decorators', for example.)</p>
+</div>
+<div class="section">
+<h2><a id="dynamic-access-to-local-and-global-name-spaces-and-object-dicts" name="dynamic-access-to-local-and-global-name-spaces-and-object-dicts">Dynamic access to local and global name spaces, and object dicts</a></h2>
+<p>Python uses dictionaries for everything -- including local and global
+name spaces and object attributes.  Try:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = 5
+&gt;&gt;&gt; d = locals()
+&gt;&gt;&gt; d['x']
+5
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; def fn():
+...   y = 6
+...   d = locals()
+...   e = globals()
+...   print d['y']
+...   print e['x']
+&gt;&gt;&gt; fn()
+6
+5
+</pre>
+</blockquote>
+<p>If you create an object, you can access its attributes through <tt class="docutils literal"><span class="pre">__dict__</span></tt>:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class A(object):
+...   def __init__(self):
+...     self.z = 'foo'
+&gt;&gt;&gt; a = A()
+&gt;&gt;&gt; a.z
+'foo'
+&gt;&gt;&gt; print a.__dict__
+{'z': 'foo'}
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="dynamic-retrieval-of-attributes" name="dynamic-retrieval-of-attributes">Dynamic retrieval of attributes</a></h2>
+<p>You can also use 'getattr' to retrieve object values by their name.
+It works like the dictionary 'get' function:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; getattr(a, 'z')
+'foo'
+</pre>
+</blockquote>
+<p>You can also specify a default value:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; getattr(a, 'XXX', 'fiddle')
+'fiddle'
+</pre>
+</blockquote>
+<p>'getattr' will work on any object where you would normally access
+attributes with a period, e.g. 'X.Y' is equivalent to getattr(X, 'Y').
+It is the safest way to check for attributes.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,669 @@
+Lab 1 Material / August 28th, 2008
+==================================
+
+This material is all in doctest format; to run the doctest, do ::
+
+  import doctest
+  doctest.testfile(filename)
+
+in Python.
+
+That will run all of the code following '>>>' and '...' and compare the
+actual output to the expected in-line output.  Neat, eh?
+
+Goals of this lab: get you used to basic Python syntax and some
+moderately complicated constructs; introduce introspection, print, and
+"duck typing".
+
+Using "complex" data types in Python
+------------------------------------
+
+Apart from the usual (int, string, etc.) there are some very nice
+complex data types in Python.  The first two that I'd like to draw your
+attention to are lists and dictionaries.
+
+Lists are just... lists of stuff.  You can create empty ones, append to them,
+etc.
+
+ >>> x = []
+ >>> x.append(5)
+ >>> x.append('a')
+ >>> x.append(0.1)
+ >>> x
+ [5, 'a', 0.10000000000000001]
+
+As you can see, there's no requirement to make all of the entries in a list
+the same type of object -- they can be whatever you want.
+
+You can, of course, index lists by integers; 0 is the starting index, just
+as in C and Java.
+
+ >>> x[0]
+ 5
+ >>> x[1]
+ 'a'
+ >>> x[2]
+ 0.10000000000000001
+
+Note that you can also create empty lists by explicitly calling the
+list constructor:
+
+ >>> x = list()
+
+and you can also initialize them in place both ways:
+
+ >>> x = [5, 'a', 0.1]
+
+or
+
+ >>> x = list((5, 'a', 0.1))
+
+You can also assign to list elements by index:
+
+ >>> x[2] = 'z'
+ >>> x
+ [5, 'a', 'z']
+
+Dictionaries are even more useful than lists, and they're really at the
+heart of Python.  Dictionaries are basically just hashes, or maps, and they
+store key, value pairs:
+
+ >>> y = {}
+ >>> y['a'] = 1
+ >>> y[2] = 0.2
+ >>> y[0.3] = 5
+ >>> y
+ {'a': 1, 2: 0.20000000000000001, 0.29999999999999999: 5}
+
+As with lists, there's no requirement that you store the same types of
+things in keys or values.  Values can be whatever you want, while keys
+must be hashable (more on that later).
+
+Instead of indexing dicts by integers, as with lists, you index them by
+key:
+
+ >>> y['a']
+ 1
+ >>> y[2]
+ 0.20000000000000001
+ >>> y[0.3]
+ 5
+
+You can delete and overwrite as well:
+
+ >>> del y[0.3]
+ >>> y[2] = 'nada'
+ >>> y
+ {'a': 1, 2: 'nada'}
+
+You can call 'len' on both lists and dicts to get their length:
+
+ >>> len(x)
+ 3
+ >>> len(y)
+ 2
+
+and dictionaries support retrieval of keys, values, and key-value
+pairs ("items"):
+
+ >>> y.keys()
+ ['a', 2]
+ >>> y.values()
+ [1, 'nada']
+ >>> y.items()
+ [('a', 1), (2, 'nada')]
+
+Note that all of these are lists; in the last case, they are lists of
+two-tuples (see below), with the first element of each tuple being the
+key and the second the value.  You can access things as you might
+expect:
+
+ >>> y.items()[0][1]
+ 1
+
+One type of Python object that you might confuse with a list is a *tuple*.
+tuples are just immutable lists, and you use '()' to define them rather
+than '[]'.
+
+ >>> z = (5, 'a', 'z')
+ >>> z[0]
+ 5
+ >>> z[0] = 6
+ Traceback (most recent call last):
+   ...
+ TypeError: 'tuple' object does not support item assignment
+
+One useful difference between lists and tuples is that because tuples
+are immutable, you can use them as keys to dictionaries:
+
+ >>> y[z] = 'pony'
+ >>> y
+ {'a': 1, 2: 'nada', (5, 'a', 'z'): 'pony'}
+
+Lists and tuples are interconvertible, too:
+
+ >>> x_tup = tuple(x)
+ >>> z_list = list(z)
+
+and you can convert the keys in a dictionary into a list too:
+
+ >>> y_keys = list(y)
+
+Technically, anything that is *iterable* can be passed into both the
+tuple and list constructors; see iterators, below.
+
+There are a bunch of other Python types that we'll run across.  The
+only really important one to mention at this point is 'object', which
+is the base of all (well, most) Python objects.  To define a new class
+(type of object) you can just do this:
+
+ >>> class MyNewClass(object):
+ ...    def __init__(self, value):
+ ...       self.v = value
+ ...
+ ...    def some_method(self):
+ ...       print 'my value is', self.v
+
+To create objects of this type, just call the constructor like so:
+
+ >>> a = MyNewClass(5)
+
+and then call methods or access attributes as you might expect:
+
+ >>> a.v
+ 5
+ >>> a.some_method()
+ my value is 5
+
+We'll talk more about classes down the road.
+
+Iterating over lists and dicts
+------------------------------
+
+As you saw above, you can convert lists and dicts into, well, lists.  How
+would you use this in a loop?
+
+Let's start with a list:
+
+ >>> x = ['a', 'b', 'c']
+
+To iterate over this in a loop, you could imagine doing this:
+
+ >>> i = 0
+ >>> while i < len(x):
+ ...   print x[i]
+ ...   i += 1
+ a
+ b
+ c
+
+but that's grotesque!  How about:
+
+ >>> for i in range(0, len(x)):
+ ...   print x[i]
+ a
+ b
+ c
+
+but it turns out you can actually do something even cleaner:
+
+ >>> for item in x:
+ ...   print item
+ a
+ b
+ c
+
+What if you want the item indices?  Use 'enumerate':
+
+ >>> for n, item in enumerate(x):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+A couple notes on these last two examples.  First, 'enumerate' wraps
+any iterable -- literally, any object which can be iterated over --
+and simply returns each item count along with the item in a tuple.
+Second, we're actually doing something called "tuple unpacking" in the
+last example: you could rewrite it like this, to be more explicit:
+
+ >>> for (n, item) in enumerate(x):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+(but there's no need to put the parantheses in).  Literally this is just
+unpacking the result of the enumerate, which we can see in list form as:
+
+ >>> list(enumerate(x))
+ [(0, 'a'), (1, 'b'), (2, 'c')]
+
+We can do the same sort of thing (iterate with a for loop) to dictionaries,
+except now we're iterating (in no guaranteed order, note!) over the keys:
+
+ >>> y = dict(x=1, y=2, z=3)
+ >>> for key in y:
+ ...   print key, y[key]
+ y 2
+ x 1
+ z 3
+
+The sequence protocol: making things look like lists
+----------------------------------------------------
+
+Before we move on to the iterator protocol, let me show you a really
+neat feature of Python: making your own objects look like lists
+(technically "sequences").
+
+Let's write a class that squares a list handed to it, but only
+when the elements are actually requested.   By defining one special
+method, and '__getitem__', we can make this class behave
+like a list:
+
+ >>> class SquareMe(object):
+ ...   def __init__(self, some_numbers):
+ ...      self.n = some_numbers
+ ...   def __getitem__(self, index):
+ ...      print 'ASKING FOR ITEM', index, 'VALUE', self.n[index]
+ ...      return self.n[index]**2
+
+You can now access this object just as if it's a list:
+
+ >>> x = SquareMe([5, 6, 7])
+ >>> x[2]
+ ASKING FOR ITEM 2 VALUE 7
+ 49
+
+and of course you can also iterate over it:
+
+ >>> for i in x:
+ ...   print i
+ ASKING FOR ITEM 0 VALUE 5
+ 25
+ ASKING FOR ITEM 1 VALUE 6
+ 36
+ ASKING FOR ITEM 2 VALUE 7
+ 49
+ ASKING FOR ITEM 3 VALUE
+
+Note that here Python understands the kind of error returned by
+accessing an invalid index in a list, and the 'for' loops knows to
+quit at that point.  That's why you get the 'ASKING FOR ITEM 3 VALUE'
+message at the end there.
+
+Doing this kind of thing with your own objects is a powerful way to
+extend Python, and we'll make use of it in this class occasionally.
+
+Here's the documentation on what you can or should extend to implement
+a full "container-like" type:
+
+  http://docs.python.org/ref/sequence-types.html
+
+The mapping protocol: making things look like dicts
+---------------------------------------------------
+
+You can also make your own objects look like dictionaries.  This is a bit
+more complicated, because dictionaries have a lot of different methods on
+them, but there is a nice trick to use...
+
+Let's define a dictionary that, if any number under 100 is used as a key,
+returns the square of that number:
+
+ >>> import UserDict
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def keys(self):
+ ...     return range(0, 100)
+ ...   def __getitem__(self, key):
+ ...     print 'ASKED FOR', key
+ ...     return key**2
+
+ >>> x = MySquareDict()
+ >>> x[0]
+ ASKED FOR 0
+ 0
+ >>> x[5]
+ ASKED FOR 5
+ 25
+
+OK, so what's really going on here!?  Well, we're using `DictMixin
+<http://docs.python.org/ref/sequence-types.html>`__, which is a `mixin
+class <http://en.wikipedia.org/wiki/Mixin>`__ that provides a full
+read-only dictionary interface for classes that already possess
+__getitem__ and keys().  (If you provide __delitem__ and __setitem__,
+you get a *full* dictionary interface.)  Here, keys() just returns
+the list of numbers between 0 and 100 (that's what range returns).
+
+This means that not only can you call __getitem__ and keys(), but you
+can ask for other dictionary methods like has_key() that you didn't
+explicitly define:
+
+ >>> x.has_key(20)
+ ASKED FOR 20
+ True
+ >>> x.has_key(99)
+ ASKED FOR 99
+ True
+
+Unfortunately in this case we didn't do a great job of defining this
+class, because keys() only returns a subset (0..99) of the actual legal
+keys:
+
+ >>> x.has_key(101)
+ ASKED FOR 101
+ True
+
+As you can see, when you call has_key(), all it's doing is trying to ask
+for key 101 -- and if __getitem__ doesn't kick up a fuss, well, then it
+obviously has that key!  We can redefine __getitem__ appropriately:
+
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def keys(self):
+ ...     return range(0, 100)
+ ...   def __getitem__(self, key):
+ ...     if key >= 0 and key < 100:
+ ...        return key**2
+ ...     raise KeyError
+
+ >>> x = MySquareDict()
+ >>> x.has_key(101)
+ False
+
+and get the right answer.
+
+One last note -- if we want to pass in a max number through the constructor,
+we can do that, too:
+
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def __init__(self, max_num):
+ ...     self.max_num = max_num
+ ...   def keys(self):
+ ...     return range(0, self.max_num)
+ ...   def __getitem__(self, key):
+ ...     if key >= 0 and key < self.max_num:
+ ...        return key**2
+ ...     raise KeyError
+
+ >>> x = MySquareDict(500)
+ >>> x.has_key(499)
+ True
+
+Iterators and the iterator protocol
+-----------------------------------
+
+In programming, you frequently want to loop over things -- things in
+lists, or dictionaries, or on disk, in databases, over the Web, whatever.
+So Python has formalized this in an 'iterator' protocol, a way for objects
+to let Python know how to iterate over them.
+
+The iterator protocol is pretty simple, but has a fair amount of syntax
+associated with it.  Your class has to define an __iter__ method, and
+that method has to return an object with a 'next' function on it; then
+to iterate, Python calls the 'next' function until it raises a
+StopIteration exception.  (More on exceptions much later...)
+
+Here's a really simple and not so useful iterator:
+
+  >>> class NullThing(object):
+  ...   def __iter__(self):
+  ...     return self
+  ...   def next(self):
+  ...     raise StopIteration
+
+(Note that here __iter__ is returning the same object, which is a
+convenient way of not having to define two classes...)
+
+  >>> x = NullThing()
+  >>> for y in x:
+  ...   print 'HELLO, WORLD'
+
+Yep, the for loop exits immediately because the 'next' method immediately
+raises StopIteration!
+
+One thing to keep in mind about about iterators is that they do not
+necessarily know anything in advance.  This means that you can't call
+'len' on an iterator, for example...
+
+Any finite iterator can be converted into a list like so:
+
+  >>> list(NullThing())
+  []
+
+Generators and maintaining implicit state
+-----------------------------------------
+
+One of the frustrating things about iterators is that with simple
+iterators, you spend a lot of time *maintaining state* -- that is, if
+you want to just do something to a list, you have to retain the index
+you're using.  For example, consider the following ugly implementation
+of 'enumerate' as an iterator:
+
+ >>> class Enumerator(object):
+ ...   def __init__(self, thing):
+ ...     self.thing = iter(thing)
+ ...     self.count = -1
+ ...   def __iter__(self):
+ ...     return self
+ ...   def next(self):
+ ...     val = self.thing.next()
+ ...     self.count += 1
+ ...     return self.count, val
+
+Sure, it works:
+
+ >>> for n, item in Enumerator(['a', 'b', 'c']):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+but that's a lot of code for something so simple!
+
+It turns out, Python recently added *generator* functions.  These are
+functions that generate re-entrant instances, by which I mean that
+they implicitly hold local state.  Here's a generator version of
+'enumerate':
+
+ >>> def enumerator(thing):
+ ...   count = 0
+ ...   for item in thing:
+ ...     yield count, item
+ ...     count += 1
+
+Here, the 'yield' statement tells Python that the function
+'enumerator' is actually a generator, and that when you call it, you
+should get back an iterator object that will return values from
+'yield'.
+
+See, it works!
+
+ >>> for n, item in enumerator(['a', 'b', 'c']):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+But how does the function know when to exit?  The implicit exit
+condition is in the for loop, which will end when the 'thing' can
+no longer be iterated over.
+
+Literally what is happening is that every time you call 'enumerator',
+Python is making a *new* generator (a.k.a. complicated iterator) out
+of it and storing the values of 'count' and the status of the 'thing'
+iteration in variables local to that instance of the function.
+
+One of the fun things about generators and iterators, incidentally,
+is that they can both be *infinite*: consider this generator,
+
+ >>> def squares():
+ ...   count = 0
+ ...   while 1:
+ ...     yield count**2
+ ...     count += 1
+
+Note the lack of exit condition... you can iterate over that indefinitely!
+You've got to put in your own exit condition:
+
+ >>> for x in squares():
+ ...   print x
+ ...   if x > 20:
+ ...     break
+ 0
+ 1
+ 4
+ 9
+ 16
+ 25
+ 
+Reimplementing 'range'
+----------------------
+
+Just to drive the points home, here are two implementations of the
+same 'range'-like function.
+
+ >>> class RangeAsIterator(object):
+ ...   def __init__(self, min_num, max_num):
+ ...     self.max_num = max_num
+ ...     self.curr = min_num - 1
+ ...   def __iter__(self):
+ ...     return self
+ ...   def next(self):
+ ...     if self.curr < self.max_num - 1:
+ ...        self.curr += 1
+ ...        return self.curr
+ ...     raise StopIteration
+
+ >>> list(RangeAsIterator(0, 5))
+ [0, 1, 2, 3, 4]
+
+ >>> def range_as_generator(min_num, max_num):
+ ...   while min_num < max_num:
+ ...     yield min_num
+ ...     min_num += 1
+
+ >>> list(range_as_generator(0, 5))
+ [0, 1, 2, 3, 4]
+
+List and generator comprehensions, and scope
+--------------------------------------------
+
+A few more cute Python tricks: you can generate a list in-place using
+a list comprehension, which returns a list:
+
+ >>> [ x**2 for x in range(1, 4) ]
+ [1, 4, 9]
+
+or what's called a 'generator comprehension':
+
+ >>> y = ( x**2 for x in range(1, 4) )
+ >>> type(y)
+ <type 'generator'>
+ >>> for item in y:
+ ...   print item
+ 1
+ 4
+ 9
+
+As above with lists and generators, the main difference here is that the
+generator values are not calculated until you ask for them.  One minor
+difference is that of scope: variables used in list comprehensions "leak",
+
+ >>> z = [ x**2 for x in range(0, 100) ]
+ >>> x
+ 99
+
+while variables used in generator comprehensions do not:
+
+ >>> z = list( (x**2 for x in range(0, 500)) )
+ >>> x
+ 99
+
+Introspection and interactivity in Python
+-----------------------------------------
+
+Python lets you figure out what methods and attributes objects have;
+consider the following way of figuring out what attributes
+dictionaries have:
+
+ >>> d = {}
+ >>> attributes = dir(d)
+ >>> print "\n".join(attributes)
+ __class__
+ __cmp__
+ __contains__
+ __delattr__
+ __delitem__
+ __doc__
+ __eq__
+ __ge__
+ __getattribute__
+ __getitem__
+ __gt__
+ __hash__
+ __init__
+ __iter__
+ __le__
+ __len__
+ __lt__
+ __ne__
+ __new__
+ __reduce__
+ __reduce_ex__
+ __repr__
+ __setattr__
+ __setitem__
+ __str__
+ clear
+ copy
+ fromkeys
+ get
+ has_key
+ items
+ iteritems
+ iterkeys
+ itervalues
+ keys
+ pop
+ popitem
+ setdefault
+ update
+ values
+
+Yikes, that's a lot!  What do they all do?
+
+ >>> help(d.values)
+ Help on built-in function values:
+ <BLANKLINE>
+ values(...)
+     D.values() -> list of D's values
+ <BLANKLINE>
+
+You can generally do that sort of thing (call 'dir', and/or 'help') to
+any Python object.  In fact, if you define your own functions
+properly, you can ask for help on them, too:
+
+ >>> def f():
+ ...   """
+ ...   f prints hello, world
+ ...   """
+ ...   print 'hello, world'
+
+ >>> help(f)
+ Help on function f:
+ <BLANKLINE>
+ f()
+     f prints hello, world
+ <BLANKLINE>
+
+One more Python jujitsu move: you can (if you *really* want to) use
+'type' to figure out what things are:
+
+ >>> type(d)
+ <type 'dict'>
+ >>> type(f)
+ <type 'function'>
+
+but Python is all about `duck typing
+<http://en.wikipedia.org/wiki/Duck_typing>`__ so you should view this
+as a way to explore code and not use it to confirm types *in* your
+code.  More on this later.

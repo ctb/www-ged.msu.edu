@@ -1,0 +1,38 @@
+Homework 7: Writing a Web server, part 5
+----------------------------------------
+
+Due Thursday, Oct 16th, at 12:40pm (lab start).
+
+----
+
+Download the new webserve test code here: ::
+
+  http://class.ged.idyll.org/svn/files/hw-7/webserve-test.py
+
+and modify your 'webserve.py' from HW #6 to make the tests pass.
+
+HW #7 adds static file serving to HW #6.  Any URL not explicitly
+handled by Python code (``/test/*`` and ``/auth/*``) should serve a
+file from the ``files/`` subdirectory (see
+http://class.ged.idyll.org/svn/files/hw-7/files/) or return a 404/file
+not found error if the file does not exist or cannot be opened.  Be
+sure to set the Content-Type to the appropriate MIME type for each
+file based on its extension, e.g. 'text/html' for .html files.
+
+Make sure that the top URL, '/', correctly points to 'index.html', and
+that the in-line image 'standing.jpg' is properly served.
+
+Please also make sure that your cookie handling from HW #6 works
+properly with a real Web browser; that is, when running your Web
+server and access the site,
+
+ - logging in with either of the valid user/password combinations from
+   the tests sets the 'user' cookie properly on your browser;
+
+ - /auth/print properly shows which user (if any) is logged in;
+
+ - /auth/logout properly clears the user cookie.
+
+You can use the form included at the bottom of
+http://class.ged.idyll.org/svn/files/hw-7/files/index.html to test out
+your /auth/login code.

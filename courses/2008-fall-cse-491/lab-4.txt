@@ -1,0 +1,252 @@
+=====================================
+Lab 4 Material / September 18th, 2008
+=====================================
+
+Handling text in Python
+-----------------------
+
+A few useful tips for string handling etc. in Python.
+
+First, string interpolation:
+
+   >>> s = "put a placeholder %s in a string"
+   >>> print s % 'some value'
+   put a placeholder some value in a string
+
+If you substitute for more than one '%s', use a tuple:
+
+   >>> s = "p1: %s p2: %s"
+   >>> print s % ('value1', 'value2')
+   p1: value1 p2: value2
+
+String interpolation using a dictionary (good for any long examples):
+
+   >>> s = "you can put in named placeholders %(name1)s %(name2)s"
+   >>> d = {}
+   >>> d['name1'] = 'bert'
+   >>> d['name2'] = 'ernie'
+
+Now use that dictionary to fill in the named placeholders:
+
+   >>> print s % d
+   you can put in named placeholders bert ernie
+
+For parsing, I find 'split' to be quite useful.  By default, 'split'
+breaks on whitespace:
+
+   >>> s = "some string"
+   >>> s.split()
+   ['some', 'string']
+
+but you can make it split on anything:
+
+   >>> s = "foobarbaz"
+   >>> s.split('bar')
+   ['foo', 'baz']
+
+Threading and concurrency
+-------------------------
+
+The ``threading`` module is the default Python API for threading:
+
+ >>> import threading
+
+Let's try a simple example of starting another thread.  First, define
+a function to run:
+
+ >>> def say(what):
+ ...   print 'SAY?', what
+
+OK, now let's run that function in a separate thread of execution by
+creating a thread object:
+
+ >>> t = threading.Thread(target=say, args=('hello, world',))
+
+This thread, when started, will now call ``say('hello, world')``.
+(You can pass as many arguments as you want into the function via the
+``args`` tuple.)
+
+Now, start the thread!
+
+ >>> t.start()
+ SAY? hello, world
+
+OK, not very impressive yet... but I assure you that the 'say' function
+is being run in a different thread of execution.  Let's try altering the
+'say' function to do something a bit more interesting, and then run
+two threads.
+
+First, define the 'say' function to pause for a specified amount of time:
+
+ >>> import time
+ >>> def say(what, pause=0):
+ ...   time.sleep(pause)
+ ...   print 'SAY?', what
+
+and create two threads, one which will run 'say' with a pause of half
+a second, the other which will run 'say' with a pause of 0.2 seconds.
+Now start 'em, and wait for the first one to finish.
+
+ >>> t1 = threading.Thread(target=say, args=('THREAD 1', 0.5))
+ >>> t2 = threading.Thread(target=say, args=('THREAD 2', 0.2))
+ >>> t1.start()
+ >>> t2.start()
+ >>> t1.join()
+ SAY? THREAD 2
+ SAY? THREAD 1
+
+So, even though you started them in the right order (1, then 2) you
+got the output in the reverse order, because the pause in the second
+thread was shorter than the pause in the first thread.
+
+Also note that both threads are printing to the same stdout here, so
+if you are running things at the same time you'll get output collision.
+For example, try copy & pasting this example into Python: ::
+
+ import threading, time
+ def loop_print(ch):
+
+    for i in range(50):
+      time.sleep(.0001)
+      print ch,
+
+ t1 = threading.Thread(target=loop_print, args=('a',))
+ t2 = threading.Thread(target=loop_print, args=('b',))
+ t1.start()
+ t2.start()
+
+This will print out a bunch of overlapping 'a's and 'b's (and not
+always in the same order, either, because there's no guarantee on
+order of execution here).
+
+Now, consider incrementing a variable in a stupid way: ::
+
+ x = 0
+ def increment_x_by_1000():
+   global x
+   for i in range(5):
+      time.sleep(0.01)
+      current_value = x
+      next_value = current_value + 1
+      x = next_value
+
+ t1 = threading.Thread(target=increment_x_by_1000)
+ t2 = threading.Thread(target=increment_x_by_1000)
+ t1.start()
+ t2.start()
+
+ print x
+
+versus using a lock: ::
+
+ lock = threading.Lock()
+
+ x = 0
+ def increment_x_by_1000():
+   global x
+   for i in range(5):
+      time.sleep(0.01)
+      lock.acquire()
+      try:
+        current_value = x
+        next_value = current_value + 1
+        x = next_value
+      finally:
+        lock.release()
+
+ t1 = threading.Thread(target=increment_x_by_1000)
+ t2 = threading.Thread(target=increment_x_by_1000)
+ t1.start()
+ t2.start()
+
+ print x
+
+Threading and locks summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So, in summary, threads: ::
+
+  t = threading.Thread(target=<function>, args=<tuple of args for target>)
+
+  t.start() # run the thread
+  t.join()  # block execution until the thread is done
+
+See the `thread object documentation
+<http://docs.python.org/lib/thread-objects.html>`__ for more info.
+
+locks: ::
+
+  lock = threading.Lock()
+
+  lock.acquire()    # grabs a lock, blocking until it's available
+  lock.release()    # releases a lock that you "own"
+
+Make sure you *always* release locks, e.g. ::
+
+  lock.acquire()
+  try:
+    ...
+  finally:
+    lock.release()
+
+See the `lock object documentation
+<http://docs.python.org/lib/lock-objects.html>`__ for more info.
+
+Lab problem #1: threaded echo server
+------------------------------------
+
+Take the blocking echo server from HW 2; you can use mine if you like:
+
+    http://class.ged.idyll.org/svn/files/hw-2/echo-server
+
+Make it use threads to handle connections.
+
+For each of your three echo servers (blocking, non-blocking, and
+threaded) run the following three scripts and write down the time each
+script takes to run (it's reported by each script).
+
+    http://class.ged.idyll.org/svn/files/lab-4/single-request
+
+    http://class.ged.idyll.org/svn/files/lab-4/several-requests
+
+    http://class.ged.idyll.org/svn/files/lab-4/many-requests
+
+If you want, use 'time on Linux to measure the CPU usage of each echo
+server, too: for example, ::
+
+    % time python echo-server '' 5000
+
+will report "real" time, user time, and system (OS) time spent handling
+the requests.
+
+Lab problem #2: logging threaded echo server
+--------------------------------------------
+
+Take your threaded echo server and modify it so that it appends each
+message received to a file 'log.txt'.  For example, if two connections
+were each sending three messages, ``foo\n``, ``bar\n``, and ``baz\n``,
+then the log file could look something like this: ::
+
+    foo
+    bar
+    foo
+    baz
+    bar
+    baz
+
+Your code *must* use the following function to write to the log file: ::
+
+    _fp = None
+    def write_message(message):
+       global _fp
+       if _fp is None:
+         _fp = open('log.txt', 'w')
+
+       for ch in message:
+          _fp.write(ch)
+
+You can use the test echo server, here
+
+    http://class.ged.idyll.org/svn/files/hw-3/test-echo-server
+
+to test your code if you like, or any of the test scripts above.

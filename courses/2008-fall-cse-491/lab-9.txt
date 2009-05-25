@@ -1,0 +1,267 @@
+===================================
+Lab 9 Material / October 23rd, 2008
+===================================
+
+Running tests is good.  Making tests easier to run is better.  Better test
+reporting is even better.
+
+Preparation
+-----------
+
+Today is going to be about *tools* -- I want to give you the tools to
+do better and more convenient testing.
+
+We'll be doing everything on arctic today, because that's where I've
+installed all the necessary software.  Talk to me if you need help
+installing any of these tools for your own work environment; they're
+all open source and freely available.
+
+Start by loading in my environment: ::
+
+     source ~ctb/python-env.csh
+
+and checking out the lab-9 materials: ::
+
+     svn co http://class.ged.idyll.org/svn/files/lab-9/
+
+(This may take a while; you can also do:
+
+     cp -r ~ctb/lab-9 lab-9
+
+if you want)
+
+OK, now you should be set!
+
+Using nose to run tests
+-----------------------
+
+'nose' is an add-on package for Python that lets you run unit tests
+more nicely.  Try: ::
+
+  % nosetests webserve-test.py
+  ...........................
+  ----------------------------------------------------------------------
+  Ran 27 tests in 0.023s
+
+  OK
+
+in your homework8 directory (or equivalently in the lab-9/ directory).
+
+You can get more verbose output like so: ::
+
+  % nosetests -v webserve-test.py
+  Check that URLs not explicitly handled return 404s. ... ok
+  test_add_user (webserve-test.CheckAddUser) ... ok
+  GET / ==> files/index.html ... ok
+  ...
+
+This prints out the information from each test's docstring.
+
+So, why is nose an improvement over unittest?  There are a bunch of reasons,
+but two of the most important are that it **captures output** and
+it lets you **selectively run tests**.
+
+Capturing output
+~~~~~~~~~~~~~~~~
+
+What do I mean by capturing output?
+
+Go into the lab-9/ directory and run: ::
+
+  % python simple-test.py
+  foo
+  bar
+  Ffib
+  faz
+  .
+  ======================================================================
+  FAIL: test_error (__main__.SimpleTest)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "simple-test.py", line 8, in test_error
+      assert False, "this test fails"
+  AssertionError: this test fails
+  ----------------------------------------------------------------------
+  Ran 2 tests in 0.000s
+
+  FAILED (failures=1)
+
+
+If you look at the simple-test.py file, you'll see that the print
+statements in each test function are all printed out before any
+errors, which makes it difficult to figure out what print statements
+are associated with what tests.
+
+Now try: ::
+
+  % nosetests simple-test.py
+  F.
+  ======================================================================
+  FAIL: test_error (simple-test.SimpleTest)
+  ----------------------------------------------------------------------
+  Traceback (most recent call last):
+    File "/Users/t/Desktop/teaching/week9/lab/simple-test.py", line 8, in test_error
+      assert False, "this test fails"
+  AssertionError: this test fails
+  -------------------- >> begin captured stdout << ---------------------
+  foo
+  bar
+
+  --------------------- >> end captured stdout << ----------------------
+
+  ----------------------------------------------------------------------
+  Ran 2 tests in 0.001s
+
+  FAILED (failures=1)
+
+Here, 'nose' has captured the test print output for each test and
+either hidden it (for the successful test) or printed it out along
+with the test error.
+
+This simple change lets you put as many print statements into your
+test code as you want, without contaminating the output when your
+tests are successful; and it lets you see *exactly* what print statements
+are executed for failing tests.
+
+Selectively running tests
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another major convenience of nose is that it will let you pick out and
+selectively run tests.  For example, 
+nose will let you run precisely one test.  Try: ::
+
+  % nosetests webserve-test.py:TestDelegate.test_1
+  .
+  ----------------------------------------------------------------------
+  Ran 1 test in 0.013s
+  
+  OK
+
+This runs the 'test_1' function on the 'TestDelegate' class in the
+file 'webserve-test.py'.
+
+Testing with twill
+------------------
+
+twill (http://twill.idyll.org/) is another useful testing tool.  It's
+an **HTTP driver** that lets you script Web page actions through either
+a simple command language or through Python directly.  This lets you
+do more *functional* testing -- testing from socket connections all
+the way through to your database code -- than the unit tests let you do.
+
+Let's start by looking at a simple twill script for testing our login site.
+You can look at it here:
+
+    http://class.ged.idyll.org/svn/files/lab-9/test-login.twill
+
+and it should be in your lab-9/ subdirectory.
+
+This script starts by going to the login form, fills it in with
+test/test, submits it, and checks to make sure that login worked
+properly.  Then it goes and does a bunch of other stuff, basically
+duplicating some of the unit tests that I gave you.
+
+Try it out; to run it against my example server, do: ::
+
+   % twill-sh -u http://class.ged.idyll.org:8080/ test-login.twill
+
+(You can also run it against your own server by putting that URL in.)
+
+The difference between this and the unit tests is that this is
+checking to make sure your entire server-side software stack -- HTTP
+and socket handling included -- work properly.  Unlike the unit tests,
+twill tests can figure out if your HTTP is malformed, or not being
+sent right to the socket, or whatnot.
+
+The tradeoff is that you lose granularity: you can't test functions in
+isolation with twill.  So, if you mess up your handle_connection
+function, for example, all of the tests will fail - even if your delegate
+function is still working properly.
+
+twill from Python
+-----------------
+
+twill is written in Python, and so you can run the twill commands
+directly from Python. (You can also extend twill with Python functions,
+which we probably won't do in this class.)
+
+I've translated the top part of the test-login.twill script into Python;
+take a look at it here:
+
+   http://class.ged.idyll.org/svn/files/lab-9/test-login-with-twill.py
+
+You can run it against a Web site by typing ::
+
+   python test-login-with-twill http://class.ged.idyll.org:8080/
+
+Generally I would recommend using the twill script for testing
+purposes; that way you won't have to debug your test scripts.  But you
+can do all sorts of things with twill, Python, and other Web sites...
+
+Testing with Selenium
+----------------------
+
+OK, the last set of neat testing technology we'll explore is Selenium Core,
+a browser-based JavaScript library that lets you drive your Web application
+from within your Web application.
+
+Confused?
+
+Go here:
+
+   http://class.ged.idyll.org:8080/
+
+and click on "Visit the Selenium tests under tests/".
+
+Click on "Introductory Selenium test suite".
+
+You should see a list of test suites on the upper left, and a control
+panel on the upper right.  Adjust the speed to "slow" and hit the
+green "play" button (leftmost).
+
+Selenium will now run through the given test suite, running the tests
+(specified in HTML tables) one by one in sequence.
+
+Pretty cool, eh?
+
+What's really going on here?!  Well, Selenium is a JavaScript library
+that reads test commands specified in HTML tables and runs them; these
+commands can include things like "go to this page" and "fill out this
+form this way".  The neat thing is that it actually uses your browser
+to do it, so you can run the same tests in Firefox, IE, Safari, etc. --
+any browser that supports JavaScript.
+
+(And, as you'll see later, Selenium is one of the few ways you can
+actually *test* the interaction of browser-side JavaScript with the
+Web server, e.g. testing of AJAX code...)
+
+How is this encoded?  Well, briefly, if you look under
+
+   http://class.ged.idyll.org/svn/files/lab-9/files/tests/
+
+you can see the list of test suites in index.html,
+
+   http://class.ged.idyll.org/svn/files/lab-9/files/tests/index.html
+
+the test suite being run under
+
+   http://class.ged.idyll.org/svn/files/lab-9/files/tests/suite.html
+
+and an example test here:
+
+   http://class.ged.idyll.org/svn/files/lab-9/files/tests/SimpleLoginTests.html
+
+The only tricky stuff is in the last file, which contains a list of
+**commands** ('open', 'type', etc.) and arguments to those commands.
+The actual commands should be pretty straightforward to understand.
+
+Conclusion
+----------
+
+Unit tests, and the nose tool, and twill, and Selenium, are all tools
+to *help you test* by making it easy to write, organize, and run your
+tests.  You don't necessarily have to use them (although I will ask
+you to write twill and Selenium tests) but they can really help speed
+up your development work.  Moreover, they make it relatively easy to
+test things like Web servers, and (even better) twill and Selenium are
+language-independent -- they can be used to test *any* Web server.

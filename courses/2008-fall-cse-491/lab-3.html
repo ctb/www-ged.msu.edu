@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab 3 Material / September 11th, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-3-material-september-11th-2008">
+<h1 class="title">Lab 3 Material / September 11th, 2008</h1>
+<div class="section">
+<h1><a id="homework-2-stuff" name="homework-2-stuff">Homework #2 Stuff</a></h1>
+<div class="section">
+<h2><a id="handing-in-hw" name="handing-in-hw">Handing in HW</a></h2>
+<p>Anyone who hasn't handed in HW #2 should either check it in
+immediately or send it to me in e-mail right now.  If you can't go to
+your Subversion server Web URL and get the latest (correct) version of
+things right now, then it's not handed in -- make sure I have it in
+e-mail.</p>
+</div>
+<div class="section">
+<h2><a id="copying-code-examples" name="copying-code-examples">Copying code examples</a></h2>
+<p>Several people caused problems for themselves by not paying sufficient
+attention to the exact order in which I was doing things in my SMTP
+examples.</p>
+<p>First, I run most code that I hand out; if it's in a doctest format,
+then I <em>do</em> run it.  So if there's a problem, it's <em>probably</em> not in
+my code.</p>
+<p>Second, all of the lecture and lab notes, as well as the homeworks, are
+available online, under this URL:</p>
+<blockquote>
+<a class="reference" href="http://ged.msu.edu/courses/2008-fall-cse-491/materials.html">http://ged.msu.edu/courses/2008-fall-cse-491/materials.html</a></blockquote>
+<p>They are all available in text format, so you should seriously consider
+<em>copying and pasting</em> the code from those pages first, to make sure that
+works.  If you copy and paste code and it doesn't work, then the odds are
+slightly higher that I'm at fault.</p>
+</div>
+<div class="section">
+<h2><a id="print-statements" name="print-statements">Print statements</a></h2>
+<p>I had several people come talk to me last night about code that looked
+like this:</p>
+<pre class="literal-block">
+while 1:
+  data = socket.recv(...)
+  if data == '\n.\n':
+    break
+</pre>
+<p>They said, &quot;it's never breaking out of the loop.&quot;  I said, &quot;that must
+be because your if statement is never true.&quot;  They said, &quot;but I'm sure
+it is! I'm sending <tt class="docutils literal"><span class="pre">\n.\n</span></tt> from the other end!&quot;</p>
+<p>Usually, they weren't.</p>
+<p>And in any case, you need to put in print statements to make sure you
+know what is going on.  In this case, I'd rewrite the code to this:</p>
+<pre class="literal-block">
+print '** entering while loop'
+while 1:
+  print '** asking for data'
+  data = socket.recv(...)
+  print 'received data:', (data,)
+
+  if data == '\n.\n':
+    print 'TRUE! breaking.'
+    break
+</pre>
+<p>Note that use of <tt class="docutils literal"><span class="pre">(data,)</span></tt>... what does this do?</p>
+</div>
+<div class="section">
+<h2><a id="synchronous-i-o" name="synchronous-i-o">Synchronous I/O</a></h2>
+<p>A number of people had problems with the spambot where they received
+a &quot;synchronization error&quot; from the server.</p>
+<p>This was often because they either sent wrong data to the server and
+didn't eyeball what the server returned (an error message...) before
+sending more data, OR they messed up the conversation (see &quot;Copying
+code examples&quot;, above).  Remember, SMTP and HTTP are <em>synchronous</em>
+protocols so you need to send and receive the right messages in the
+right order:</p>
+<pre class="literal-block">
+server: Hello!
+client: Hi!
+
+server: Welcome!
+client: Here's my from address.
+
+server: Excellent!  We take that here.
+client: Good -- here's an address I'm sending *to*.
+
+server: OK.  Looks good to me.
+client: Here's the data, then.
+</pre>
+<p>etc.  If you omit any step in this conversation the server will
+justifiably be upset at you for being rude.</p>
+</div>
+<div class="section">
+<h2><a id="data-breakup-etc" name="data-breakup-etc">Data breakup etc.</a></h2>
+<p>I sort of glossed over this in description of TCP, but you need to be
+aware that clients and servers are under no particular requirement to
+send their data in the right chunks.  Thus, one problem that people had
+was in this comparison:</p>
+<pre class="literal-block">
+data = sock.recv(4096)
+if data == '\n.\n':
+   ...
+</pre>
+<p>If you used telnet to test this code, then you'd find two things:
+first, telnet uses 'rn' instead of 'n'; and second, telnet sends
+each line individually, so data would first be</p>
+<pre class="literal-block">
+\r\n
+</pre>
+<p>and then</p>
+<pre class="literal-block">
+.\r\n
+</pre>
+<p>second.  Thus the above 'if' statement would never be true.  Did you
+receive a newline followed by a period followed by a newline?  Sure!
+You just didn't keep track of it properly.</p>
+<p>One way to think about this for future work is that your code should
+work just as well (if a bit slower) if you change the size of the receive
+buffer from '4096' to '1': so, instead of the obviously ridiculous</p>
+<pre class="literal-block">
+data = sock.recv(1)
+if data == '\n.\n':
+   ...
+</pre>
+<p>(which will <em>never</em> be true, since 'data' will at most be one character
+in length) you should do</p>
+<pre class="literal-block">
+data_so_far = ''
+while 1:
+   data = sock.recv(1)
+   data_so_far += data
+   if '\n.\n' in data_so_far:
+      ...
+</pre>
+<p>Does this make sense?</p>
+</div>
+<div class="section">
+<h2><a id="running-things-on-unix" name="running-things-on-unix">Running things on UNIX</a></h2>
+<p>Windows may have firewall issues.  You should, in general, run your
+network code on UNIX; use 'cse.msu.edu' to do so.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="more-subversion" name="more-subversion">More Subversion</a></h1>
+<p>I'm not kidding when I tell you that version control, and proper use
+of version control, is really really important.  It will save you many
+times in the future if you use it well.</p>
+<p>You should think of your checked out &quot;working copies&quot; as playgrounds
+for you to try out new code and fix old code; nothing you do there
+is visible to anyone else, until you check it in (and then it's only
+visible to me).  But there are some useful things you can do.</p>
+<p>So, let's introduce four new commands.</p>
+<div class="section">
+<h2><a id="svn-diff" name="svn-diff">svn diff</a></h2>
+<p>'svn diff' will by default compare your working copy to the last version
+that you checked out. That is, if you do a checkout and change one line,
+and then type 'svn diff', you'll see a modification in that one line.</p>
+<p>By default 'svn diff' will look at <em>all</em> files in Subversion; you can
+use 'svn diff &lt;filename&gt;' to have it just report on differences in
+that file.</p>
+<p>With different command-line options (the '-r' revision flag) you can
+also use 'svn diff' to look at differences between versions in the
+actual Subversion system; see below.</p>
+</div>
+<div class="section">
+<h2><a id="svn-revert" name="svn-revert">svn revert</a></h2>
+<p>'svn revert &lt;filename&gt;' will reset all changes in that file to the
+version that you checked out.  This has two implications: first, be
+careful!  You can work for an hour and then lose all your changes by
+doing an 'svn revert'.  Second, commit often!  Every time you get one
+step closer to a working solution, do a 'svn commit'.  Then even if
+you mess things up in the next step, you can always go back to that
+intermediate functioning step by doing a 'svn revert'.</p>
+</div>
+<div class="section">
+<h2><a id="svn-update" name="svn-update">svn update</a></h2>
+<p>'svn update' will pull all of the <em>latest</em> changes from the Subversion
+repository into your working copy.  This is how you can get my comments
+on your HW #1, for example... It's most useful when you're working with
+other people, and not just by yourself; but it can also be useful when
+you have multiple working directories, perhaps on multiple machines.</p>
+</div>
+<div class="section">
+<h2><a id="svn-log" name="svn-log">svn log</a></h2>
+<p>'svn log' will give you a log history of all of your commits, along
+with specific revision information that you can use in 'svn diff' and
+'svn revert'.  For example, 'svn log' in my test repository returns this:</p>
+<pre class="literal-block">
+% svn log
+------------------------------------------------------------------------
+r3 | t | 2008-09-11 08:34:16 -0700 (Thu, 11 Sep 2008) | 3 lines
+
+added a new line
+
+
+------------------------------------------------------------------------
+r2 | t | 2008-09-04 06:21:12 -0700 (Thu, 04 Sep 2008) | 2 lines
+
+this is my homework1 whatever
+
+------------------------------------------------------------------------
+r1 | t | 2008-09-03 19:20:49 -0700 (Wed, 03 Sep 2008) | 3 lines
+
+hello, world!
+</pre>
+<p>and I can look at the differences between r2 and r3 by doing</p>
+<pre class="literal-block">
+% svn diff -r2:3
+Index: README.txt
+===================================================================
+--- README.txt  (revision 2)
++++ README.txt  (revision 3)
+&#64;&#64; -1 +1,3 &#64;&#64;
+ this is a test
++
++this is a new line!
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a id="non-blocking-network-i-o" name="non-blocking-network-i-o">Non-blocking network I/O</a></h1>
+<p>For the next HW, you must use <tt class="docutils literal"><span class="pre">socket.setnonblocking(0)</span></tt> on all
+of your sockets to make a non-blocking echo server.  This need to
+be done on the bound socket as well as on all client connection sockets.</p>
+<p>If you set the sockets to non-blocking, then you will get an exception
+almost every time you try to accept a connection or read from a connection:
+that is,</p>
+<pre class="literal-block">
+sock.recv(...)
+</pre>
+<p>will raise a <tt class="docutils literal"><span class="pre">socket.error</span></tt>.</p>
+<p>To handle this case, wrap it in a try/except statement body:</p>
+<pre class="literal-block">
+try:
+   sock.recv(...)
+except socket.error:
+   # handle error
+</pre>
+<p>The code in 'handle error' can be whatever you want it to be; see below
+for three examples.</p>
+<div class="section">
+<h2><a id="exception-handling" name="exception-handling">Exception handling</a></h2>
+<p>Consider these three examples:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     pass                  # silently ignore error
+...   print i
+0
+1
+2
+3
+4
+5
+6
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     break                 # exit loop
+...   print i
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     continue              # jump to 'for'
+...   print i
+1
+2
+4
+5
+</pre>
+</blockquote>
+<p>Why do you get these results?</p>
+<!-- http protocol -->
+</div>
+</div>
+</div>
+</body>
+</html>

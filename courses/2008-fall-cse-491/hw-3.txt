@@ -1,0 +1,68 @@
+Homework 3: Writing a Web server
+--------------------------------
+
+Due Thursday, Sep 18th, at 12:40pm (class start).
+
+Section 0: Cleanup
+------------------
+
+Deal with my comments on the second homework: fix problems, etc.
+
+Section 1: Non-blocking TCP echo server
+---------------------------------------
+
+Write a non-blocking version of the TCP echo server that can accept
+and handle multiple connections **without using threads or multiple
+processes**.  You should use ``sockobj.setblocking(0)`` to set your
+sockets to non-blocking.
+
+Please be sure separate the code that handles reading and writing into
+a function ``handle_connection(sockobj)`` separate from the main body of
+the code; that is, you should have a main block that deals with
+accepting new connections and then calls the ``handle_connection``
+function to do read/write.  ``handle_connection`` should take precisely
+one argument and return ``True`` if the connection remains open and
+``False`` otherwise.
+
+Be sure to test that your program can handle 2 or more connections
+simultaneously.  I would suggest writing a test client program, but
+that's up to you.
+
+The echo server should be submitted via the Subversion server and
+be executable like so: ::
+
+  python homework3/echo-server-nb <host> <port>
+
+Section 2: Write a simple Web server
+------------------------------------
+
+Using only the socket networking library, write an HTTP server that returns
+"hello, %s" to a GET URL request, where '%s' is replaced by the URL path being
+requested.  For example, ::
+
+  python homework3/webserve <port>
+
+starts a Web server that answers on the given port and can be accessed at ::
+
+  http://localhost:<port>/
+
+If the Web server is accessed at
+
+  http://localhost:<port>/some/random/url
+
+then the returned page content is
+
+  hello, /some/random/url
+
+The returned code should be 200 and the returned content-type should
+be ``text/html``.
+
+This HTTP server should *ignore* any query strings; that is,
+/some/random/url?BLAH will return the same thing as /some/random/URL.
+The HTTP server should also ignore any non-GET requests; it's ok to
+leave the behavior undefined for non-GET requests (i.e. don't bother
+putting in error-handling for them unless you want to).
+
+Your Web server should be implemented well enough that Firefox or
+Safari can talk to it, but this doesn't mean you need to implement the
+full HTTP/1.0 spec.

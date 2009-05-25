@@ -1,0 +1,274 @@
+Lecture 6 Outline / September 30th, 2008
+========================================
+
+Quote:
+
+   I believe that the following statement is an axiom of software
+   development:
+
+   *It is impossible, by examining any significant piece of completed
+   code, to determine within a factor of two how many man-hours it
+   took to produce that code.*
+
+   Corollary:
+
+   *If you can't tell how long a piece of code would take when you have
+   the finished product available, what chance do you think you have
+   before the first line of code is written?*
+
+   Talking about a software development schedule more than a year out is   
+   like talking about where we go after we die. Everyone has some idea   
+   where we'll end up, but those ideas differ wildly, and there's a lack   
+   of solid evidence to support any of them.   
+
+-- from Software is Hard, http://www.gamearchitect.net/Articles/SoftwareIsHard.html, by Kyle Wilson.
+
+=====   
+
+Frameworks vs libraries
+-----------------------
+
+Shifting gear to develop application code.  You will be extending your
+Web framework to handle application needs on your own over the next
+few weeks; the only thing that needs to remain firm is the stack of
+code above the 'delegate' function.
+
+So what is a framework?
+
+"Frameworks" call your code, as opposed to libraries: ::
+
+  user--               user --
+       |                     |
+       v                     v
+   framework             your code
+      ---                   ---
+    your code             library
+
+To properly design a Web framework while writing an application, you
+must become schizophrenic:
+
+First, think about what you need to do, as an application programmer.
+
+Now think about what the framework code (which is sitting between
+you-the-app-programmer, and the network) must do in order to support
+your application needs.
+
+Now generalize the right amount (not too much, not too little) and
+code that up.
+
+Now write a bunch more code.  If you were wrong about the correct
+amount of generalization, you will suffer: you will have to (at some
+point) change the framework and then potentially change all of your
+code that interacts with it.  Also, new programmers will have to learn
+your specific framework...
+
+If you *don't* write a framework, however, you will suffer every time
+you write code that *could* have been handled in a framework.  On the
+other hand it will be easy for new programmers to learn... but then
+they will start making subtle modifications to the duplicated code,
+screwing everything up.
+
+So what do you do?
+
+Many (experienced) programmers go for (over-?)abstraction, because
+it's more fun than writing code that actually does something:
+
+  "First, let's develop a framework!" -- http://jeffreypalermo.com/blog/i-ll-get-to-your-application-in-a-minute-first-we-need-to-build-the-framework/
+
+It's a tricky topic.  Figuring out the right level of abstraction
+takes a lifetime of experience; might as well get started now.
+
+So, how does this "framework" stuff apply to you?
+
+Well, HW #5 asks you to write a function 'delegate' that takes all
+conceivable information contained in an HTTP request and returns all
+possible HTTP response information.  What does this tie you into?
+
+ - by framing things in a back & forth conversation (single
+   request/response), the framework limits you by: no general
+   stream-oriented processing (HTTP/1.1)
+
+ - your framework must now protect you against DoS attacks where
+   people send multi-gb files at you to overwhelm your server
+
+ - your framework must also protect against errors stemming from code
+   run by it
+
+So design of frameworks is a big issue.  As soon as you start having
+to repurpose code (take code designed for one purpose, and generalize
+it to fit two purposes) you should think a little bit about the next
+obvious purpose.
+
+I personally am a big fan of adding features as you need them, and
+that's more or less how the class is going. For example, for HW #6,
+you will be doing cookie manipulation, which involves extracting info
+from headers and publishing new headers.  I *could* have outlined the
+concept of cookies and had you include cookie handling stubs in HW #5,
+but I'd rather have you evolve your code.
+
+**Fundamentally, in any real project you cannot predict all the uses to
+which your code will be put.**
+
+So, you can **design a lot** -- become very generic -- or **design a
+little** -- eliminate constraints.  For example, consider Alex's
+question on the mailing list; why did I specify that 'delegate' was to
+take both ``GET_data`` and ``POST_data``, when they could be combined?
+
+ - if you combine them, you cannot pull them apart
+
+ - it is easy to combine them in your own code beneath 'delegate', if you
+   so choose.
+
+ - this is a framework decision; most Web frameworks *don't* distinguish
+   between them.
+
+ - It probably won't hurt you but I wanted to leave the option open.
+
+Beneath 'delegate', I will leave you to your own devices.  'delegate'
+is a good choke-point for me to test; I encourage you all to work on
+extending the framework code below 'delegate' to help you.  Right now,
+my own 'delegate' code looks something like this: ::
+
+      if url == 'something1': call_something1_fn()
+      elif url == 'something2': call_something2_fn()
+      else: call_error_fn()
+
+This is clumsy, inelegant, and inefficient (both in your time and in
+processing); every time you add a url you need to add in a new 'if'
+statement.  You also need to pass the same arguments/data around;
+duplicated code is bad!
+
+What else could you do?  **Implement an abstraction layer**
+
+For example,
+
+ - use a dictionary lookup, ::
+
+      fn = url_handlers[function_name]
+      return fn(method, path, headers, GET_data, POST_data)
+
+ - make an HTTPRequest class that stores headers, cookies in a
+   dict-like format.
+
+ - pass in form values as keyword arguments;
+
+ - automatically/dynamically discover functions to call.
+
+You already know how to do the first, and I will show you some Python
+approaches to doing the rest on Thursday.
+
+I'll probably write some framework code to help me write tests, too.
+
+Thinking about delegate in a slightly different way: remote function calls
+--------------------------------------------------------------------------
+
+Client-server.
+
+HTTP.
+
+Limited mechanisms of information transfer.
+
+Basically HTTP is a remote procedure call (RPC) mechanism (as we'll
+see in more detail later).  Think of 'delegate' as being on the
+receiving end of a high-latency function call... that is, this ::
+
+   client <--> OS <--> network <--> OS <--> 'delegate'
+
+can be wrapped like so: ::
+
+   'x = func()' <--> http://server/some/function <--> 'delegate' <--> 'return func()'
+
+or, in other words, ::
+
+   x = func()
+
+can really be calling something on another server. We'll talk about
+this more later with JavaScript & AJAX, as well as REST.
+
+Authentication and identity
+---------------------------
+
+How does "identity" transfer with your laptop, when you shift from network
+to network?
+
+Answer: client-side cookies.
+
+These are bits of data (limited in size) that browsers send to servers
+based on server name and URL path.
+
+On the server side, header: ::
+
+  Set-Cookie: key=value
+
+Optional 'Path' and 'Expires' attributes, along with a few others:
+'Path' specifies what  
+
+::
+
+  Set-Cookie: key=value; Path=/some/path; Expires <some date>
+
+These are then stored on the client side and returned to the server,
+when appropriate (right server, URL path, etc.), in the headers: ::
+
+  Cookie: key=value
+
+Really simple example: cookie contains a **user name** or a **database
+ID** that lets the server retrieve a user account based on previous
+login info.  (You'll implement this type of cookie for HW #6.)
+
+What's the main problem with this? You can simply start guessing user
+names... the **only** information that the server can even think about
+trusting is the info contained in cookies and the URL, and the
+originating IP address.  All of those can be manipulated by a
+sufficiently motivated sender.
+
+(Cookies can be thought of as adjuncts to the URL, in some ways: just
+another way to send information with each transaction.)
+
+So, servers will often send a *key* -- a 64-bit hash, or some such
+-- that:
+
+ - is big enough that the search space of all possible keys cannot
+   readily be enumerated.
+
+ - is tied to the client IP address.
+
+This key is then kept in a database and linked to user information.
+
+Note, someone on your local network with access to unencrypted traffic
+(non-HTTPS/SSL network traffic) can "steal" your identity pretty
+easily.
+
+These schemes don't protect an individual user much, but they *do*
+protect the aggregate 'users of your site'.
+
+------
+
+Additional topics:
+
+   - SSL & asymmetric cryptography
+     
+     Symmetric or "secret key" encryption (how do you transmit the key!?)
+
+     Asymmetric or "public key" encryption - encrypt with public key,
+         decrypt with private key.  Only the private key holder can decrypt.
+     
+     Based on a fundamental *asymmetry* -- large number factorization.
+     *Given a large number, what are its prime factors?*  Easy to *make* a
+     big number from primes; difficult to factor it into primes.
+
+     So you can think of the public key as a large number used to encrypt
+     something; the private key is the set of prime numbers factors of the
+     large number.
+
+     See http://en.wikipedia.org/wiki/RSA
+
+     Python supports SSL, but it adds complexity to debugging, etc. so
+     I'm not planning on talking about it much in this course.
+     Generally when writing Web apps you can treat it as something
+     transparently supported by your server.
+
+   - OpenID
+
+     single sign-on system: lets you have a unique identity among multiple
+     Web sites.

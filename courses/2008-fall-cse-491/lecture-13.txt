@@ -1,0 +1,269 @@
+=======================================================
+Lecture 12: RPC and AJAX concepts - November 18th, 2008
+=======================================================
+
+My innate wonderfulness doesn't extend to clairvoyance.  This last HW
+I couldn't find a lot of files because people didn't name them
+properly.  From now on, I will take a point off for not following
+instructions on **file names** and **command-line arguments**.
+
+(Yes, it's stupid, but I usually spend 1/3 of my grading time tracking
+down issues like this.)
+
+SQL Strategies
+==============
+
+A lot of people had trouble with *results* and *speed* in movie
+searching.  I didn't track down these problems for you.
+
+However, I implemented a few different schemas and tried them out.  It
+seems likely that there were a few different problems:
+
+ - first, people didn't actually look at the data being inserted;
+
+ - second, several people didn't test their entire process;
+
+ - third, the central machines (arctic and adriatic) are freakin' slow;
+
+This problem reappears on HW #12, and this time in a form that will actually
+make it gradeable :).  Also, you only need to load through the 'A's.
+
+A few tips/changes/thoughts:
+
+ - don't check in actor/actresses lists or your final db; they're too
+   big.  (my fault, sorry)
+
+ - primary keys are critical;
+
+ - actor names and movie names are UNIQUE, e.g. ::
+
+           name TEXT UNIQUE
+
+   this can help speed things up.
+
+ - test your code with realistic data;
+
+ - test your code all the way through (by making fake data files)
+
+ - run your code against a locally-stored file ('/tmp' on Linux)
+   and on a faster machine.
+
+ - try actor 'Aakash' and actress 'Agarwal'.
+
+Subversion
+==========
+
+**Working copy** vs **central server**
+
+*Check out* a working copy from the server.
+
+Each working copy changes independendently of the central server until
+you do a *commit* or an *update*.  'commit' transmits changes from the
+working copy to the server, 'update' transmits changes from the server to
+the working copy.
+
+The "state" of each working copy is kept in the '.svn' directories.
+
+Copying these between subdirectories is Bad and results in weird
+svn conflicts, as many of you have noticed.
+
+Tips for **fixing subversion problems**:
+
+  - if you can't commit changed files, check out a new working copy
+    into a new directory, and then make the changes again to the
+    individual files.
+
+  - **do not drag and drop whole directories**, ever, because you will
+    then be keeping all the associated versioning info -- which was
+    probably the cause of your problems in the first place
+
+  - if checking out a new working copy & re-making your modifications
+    doesn't work, e-mail me *before* HW is due.
+
+If you want to get a clean copy (sans '.svn' subdirs) do an 'export'
+instead of a 'checkout'.  (This is for e.g. deployment or releases of
+the software, but it also produces directories that you can drag &
+drop across working versions.)
+
+Note, svn is hierarchical (URLs!), so you can do things hierarchically, e.g. ::
+
+     svn co http://class.ged.idyll.org/svn/files/lab-10/oswd/
+
+Hint, this means that you can check out *just* your HW 10 to test it...
+
+Thinking about version control
+------------------------------
+
+Subversion is a version control system -- that means it keeps copies
+of *everything submitted*; as long as you have committed files once,
+you can always go back and retrieve them: see ::
+
+   svn log <filename>
+
+and ::
+
+   svn update -r <revision or date>
+
+For this reason it is very important to back up version control systems:
+they store every change, including changes that introduced bugs (for
+example).
+
+Therefore, you don't want to store easily-reproduced or
+inconsequential files in subversion, because that chokes up the
+subversion server with crud.  Think:
+
+ - .pyc files (Python byte code, generated from .py)
+
+ - data files (actors, actresses) & products (databases)
+
+ - program downloads (twill)
+
+Part of the reason for this is that these files may change frequently
+(.pyc files) or infrequently (actors, actresses):
+
+ - spurious differences between versions
+
+ - increase the size of backups and the load on the version control server
+
+If you check this stuff in when you are working for a company, big people
+with bats will come around and break your knees.
+
+I don't have that option so I will merely put it on the homework.
+
+Branching
+---------
+
+One of my more annoying screwups: not having you use version control properly.
+
+Ideally you would be working in something like ::
+
+   /username/trunk/
+
+and then submitting your homework by making branches off of 'trunk'
+like ::
+
+   /username/homework10/
+
+This way for the homeworks since 'webserve.py' started you would have
+continuous version control history.  But I wasn't smart enough to do
+that up front.  There are also reasons why you might want to do it
+differently for homeworks, and I don't want you guys to spend too much
+time screwing around with it.  So here's the new strategy: branch off
+of the last homework, when you're starting to work on the new one.
+
+SO, do:
+
+   svn copy http://class.ged.idyll.org/$username/homework11/ \
+            http://class.ged.idyll.org/$username/homework12/
+
+   svn update
+
+and then work in homework12.
+
+What are the advantages?
+
+ - the main one is that you don't have to manually copy file around:
+   subversion will do it all for you.  This means you won't mess up
+   your working repositories so much.
+
+ - more generally, version control and history are maintained.
+
+ - in particular, you can merge "fixes" to homework11/ into your homework12/
+   code, if you want.
+
+PLEASE PLEASE PLEASE do things this way.  I won't make you but it will
+cut down on problems (and these problems are now YOUR responsibility
+anyway).
+
+Why, why, why?
+--------------
+
+Learning to deal with version control properly is as important as
+knowing how to program effectively.  So, tough.  But I do apologize
+for not anticipating some of these problems better.
+
+http://svnbook.red-bean.com/ - free Subversion book.
+
+Making sure you handed stuff in
+-------------------------------
+
+It is your responsibility to make sure that your files have been submitted,
+too! Two ways to do that:
+
+ 1. Look on the Web.  (Quick & easy, but you may miss details)
+
+ 2. Check out a new working version into a temporary directory and
+    make sure that it works.  (This is what I do to grade your
+    homework.)
+
+Remote Procedure Calls over HTTP
+================================
+
+Idea: call functions remotely.
+
+Spec:
+
+ - call multiple functions
+
+ - zero or more arguments
+
+ - return values as well
+
+ - cross language would be nice
+
+Basic idea: should look like Just Another Function Call
+
+How would you design such a thing?
+
+---
+
+XML-RPC and JSON-RPC
+
+Advantages --
+
+ - cross language
+ - go through firewalls
+ - relatively simple protocol
+ - text data
+
+Disadvantages:
+
+ - cross language
+ - slow (high latency)
+
+AJAX
+----
+
+"Asynchronous JavaScript and XML"
+
+Used to load data (raw HTML, CSV data from database, etc.) dynamically
+into a Web document.
+
+Uses XMLHttpRequest or other ways of doing HTTP requests.
+
+Enables really interactive Web pages, data retrieval, manipulation,
+and submission w/o reloading entire page, etc.  Lowers apparent
+latency.
+
+Restrictions on cross-site scripting: same-origin policy prevents AJAX
+calls to other domains!  So, your AJAX functionality (data source,
+etc.)  must be tied into the same Web site that your Web pages are
+loaded from.
+
+Comet and Orbited
+-----------------
+
+How do you "push" information to a Web browser?
+
+AJAX has scalability issues: don't want to poll server!  (High
+latency; & expensive to create/destroy connections from the network &
+process perspective)
+
+One common technique: long-lived HTTP connection that is polled by JS.
+Managing such a thing from the server side is complicated, especially
+for 100k+ connections...
+
+Another technique: run a TCP server in your browser to receive
+messages "pushed" by another server.
+
+Componentized: Web app framework + Orbited server + browser.

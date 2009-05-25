@@ -1,0 +1,59 @@
+Essay assignment
+----------------
+
+Outline due November 6th; final essay due November 28th.  3-5 pages,
+not including figures, data, and code.
+
+(Final project **proposal** will be due at the same time; then you'll
+have two weeks to implement.)
+
+--
+
+Now that you have some real Web serving under your belt, let's revisit
+multitasking again.
+
+The basic assignment is to explore the performance of various
+multitasking strategies, in the context of either your Web server code
+**or** the echo-server functionality assignments.
+
+Performance includes *throughput* (bytes/sec), *latency* (delay in
+receiving first byte), CPU utilization (e.g. measured with 'time' on
+Linux), and memory or other non-CPU resource utilization.
+
+You should pick at least two of the following axes (that is, types of
+strategies) across which to explore performance:
+
+  1. Non-blocking server vs threading server vs processes.
+     (note, you can use the multiprocessing package here, in Python 2.6)
+
+  2. Threads vs cooperative multitasking (e.g. see 'multitask' module).
+
+  3. Number of cores or processors being used.
+
+  4. C code vs Python code.
+
+  5. Size of data being sent.
+
+  6. Linux vs Windows vs Mac OS X.
+
+  7. Between two machines, and to the local & external interfaces on
+     one machine.
+
+  8. Number of concurrent processing units (number of threads/processes)
+
+Pick at least two of these, do relevant measurements, and try to explain
+what you see.  Write up a discussion with diagrams etc.  Your job is to
+convince me of two things:
+
+ - first, that you have an internally consistent model that explains your
+    observations;
+
+ - second, that you actually understand the proposed model fully!
+
+Please submit a bullet-point outline of your proposed topic(s) before
+lab on November 6th.  The final essay is due on November 28th.
+
+Please also remember to do this work on *lab computers*, not on arctic.
+
+The writing should not be collaborative, although I encourage you to
+discuss your results with other people.

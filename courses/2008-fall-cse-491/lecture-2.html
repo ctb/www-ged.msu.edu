@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 2 Outline / September 2nd, 2008</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-2-outline-september-2nd-2008">
+<h1 class="title">Lecture 2 Outline / September 2nd, 2008</h1>
+<p>Introduction to Database-backed Web Programming</p>
+<p>CSE 491, fall 2008; <a class="reference" href="http://ged.msu.edu/courses/2008-fall-cse-491/">http://ged.msu.edu/courses/2008-fall-cse-491/</a></p>
+<p>Most of you are familiar with the virtues of a programmer. There are
+three, of course: laziness, impatience, and hubris. -- <em>Larry Wall</em></p>
+<div class="section">
+<h1><a id="syntax-vs-logic" name="syntax-vs-logic">Syntax vs logic</a></h1>
+<p>Most of HW 1 is about <em>syntax</em>, not <em>logic</em> -- you should all be able
+to write a basic Fibonacci sequence function in your sleep, and even
+if you can't, you can look it up online!</p>
+<p>Each function/construct does the same thing in the homework: it's about
+adapting your program logic to different syntax requirements.</p>
+<p>(And learning that syntax is in fact quite important in programming.
+How many more lines of code would this assignment have been in a
+non-dynamic/statically typed programming language?  Which of your
+solutions is easiest to understand?  Easiest to use?  And why?)</p>
+<p>Work with others, ask for help, google, etc... There's no penalty in
+this course for casting as wide a net as you can.</p>
+<p>Try doing section 1 of HW #2 by yourselves, though.  (It's the same as
+HW #1.)  No requirement, but you should be <em>able</em> to do it by yourself.</p>
+</div>
+<div class="section">
+<h1><a id="methods-of-problem-solving" name="methods-of-problem-solving">Methods of problem solving</a></h1>
+<p>Code &quot;substitution&quot; a la algebra.</p>
+<p>print -- figure out what's going on by <em>looking</em></p>
+<p>Reductio ad absurdum -- reducing to the absurd:</p>
+<blockquote>
+<ul class="simple">
+<li>hard-coded responses</li>
+<li>'assert 0' to see if certain code is ever run</li>
+</ul>
+</blockquote>
+<p>assert -- use it!  But don't use it &quot;with side effects&quot; like I'm doing.</p>
+</div>
+<div class="section">
+<h1><a id="re-entrancy-and-iterators" name="re-entrancy-and-iterators">Re-entrancy and iterators</a></h1>
+<p>Re-entrancy will become very important later on; <a class="reference" href="http://en.wikipedia.org/wiki/Reentrant">re-entrant functions</a> are useful for parallel
+processing.</p>
+<p>Critical component of re-entrancy from your perspective is <em>no global
+data</em>, and <em>no internal data that changes</em>.  My tests (list(x) ==
+list(x), and double-for-loops) are a stupid proxy for this, but
+nonetheless important: point is that</p>
+<pre class="literal-block">
+fib = ReentrantFibonacciIterator(8)
+for x in fib:
+    for y in fib:
+      ...
+</pre>
+<p>is also similar to multi-threaded case where you have multiple functions
+running concurrently and all accessing 'fib'.  If you can pass the 'for'
+loop test then you probably have written it so that it can <em>also</em> pass
+the concurrency test.  We will discuss this more, later, in a week or two.</p>
+<p>Two hints for this (presumably the hard) part of the HW: from lab notes,</p>
+<blockquote>
+The iterator protocol is pretty simple, but has a fair amount of
+syntax associated with it. Your class has to define an __iter__
+method, and that method has to return an object with a 'next'
+function on it; then to iterate, Python calls the 'next' function
+until it raises a StopIteration exception.</blockquote>
+<p>and also this: in the following code,</p>
+<pre class="literal-block">
+class Enumerator(object):
+  def __init__(self, thing):
+      self.thing = iter(thing)
+      self.count = -1
+  def __iter__(self):
+      return self
+  def next(self):
+      val = self.thing.next()
+      self.count += 1
+      return self.count, val
+</pre>
+<p>what is the __iter__ function doing?  If it always returns self (as in
+all my examples) isn't it just boilerplate that we can remove?</p>
+<p>To reiterate, the point here is to understand how the syntax and the
+logic fit together.</p>
+</div>
+<div class="section">
+<h1><a id="tcp-ip-and-network-programming-basic-concepts" name="tcp-ip-and-network-programming-basic-concepts">TCP/IP and network programming -- basic concepts</a></h1>
+<dl class="docutils">
+<dt>IP (v4)</dt>
+<dd><ul class="first last simple">
+<li>&quot;Internet Protocol&quot;</li>
+<li>send packets/datagrams containing data</li>
+<li>abstraction allows these packets to be routed over many types of networks
+(think cell phones...)</li>
+<li>connectionless: no circuit needs to be established before sending</li>
+<li>unreliable (data corruption, out-of-order, duplicates, lost/dropped)</li>
+<li>header is checksummed</li>
+<li>addressing and routing: there be dragons</li>
+</ul>
+</dd>
+</dl>
+<p>Internet addresses: dotted quad (A.B.C.D) of 8-bit numbers.</p>
+<dl class="docutils">
+<dt>UDP</dt>
+<dd><ul class="first last simple">
+<li>&quot;User Datagram Protocol&quot; a.k.a. &quot;Unreliable Datagram Protocol&quot;</li>
+<li>built on top of IP</li>
+<li>no guarantees</li>
+<li>applications: DNS (name service; below); VoIP; games (NetTrek)</li>
+<li>stateless; broadcast; multicast</li>
+<li>app-to-app communication through ports (as with TCP)</li>
+</ul>
+</dd>
+<dt>TCP</dt>
+<dd><ul class="first last simple">
+<li>&quot;Transmission Control Protocol&quot;</li>
+<li>stream-oriented: send multiple bytes through channel, TCP handles
+encoding etc.</li>
+<li>applications: HTTP, SMTP, SSH, etc.</li>
+<li>app-to-app communication through ports (as with UDP, but different ports!)</li>
+<li>reliable, guaranteed order, <strong>easy to program</strong> (relatively speaking)</li>
+</ul>
+</dd>
+<dt>DNS</dt>
+<dd><ul class="first last simple">
+<li>names to IP addresses</li>
+</ul>
+</dd>
+</dl>
+<p>Special IP addresses: 127.0.0.1 (localhost); 192.168.x.y and 10.0.x.y (private networks)</p>
+<p>Gateways, firewalls, and NAT (network address translation); going in vs
+coming out.</p>
+<p>ping and traceroute</p>
+<p>Connecting to hosts</p>
+<p>Specifying a port, &quot;reserved&quot; ports, and &quot;standard&quot; ports</p>
+<blockquote>
+<ul class="simple">
+<li>bind a port to define an &quot;address&quot;</li>
+<li>ports under 1024 are reserved for 'root' on Linux boxes; don't know
+about Windows.  Generally users cannot bind to these ports.</li>
+<li>SMTP (mail) - 25; HTTP (Web) - 80; ssh - 22; HTTPS (secure Web) - 443</li>
+</ul>
+</blockquote>
+<p>Firewalls may make HW tricky.  Port forwarding with ssh...?  Or just
+turn off the darn thing, and/or stay with 127.0.0.1.</p>
+<p>Network <em>latency</em> vs <em>throughput</em></p>
+</div>
+<div class="section">
+<h1><a id="mechanics-of-processing-network-connections" name="mechanics-of-processing-network-connections">Mechanics of processing network connections</a></h1>
+<p>(socket module in Python; see <a class="reference" href="http://docs.python.org/lib/socket-objects.html">http://docs.python.org/lib/socket-objects.html</a>)</p>
+<p>Creating a socket - 'socket', SOCK_STREAM or SOCK_DGRAM</p>
+<p>Binding to an address - 'bind', host &amp; port</p>
+<p>Listening for connections - 'listen', backlog</p>
+<p>Handling new connections synchronously and asynchronously</p>
+<blockquote>
+<ul>
+<li><p class="first">connection comes in</p>
+</li>
+<li><p class="first">while processing data for that conn, another connection attempt is
+made; what now?</p>
+</li>
+<li><dl class="first docutils">
+<dt>can handle:</dt>
+<dd><ul class="first last simple">
+<li>&quot;in order&quot;, or synchronously (send; receive; send; receive);</li>
+<li>asynchronously (send 1; receive 2; send 2; receive 1; etc.)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">synchronous programming is more <em>predictable</em></p>
+</li>
+<li><p class="first">asynchronous programming is more difficult but much <em>faster</em> in terms
+of response</p>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="the-web-basics" name="the-web-basics">The Web - basics</a></h1>
+<p>'HTTP' (v1.0) - hypertext transport protocol</p>
+<p>Simple content-delivery system</p>
+<p>Synchronous transactions</p>
+<p>URL/URI</p>
+<p>&quot;Stateless&quot; &amp; cookies</p>
+<p>GET, POST</p>
+<p>Status codes</p>
+<p>(We'll revisit all of this next week.)</p>
+</div>
+</div>
+</body>
+</html>

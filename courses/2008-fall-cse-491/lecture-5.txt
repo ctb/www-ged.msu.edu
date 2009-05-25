@@ -1,0 +1,166 @@
+Lecture 5 Outline / September 23rd, 2008
+========================================
+
+Homework stuff
+==============
+
+HTTP protocol, query: ::
+
+  <method> <url> <protocol>\r\n
+  <header line>\r\n
+  <header line>\r\n
+  [ ... ]
+  \r\n
+  <content>
+
+method can be GET, POST; protocol is usually HTTP/1.0 or 1.1.  Header
+lines are things like 'Content-Length: 500'.
+
+HTTP protocol, response: ::
+
+  <protocol accepted> <numeric code> <corresponding status message>
+  <response header line>\r\n
+  <response header line>\r\n
+  [ ... ]
+  \r\n
+  <content>
+
+protocol accepted is the version of the protocol YOU speak, e.g.
+HTTP/1.0.  numeric code is (for example) '200' for the status message
+'OK'.
+
+-------
+
+Bad code:
+
+  try:
+    ...
+  except:
+    # people put NO ERROR REPORTING here
+
+This catches ALL EXCEPTIONS, including variables not defined, bad
+function call, etc.  BAD BAD BAD.
+
+Try 'traceback.print_exc()' for error reporting.
+
+Note, you are always welcome to start from my handed-out code for the
+next week.
+
+Code review
+-----------
+
+Good code is unambiguous, complete, as simple as possible (but no
+simpler), and idiomatic.
+
+Common mistakes & bad idioms
+
+ - no explicit return in 'handle_connection' -- what happens??
+ - 'if x == True', 'if x == False'
+
+Simplicity is important.  Your programs are easier to read and understand,
+and as a result they are more likely to work.
+
+Complex code is often a sign of a lack of understanding, hint hint.
+
+Mention refactoring... see end.
+
+Testing
+-------
+
+Want to ensure that your program is correct.
+
+NO GENERAL WAY TO PROVE THIS.
+
+What can we do?
+
+Break it down.
+
+Programs are made up of pieces.  Even complex programs can usually be broken
+down into simple pieces.
+
+For whole to work, these pieces must work.
+
+So, want to ensure that each piece works.
+
+Basically dissect your program into minimally useful chunks and test
+them all.  "Functional decomposition"
+
+(This pulls your problems to a higher level: did you combine the *pieces*
+correctly?)
+
+One useful "piece" size is "function"... hint.
+
+How would you test handle_connection in your non-blocking echo server?
+
+Remember: read once, if error thrown return True; if data returned,
+write and then return True.
+
+Build a fake socket object to test read/write: ::
+
+  class fakesocket(object):
+     def recv(self, size):
+        return "foo"
+     def sendall(self, data):
+        assert data == 'foo'
+
+  sockobj = fakesocket()
+  ret = handle_connection(sockobj)
+  assert ret == True
+
+Basically you set up a fake object that returns exactly what you
+want to test, and then you verify that when you pass that into your
+function under test, you get the right results.
+
+This is called a "mock object".  We'll explore these on Thursday a bit
+more.
+
+-----
+
+Testing is about exploring the behavior of your code.
+
+Main rule of testing: **be paranoid**.  Code misbehaves.
+
+Automate your testing code so that you can "just run it"!  Many
+frameworks exist for this purpose; I'll show you unittest on Thursday.
+
+Benefits of automated testing:
+
+ - good way to force you think about what your code is supposed to do.
+
+ - complex code is hard to test; forces you to simplify your code.
+
+ - lets you explore "edge" cases that might be tough to test in the
+   real world.  you'll see examples of this with web sessions.
+
+ - you can progressively write tests to cover code you just wrote, or are
+   about to write; this frees you to worry about the code you're *going*
+   to write
+
+ - can help detect *regressions*, situations where you reintroduce a bug
+   that you had before.  This is a bigger problem than you might think.
+
+ - also helps prevent code breakage from later changes, bug fixes.  This
+   is important because of *refactoring*
+
+A bit counterintuitive: write *more* code to see if my *first* code
+works.  Really? Yes: second batch of code is easier, simpler; keeping
+your code working is the main point, and automated testing is the best
+way to do that.
+
+Common approach to automated testing:
+
+ - set up conditions (state & input variables)
+ - run function
+ - check for correct & expected changes (new state & output)
+
+When done to small bits of code, this is called "unit testing".  Whole
+new set of terminology that I'll show you on Thursday.
+
+Refactoring
+-----------
+
+Refactoring is the technique of transforming your program's syntax bit
+by bit, while keeping it working at all times.  You'll be doing this a lot
+in your homework.
+
+Refactoring is very, very difficult without automated tests.

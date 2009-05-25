@@ -1,0 +1,82 @@
+==================================
+Lab 6 Material / October 2nd, 2008
+==================================
+
+Cookies
+-------
+
+'Cookies' are bits of data ("morsels") that are set by the server on
+a particular path, stored client-side, and sent to the server whenever
+that path is hit by the client.
+
+Cookies are the basic mechanism used for retaining user authentication
+and storing *small* pieces of information in a user's browser.
+
+To set a cookie, the server issues a 'Set-Cookie' header as part of
+its response to a client's HTTP request.  In the response headers,
+then, you might see: ::
+
+   Set-Cookie: user=foo
+
+If the client supports cookies, then any further requests -- now or later --
+to the same server should result in the client sending the cookie back
+to the server.  So, in the client headers sent with each request, you
+would expect to see: ::
+
+   Cookie: user=foo
+
+This allows the server to link state across multiple requests without
+encoding it in the URL or in form variables.
+
+Servers can specify additional cookie metadata like an expiration date
+(via the 'Expires' tag) and a limiting path on the server (via the
+'Path' tag), but we won't use either of them this week.
+
+The Cookie module is a built-in Python module for handling cookies on
+the server side.  It contains code for parsing and generating cookie
+headers.
+
+To generate the appropriate cookie header, start by creating a cookie object:
+
+  >>> import Cookie
+  >>> C = Cookie.SimpleCookie()
+  >>> C['key'] = 'some value'
+  >>> C.output()
+  'Set-Cookie: key="some value"'
+
+This can be turned into the appropriate response tuple for your
+``webserve.py`` by doing a ``split``:
+
+  >>> x = C.output()
+  >>> x.split(': ', 1)
+  ['Set-Cookie', 'key="some value"']
+
+Once you pass this back to the Web browser, future accesses to that
+Web server -- that is, that exact top-level URL, including the port --
+will include a client header.  This header will just specify the cookie
+name and its value:
+
+  >>> cookie_in = 'Cookie: key="some value"'
+
+In your ``webserve.py``, ``handle_connection`` should pass this into
+``delegate`` as a tuple:
+
+  >>> parsed_cookie_in = cookie_in.split(': ', 1)
+
+This cookie can now be parsed by feeding the cookie header value diretly
+into ``simpleCookie.load``:
+
+  >>> C_in = Cookie.SimpleCookie()
+  >>> C_in.load(parsed_cookie_in[1])
+  >>> C_in['key']
+  <Morsel: key='some value'>
+
+and its value can be retrieved by grabbing the 'value' attribute:
+
+  >>> C_in['key'].value
+  'some value'
+
+.. dynamic importing
+.. getattr/setattr
+.. traversing objects
+.. keyword args

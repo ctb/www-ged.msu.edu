@@ -1,0 +1,94 @@
+Homework 2: Simple Network Programming
+======================================
+
+Due Tuesday, Sep 9th, 12:40pm (at class start).
+
+----
+
+Section 0: Cleanup
+------------------
+
+Deal with my comments on the first homework: fix problems, etc.
+
+Section 1: More Iterators and Generators
+----------------------------------------
+
+Implement both a re-entrant non-generator iterator, PrimeIter, *and* a
+generator, prime_generator, that calculate prime numbers using
+`Eratosthenes' Sieve
+<http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes>`__. Your code
+should pass the following tests: ::
+
+  import homework2_primes, types
+  
+  prime5 = [2, 3, 5, 7, 11]
+  
+  primer = homework2_primes.PrimeIter()
+  x = [ (i, j, k) for (i, j, k) in zip(primer, primer, range(5)) ]
+  assert prime5 == [ i for (i, j, k) in x ]
+  assert prime5 == [ j for (i, j, k) in x ]
+  
+  primer = homework2_primes.prime_generator()
+  assert isinstance(primer, types.GeneratorType)
+  x = [ i for (i, k) in zip(primer, range(5)) ]
+  assert prime5 == x
+
+Here is a potentially useful utility function that you should feel
+free to use in your own code: ::
+
+  def divides(primes, n):
+    """
+    'primes' is a list of prime numbers, 'n' is a positive integer.
+    'divides' returns True if any number in 'primes' divides 'n'.
+    """
+    for trial in primes:
+       if n % trial == 0: return True
+    return False
+
+Section 2: Write a spambot
+--------------------------
+
+Write a command-line program that connects to a specified server on
+the SMTP port (port 25) and sends an e-mail from you to a specified
+address; the e-mail should contain a specified word.  The program
+should be named 'send-email' and be in the 'homework2/' subdirectory
+of your svn archive.  So, for example, the following command ::
+
+  python homework2/send-email teckla.idyll.org titus@cse491.msu.idyll.org blarny
+
+would send an e-mail containing the word 'blarny' to
+'titus@cse491.msu.idyll.org' using the mail server 'teckla.idyll.org'.
+
+You don't need to do any error trapping or handling.
+
+**Very important:** Actually sending spam is a violation of the `MSU
+network policy <http://www.msu.edu/aup/>`__, and it is also very
+unfriendly. Stick to using the server 'teckla.idyll.org' and your own
+username @ cse491.msu.idyll.org, or else you may find your network
+access cut off or worse.  Plus you could get me in trouble, which may
+sound like fun but won't be - for you.  Promise.
+
+Section 3: Write a simple TCP echo server
+-----------------------------------------
+
+Create a Python echo server that, when run, binds to the specified
+port and echoes whatever data is sent to it back to the sender, up
+until a simple '\\n.\\n' is received, at which point the connection is
+terminated.  This echo server should take two arguments on the command
+line: the host IP address and the port to which to bind.  For example,
+::
+
+  python homework2/echo-server localhost 4199
+
+**Please do not use any Python network libraries other than 'socket' for
+this assignment.**  You can (and should) process connections
+synchronously; there's no need to handle multiple connections in
+parallel.  (Guess what a future homework is? ;)
+
+The echo server should echo *exactly* what it receives, with no
+interpretation or parsing other than the end period.
+
+Hint: you can use the spambot from section 2 to test your echo-server
+without writing a new Python program; just set the spambot program to
+print whatever it receives to the console, so you can verify that the
+echo server is working properly.

@@ -1,0 +1,188 @@
+-------------------------------------
+Lab 12 Material - November 13th, 2008
+-------------------------------------
+
+.. @ order of sql?
+
+Reminder: office hours tonight, 9-11pm; hw due at 5pm on Friday.
+
+---
+
+Objective: expose you to JavaScript and JS troubleshooting.
+
+General JS resources:
+
+http://www.w3schools.com/js/
+
+http://devguru.com/technologies/javascript/home.asp
+
+---
+
+Files for this lab are in svn, at:
+
+   http://class.ged.idyll.org/svn/files/lab-12/
+
+or you can copy them from
+
+   ~ctb/lab-12/
+
+on the CSE cluster.
+
+---
+
+Common problems (hat tip to Taylor Marshall): ::
+
+  '' == '0' //false
+  0 == '' // true
+  0 == '0' // true
+
+(== and != are not symmetric, so weird stuff can happen as above; this
+is also possible in Python, note!)
+
+Recommend using === and !== operators to avoid such tomfoolery.   In
+the above examples, all statements would evaluate to false using ===.
+
+JavaScript examples
+-------------------
+
+Simple JS (`page <lab-12/ex1.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex1.html>`__) : ::
+
+  <html>
+  <body>
+  <script type="text/javascript">		<--
+  document.write("Hello World!");
+  </script>					<--
+  </body>
+  </html>
+
+Hide your JavaScript from non-JS users (`page <lab-12/ex2.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex2.html>`__) : ::
+
+   <script type="text/javascript">
+   <!--
+   document.write("Hello World!");
+   //-->
+   </script>
+
+Load JavaScript code from another file (`page <lab-12/ex3.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex3.html>`__ and `JS source <http://class.ged.idyll.org/svn/files/lab-12/hello.js>`__) : ::
+
+   <script src='hello.js'></script>
+
+Grouping JS statements into blocks with squigglies (`page <lab-12/ex4.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex4.html>`__) : ::
+
+   <script type='text/javascript'>
+   {
+   document.write("Hello");
+   document.write(" World!");
+   }
+   </script>
+
+
+Basic JS prompts (`page <lab-12/ex5.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex5.html>`__) : ::
+
+   alert("something happened!");
+
+   confirm("may I delete all your files?");
+
+   prompt("some question","defaultvalue");
+
+Functions, head/body separation, and element events (`page <lab-12/ex6.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex6.html>`__) : ::
+
+  <head>
+  <script type="text/javascript">
+  function displaymessage()
+  {
+  alert("Hello World!");
+  }
+  </script>
+  </head>
+
+  <body>
+  <form>
+
+  <input type="button" value="Click me!" onclick="displaymessage()" >
+
+  </form>
+  </body>
+
+
+'undefined' implicit conversion to strings, & errors (`page <lab-12/ex7.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex7.html>`__) : ::
+
+   document.write("this.bar is: " + this.bar)
+
+   document.write("<p>foo is: " + foo);
+
+   document.write("<p>and hello, world!");
+
+(Go look at the Firefox error console.)
+
+Simple object-oriented programming, and iteration over bags o' properties (`page <lab-12/ex8.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex8.html>`__) : ::
+
+  function some_object_method(param) {
+     document.write("hello!  This is SomeObject's other param: ");
+     document.write(this.what);
+  
+     document.write("<p> and this is my method param:");
+     document.write(param);
+  }
+  
+  function SomeObject(what, other_param) {
+     this.foo = "hello";
+     this.what = other_param;
+     this.method = some_object_method;
+  }
+
+  /////
+  
+  x = new SomeObject("world", 2);
+  
+  document.write(x.foo + " " + x.what + "<p>");
+  x.method("argument to SomeObject.method");
+  
+  for (z in x) {
+     document.write('<p>z is ' + z);
+     document.write('<p>x[z] is ' + x[z]);
+  }
+
+Working with HTML elements (`page <lab-12/ex9.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-12/ex9.html>`__) : ::
+
+  <script type="text/javascript">
+  
+  function change_title() {
+      var x = document.getElementById("my_input");
+      document.title = x.value;
+      return false;
+  }
+  
+  document.write("The title is: " + document.title + "<p>");
+  </script>
+  
+  <form onsubmit='return change_title()' method='POST'>
+  
+  New title: <input type="text" id='my_input'>
+  
+  <input type="submit" value='change title' >
+  
+  </form>
+  
+  </body>
+
+---
+
+Group exercises
+---------------
+
+There are several files with a variety of problems between them, in
+`lab-12/exercises/
+<http://class.ged.idyll.org/svn/files/lab-12/exercises>`__.  Fix
+the problems!
+
+.. @@ wrong stuff:
+.. @@   syntax error, no semicolon
+.. @@   
+.. @@   no <script>
+.. @@   no </script>, when loading external file
+.. @@   multi find
+.. @@   no find
+.. @@   determine properties, CSS mod
+
+.. @@ submit stuff!

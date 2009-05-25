@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="homework-5-writing-a-web-server-part-3" name="homework-5-writing-a-web-server-part-3">Homework 5: Writing a Web server, part 3</a></h1>
+<p>Due Thursday, Oct 2nd, at 12:40pm (class start).</p>
+</div>
+<div class="section">
+<h1><a id="refactor" name="refactor">Refactor</a></h1>
+<p>Break your code from HW #4 down into (at least) three functions, named
+exactly as below, and placed in the file 'homework5/webserve.py'. You
+can use the following as a template:</p>
+<pre class="literal-block">
+import socket
+import urlparse
+import traceback
+import cgi
+import httplib
+import threading
+
+def serve(interface, port):
+    &quot;&quot;&quot;
+    'serve' processes HTTP connections on the given interface/port.
+
+    serve(interface, port) creates &amp; binds a socket to the given
+    interface/port, and processes connections to that port as a
+    single HTTP request.  'handle_connection' is used to process each
+    connection in a thread.
+
+    'serve' never returns.
+    &quot;&quot;&quot;
+    # ...
+
+def handle_connection(client_sock, client_address):
+    &quot;&quot;&quot;
+    'handle_connection' is called for each client connection to the server.
+
+    handle_connection(client_sock, client_address) takes the socket
+    and client address information returned by 'accept' and handles
+    exactly one HTTP exchange.
+
+    'delegate' is called to process the actual HTTP request.
+
+    This function returns nothing (a.k.a 'return', a.k.a 'return None').
+
+    No assumptions are made about the size of the input data; data should
+    be read until the headers have been completely received.  Any data
+    following that should be parsed as POST data.
+
+    In case an exception is raised in 'delegate', an HTTP error 500
+    (internal server error) is returned.
+
+    'handle_connection' traps all exceptions.
+    &quot;&quot;&quot;
+    # ...
+
+    return
+
+def delegate(request_type, path, received_headers, GET_data, POST_data=None):
+    &quot;&quot;&quot;
+    'delegate' is called to process each HTTP request.
+
+    delegate(request_type, path, received_headers, get_data, post_data)
+    takes an HTTP request (string; 'GET' or 'POST'), the associated
+    URL path (string), a list of header tuples [(key, value), ...],
+    and any GET_data or POST data (as returned by parse_qs).  GET_data
+    and POST_data can both be None if no such data is available.
+
+    Returns HTTP status code, a list of (key, value) headers to send,
+    and the data (string) to send.
+    &quot;&quot;&quot;
+    # ...
+
+    return code, return_headers, return_data
+
+if __name__ == '__main__':
+    # call 'serve'
+</pre>
+<p>Please make sure that 'webserve.py has no 'side effects' on import,
+that is, that nothing other than function/class definitions and the
+final 'if' block are run on import.  This will allow you to run the
+tests.</p>
+<p>At the end of the refactoring, your code must still work as in
+HW #4, i.e. it should be multithreaded AND it should properly
+display the URL and any query data.</p>
+<p>Note that you still must use the socket library to do all of the
+network communication -- no cheating and using Python's built-in Web
+server modules, please...</p>
+</div>
+<div class="section">
+<h1><a id="accepting-post-data" name="accepting-post-data">Accepting POST data</a></h1>
+<p>Modify your 'handle_connection' function to accept POST data, i.e.
+data sent with a POST, after the request headers.  You can use
+'cgi.parse_qs' to parse this.  The results should be passed into
+the 'delegate' function.</p>
+<p>I'll provide tests and an example of how to construct a POST on
+Thursday in lab.</p>
+<p>(You don't need to parse multipart/form-data POST data, only
+application/x-www-form-urlencoded POST data.)</p>
+</div>
+<div class="section">
+<h1><a id="testing" name="testing">Testing</a></h1>
+<p>Test code is available here:</p>
+<pre class="literal-block">
+http://class.ged.idyll.org/svn/files/hw-5/webserve-test.py
+</pre>
+<p>Your 'webserve.py' file should pass all of these tests, as well as function
+as a regular Web server.</p>
+</div>
+<div class="section">
+<h1><a id="tips-tricks" name="tips-tricks">Tips &amp; tricks</a></h1>
+<p>A few other tips -</p>
+<blockquote>
+<ul class="simple">
+<li>you can use the dictionary 'httplib.responses' to return the proper
+status message for each numeric code, e.g. <tt class="docutils literal"><span class="pre">httplib.responses[200]</span></tt>
+is 'OK'.</li>
+<li>You can use <tt class="docutils literal"><span class="pre">headers,</span> <span class="pre">content</span> <span class="pre">=</span> <span class="pre">buffer.split('\r\n\r\n',</span> <span class="pre">1)</span></tt> to
+split the header data from any incoming POST data.</li>
+<li>The size of the POST data is specified in the incoming 'Content-Length'
+header; you can rely on that to specify the size, in bytes, of all
+data following the <tt class="docutils literal"><span class="pre">\r\n\r\n</span></tt> header boundary.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="helpful-suggestion-ignore-if-stubborn" name="helpful-suggestion-ignore-if-stubborn">Helpful suggestion (ignore if stubborn)</a></h1>
+<p>This could be a lot of work if you do things in the wrong order.</p>
+<p>I would suggest doing things as below, and testing (at least by hand)
+at each step.</p>
+<blockquote>
+<ol class="arabic simple">
+<li>write a 'delegate' function that returns constant data, independent
+of what is passed into it.</li>
+<li>refactor your existing 'webserve' code from HW 3 to call 'delegate'.</li>
+<li>separate out your client connection handling code into a function
+'handle_connection'.</li>
+<li>rework your main 'while' loop into the 'serve' function.</li>
+<li>change your 'delegate' function to one that displays the URL and query
+that it is called with in a GET (as in HW #4).</li>
+<li>update your code to handle POST data.</li>
+</ol>
+</blockquote>
+<p>Note that if you do this, you only need to write new (untested) code
+in steps #1 and #6; the rest is simply refactoring of existing,
+working code.</p>
+</div>
+</div>
+</body>
+</html>
