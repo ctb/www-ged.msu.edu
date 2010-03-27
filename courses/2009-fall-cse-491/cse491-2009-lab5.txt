@@ -1,0 +1,415 @@
+Lab #5 -- Strings, Jinja2 template inheritance, and testing
+-----------------------------------------------------------
+
+CSE 491, Oct 1st, 2009.
+
+**NOTE**: class next Tuesday will start at 5:05pm and run as usual until
+5:50 (so only a 45 minute class).  I am hosting a speaker at 5pm...
+
+String manipulation
+-------------------
+
+Here are some handy tricks for string manipulation in Python.  All of
+these methods work on string objects.
+
+Splitting strings
+~~~~~~~~~~~~~~~~~
+
+First, the  ``split`` function breaks strings into lists of strings
+based on a split string::
+
+  >>> s = "foo,bar,baz"
+  >>> s.split(',')
+  ['foo', 'bar', 'baz']
+
+The split string doesn't have to be a single character; it can be
+a string, too::
+
+  >>> t = "foo-:-bar-:-baz"
+  >>> t.split('-:-')
+  ['foo', 'bar', 'baz']
+
+This is especially good for when you want to break up multiple lines that
+have a multi-character line break; for example::
+
+  >>> v = "this is line 1\r\nthis is line 2\r\n"
+  >>> v.split('\r\n')
+  ['this is line 1', 'this is line 2', '']
+
+This use is so common that there's a pre-defined function ``splitlines`` to
+do it::
+
+  >>> v.splitlines()
+  ['this is line 1', 'this is line 2']
+
+There is one small difference -- do you see it?  In the first example,
+``split`` keeps the last "empty" line, while in the second example,
+``splitlines`` discards it.  This is because ``splitlines`` knows you're
+looking for distinct lines of text.
+ 
+Note that ``splitlines`` uses ``\r\n`` and ``\n`` to mean end of line::
+
+  >>> "line 1\nline 2\n".splitlines()
+  ['line 1', 'line 2']
+
+This is fine for Web protocol purposes, although if you are worried about
+picking up ``\n`` instead of ``\r\n`` you can just use ``split``.
+
+Another convenience of ``split`` (but not ``splitlines``) is that you
+can tell it how many elements you want it to split off -- for example,
+to split off only one element, use::
+
+  >>> "foo:bar:baz".split(":", 1)
+  ['foo', 'bar:baz']
+
+Here ``split`` is performing a single split, and leaving everything else
+as a combined string.
+
+You can combine this with tuple unpacking to write some pretty terse
+processing functions; for example, ::
+
+  >>> x = "request line\r\nheader 1\r\nheader 2\r\nheader 3\r\n"
+  >>> request, headers = x.split('\r\n', 1)
+  >>> request
+  'request line'
+  >>> headers
+  'header 1\r\nheader 2\r\nheader 3\r\n'
+
+  >>> headers = headers.splitlines()
+  >>> headers
+  ['header 1', 'header 2', 'header 3']
+
+For HTTP request parsing, then, you're set!  Remember, for HTTP,
+
+ - the first line of an HTTP request (the "request line") has three
+   space-separated fields and ends with an ``\r\n``;
+
+ - the headers are on the second line forward, separated by ``\r\n``,
+   until an empty line (blank ``\r\n``, or equivalently a ``\r\n\r\n``)
+   ends them; this ``\r\n\r\n`` is guaranteed to be present in a valid
+   HTTP request;
+
+ - each header consists of a name/value pair separated by a single ': '
+   (colon followed by a space);
+
+ - everything *after* the ``\r\n\r\n`` that ends the headers should be
+   stored but not parsed.
+
+String matching
+~~~~~~~~~~~~~~~
+
+Here are three functions useful for string matching.  First, you can
+use ``find``, which returns the position of the first exact match, or
+-1 if there is no match::
+
+  >>> s = 'some text'
+  >>> s.find('text')
+  5
+  >>> s.find('foo')
+  -1
+
+You can write your own simple ``split``-like function using ``find``, string
+slicing, and tuple unpacking::
+
+  >>> loc = s.find('t')
+  >>> first, last = s[:loc], s[loc:]
+  >>> first, last
+  ('some ', 'text')
+
+If you just want to find out if there's a substring present, you can also
+use 'in'::
+
+  >>> 'text' in s
+  True
+
+And if you want the location of that text, you can use ``index``::
+
+  >>> s.index('text')
+  5
+
+(Guess what happens if you use ``index`` and the substring is not present?)
+
+Joining lists
+~~~~~~~~~~~~~
+
+Another very useful string function, this time for turning lists into
+strings (as opposed to strings into lists) is ``join``.  Suppose you
+have a list of strings that you want to make into a comma-separated
+string::
+
+  >>> x = ['foo', 'bar', 'baz']
+  >>> ",".join(x)
+  'foo,bar,baz'
+
+The "join" string can be anything, including ``\r\n``::
+
+  >>> "\r\n".join(x)
+  'foo\r\nbar\r\nbaz'
+
+To construct headers for an HTTP response, then, you could just take a list
+of 2-tuple headers and do two joins: ::
+
+  >>> headers = [('Foo', 'bar'), ('Baz', 'bif')]
+  >>> header_list = []
+  >>> for pair in headers:
+  ...    header = ': '.join(pair)
+  ...    header_list.append(header)
+
+  >>> header_list
+  ['Foo: bar', 'Baz: bif']
+
+  >>> headers_final = "\r\n".join(header_list)
+  >>> headers_final
+  'Foo: bar\r\nBaz: bif'
+
+List comprehensions
+~~~~~~~~~~~~~~~~~~~
+
+List comprehensions are a convenient way to tersely write certain expressions.
+For example, suppose you wanted to process a bunch of headers into 2-tuples.::
+
+  >>> headers = [ 'Foo: bar', 'Baz: bif' ]
+
+Using a for loop would require 3 or 4 lines:
+
+  >>> split_headers = []
+  >>> for s in headers:
+  ...   name, value = s.split(': ')
+  ...   split_headers.append((name, value))
+  >>> split_headers
+  [('Foo', 'bar'), ('Baz', 'bif')]
+
+List comprehensions give you a shorter way to write this::
+
+  >>> split_headers = [ s.split(': ') for s in headers ]
+  >>> split_headers
+  [['Foo', 'bar'], ['Baz', 'bif']]
+
+The general syntax of a list comprehension looks like this: ::
+
+  [ <expression> for x in y ]
+
+and you can also include if statements, e.g.
+
+  [ <expression> for x in y if <expression> ]
+
+List comprehensions can get pretty complicated, which then makes your
+code unreadable; and there's no good way to do certain things (like
+catch & ignore exceptions to continue processing) because everything
+has to be written on one codel ine.  I recommend using them only when
+you have some pretty simple list processing to do, but then can
+really help make your code shorter and (potentially) easier to read.
+
+For example, for the above header creation join, you could now do:
+
+  >>> headers = [('Foo', 'bar'), ('Baz', 'bif')]
+
+  >>> header_final = "\r\n".join([ ": ".join(pair) for pair in headers ])
+
+or (if you want to write slightly more readable code...) 
+
+  >>> headers = [ ": ".join(pair) for pair in headers ]
+  >>> header_final = "\r\n".join(headers)
+
+---
+
+Remember, you can also type 'help' to get information on what split and
+join do::
+
+  help("".join)
+
+HTML structure, and Jinja2 inheritance & blocks
+-----------------------------------------------
+
+Every HTML page is supposed to have roughly this structure: ::
+
+  <html>
+   <head>
+   ... HEADER INFO GOES HERE - title, keywords, etc. ...
+   </head>
+   <body>
+   ... BODY OF PAGE GOES HERE -- stuff to display. ...
+   </body>
+  </html>
+
+but in practice, for most pages, you will only modify the title and
+the content.  Retyping all of this every time would be a waste of time,
+error-prone, and (as you'll see once we get to CSS and styling) make
+the pages hard to change.
+
+Or, in sum, writing the same HTML for every page violates the DRY
+rule: don't repeat yourself!
+
+Jinja2 templates offer a way around this through template inheritance
+and *blocks*.
+
+First, write a template page -- let's call it 'base.html' and add
+in some blocks.  This is a notation that lets you designate areas
+to be replaced by subclassed pages. ::
+
+   <html>
+    <head>
+     <title>{% block title %} DEFAULT TITLE {% endblock %}</title>
+    </head>
+    <body>
+     {% block content %} DEFAULT CONTENT {% endblock %}
+    </body>
+   </html>
+
+Now, in another page, *extend* from base.html: ::
+
+   {% extends "base.html" %}
+   
+and in that same page, override one or more of the blocks: ::
+
+   {% block title %}
+   my real title
+   {% endblock %}
+
+Voila!  When you render the *second*, subclassed, page with Jinja2, it
+will automatically load in the 'base.html' structure and then replace
+only the title block: ::
+
+   <html>
+    <head>
+     <title>
+      my real title
+     </title>
+    </head>
+    <body>
+     {% block content %} DEFAULT CONTENT {% endblock %}
+    </body>
+   </html>
+
+You can do this several times, too; have one base page that specifies
+the default color scheme for a Web page, and then another that (for
+some subset of the site) defines a set of tabs, etc.
+
+Testing
+-------
+
+I've told you a bit about how important automated testing can be for
+keeping on top of code changes & refactoring.  But how do you actually
+do it?
+
+The main technique in automated testing is to have some code -- the
+*test code* -- drive the code **under test**.  So, if you have code
+like this: ::
+
+  def sum(x, y):
+     return x+y
+
+then you write test code like this: ::
+
+  assert sum(0, 0) == 0
+  assert sum(1, 1) == 2
+
+(here, 'assert' is a language construct that complains if the following
+condition isn't true).
+
+Now, let's suppose you have a function ``handle_connection`` that
+takes a socket object and reads an HTTP request from it.  How would you
+test that using these techniques?
+
+Let's start with a stub handle_connection function: ::
+
+   response = 'HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\nhello, world'
+
+   def parse_request(data):
+      # do parsing, etc.
+      return response     # for now, return fake response
+
+   def handle_connection(sockobj, data_so_far=None):
+      if data_so_far is None:    # initialize
+         data_so_far = ''
+      
+      data = sockobj.recv(4096)
+      data_so_far += data
+      if '\r\n\r\n' in data_so_far:  # complete GET request - respond & close
+         response = parse_request(data_so_far)
+         sockobj.sendall(response)
+         sockobj.close()
+         return True, None
+
+      # not done yet; keep gathering information
+      return False, data_so_far
+
+This function reads from the socket until an entire request has been
+received; then (without parsing the request or anything) responds with
+a basic response.
+
+How do we test this?
+
+Well, conveniently, it's in a function.  We can just import it, and call
+the function::
+
+   import webserve
+
+   done = False
+   data_so_far = ''
+   while not done:
+       done, data_so_far = webserve.handle_connection(fake_socket, data_so_far)
+
+Err, what's that 'fake_socket' object, then?  It's just a Python object
+that *looks* and *behaves* like a socket::
+
+    class fake_client_sock_obj(object):
+       def __init__(self, data):
+           self.data = data
+           self.sent = ''
+
+       def recv(self, amount):
+           d, self.data = self.data[:amount], self.data[amount:]
+           return d
+
+       def sendall(self, to_send):
+           self.sent += to_send
+
+       def close(self):
+           pass
+
+and that we can stuff with data: ::
+
+   request_data = '''GET / HTTP/1.0\r\nHost: locahost\r\nPort: 5000\r\n\r\n'''
+   fake_socket = fake_client_sock_obj(request_data)
+
+...and since it saves everything sent using 'sendall', we can even inspect
+what was sent: ::
+
+   # ... run code, etc.
+
+   response = fake_socket.sent
+   print 'RESPONSE IS:', response
+
+You can see functioning code here:
+
+   http://class.ged.idyll.org/svn/files/lab5/
+
+Actually doing testing
+----------------------
+
+How can you use this on your homework?
+
+Zeroth, it's not required to do testing on your homework, or to submit
+testing code with the homework.  (It will be, later.)
+
+First of all, this is a good start for part of the homework.  If you
+integrate this code into your blocking echo server, you'll have
+something that responds to HTTP requests with an HTTP response.  Yay.
+
+Second of all, it's pretty easy to change things around to test things
+like 'is the socket closed?' and 'am I properly aggregating client data?'
+We can do that in class.
+
+Third, once you add in request parsing, how hard is it to add in
+checking for the proper response?  Not very -- it's just mucking about
+with strings, which is infinitely easier than dealing with all that socket
+stuff.
+
+I realize this kind of testing is probably a new concept to a lot of
+you, but I highly recommend spending the time to run the code and figure
+out what's going on here.
+
+And... how would you test non-blocking server code this way?
+That is left as an exercise (or something to do at the end of class, if
+we have time.

@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lab-4-network-programming" name="lab-4-network-programming">Lab #4 -- Network programming</a></h1>
+<p>CSE 491, Sep 24th, 2009.</p>
+<p>Quote:</p>
+<blockquote>
+It is impossible, by examining any significant piece of completed
+code, to determine within a factor of two how many man-hours it took
+to produce that code.</blockquote>
+<p>And the corollary:</p>
+<blockquote>
+If you can't tell how long a piece of code would take when you have
+the finished product available, what chance do you think you have
+before the first line of code is written?</blockquote>
+<p>-- Kyle Wilson, <a class="reference" href="http://www.gamearchitect.net/Articles/SoftwareIsHard.html">http://www.gamearchitect.net/Articles/SoftwareIsHard.html</a></p>
+<div class="section">
+<h2><a id="networking" name="networking">Networking</a></h2>
+<p>Blocking vs non-blocking I/0</p>
+<blockquote>
+<ul>
+<li><p class="first">blocking I/O <strong>blocks</strong> the thread of execution until input/output
+is available.  This means that you must use multiple threads of
+execution (threading, multiprocess) OR special monitoring functions
+(select) to handle multiple connections with blocking I/O in a single
+thread of execution.</p>
+</li>
+<li><p class="first">non-blocking I/O doesn't block, but returns immediately with data
+OR aborts and signals an error (&quot;no data available, boss&quot;).</p>
+<p>(how do you distinguish between &quot;data available&quot; and error? guesses?)</p>
+</li>
+</ul>
+</blockquote>
+<p>Synchronous vs asynchronous I/O</p>
+<blockquote>
+<ul class="simple">
+<li>synchronous is like a conversation: you speak, then I speak.</li>
+<li>asynchronous is like an unfriendly argument: everyone speaking at
+once.</li>
+</ul>
+</blockquote>
+<p>Synchronous vs asynchronous <strong>processing</strong></p>
+<blockquote>
+<ul class="simple">
+<li>synchronous processing waits for one &quot;conversation&quot; to be over before
+starting another one.</li>
+<li>synchronous processing is BAD: inefficient, doesn't scale,
+resource intensive...</li>
+<li>asynchronous processing relies on built-in language or OS features
+to &quot;keep track&quot; of several connections at once.  It can be done
+inefficiently or efficiently (threading/processes, or select); the
+latter depends more on language/OS features.</li>
+</ul>
+</blockquote>
+<p>(Some diagrams...)</p>
+</div>
+<div class="section">
+<h2><a id="tcp-ip-socket-stuff" name="tcp-ip-socket-stuff">TCP/IP socket stuff</a></h2>
+<div class="section">
+<h3><a id="connecting-out-via-tcp-ip" name="connecting-out-via-tcp-ip">Connecting out via TCP-IP</a></h3>
+<p>Creating a socket:</p>
+<pre class="literal-block">
+import
+sock = socket.socket()
+</pre>
+<p>Connecting that socket to a remote server:</p>
+<pre class="literal-block">
+remote_address = 'teckla.idyll.org'
+port = 25
+sock.connect((remote_address, port))
+</pre>
+<p>Reading from the socket:</p>
+<pre class="literal-block">
+data = sock.recv(4096)
+</pre>
+<p>You will get <em>up to</em> bufsize=4096 bytes, and if there is nothing
+available, 'sock.recv' will block (wait) until either there <em>is</em> something
+available, or the socket closes, or you hit CTRL-C.</p>
+<p>Writing to the socket:</p>
+<pre class="literal-block">
+data = sock.sendall('HELO foo.msu.edu')
+</pre>
+</div>
+<div class="section">
+<h3><a id="sending-mail-example" name="sending-mail-example">Sending mail - example</a></h3>
+<p>Here's a sample SMTP (mail) session:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; import socket
+&gt;&gt;&gt; sock = socket.socket()
+</pre>
+<p>Connect to the server:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; sock.connect(('teckla.idyll.org', 25))
+&gt;&gt;&gt; sock.recv(4096)                   #doctest: +ELLIPSIS
+'220 teckla.idyll.org ESMTP Exim 4.63 ...\r\n'
+</pre>
+<p>Say hello:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; sock.sendall(&quot;HELO foo.msu.edu\n&quot;)
+&gt;&gt;&gt; sock.recv(4096)                   #doctest: +ELLIPSIS
+'250 teckla.idyll.org Hello ....msu.edu [...]\r\n'
+</pre>
+<p>Identify the sender address:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; sock.sendall(&quot;MAIL FROM: t&#64;foo.msu.edu\n&quot;)
+&gt;&gt;&gt; sock.recv(4096)
+'250 OK\r\n'
+</pre>
+<p>Identify the recipient address:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; sock.sendall(&quot;RCPT TO: null&#64;idyll.org\n&quot;)
+&gt;&gt;&gt; sock.recv(4096)
+'250 Accepted\r\n'
+</pre>
+</blockquote>
+<p>OK, greetings are over; set up to send the actual message:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; sock.sendall('DATA\n')
+&gt;&gt;&gt; sock.recv(4096)
+'354 Enter message, ending with &quot;.&quot; on a line by itself\r\n'
+</pre>
+</blockquote>
+<p>Aaaaaaaaaaaaand send!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; sock.sendall('foo bar baz\n.\n')
+&gt;&gt;&gt; sock.recv(4096)       #doctest: +ELLIPSIS
+'250 OK...\r\n'
+</pre>
+</blockquote>
+<p>Be nice &amp; 'quit' before closing.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; sock.sendall('quit\n')
+&gt;&gt;&gt; sock.close()
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h3><a id="receiving-connections" name="receiving-connections">Receiving connections</a></h3>
+<p>Create a socket:</p>
+<pre class="literal-block">
+import socket
+sock = socket.socket()
+</pre>
+<p>If 'interface' is a blank string, connections are allowed in to all IP
+addresses on this host; if it's non-blank, e.g. e.g. '127.0.0.1', then
+only connections to that network interface are allowed. I would
+suggest using a blank interface so that you don't have to worry about
+it:</p>
+<pre class="literal-block">
+interface = ''
+port = 5555
+
+sock.bind( (interface, port) )
+</pre>
+<p>Allow up to 5 &quot;backlogged&quot; connections (unhandled connections in):</p>
+<pre class="literal-block">
+sock.listen(5)
+</pre>
+<p>Handle incoming connections one at a time until they die:</p>
+<pre class="literal-block">
+while 1:
+   (client_sock, client_address) = sock.accept()
+
+    while 1:
+        data = client_sock.recv(4096)
+        if not data:
+            break
+
+        print 'got data:', data
+</pre>
+<p>For example, if you run this code, you can try using your Web browser
+to connect to</p>
+<blockquote>
+<a class="reference" href="http://localhost:5555/">http://localhost:5555/</a></blockquote>
+<p>to see what's printed out on your screen by both sides...</p>
+<p>Two final notes -- 'bind' is sometimes a bit sticky, and you may have to
+wait for a while (10-20 seconds) before rebinding a socket after hitting
+CTRL-C.  One way around this is just to change the port number.</p>
+<p>Also, if you can find a 'telnet' program (installed on many UNIXes by
+default; not available on Windows by default -- enable <a class="reference" href="http://windowsitpro.com/article/articleid/93952/where-is-the-telnet-client-in-windows-vista.html">like this</a>) then you can talk directly to TCP ports; just do</p>
+<pre class="literal-block">
+telnet teckla.idyll.org 25
+</pre>
+<p>to connect to port 25 on teckla.idyll.org...</p>
+</div>
+</div>
+<div class="section">
+<h2><a id="non-blocking-network-i-o" name="non-blocking-network-i-o">Non-blocking network I/O</a></h2>
+<p>By default, sockets are <em>blocking</em>; see the above 'while' loop.  When
+you try to read from them, your program will hang until some event
+(data is available; connection closed; etc.)</p>
+<p>For the next HW, you must use <tt class="docutils literal"><span class="pre">socket.setblocking(0)</span></tt> on all
+of your sockets to make a non-blocking echo server.  This need to
+be done on the bound socket as well as on all client connection sockets.</p>
+<p>If you set the sockets to non-blocking, then you will get an exception
+almost every time you try to accept a connection or read from a connection:
+that is,</p>
+<pre class="literal-block">
+sock.recv(...)
+</pre>
+<p>will raise a <tt class="docutils literal"><span class="pre">socket.error</span></tt>.</p>
+<p>To handle this case, wrap it in a try/except statement body:</p>
+<pre class="literal-block">
+try:
+   sock.recv(...)
+except socket.error:
+   # handle error
+</pre>
+<p>The code in the 'except block ('handle error') can be whatever you
+want it to be; see below for three examples.</p>
+<p>For problem #3 in the homework, you will need to keep track of what
+connections you are currently processing; you can use a list.  Be
+sure to remove dead connections.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="exception-handling" name="exception-handling">Exception handling</a></h1>
+<p>We haven't gone over exception handling in Python yet, but it's fairly
+similar to exception handling in C++ and I'm hoping most people have seen
+it.  The basic idea is that if you have a statement that could &quot;error out&quot;,
+that statement may <strong>throw an exception</strong>:</p>
+<pre class="literal-block">
+try:
+   x = int('foo')
+except Exception:
+   print 'got an exception'
+</pre>
+<p>Consider these three examples:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     pass                  # silently ignore error
+...   print i
+0
+1
+2
+3
+4
+5
+6
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     break                 # exit loop
+...   print i
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 7):
+...   try:
+...     if i % 3 == 0:
+...       raise Exception
+...
+...   except Exception:
+...     continue              # jump to 'for'
+...   print i
+1
+2
+4
+5
+</pre>
+</blockquote>
+<p>Why do you get these results?</p>
+<p>Network code will throw <tt class="docutils literal"><span class="pre">socket.error</span></tt> exceptions, and you can find
+out what the complaint is by doing this in the exception handling block:</p>
+<pre class="literal-block">
+try:
+  # some network code
+exception Exception, e:
+  print 'Error:', e
+</pre>
+</div>
+<div class="section">
+<h1><a id="copying-code-examples" name="copying-code-examples">Copying code examples</a></h1>
+<p>You will cause problems for yourself with carelessness in protocols.
+Mail servers will hang up on you, in particular.</p>
+<p>I run most of code that I hand out; if it's in a doctest format, then
+I <em>do</em> run it.  So if there's a problem, it's <em>probably</em> not in my
+code.</p>
+<p>Second, all of the lecture and lab notes, as well as the homeworks, are
+available online, under this URL:</p>
+<blockquote>
+<a class="reference" href="http://ged.msu.edu/courses/2009-fall-cse-491/materials.html">http://ged.msu.edu/courses/2009-fall-cse-491/materials.html</a></blockquote>
+<p>They are all available in text format, so you should seriously consider
+<em>copying and pasting</em> the code from those pages first, to make sure that
+works.  If you copy and paste code and it doesn't work, then the odds are
+slightly higher that I'm at fault ;).</p>
+</div>
+<div class="section">
+<h1><a id="print-statements" name="print-statements">Print statements</a></h1>
+<p>When you want to debug network code, put in print statements! For example,
+with code like this:</p>
+<pre class="literal-block">
+while 1:
+  data = socket.recv(...)
+  if data == '\n.\n':
+    break
+</pre>
+<p>you may run into difficulties.</p>
+<p>You'll say, &quot;it's never breaking out of the loop.&quot;  I'll say, &quot;that
+must be because your if statement is never true.&quot;  You'll say, &quot;but
+I'm sure it is! I'm sending <tt class="docutils literal"><span class="pre">\n.\n</span></tt> from the other end!&quot;</p>
+<p>Well, prove it!</p>
+<p>You need to put in print statements to make sure you know what is
+going on.  In this case, I'd rewrite the code to this:</p>
+<pre class="literal-block">
+print '** entering while loop'
+while 1:
+  print '** asking for data'
+  data = socket.recv(...)
+  print 'received data:', (data,)
+
+  if data == '\n.\n':
+    print 'TRUE! breaking.'
+    break
+</pre>
+<p>Note that use of <tt class="docutils literal"><span class="pre">(data,)</span></tt>... what does this do?  (See 'repr'
+discussion, lab #2).</p>
+</div>
+<div class="section">
+<h1><a id="synchronous-i-o" name="synchronous-i-o">Synchronous I/O</a></h1>
+<p>If you get a synchronization error from the server, this may be
+because you either sent wrong data to the server and didn't eyeball
+what the server returned (an error message...) before sending more
+data, OR they messed up the conversation (see &quot;Copying code examples&quot;,
+above).  Remember, SMTP and HTTP are <em>synchronous</em> protocols so you
+need to send and receive the right messages in the right order:</p>
+<pre class="literal-block">
+server: Hello!
+client: Hi!
+
+server: Welcome!
+client: Here's my from address.
+
+server: Excellent!  We take that here.
+client: Good -- here's an address I'm sending *to*.
+
+server: OK.  Looks good to me.
+client: Here's the data, then.
+</pre>
+<p>etc.  If you omit any step in this conversation the server will
+justifiably be upset at you for being rude.</p>
+</div>
+<div class="section">
+<h1><a id="data-breakup-etc" name="data-breakup-etc">Data breakup etc.</a></h1>
+<p>I sort of glossed over this in description of TCP, but you need to be
+aware that clients and servers are under no particular requirement to
+send their data in the right chunks.  Thus, one problem that people
+will have is in this comparison:</p>
+<pre class="literal-block">
+data = sock.recv(4096)
+if data == '\n.\n':
+   ...
+</pre>
+<p>If you use telnet to test this code, then you'll find two things:
+first, telnet uses 'rn' instead of 'n'; and second, telnet sends
+each line individually, so <tt class="docutils literal"><span class="pre">data</span></tt> would first be</p>
+<pre class="literal-block">
+\r\n
+</pre>
+<p>and then</p>
+<pre class="literal-block">
+.\r\n
+</pre>
+<p>second.  Thus the above 'if' statement would never be true.  Did you
+receive a newline followed by a period followed by a newline?  Sure!
+You just didn't keep track of it properly!</p>
+<p>Your code needs take this into account.</p>
+<p>One way to think about this for planning purposes is that your code
+should work just as well (if a bit slower) if you change the size of
+the receive buffer from '4096' to '1'.  This makes this statement
+obviously ridiculous</p>
+<pre class="literal-block">
+data = sock.recv(1)
+if data == '\n.\n':
+   ...
+</pre>
+<p>since 'data' will at most be one character, this if never be true!
+Instead you could try:</p>
+<pre class="literal-block">
+data_so_far = ''
+while 1:
+   data = sock.recv(1)
+   data_so_far += data
+   if '\n.\n' in data_so_far:
+      ...
+</pre>
+</div>
+<div class="section">
+<h1><a id="hw-tips-thoughts-summary" name="hw-tips-thoughts-summary">HW tips/thoughts, summary</a></h1>
+<p>All of these protocols are finicky.  Take a known working example
+and <strong>start with that</strong>.  (Hint: my SMTP example above works.)</p>
+<p>You may have trouble seeing your e-mail because of spam filters.
+And send it to <tt class="docutils literal"><span class="pre">nermal&#64;cse491.msu.idyll.org</span></tt>, please, not <tt class="docutils literal"><span class="pre">t</span></tt>.</p>
+<p>Put print statements in your network code, especially around commands
+that might block, or throw exceptions (i.e. network commands).</p>
+<p>Blanket exceptions are dangerous -- they catch many kinds of errors --
+so be sure to put print statements in them.</p>
+<p>Use a list to keep track of open sockets in your HW, problem 3.</p>
+</div>
+</div>
+</body>
+</html>

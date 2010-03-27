@@ -1,0 +1,64 @@
+----------------------------------------
+Homework 8: Serving HTML and other files
+----------------------------------------
+
+Due Tuesday, November 3rd, at 4:30pm.
+
+1. Write a WSGI app that serves files from the disk with the appropriate
+MIME types.  The app class should be importable as FileServer from apps.py,
+and should take a single argument, the location of the directory from which
+to serve files.  For example, after ::
+
+     from apps import FileServer
+     app = FileServer('/some/path')
+
+the object 'app' must be a WSGI-compliant application object that
+returns the contents of '/some/path/filename.html' with a MIME type of
+'text/html' when the URL '/filename.html' is requested.  The app
+should be a general file server, i.e. should serve files from any
+subdirectory within it.  It must work on UNIX-based systems (with a
+'/' path separator); Windows compatibility is optional (but easy to
+achieve; apply os.path.split to the URL path and os.path.join to the
+resulting list!)
+
+trailing '/' should be served as 'index.html' within that directory, i.e.
+
+   http://localhost:5000/
+
+and
+
+   http://localhost:5000/subdir/
+
+should serve index.html and subdir/index.html, respectively.
+
+The following filename-extension-to-MIME-type mapping should be used::
+
+   { '.html' : 'text/html',
+     '.txt' : 'text/plain',
+     '.jpg' : 'image/jpeg',
+     '.css' : 'text/css',
+     '.js'  : 'text/javascript' }
+
+Be sure to return a 404 for file-not-found errors, and use a default
+MIME type of 'text/plain' for files with unrecognized extensions.
+
+(5 points)
+
+2. Grab an OSWD example site (oswd.org), commit all of the site files
+under hw8/html/, and make sure that you can load the entire site
+through your Web server.  (This may involve extending the MIME
+mappings above.)  Please make this the default 'application' for your
+Web server, i.e. ::
+
+   python webserve.py 5000
+
+on the command line should serve the 'html/' directory containing the
+OSWD site at
+
+   http://localhost:5000/
+
+Be sure to check for errors on the server side (related to expected
+files not found, etc.) as your Web browser may not show an error
+message for failed file loads (e.g. small images, or bad CSS, or ...)
+
+(2.5 points)

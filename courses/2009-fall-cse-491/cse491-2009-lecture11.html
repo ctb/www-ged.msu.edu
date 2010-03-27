@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 11 -- Testing, message boards, and registration</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-11-testing-message-boards-and-registration">
+<h1 class="title">Lecture 11 -- Testing, message boards, and registration</h1>
+<p>November 10th, 2009.</p>
+<p>No office hours next Monday.  Should the homework be due next
+Thursday, or the following Tuesday, or what?</p>
+<p>No class next Tuesday (I'm presenting at the Great Lakes Software
+Excellence Conference, glsec.org).</p>
+<p>You may have noticed that Python is now dead?</p>
+<blockquote>
+<a class="reference" href="http://python.org/dev/peps/pep-3003/">http://python.org/dev/peps/pep-3003/</a></blockquote>
+<div class="section">
+<h1><a id="tips-and-tricks-favicon-ico" name="tips-and-tricks-favicon-ico">Tips and tricks: favicon.ico</a></h1>
+<p>Did anyone notice that 'favicon.ico' is always requested!?  What is
+that?</p>
+</div>
+<div class="section">
+<h1><a id="testing-and-code-coverage" name="testing-and-code-coverage">Testing and code coverage</a></h1>
+<p>Gratuitous Darth Vader reference:</p>
+<blockquote>
+<a class="reference" href="http://www.flickr.com/photos/sebastian_bergmann/2282734669/">http://www.flickr.com/photos/sebastian_bergmann/2282734669/</a></blockquote>
+<p>Re testing and 100% coverage,</p>
+<p>Why would you write this?</p>
+<pre class="literal-block">
+class FileServer(object):
+   def __init__(self, dirpath):
+      self.dirpath = os.path.abspath(dirpath)
+
+   def __call__(self, environ, start_response):
+       url = environ['PATH_INFO']
+       url = url.lstrip('/')
+
+       filename = os.path.join(dirpath, url)
+       filename = os.path.abspath(filename)
+
+       # ... do other stuff ...
+
+       # make *sure* it's under dirpath
+       if not filename.startswith(self.dirpath):
+          raise Exception(&quot;bad web user!&quot;)
+
+       content = open(filename).read()
+
+       return [content]
+</pre>
+<p>What is the point of that last 'if'?</p>
+<p>(for later, when other developers, or you, mess with the code!)</p>
+<p>...and how would you test the line of code that raises the exception?</p>
+<p>A few ideas:</p>
+<blockquote>
+<ul>
+<li><p class="first">pass in a purposely messed-up URL in PATH_INFO.</p>
+</li>
+<li><p class="first">make os.path.abspath return something weird the third time
+it was called -- this is called <strong>dependency injection</strong>, where you
+replace a perfectly good function with a different one for the purposes
+of testing.</p>
+</li>
+<li><p class="first">change the code to make it more testable ;)</p>
+<p>In this case, a straight out 'assert' might work, wrapped in a function:</p>
+<pre class="literal-block">
+def get_file_content(self, url):
+  url = url.lstrip('/')
+
+  filename = os.path.join(dirpath, url)
+  filename = os.path.abspath(filename)
+
+  # ... do other stuff ...
+
+  # make *sure* it's under dirpath
+  assert filename.startswith(self.dirpath)
+
+  content = open(filename).read()
+  return mimetype, content
+</pre>
+<p>...but then you've got to trap the assertion error:</p>
+<pre class="literal-block">
+def __call__self(self, environ, start_response):
+  url = environ['PATH_INFO']
+
+  try:
+     mimetype, content = self.get_file_content(url)
+  except AssertionError:
+     ... return 500 ...
+  except IOError:
+     ... return 404 ...
+
+  ... return 200, file content ...
+</pre>
+<p>... and really you've just pushed the testing problem up a level!</p>
+<p>Or have you?</p>
+<p>First, you've decoupled 'get_file_content' from the WSGI
+serving mechanism (which is good); you can test the file stuff separately
+from the WSGI stuff.</p>
+<p>Second, you can more legitimately use the dependency injection trick here:</p>
+<pre class="literal-block">
+def test_500():
+   def broken_get_file_500(url):
+      raise AssertionError(&quot;foo&quot;)
+
+   app = FileServer(dirpath)
+   app.get_file_content = broken_get_file  # REPLACE FUNCTION DYNAMICALLY
+
+   ...
+
+   environ['PATH_INFO'] = '/foo'
+   data = app(environ, start_response)
+
+   assert start_response.status.startswith(&quot;500 &quot;)
+</pre>
+<p>So, literally, you are dynamically swapping out a method on an object...
+neat, eh?</p>
+</li>
+</ul>
+</blockquote>
+<div class="section">
+<h2><a id="more-on-dependency-injection" name="more-on-dependency-injection">More on dependency injection</a></h2>
+<p>You can replace any pure-Python attribute/function/method with your
+own, just by assignment.</p>
+<p>It is an excellent way to get yourself into trouble, however, because
+you may forget to replace.  A good mental habit: use try/finally.</p>
+<pre class="literal-block">
+try:
+  orig_abspath, os.path.abspath = os.path.abspath, effed_up_function
+
+  # ...
+
+finally:
+  os.path.abspath = orig_abspath
+</pre>
+<p>'finally' blocks are guaranteed to be executed even if an unhandled
+exception is raised inside the try block.</p>
+<p>A few examples to go over:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; class A(object):
+...    def f(self):
+...       self.g()
+...    def g(self):
+...       print 'I am a manly man'
+
+&gt;&gt;&gt; a = A()
+&gt;&gt;&gt; a.f()
+I am a manly man
+</pre>
+<p>as expected!</p>
+<p>Now, define a function to replace 'g':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def h(param):
+...    print 'I am a womanly woman'
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; a.g = h
+&gt;&gt;&gt; a.f()
+I am a womanly woman
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; print a.f
+&lt;bound method A.f of &lt;__main__.A object at 0x83e70&gt;&gt;
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; print h
+&lt;function h at 0x88030&gt;
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; print a.g
+&lt;function h at 0x88030&gt;
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; m = a.f
+&gt;&gt;&gt; m()
+I am a womanly woman
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; h == a.g
+True
+</pre>
+</blockquote>
+<p>Note:</p>
+<blockquote>
+<ul class="simple">
+<li>'h' is not a bound function, which means it's not bound to 'self',
+so it doesn't take 'self' as an argument.  (i.e. 'self' is treated
+as &quot;part of the function&quot;; see m, above).</li>
+<li>you can do 'print' and equality comparisons between functions, which
+is good for debugging purposes.</li>
+</ul>
+</blockquote>
+<p>When you do this kind of ^#%!%! to production code (i.e. not just for
+testing), it's called &quot;monkey patching&quot;.</p>
+<p>Don't. It makes your code undebuggable.</p>
+<p>Using it for testing is legitimate, however.</p>
+<p>It's also worth thinking about how much more code is untestable in
+static languages... Remember, B&amp;D is good for you! (?)</p>
+<p>The larger lesson is, always think about how you might test your code
+(and always test it -- Darth Vader reference #2).</p>
+<p>It will often lead to better code, too.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="building-a-message-board" name="building-a-message-board">Building a message board</a></h1>
+<p>So, let's build a message board!</p>
+<div class="section">
+<h2><a id="registration" name="registration">Registration</a></h2>
+<p>Typical registration flow (message board).</p>
+<blockquote>
+<ul class="simple">
+<li>can't post if you're not logged in</li>
+<li>log in<ul>
+<li>existing account? username/password please!</li>
+<li>create account:<ul>
+<li>enter username, password, hair color, mother's maiden name, etc.</li>
+<li>create</li>
+<li>go log in</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>How would this work &quot;behind the scenes&quot;, i.e. software?</p>
+<p>(Let's assume that you can assign a cookie (limited to a key into a
+dictionary or database) to each user uniquely.)</p>
+<blockquote>
+<ul class="simple">
+<li>when to assign</li>
+<li>when to clear</li>
+<li>is assigning == authenticating?</li>
+<li>tying it to an IP address?</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="back-to-the-message-board" name="back-to-the-message-board">Back to the message board</a></h2>
+<p>What features should/could message board have?</p>
+<blockquote>
+<ul class="simple">
+<li>posting messages</li>
+<li>replying to messages</li>
+</ul>
+</blockquote>
+<dl class="docutils">
+<dt>Q:</dt>
+<dd><ul class="first last simple">
+<li>methods for moderation and spam filtering</li>
+<li>how do you prevent automated signups?</li>
+<li>??</li>
+</ul>
+</dd>
+</dl>
+<p>Think about it in context of an online store, too...??</p>
+<p>How does Amazon do registration?  (think: recommendations; wish lists; buying)</p>
+<p>Google?</p>
+<p>---</p>
+<p>For Thursday, read this registration article:</p>
+<pre class="literal-block">
+http://www.asktog.com/columns/081Registration.html
+</pre>
+<p>and think about what kind of registration system you'd use for
+your message (assume that it's for-profit, you care deeply about
+subscribers, etc etc)</p>
+</div>
+</div>
+</div>
+</body>
+</html>

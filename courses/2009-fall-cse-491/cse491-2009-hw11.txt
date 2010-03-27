@@ -1,0 +1,65 @@
+----------------------------
+Homework 11: jQuery and AJAX
+----------------------------
+
+Due Thursday, December 3rd, at 4:30pm.
+
+1.  Write an AJAX mechanism for login validation and cookie setting for
+meep.  That is, your login page should use XmlHttpRequest, as in the
+lecture 13 examples, to validate the information entered on the login
+form, and then set the necessary cookie(s), again using JavaScript.  (5.0
+points.)
+
+Please make sure that username 'test' and password 'foo' work by default
+so that I can test your code!
+
+You can use the jQuery Cookie plugin
+(http://plugins.jquery.com/project/Cookie) to manipulate the cookies,
+if you like.  Here are some more examples:
+http://www.electrictoolbox.com/jquery-cookies/
+
+Some suggestions:
+
+ - the 'chat' application discussed in lecture 13 (and available in the
+   lecture13/ files repo) is a good starting point, because it both
+   sends information (add post) and does something with the returned
+   information (display).
+
+ - give your username and password fields each a unique ID so that you
+   can easily work on them with jQuery.
+
+ - the 'ex1.html' in lecture12/ gives a simple example of how to notify
+   the user that their username or password is incorrect.
+
+ - make sure that the user's real password is "kept secret" on the server
+   side: the client can't be trusted.
+
+2.  Write two Selenium tests: one that verifies that a good
+username/password combination works, and one that verifies that a bad
+username/password combination does not work.  (2.5 points)
+
+You can get started on this most easily by going to::
+
+  http://class.ged.idyll.org/svn/files/hw11/
+
+and getting 'selenium.zip'.  This should be unzipped into your 'html'
+directory (the directory containing the files that you are serving
+via webserve.py / FileServer). 
+
+Once you have this unpacked, run webserve.py and visit the
+URL ::
+
+  /selenium/index.html
+
+going to the Test Runner (first link) and entering
+
+  /tests/TestSuite.html
+
+as the test suite to run.  You should see a single test, TestGo, that
+opens /foo.html.  Click on the 'run' button to make sure it works.
+
+Replace TestGo in, or add your new tests to, TestSuite.html.
+
+You're welcome to use the Selenium IDE to record your tests.  Just
+make sure they're saved as tests and available in TestSuite.html.
+

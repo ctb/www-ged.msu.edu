@@ -1,0 +1,428 @@
+Lab #4 -- Network programming
+-----------------------------
+
+CSE 491, Sep 24th, 2009.
+
+Quote:
+
+   It is impossible, by examining any significant piece of completed
+   code, to determine within a factor of two how many man-hours it took
+   to produce that code.
+
+And the corollary: 
+
+   If you can't tell how long a piece of code would take when you have
+   the finished product available, what chance do you think you have
+   before the first line of code is written?
+
+-- Kyle Wilson, http://www.gamearchitect.net/Articles/SoftwareIsHard.html
+
+Networking
+==========
+
+Blocking vs non-blocking I/0
+
+  - blocking I/O **blocks** the thread of execution until input/output
+    is available.  This means that you must use multiple threads of
+    execution (threading, multiprocess) OR special monitoring functions
+    (select) to handle multiple connections with blocking I/O in a single
+    thread of execution.
+
+  - non-blocking I/O doesn't block, but returns immediately with data
+    OR aborts and signals an error ("no data available, boss").
+
+    (how do you distinguish between "data available" and error? guesses?)
+
+Synchronous vs asynchronous I/O
+
+  - synchronous is like a conversation: you speak, then I speak.
+
+  - asynchronous is like an unfriendly argument: everyone speaking at
+    once.
+
+Synchronous vs asynchronous **processing**
+
+  - synchronous processing waits for one "conversation" to be over before
+    starting another one.
+
+  - synchronous processing is BAD: inefficient, doesn't scale,
+    resource intensive...
+
+  - asynchronous processing relies on built-in language or OS features
+    to "keep track" of several connections at once.  It can be done
+    inefficiently or efficiently (threading/processes, or select); the
+    latter depends more on language/OS features.
+
+(Some diagrams...)
+
+TCP/IP socket stuff
+===================
+
+Connecting out via TCP-IP
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creating a socket: ::
+
+   import 
+   sock = socket.socket()
+
+Connecting that socket to a remote server: ::
+
+   remote_address = 'teckla.idyll.org'
+   port = 25
+   sock.connect((remote_address, port))
+
+Reading from the socket: ::
+
+   data = sock.recv(4096)
+
+You will get *up to* bufsize=4096 bytes, and if there is nothing
+available, 'sock.recv' will block (wait) until either there *is* something
+available, or the socket closes, or you hit CTRL-C.
+
+Writing to the socket: ::
+
+   data = sock.sendall('HELO foo.msu.edu')
+
+Sending mail - example
+~~~~~~~~~~~~~~~~~~~~~~
+
+Here's a sample SMTP (mail) session: ::
+
+  >>> import socket
+  >>> sock = socket.socket()
+
+Connect to the server: ::
+
+  >>> sock.connect(('teckla.idyll.org', 25))
+  >>> sock.recv(4096)			#doctest: +ELLIPSIS
+  '220 teckla.idyll.org ESMTP Exim 4.63 ...\r\n'
+
+Say hello: ::
+
+  >>> sock.sendall("HELO foo.msu.edu\n")
+  >>> sock.recv(4096)			#doctest: +ELLIPSIS
+  '250 teckla.idyll.org Hello ....msu.edu [...]\r\n'
+
+Identify the sender address: ::
+
+  >>> sock.sendall("MAIL FROM: t@foo.msu.edu\n")
+  >>> sock.recv(4096)
+  '250 OK\r\n'
+
+Identify the recipient address:
+
+  >>> sock.sendall("RCPT TO: null@idyll.org\n")
+  >>> sock.recv(4096)
+  '250 Accepted\r\n'
+
+OK, greetings are over; set up to send the actual message:
+
+  >>> sock.sendall('DATA\n')
+  >>> sock.recv(4096)
+  '354 Enter message, ending with "." on a line by itself\r\n'
+
+Aaaaaaaaaaaaand send!
+
+  >>> sock.sendall('foo bar baz\n.\n')
+  >>> sock.recv(4096)	    #doctest: +ELLIPSIS
+  '250 OK...\r\n'
+
+Be nice & 'quit' before closing.
+
+  >>> sock.sendall('quit\n')
+  >>> sock.close()
+
+Receiving connections
+~~~~~~~~~~~~~~~~~~~~~
+
+Create a socket: ::
+
+  import socket
+  sock = socket.socket()
+
+If 'interface' is a blank string, connections are allowed in to all IP
+addresses on this host; if it's non-blank, e.g. e.g. '127.0.0.1', then
+only connections to that network interface are allowed. I would
+suggest using a blank interface so that you don't have to worry about
+it: ::
+
+  interface = ''
+  port = 5555
+
+  sock.bind( (interface, port) )
+
+Allow up to 5 "backlogged" connections (unhandled connections in): ::
+
+  sock.listen(5)
+
+Handle incoming connections one at a time until they die: ::
+
+ while 1:
+    (client_sock, client_address) = sock.accept()
+ 
+     while 1:
+         data = client_sock.recv(4096)
+         if not data:
+             break
+ 
+         print 'got data:', data
+
+For example, if you run this code, you can try using your Web browser
+to connect to
+
+  http://localhost:5555/
+
+to see what's printed out on your screen by both sides...
+
+Two final notes -- 'bind' is sometimes a bit sticky, and you may have to
+wait for a while (10-20 seconds) before rebinding a socket after hitting
+CTRL-C.  One way around this is just to change the port number.
+
+Also, if you can find a 'telnet' program (installed on many UNIXes by
+default; not available on Windows by default -- enable `like this
+<http://windowsitpro.com/article/articleid/93952/where-is-the-telnet-client-in-windows-vista.html>`__) then you can talk directly to TCP ports; just do ::
+
+  telnet teckla.idyll.org 25
+
+to connect to port 25 on teckla.idyll.org...
+
+Non-blocking network I/O
+========================
+
+By default, sockets are *blocking*; see the above 'while' loop.  When
+you try to read from them, your program will hang until some event
+(data is available; connection closed; etc.)
+
+For the next HW, you must use ``socket.setblocking(0)`` on all
+of your sockets to make a non-blocking echo server.  This need to
+be done on the bound socket as well as on all client connection sockets.
+
+If you set the sockets to non-blocking, then you will get an exception
+almost every time you try to accept a connection or read from a connection:
+that is, ::
+
+  sock.recv(...)
+
+will raise a ``socket.error``.
+
+To handle this case, wrap it in a try/except statement body: ::
+
+  try:
+     sock.recv(...)
+  except socket.error:
+     # handle error
+
+The code in the 'except block ('handle error') can be whatever you
+want it to be; see below for three examples.
+
+For problem #3 in the homework, you will need to keep track of what
+connections you are currently processing; you can use a list.  Be
+sure to remove dead connections.
+
+Exception handling
+------------------
+
+We haven't gone over exception handling in Python yet, but it's fairly
+similar to exception handling in C++ and I'm hoping most people have seen
+it.  The basic idea is that if you have a statement that could "error out",
+that statement may **throw an exception**: ::
+
+  try:
+     x = int('foo')
+  except Exception:
+     print 'got an exception'
+
+Consider these three examples:
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     pass			# silently ignore error
+  ...   print i
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     break			# exit loop
+  ...   print i
+
+  >>> for i in range(0, 7):
+  ...   try:
+  ...     if i % 3 == 0:
+  ...       raise Exception
+  ...
+  ...   except Exception:
+  ...     continue		# jump to 'for'
+  ...   print i
+  1
+  2
+  4
+  5
+
+Why do you get these results?
+
+Network code will throw ``socket.error`` exceptions, and you can find
+out what the complaint is by doing this in the exception handling block: ::
+
+   try:
+     # some network code
+   exception Exception, e:
+     print 'Error:', e
+
+Copying code examples
+---------------------
+
+You will cause problems for yourself with carelessness in protocols.
+Mail servers will hang up on you, in particular.
+
+I run most of code that I hand out; if it's in a doctest format, then
+I *do* run it.  So if there's a problem, it's *probably* not in my
+code.
+
+Second, all of the lecture and lab notes, as well as the homeworks, are
+available online, under this URL:
+
+    http://ged.msu.edu/courses/2009-fall-cse-491/materials.html
+
+They are all available in text format, so you should seriously consider
+*copying and pasting* the code from those pages first, to make sure that
+works.  If you copy and paste code and it doesn't work, then the odds are
+slightly higher that I'm at fault ;).
+
+Print statements
+----------------
+
+When you want to debug network code, put in print statements! For example,
+with code like this: ::
+
+  while 1:
+    data = socket.recv(...)
+    if data == '\n.\n':
+      break
+
+you may run into difficulties.
+
+You'll say, "it's never breaking out of the loop."  I'll say, "that
+must be because your if statement is never true."  You'll say, "but
+I'm sure it is! I'm sending ``\n.\n`` from the other end!"
+
+Well, prove it!
+
+You need to put in print statements to make sure you know what is
+going on.  In this case, I'd rewrite the code to this: ::
+
+  print '** entering while loop'
+  while 1:
+    print '** asking for data'
+    data = socket.recv(...)
+    print 'received data:', (data,)
+
+    if data == '\n.\n':
+      print 'TRUE! breaking.'
+      break
+
+Note that use of ``(data,)``... what does this do?  (See 'repr'
+discussion, lab #2).
+
+Synchronous I/O
+---------------
+
+If you get a synchronization error from the server, this may be
+because you either sent wrong data to the server and didn't eyeball
+what the server returned (an error message...) before sending more
+data, OR they messed up the conversation (see "Copying code examples",
+above).  Remember, SMTP and HTTP are *synchronous* protocols so you
+need to send and receive the right messages in the right order: ::
+
+   server: Hello!
+   client: Hi!
+
+   server: Welcome!
+   client: Here's my from address.
+
+   server: Excellent!  We take that here.
+   client: Good -- here's an address I'm sending *to*.
+
+   server: OK.  Looks good to me.
+   client: Here's the data, then.
+
+etc.  If you omit any step in this conversation the server will
+justifiably be upset at you for being rude.
+
+Data breakup etc.
+-----------------
+
+I sort of glossed over this in description of TCP, but you need to be
+aware that clients and servers are under no particular requirement to
+send their data in the right chunks.  Thus, one problem that people
+will have is in this comparison: ::
+
+   data = sock.recv(4096)
+   if data == '\n.\n':
+      ...
+
+If you use telnet to test this code, then you'll find two things:
+first, telnet uses '\r\n' instead of '\n'; and second, telnet sends
+each line individually, so ``data`` would first be ::
+
+   \r\n
+
+and then ::
+
+   .\r\n
+
+second.  Thus the above 'if' statement would never be true.  Did you
+receive a newline followed by a period followed by a newline?  Sure!
+You just didn't keep track of it properly!
+
+Your code needs take this into account.
+
+One way to think about this for planning purposes is that your code
+should work just as well (if a bit slower) if you change the size of
+the receive buffer from '4096' to '1'.  This makes this statement
+obviously ridiculous ::
+
+   data = sock.recv(1)
+   if data == '\n.\n':
+      ...
+
+since 'data' will at most be one character, this if never be true!
+Instead you could try: ::
+
+   data_so_far = ''
+   while 1:
+      data = sock.recv(1)
+      data_so_far += data
+      if '\n.\n' in data_so_far:
+         ...
+
+HW tips/thoughts, summary
+-------------------------
+
+All of these protocols are finicky.  Take a known working example
+and **start with that**.  (Hint: my SMTP example above works.)
+
+You may have trouble seeing your e-mail because of spam filters.
+And send it to ``nermal@cse491.msu.idyll.org``, please, not ``t``.
+
+Put print statements in your network code, especially around commands
+that might block, or throw exceptions (i.e. network commands).
+
+Blanket exceptions are dangerous -- they catch many kinds of errors --
+so be sure to put print statements in them.
+
+Use a list to keep track of open sockets in your HW, problem 3.

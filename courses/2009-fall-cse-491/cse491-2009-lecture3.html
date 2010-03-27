@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 3 -- CGI and WSGI; templating</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-3-cgi-and-wsgi-templating">
+<h1 class="title">Lecture 3 -- CGI and WSGI; templating</h1>
+<p>Sep 15th, 2009.</p>
+<p>---</p>
+<p>A few thoughts re the homework from e-mail &amp; office hours.</p>
+<p>First, there are at least four  locations:</p>
+<blockquote>
+<p>the files/ repository, which is where I put class materials.</p>
+<p>your copy of the files/ repository, to which you do NOT have write
+access ;)</p>
+<p>your repository, which is how you communicate files to me.</p>
+<p>cgi directory, where you actually execute your CGI scripts.</p>
+<p>home directory, where you develop.</p>
+</blockquote>
+<p>After this week there will be no more cgi directory; that was an
+unexpected amount of pain.</p>
+<p>---</p>
+<p>Second, <em>start with a working script</em>.</p>
+<p>Easy to move from working script to working script; not so easy to
+start from scratch!</p>
+<p>---</p>
+<p>How many people used a weird content-type on their hello.cgi script?</p>
+<p>Most browsers try to <em>download</em> file if they don't know what else to
+do with it.</p>
+<p>---</p>
+<p>Double-check the lab notes; re-skim them later.  Sometimes I answer
+questions you will actually have...</p>
+<p>---</p>
+<div class="section">
+<h1><a id="http-and-the-web" name="http-and-the-web">HTTP and the Web</a></h1>
+<p>The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.  Note, HTTP can be used to transport any content,
+not just &quot;hypertext&quot; (e.g. HTML) but also things like large
+files. However, HTTP servers are usually optimized for many
+connections sending fairly small loads of data.</p>
+<p>URLs:</p>
+<blockquote>
+<blockquote>
+<a class="reference" href="http://machine:port/path/to/resource?query_stuff">http://machine:port/path/to/resource?query_stuff</a></blockquote>
+<ul class="simple">
+<li>http is the protocol</li>
+<li>machine is a DNS name or an IP address</li>
+<li>port is a TCP port</li>
+<li>/path/to/resource is the on-server path, can be anything you want, although
+many Web servers have canonical URL schemes (e.g. CGI scripts).</li>
+<li>query_stuff is a way of passing in values</li>
+</ul>
+</blockquote>
+<p>The HTTP protocol:</p>
+<blockquote>
+<ul>
+<li><p class="first">synchronous (query, response transaction pairs); AJAX adds
+asynchrony.</p>
+</li>
+<li><p class="first">client/server in design, not peer to peer (although again
+JavaScript is changing things)</p>
+</li>
+<li><p class="first">note, all header lines etc. end in &lt;CR&gt;&lt;LF&gt; (carriage return/line
+feed), or <cite>rn</cite></p>
+</li>
+<li><p class="first">basic protocol: port 80, requests like</p>
+<pre class="literal-block">
+&lt;command&gt; &lt;url&gt; &lt;protocol version&gt;\r\n
+[ &lt;other optional stuff&gt; ]
+</pre>
+<p>ended by blank line; for example</p>
+<pre class="literal-block">
+GET / HTTP/0.9\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">answer is in format</p>
+<pre class="literal-block">
+&lt;protocol&gt; &lt;status code&gt; &lt;message&gt;\r\n
+&lt;header line(s)&gt;\r\n
+\r\n
+</pre>
+<p>for example</p>
+<pre class="literal-block">
+HTTP/1.1 200 OK\r\n
+Content-length: 4567\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">GET, retrieval of page content; generally full URL is specified.</p>
+</li>
+<li><p class="first">content-type specification (MIME types: 'text/html', 'image/jpeg')</p>
+</li>
+<li><p class="first">data passing via query strings: query_string is set of pairs of</p>
+<blockquote>
+<p>name, value</p>
+</blockquote>
+<p>data, encoded suitably: name=value2&amp;name2=value2</p>
+<p>Obvious limitations for large data (submitting files!)...</p>
+</li>
+<li><p class="first">POST, retrieval of page content AFTER data passing.</p>
+<p>data is passed after the header, as one long encoded stream of bytes.</p>
+</li>
+<li><p class="first">&quot;cookies&quot; are small bits of data that are specific to a URL
+hierarchy, and are a name,value pair.  They are stored on the
+client side -- really the <em>only</em> persistent thing stored on the
+client.</p>
+</li>
+<li><p class="first">markup, html, forms</p>
+</li>
+<li><p class="first">HTML (&quot;HyperText Markup Language&quot;) is a bastardized XML-ish language:</p>
+<pre class="literal-block">
+&lt;markup_tag option1='value' option2='value2'&gt;plain text&lt;/markup_tag&gt;
+</pre>
+<p>There's a specific document format that we will mostly be ignoring</p>
+<pre class="literal-block">
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;title&gt;...&lt;/title&gt;
+   [ other stuff ]
+ &lt;/head&gt;
+ &lt;body&gt;
+   [ actual content ]
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li><p class="first">note, HTTP is actually a very simple protocol, and HTML is quite
+simple (and &quot;open source&quot;).  This drove the spread of both!</p>
+</li>
+</ul>
+</blockquote>
+<div class="section">
+<h2><a id="statelessness" name="statelessness">Statelessness</a></h2>
+<p>HTTP is designed around <em>statelessness</em> -- the only persistent state
+on the client side is in the cookies, and those contain only data
+relevant to the <em>server</em> (so you can e.g. switch IP addresses and
+clients easily).  Connections are designed to be transient (request,
+receive, end) although there are optimizations on top of that now
+(HTTP/1.1).</p>
+<p>See Wikipedia, tateless server
+&lt;<a class="reference" href="http://en.wikipedia.org/wiki/Stateless_server">http://en.wikipedia.org/wiki/Stateless_server</a>&gt;_; each transaction
+is treated independently, with cookies being the only thing kept
+across conversations.  Thus HTTP is actually not just a synchronous
+protocol/conversation, it is a very <em>brief</em> conversation :).</p>
+</div>
+<div class="section">
+<h2><a id="cgi" name="cgi">CGI</a></h2>
+<p>So let's go back to CGI.  With your form processing in CGI, you saw</p>
+<pre class="literal-block">
+client -&gt; Web server -&gt; CGI script
+^^^^^^                  ^^^^^^^^^^
+</pre>
+<p>where you wrote or at least designed the ^^^ parts.</p>
+<p>In CGI, all of the stuff in the protocol section above gets communicated
+to the script in two ways:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>in environment variables</li>
+<li>in stdin input (as if typing &#64; keyboard)</li>
+</ol>
+</blockquote>
+<p>Then the output of CGI gets communicated back,</p>
+<pre class="literal-block">
+Content-type: text/html
+
+(content goes here)
+</pre>
+<p>and the Web server that <em>called</em> the script is responsible for parsing
+the headers (everything above 'content goes here') and turning it back into
+HTTP.</p>
+<p>Reasonably good way to execute things, except for</p>
+<blockquote>
+<ul class="simple">
+<li>executing a new process for each Web call.</li>
+<li>security &amp; permissions: everything runs as unprivileged user.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="wsgi" name="wsgi">WSGI</a></h2>
+<p>&quot;Web Services Gateway Interface&quot;, part of the Python language now.</p>
+<p>wsgiref is a reference implementation that comes in the stdlib.</p>
+<p>WSGI is a Python-specific programmatic way of doing the same thing --
+translating HTTP data into a callable (function, class, whatever) and
+returning HTTP + content.</p>
+<p>Less parsing involved, because we're dealing with richer data types
+(multiple strings, rather than just one in and one out!)</p>
+<p>WSGI is laid out in a long and reasonably technical Python Enhancement
+Proposal, PEP 333 (<a class="reference" href="http://www.python.org/dev/peps/pep-0333/">http://www.python.org/dev/peps/pep-0333/</a>).  Worth
+skimming to get a feel for it.</p>
+<p>We will implement a complete (though simple) WSGI framework in the next
+few classes.</p>
+<p>Here's a simple WSGI application:</p>
+<pre class="literal-block">
+def simple_app(environ, start_response):
+    &quot;&quot;&quot;Simplest possible application object&quot;&quot;&quot;
+    status = '200 OK'
+    response_headers = [('Content-type','text/plain')]
+    start_response(status, response_headers)
+    return ['Hello world!\n']
+</pre>
+<p>How does this work?</p>
+<blockquote>
+<ol class="arabic simple">
+<li>The Web server calls 'simple_app' and passes it a mapping (dictionary)
+of environment variables, 'environ', and a function, 'start_response'.</li>
+<li>The app prepares (thinks, processes, opens dbs, etc. etc.)</li>
+<li>When the app is ready to begin responding -- that is, it knows
+what its status is and what it's going to return -- it calls
+'start_response' with the response code (&quot;200 OK&quot; and others)
+and a list of response headers (&quot;Content-type&quot;, &quot;text/plain&quot;)</li>
+<li>It then returns a chunks of text in an <em>iterable</em>.</li>
+</ol>
+</blockquote>
+<p>Think of this as a &quot;programmatic CGI&quot;, no script involved, just Python
+code and functions.</p>
+<p>Points:</p>
+<blockquote>
+<ul class="simple">
+<li>this mechanism can support apps that are functions (as above), or
+your own classes/object -- technically, &quot;callables&quot;, things that
+can be called.</li>
+<li>also supports <em>incremental return</em> of large documents.  This is
+good for situations e.g. where it may &quot;cost&quot; a lot of time to
+construct the document but you want to send something back to the
+user quickly.</li>
+<li>also supports <em>middleware</em>, wrapper functions that sit in between
+server and application.</li>
+<li>think about <em>dispatch</em> -- the idea that a single &quot;app&quot; object will
+look at the input URL (in 'environ') and then <em>decide</em> what function
+to call.  Again, more later.</li>
+</ul>
+</blockquote>
+<p>We'll start with WSGI by reimplementing the form processing code you just
+handed in as a WSGI app object for the next homework.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="templating" name="templating">Templating</a></h1>
+<p>In HW #1, you constructed HTML by hand, with 'print' or string
+concatenation.</p>
+<p>This gets inconvenient and error-prone for large HTML files.</p>
+<p>Templates are a mechanism by which you can do things like chunk out
+HTML directives and page layout while substituting in only the content
+that differs between pages.  &quot;Programming in HTML&quot; ;)</p>
+<p>Templates offer many conveniences:</p>
+<blockquote>
+<ul class="simple">
+<li>separation between content and style.</li>
+<li>some control constructs for limited programming, to take care of
+simple stuff.</li>
+<li>on-the-fly editing and reloading (unlike Python code)</li>
+<li>hierarchical layout of files and style.</li>
+<li>tools to help you encode and escape text for HTML display.</li>
+</ul>
+</blockquote>
+<p>We'll be using jinja2, a simple templating engine that lets you do some
+simple and neat things.  More in lab, HW.</p>
+</div>
+</div>
+</body>
+</html>

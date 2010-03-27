@@ -1,0 +1,133 @@
+-------------------------
+Lecture 6 -- More testing
+-------------------------
+
+October 6th, 2009.
+
+---
+
+Types of Testing
+----------------
+
+Smoke test - "does it smoke when I run it"?
+
+Exploratory - "I'm lookin' for bugs"
+
+Automated - "I'm making sure there aren't any bugs I already know how
+to test for"
+
+Q: how did you test your homework #4 before handing it in?
+
+Automated testing
+-----------------
+
+Unit tests
+==========
+
+Test single functions or methods.
+
+Set up variables, call function, verify that what comes out is expected.
+
+(e.g. to test "handle_connection closes the socket." => use a fake
+socket, feed in data that should result in a closed socket, verify
+that socket is actually closed after the test.)
+
+"Silence is golden" -- generally these tests are silent if they succeed.
+
+Functional tests
+================
+
+Verify correct function of a collection of functions from top to bottom,
+by looking at what comes out is expected based on what you put in.
+
+(e.g. "When I POST form data to this Web site, do I get back the right
+results?  Does the entire functional chain from taking in data, to
+parsing it, to handling it, to sending back the results, work?")
+
+Similar to unit tests, except that unit tests are often divorced from
+other functioning code -- you just test a function or method in
+isolation.  For unit tests, you pull apart your code as much as
+possible into small subunits, and then test those units; for
+functional testing, you start putting them back together and testing
+them in larger groups.
+
+Regression tests
+================
+
+Is the result today the same as some "good" result recorded some other time?
+
+Think of it as lazy "black box" testing.  One approach: I have a piece
+of software that is complicated; I don't want to think too hard about
+what the right answer is.  Rather than writing specific pairs of input
+and output expectations, instead I try some inputs and just record what
+comes out.  Then for future tests I run the same input and make sure that
+what comes out is the same thing that I recorded for that input.
+
+"Lazy" because you're not being systematic or necessarily trying to
+detect any specific bug, you're just looking for a change.
+
+For Web programm, maybe not so useful.  I mainly use regression
+testing for complicated scientific programs where I'm integrating
+other people's code into mine and just want to make sure that it's
+minimally functioning.
+
+Acceptance tests
+================
+
+Does this program do what it's supposed to, at a larger level?
+
+Think, me grading your homework.  Can be automated in various ways.
+We'll talk about this later, with Web testing and Selenium.
+
+Example - accounting firm wants to make sure that paycheck processing
+yields the right numbers for taxes, withholding, etc.  So set up a 
+problem where someone (accountant, == customer) manually crunches numbers,
+and inputs expectations; programmer is then expected to make the program
+match those expectations.
+
+Less concerned with specific "how" than with what the results are.
+
+Often used as an aid to communication -- build a mock (fake)
+interface, set up acceptance tests to all pass when a particular
+feature set is done, and then implement implement implement.
+
+GUI testing
+===========
+
+Does the user interface still work?  For Web sites, questions like
+"does the right popup pop up" -- at a user interface level, not a
+programming level.  This kind of testing depends very much on the
+browser (for Web sites) or the specific type of graphical interface
+and what technologies are available for automating it.
+
+Continuous integration
+=======================
+
+Run your automated tests on multiple platforms, under multiple
+libraries, browsers, etc., automatically; report results.
+
+Answers the question, does the site I developed on Windows under
+Firefox work on Mac OS X under Safari?  Or, does the back-end Web
+server work on Linux, Mac OS X, Windows?  Under Python 2.3?  2.4, 2.5,
+2.6?
+
+The more dependencies you have, the more useful this kind of testing
+becomes.
+
+---
+
+All of these test types are useful, and we'll try most of them in this
+class (all except for acceptance tests and maybe continuous
+integration).
+
+Thoughts about projects
+-----------------------
+
+Pick a project (from a list I make up, OR make up your own)
+
+Work on it alone or in a group.
+
+Sometime during last 2-3 weeks, present for 5 minutes, demoing your
+project, reviewing code, discussing technical challenges and choices
+(scalability, etc.)  Each person from a group must present something
+different (not necessarily on the same day).

@@ -1,0 +1,337 @@
+-----------------------------
+Lab #7 -- Refactoring to WSGI
+-----------------------------
+
+CSE 491, Oct 15th, 2009.
+
+Classes
+-------
+
+Classes are defined in a 'class' block::
+
+  class ClassName(object):
+    def __init__(self, arg1, arg2, arg3, ...):     # constructor
+       # do initialization stuff to 'self'
+
+    def method(self, argX, argY, argZ, ...):       # method
+       # ...
+
+and you create an object of a particular class by calling it, ::
+
+   obj = ClassName(arg1, arg2, arg3, ...)
+
+'self' is implicitly passed into all method calls on obj: ::
+
+   obj.method(argX, argY, argZ, ...)
+
+is equivalent to ClassName.method(obj, argX, argY, argZ).
+
+For basic purposes you can think of 'method' as a function that just
+implicitly takes 'self' as the first argument, and 'self' as just a
+separate namespace for variables.  For example, here the function
+'hello' is retrieving the attribute 'name' from the object of type
+'A': ::
+
+   class A(object):
+      def __init__(self, name):
+         self.name = name
+
+      def hello(self):
+         print self.name
+
+   a = A('bill punch')
+   a.hello()
+
+so this is equivalent to ::
+
+      ==> a.name = 'bill.punch'
+          print a.name
+
+Everything's an object, including functions
+-------------------------------------------
+
+You can pass functions around and then call them, ::
+
+  def myfunc():
+     print 'hello, world'
+
+  def calls_fn(x):
+     x()
+
+so ::
+
+   calls_fn(myfunc)
+
+just executes ::
+
+   myfunc()
+
+and prints out 'hello, world'.
+
+Now, you can always "call" a function here -- by applying parantheses
+to it and passing in arguments -- which makes functions a special case
+of a more general type of object, **callables**.  Callables are just
+objects with a ``__call__`` method: ::
+
+   class B(object):
+      def __call__(self):
+        print 'I am B, and I have been called!'
+
+   c = B()    # create an object of type B, calling __init__
+
+   c()        # and 'call' it, equivalent to executing the __call__ function
+
+Here you can pass in whatever arguments you like, as you might expect::
+
+   class D(object):
+      def __call__(self, arg1, arg2, arg3):
+         print 'args are', arg1, arg2, arg3
+
+   e = D()     	     # calls __init__
+
+   e(1, 2, 3)        # calls D.__call__(e, 1, 2, 3)
+
+Callables in WSGI
+-----------------
+
+The HW this week has two examples of callables in it: first, the WSGI
+application object, which is used to generate content; and second,
+the 'start_response' callback, which is *passed into* the WSGI application
+object and is used to tell the WSGI server that a response is starting.
+
+For reference, here's a 'hello, world' WSGI application function: ::
+
+   def wsgi_app(environ, start_response):
+      headers = [('Content-type', 'text/html')]
+      status = '200 OK'
+
+      start_response(status, headers)
+
+      return ["Hello, world"]
+
+and the equivalent callable object::
+
+   class WSGIAppObject(object):
+      def __call__(self, environ, start_response):
+         headers = [('Content-type', 'text/html')]
+         status = '200 OK'
+
+         start_response(status, headers)
+
+         return ["Hello, world"]
+
+and the equivalent callable class::
+
+   class WSGIAppClass(object):
+      def __init__(self, environ, start_response):
+         self.environ = environ
+         self.start_response = start_response
+
+      def __iter__(self):
+         headers = [('Content-type', 'text/html')]
+         status = '200 OK'
+
+         self.start_response(status, headers)
+
+         return iter(["Hello, world"])
+
+WSGI
+----
+
+So, what is WSGI, again?
+
+WSGI is the Web Services Gateway Interface, and it specifies an interface
+between a **server** and an **application**.  The server talks to the socket
+and "speaks" HTTP, ::
+
+
+   sockets <--> WSGI server
+
+and the application "takes" Web requests from the WSGI server and processes
+them, ::
+
+   WSGI server <--> WSGI application
+
+On Tuesday I talked a bit about separation of concerns.  WSGI
+separates the concerns into a server and an application: the WSGI
+server only cares about talking to the socket and speaking HTTP, while
+the WSGI application is responsible for generating content and
+"speaking" HTML and other things.
+
+Here the interface can be viewed as a programmatic abstraction of HTTP
+itself: rather than dealing with the messiness of socket reading and
+strings and HTTP, you have functions that pass around Python objects.
+
+How does this work?
+
+The WSGI server:
+
+ - reads the HTTP request from the socket
+ - parses it into method, URL, headers, and content
+ - calls the WSGI application object and gives it a callback function,
+   'start_response'
+
+ - receives status and headers from the WSGI application object via
+   'start_response'
+
+ - reads data from the WSGI application object and sends it back via the
+   socket until the WSGI application object is done.
+
+The WSGI application, on the other side of this,
+
+ - figures out what its response is going to be (i.e. status, headers)
+ - calls 'start_response' with the appropriate parameters
+ - returns data (content).
+
+Your job is to refactor your HW #5 blocking server so that it "speaks"
+the WSGI interface.  In particular, this means that you need to make
+your handle_connection function **call a WSGI application object** and
+return the results as a HTTP response.
+
+The basic requirements are laid out in the homework.  You need to
+
+ - move your existing code into a class, 'webserve.Server', that takes
+   two arguments: a port, and a WSGI application object.
+
+   You can look at webserve_test.py in 
+
+        http://class.ged.idyll.org/svn/files/hw6/
+
+   in the test function _run_fake_socket to see how this is used.
+
+ - in the parse_request function (or whatever you called the function
+   that parses the HTTP request and generates a response), build a
+   dictionary 'environ' that has the following key/values stored in it::
+
+      environ['REQUEST_METHOD'] -- 'GET' or 'POST'
+
+      environ['PATH_INFO '] -- the url, without the query string
+
+      environ['SERVER_PROTOCOL'] - the protocol spoken by the browser
+          (this is the third component of the request line)
+
+      environ['QUERY_STRING'] -- the 'GET' query string, if any; empty otherwise
+
+      environ['wsgi.input'] -- a file-like object containing the POST data (if any)
+
+   For 'wsgi.input', you can just use the class 'StringIO' from the
+   module 'cStringIO' and do ::
+
+      environ['wsgi.input'] = StringIO(post_data)
+
+  - again in the parse_request function, build a callable,
+    'start_response', that takes 'status' and 'headers' and
+    saves them.  One way to do this is::
+
+       class StartResponse(object):
+           def __call__(self, status, headers):
+              self.status = status
+              self.headers = headers
+
+       start_response = StartResponse()
+
+    Now, when 'start_response(status, headers)' is called, ::
+
+       start_response.status
+
+    and ::
+
+       start_response.headers
+
+    will store the status and headers for you.
+
+  - rewrite your current content-generation code (probably in
+    parse_request) into the form of a WSGI application.  Hint, hint,
+    you have most of it from HW #2...
+
+  - write a method 'Server.serve_forever()' that does your main while loop.
+
+  - change your __main__ block to run Server.serve_forever() on the
+    appropriate port.
+
+As usual, look at the tests.  If the tests work, you will have the majority
+of the "hard stuff" done, I think.
+
+Doing the homework
+------------------
+
+Here are some suggested steps.  If you come to office hours I will ask
+you why you haven't done them in this order... and tell you to go away
+and do them in this order.
+
+First, refactor your existing code into a class.  (This is as simple as
+putting 'self' at the beginning of every function call, and indenting
+them into a 'class' block.)
+
+Next, get your 'serve_forever' and ``__main__`` code working (it
+should all still work as in HW #5).
+
+Third, write a server-side WSGI interface and get it working with
+a 'hello, world' WSGI app.  (This is what the tests test.)  You will
+need to have ``Server.__init__`` take the right parameters here.
+
+Fourth, modify your server-side WSGI interface to create the 'environ'
+and 'start_response' objects properly for 'GET' requests.
+
+Fifth, rewrite your code from HW #5 to work as a WSGI application object
+that takes the GET query string from "environ['QUERY_STRING']".
+
+And sixth, deal with POST requests.  Look above for the tip on wsgi.input,
+and look at HW #2 for information on how to deal with it on the WSGI
+application side.
+
+Seventh, look over your code and make sure it still works as it should
+for HW #5, too!
+
+Some design considerations
+--------------------------
+
+Look at the WSGI stack.
+
+The WSGI server talks to the WSGI application object.  The application
+object doesn't know anything about the socket, or the HTTP request, or
+anything like that -- it just knows what URL was requested, what query
+string or POST content was passed in, and one or two other things
+(primarily the headers, which we'll do next week).
+
+So, looking at the WSGI application object, the first thing you want
+to do is ask yourself: if I want to print out the form results from HW #5,
+where does that information come from?
+
+What information do you have?
+
+ - client / url & form information
+
+ - socket information (more data to read? etc)
+
+ - HTTP request information (url, GET, POST, cookies, etc.)
+
+ - HTTP response (headers out, content, etc.)
+
+Why isn't all of this information available to all of the code in the
+webserve module, as module globals? Why can't the application object
+talk directly to the socket?
+
+The whole point of abstractions and separation of concerns is
+encapsulation: you're trying to neatly put things into little black
+boxes with known inputs and outputs so you can stop thinking about
+them.
+
+And why do this?
+
+Crossing boundaries of abstractions: bad.  This reduces encapsulation
+=> makes testing hard, reduces reliability, etc.  Global or
+cross-module dependencies should be minimized: inderdependencies =>
+complexity => bad.
+
+---
+
+Last point: how to use tests
+----------------------------
+
+The test code is in Python, and self-contained.  You can always just
+pull out a particularly annoying test into a standalone file and
+manipulate it to figure out what's going on.  Don't sit there and
+stare at the code; that's not going to help you understand it all that
+much.  Pull it out, run it, modify it, put print statements in,
+etc. etc.

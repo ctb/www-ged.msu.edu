@@ -1,0 +1,161 @@
+-----------------------------------------------------------
+Lecture 14 -- Revisiting Web architecture; data persistence
+-----------------------------------------------------------
+
+I will finish grading HWs 2 & 3 this weekend sometime.
+
+Projects: my bad.  not enough weeks in the term/I'm badly organized...
+
+ - predefined set, or ask if you want to do something.
+
+ - split into categories (database, web serving, message board, JavaScript)
+   and you can choose one or more?
+
+ - **independent** projects - don't expect me to help ;)
+
+ - ...how about just extra credit/makeup credit?  Or else... hand out on
+   this Thursday, due at finals period?
+
+Finals week: pizza/etc?  Survey & course review, like last year?
+
+HW out on Thursday -> next Thursday.
+
+Office hours tomorrow.
+
+---
+
+...Look at HW #10.  Examples will be posted tonight.  If you want comments
+on your HW #10, please drop me a note and I will look at it tonight.
+(You should know if you got it all working, right?)
+
+---
+
+Revisit blocks-and-arrows stuff:
+
+ - what generates what?  How are things isolated? who cares about what?
+
+ - composed as independent components that can be mixed & matched.
+
+---
+
+Demo Selenium, Selenium IDE again.  Your tests go in ::
+
+   html/tests/<some file>.html
+
+e.g. 'TestGo.html'
+
+and a link to them needs to be put in TestSuite.html.
+
+Then you can access them as /tests/TestSuite.html from within Selenium.
+
+---
+
+Data persistence in message board.
+
+What needs to be done?
+
+ - users
+ - messages
+
+Term for basic functionality needed: "CRUD" - create, read, update, delete.
+
+Discuss strategies for persistence: what strategies can people come up with?
+
+ - single file
+ - SQL-based solution
+ - ???
+
+Larger needs of persistence (banks as well as message boards)
+
+ - data correctness!
+    + partial fail => complete fail
+
+ - concurrency: multiple people (programs/machines) accessing same data
+    + locking and locking granularity
+    + consistency of views
+
+ - scaling to handle multiple frontend machines
+
+    + shared disk? 
+    + two-layer system? client/server relationship with an expensive DB.
+    + read vs write: which is more expensive?
+    + caching.
+    + sharding.
+
+Concept of ACID databases: atomic, consistent, isolated, and durable.
+
+Think in the context of a bank transaction:
+
+ - Atomic means either all of a transaction happens, or none of it.
+
+   (Withdraw $10 from one account, add $10 to another account.)
+
+ - Consistent means that predefined rules (such as, bank balances are
+   integer; or, every bank account must be linked to a person; or,
+   bank balances cannot go below zero) cannot be violated.
+
+ - Isolation means that the database remains consistent during concurrent
+   access, e.g. no matter what order multiple operations are run in they
+   are kept isolated from each other.
+
+ - Durability means that once the database confirms that an action has
+   been taken, it persists despite power failure, etc.
+
+When people talk about "real databases" they generally mean one that
+is ACID compliant.
+
+Consider storing things in files:
+
+ - atomic: if you want to remove something from one file and add it to
+   another, it essentially happens as you might expect: remove from one
+   file, add to the other.  Atomicity must be implemented in software in
+   this case; there's no way to ask the file system to handle things for
+   you.
+
+How hard is this to achieve?  Remember, it's built on files ;).
+
+ - atomic and consistent depend very much on the database policies.
+
+   Some databases (most SQL dbs) let you define when a transaction
+   begins and ends, and guarantee that either all actions in the
+   transaction are completed or none are.
+
+   Some databases let you define the concept of *referential integrity*
+   which lets you link between records ("each post must have an
+   associated user record")
+
+ - isolation is easy to achieve if you only allow one change to the
+   database at a time.  But then that's slow.  So the challenge is to
+   achieve isolation in the face of concurrency.
+
+ - durability is difficult, partly because you have to make changes to
+   multiple data structures on the disk "simultaneously" (which can't
+   actually be done -- disks are effectively serial in nature).
+
+   One approach is to use a transaction log, where you write a
+   complete record describing the transaction ("I took 10 from this
+   account, and added 10 to this account").  That transaction log
+   can be written to *progressively* and *atomically*, and then
+   (at some point) the database can lock out all reads and writes 
+
+So it's pretty difficult to make work (do they cover this in db
+course??)  but there are many available so you can just pick one.  So
+you should choose an ACID database from the start and then you never
+have to worry about this stuff.
+
+What do you gain from ACID?  Consider making meeplib persistent:
+
+ - You can ignore a lot of double-checking and error handling.  If the
+   database says something is saved, it is *saved*; if you established
+   a rule that each post must have a valid user, you will not be
+   allowed to delete a user without deleting all of their posts.
+
+ - You can ignore issues of concurrent access (which we'll discuss in
+   more detail next week).
+
+Python comes with at least one ACID-compliant database, sqlite3, and
+(depending on version) has two -- bsddb.  You may use either one (or
+MySQL) for the last homework.  (Neither specifies particularly useful
+consistency policies.  SQLite supports atomicity through transactions,
+and bsddb does not.  But both are ACID within their policies.  We'll
+look at them on Thursday.)

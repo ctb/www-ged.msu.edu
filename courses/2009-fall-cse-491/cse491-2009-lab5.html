@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lab-5-strings-jinja2-template-inheritance-and-testing" name="lab-5-strings-jinja2-template-inheritance-and-testing">Lab #5 -- Strings, Jinja2 template inheritance, and testing</a></h1>
+<p>CSE 491, Oct 1st, 2009.</p>
+<p><strong>NOTE</strong>: class next Tuesday will start at 5:05pm and run as usual until
+5:50 (so only a 45 minute class).  I am hosting a speaker at 5pm...</p>
+</div>
+<div class="section">
+<h1><a id="string-manipulation" name="string-manipulation">String manipulation</a></h1>
+<p>Here are some handy tricks for string manipulation in Python.  All of
+these methods work on string objects.</p>
+<div class="section">
+<h2><a id="splitting-strings" name="splitting-strings">Splitting strings</a></h2>
+<p>First, the  <tt class="docutils literal"><span class="pre">split</span></tt> function breaks strings into lists of strings
+based on a split string:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; s = &quot;foo,bar,baz&quot;
+&gt;&gt;&gt; s.split(',')
+['foo', 'bar', 'baz']
+</pre>
+<p>The split string doesn't have to be a single character; it can be
+a string, too:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; t = &quot;foo-:-bar-:-baz&quot;
+&gt;&gt;&gt; t.split('-:-')
+['foo', 'bar', 'baz']
+</pre>
+<p>This is especially good for when you want to break up multiple lines that
+have a multi-character line break; for example:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; v = &quot;this is line 1\r\nthis is line 2\r\n&quot;
+&gt;&gt;&gt; v.split('\r\n')
+['this is line 1', 'this is line 2', '']
+</pre>
+<p>This use is so common that there's a pre-defined function <tt class="docutils literal"><span class="pre">splitlines</span></tt> to
+do it:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; v.splitlines()
+['this is line 1', 'this is line 2']
+</pre>
+<p>There is one small difference -- do you see it?  In the first example,
+<tt class="docutils literal"><span class="pre">split</span></tt> keeps the last &quot;empty&quot; line, while in the second example,
+<tt class="docutils literal"><span class="pre">splitlines</span></tt> discards it.  This is because <tt class="docutils literal"><span class="pre">splitlines</span></tt> knows you're
+looking for distinct lines of text.</p>
+<p>Note that <tt class="docutils literal"><span class="pre">splitlines</span></tt> uses <tt class="docutils literal"><span class="pre">\r\n</span></tt> and <tt class="docutils literal"><span class="pre">\n</span></tt> to mean end of line:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; &quot;line 1\nline 2\n&quot;.splitlines()
+['line 1', 'line 2']
+</pre>
+<p>This is fine for Web protocol purposes, although if you are worried about
+picking up <tt class="docutils literal"><span class="pre">\n</span></tt> instead of <tt class="docutils literal"><span class="pre">\r\n</span></tt> you can just use <tt class="docutils literal"><span class="pre">split</span></tt>.</p>
+<p>Another convenience of <tt class="docutils literal"><span class="pre">split</span></tt> (but not <tt class="docutils literal"><span class="pre">splitlines</span></tt>) is that you
+can tell it how many elements you want it to split off -- for example,
+to split off only one element, use:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; &quot;foo:bar:baz&quot;.split(&quot;:&quot;, 1)
+['foo', 'bar:baz']
+</pre>
+<p>Here <tt class="docutils literal"><span class="pre">split</span></tt> is performing a single split, and leaving everything else
+as a combined string.</p>
+<p>You can combine this with tuple unpacking to write some pretty terse
+processing functions; for example,</p>
+<pre class="literal-block">
+&gt;&gt;&gt; x = &quot;request line\r\nheader 1\r\nheader 2\r\nheader 3\r\n&quot;
+&gt;&gt;&gt; request, headers = x.split('\r\n', 1)
+&gt;&gt;&gt; request
+'request line'
+&gt;&gt;&gt; headers
+'header 1\r\nheader 2\r\nheader 3\r\n'
+
+&gt;&gt;&gt; headers = headers.splitlines()
+&gt;&gt;&gt; headers
+['header 1', 'header 2', 'header 3']
+</pre>
+<p>For HTTP request parsing, then, you're set!  Remember, for HTTP,</p>
+<blockquote>
+<ul class="simple">
+<li>the first line of an HTTP request (the &quot;request line&quot;) has three
+space-separated fields and ends with an <tt class="docutils literal"><span class="pre">\r\n</span></tt>;</li>
+<li>the headers are on the second line forward, separated by <tt class="docutils literal"><span class="pre">\r\n</span></tt>,
+until an empty line (blank <tt class="docutils literal"><span class="pre">\r\n</span></tt>, or equivalently a <tt class="docutils literal"><span class="pre">\r\n\r\n</span></tt>)
+ends them; this <tt class="docutils literal"><span class="pre">\r\n\r\n</span></tt> is guaranteed to be present in a valid
+HTTP request;</li>
+<li>each header consists of a name/value pair separated by a single ': '
+(colon followed by a space);</li>
+<li>everything <em>after</em> the <tt class="docutils literal"><span class="pre">\r\n\r\n</span></tt> that ends the headers should be
+stored but not parsed.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="string-matching" name="string-matching">String matching</a></h2>
+<p>Here are three functions useful for string matching.  First, you can
+use <tt class="docutils literal"><span class="pre">find</span></tt>, which returns the position of the first exact match, or
+-1 if there is no match:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; s = 'some text'
+&gt;&gt;&gt; s.find('text')
+5
+&gt;&gt;&gt; s.find('foo')
+-1
+</pre>
+<p>You can write your own simple <tt class="docutils literal"><span class="pre">split</span></tt>-like function using <tt class="docutils literal"><span class="pre">find</span></tt>, string
+slicing, and tuple unpacking:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; loc = s.find('t')
+&gt;&gt;&gt; first, last = s[:loc], s[loc:]
+&gt;&gt;&gt; first, last
+('some ', 'text')
+</pre>
+<p>If you just want to find out if there's a substring present, you can also
+use 'in':</p>
+<pre class="literal-block">
+&gt;&gt;&gt; 'text' in s
+True
+</pre>
+<p>And if you want the location of that text, you can use <tt class="docutils literal"><span class="pre">index</span></tt>:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; s.index('text')
+5
+</pre>
+<p>(Guess what happens if you use <tt class="docutils literal"><span class="pre">index</span></tt> and the substring is not present?)</p>
+</div>
+<div class="section">
+<h2><a id="joining-lists" name="joining-lists">Joining lists</a></h2>
+<p>Another very useful string function, this time for turning lists into
+strings (as opposed to strings into lists) is <tt class="docutils literal"><span class="pre">join</span></tt>.  Suppose you
+have a list of strings that you want to make into a comma-separated
+string:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; x = ['foo', 'bar', 'baz']
+&gt;&gt;&gt; &quot;,&quot;.join(x)
+'foo,bar,baz'
+</pre>
+<p>The &quot;join&quot; string can be anything, including <tt class="docutils literal"><span class="pre">\r\n</span></tt>:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; &quot;\r\n&quot;.join(x)
+'foo\r\nbar\r\nbaz'
+</pre>
+<p>To construct headers for an HTTP response, then, you could just take a list
+of 2-tuple headers and do two joins:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; headers = [('Foo', 'bar'), ('Baz', 'bif')]
+&gt;&gt;&gt; header_list = []
+&gt;&gt;&gt; for pair in headers:
+...    header = ': '.join(pair)
+...    header_list.append(header)
+
+&gt;&gt;&gt; header_list
+['Foo: bar', 'Baz: bif']
+
+&gt;&gt;&gt; headers_final = &quot;\r\n&quot;.join(header_list)
+&gt;&gt;&gt; headers_final
+'Foo: bar\r\nBaz: bif'
+</pre>
+</div>
+<div class="section">
+<h2><a id="list-comprehensions" name="list-comprehensions">List comprehensions</a></h2>
+<p>List comprehensions are a convenient way to tersely write certain expressions.
+For example, suppose you wanted to process a bunch of headers into 2-tuples.:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; headers = [ 'Foo: bar', 'Baz: bif' ]
+</pre>
+<p>Using a for loop would require 3 or 4 lines:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; split_headers = []
+&gt;&gt;&gt; for s in headers:
+...   name, value = s.split(': ')
+...   split_headers.append((name, value))
+&gt;&gt;&gt; split_headers
+[('Foo', 'bar'), ('Baz', 'bif')]
+</pre>
+</blockquote>
+<p>List comprehensions give you a shorter way to write this:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; split_headers = [ s.split(': ') for s in headers ]
+&gt;&gt;&gt; split_headers
+[['Foo', 'bar'], ['Baz', 'bif']]
+</pre>
+<p>The general syntax of a list comprehension looks like this:</p>
+<pre class="literal-block">
+[ &lt;expression&gt; for x in y ]
+</pre>
+<p>and you can also include if statements, e.g.</p>
+<blockquote>
+[ &lt;expression&gt; for x in y if &lt;expression&gt; ]</blockquote>
+<p>List comprehensions can get pretty complicated, which then makes your
+code unreadable; and there's no good way to do certain things (like
+catch &amp; ignore exceptions to continue processing) because everything
+has to be written on one codel ine.  I recommend using them only when
+you have some pretty simple list processing to do, but then can
+really help make your code shorter and (potentially) easier to read.</p>
+<p>For example, for the above header creation join, you could now do:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; headers = [('Foo', 'bar'), ('Baz', 'bif')]
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; header_final = &quot;\r\n&quot;.join([ &quot;: &quot;.join(pair) for pair in headers ])
+</pre>
+</blockquote>
+<p>or (if you want to write slightly more readable code...)</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; headers = [ &quot;: &quot;.join(pair) for pair in headers ]
+&gt;&gt;&gt; header_final = &quot;\r\n&quot;.join(headers)
+</pre>
+</blockquote>
+<p>---</p>
+<p>Remember, you can also type 'help' to get information on what split and
+join do:</p>
+<pre class="literal-block">
+help(&quot;&quot;.join)
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a id="html-structure-and-jinja2-inheritance-blocks" name="html-structure-and-jinja2-inheritance-blocks">HTML structure, and Jinja2 inheritance &amp; blocks</a></h1>
+<p>Every HTML page is supposed to have roughly this structure:</p>
+<pre class="literal-block">
+&lt;html&gt;
+ &lt;head&gt;
+ ... HEADER INFO GOES HERE - title, keywords, etc. ...
+ &lt;/head&gt;
+ &lt;body&gt;
+ ... BODY OF PAGE GOES HERE -- stuff to display. ...
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>but in practice, for most pages, you will only modify the title and
+the content.  Retyping all of this every time would be a waste of time,
+error-prone, and (as you'll see once we get to CSS and styling) make
+the pages hard to change.</p>
+<p>Or, in sum, writing the same HTML for every page violates the DRY
+rule: don't repeat yourself!</p>
+<p>Jinja2 templates offer a way around this through template inheritance
+and <em>blocks</em>.</p>
+<p>First, write a template page -- let's call it 'base.html' and add
+in some blocks.  This is a notation that lets you designate areas
+to be replaced by subclassed pages.</p>
+<pre class="literal-block">
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;{% block title %} DEFAULT TITLE {% endblock %}&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  {% block content %} DEFAULT CONTENT {% endblock %}
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>Now, in another page, <em>extend</em> from base.html:</p>
+<pre class="literal-block">
+{% extends &quot;base.html&quot; %}
+</pre>
+<p>and in that same page, override one or more of the blocks:</p>
+<pre class="literal-block">
+{% block title %}
+my real title
+{% endblock %}
+</pre>
+<p>Voila!  When you render the <em>second</em>, subclassed, page with Jinja2, it
+will automatically load in the 'base.html' structure and then replace
+only the title block:</p>
+<pre class="literal-block">
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;
+   my real title
+  &lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  {% block content %} DEFAULT CONTENT {% endblock %}
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>You can do this several times, too; have one base page that specifies
+the default color scheme for a Web page, and then another that (for
+some subset of the site) defines a set of tabs, etc.</p>
+</div>
+<div class="section">
+<h1><a id="testing" name="testing">Testing</a></h1>
+<p>I've told you a bit about how important automated testing can be for
+keeping on top of code changes &amp; refactoring.  But how do you actually
+do it?</p>
+<p>The main technique in automated testing is to have some code -- the
+<em>test code</em> -- drive the code <strong>under test</strong>.  So, if you have code
+like this:</p>
+<pre class="literal-block">
+def sum(x, y):
+   return x+y
+</pre>
+<p>then you write test code like this:</p>
+<pre class="literal-block">
+assert sum(0, 0) == 0
+assert sum(1, 1) == 2
+</pre>
+<p>(here, 'assert' is a language construct that complains if the following
+condition isn't true).</p>
+<p>Now, let's suppose you have a function <tt class="docutils literal"><span class="pre">handle_connection</span></tt> that
+takes a socket object and reads an HTTP request from it.  How would you
+test that using these techniques?</p>
+<p>Let's start with a stub handle_connection function:</p>
+<pre class="literal-block">
+response = 'HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\nhello, world'
+
+def parse_request(data):
+   # do parsing, etc.
+   return response     # for now, return fake response
+
+def handle_connection(sockobj, data_so_far=None):
+   if data_so_far is None:    # initialize
+      data_so_far = ''
+
+   data = sockobj.recv(4096)
+   data_so_far += data
+   if '\r\n\r\n' in data_so_far:  # complete GET request - respond &amp; close
+      response = parse_request(data_so_far)
+      sockobj.sendall(response)
+      sockobj.close()
+      return True, None
+
+   # not done yet; keep gathering information
+   return False, data_so_far
+</pre>
+<p>This function reads from the socket until an entire request has been
+received; then (without parsing the request or anything) responds with
+a basic response.</p>
+<p>How do we test this?</p>
+<p>Well, conveniently, it's in a function.  We can just import it, and call
+the function:</p>
+<pre class="literal-block">
+import webserve
+
+done = False
+data_so_far = ''
+while not done:
+    done, data_so_far = webserve.handle_connection(fake_socket, data_so_far)
+</pre>
+<p>Err, what's that 'fake_socket' object, then?  It's just a Python object
+that <em>looks</em> and <em>behaves</em> like a socket:</p>
+<pre class="literal-block">
+class fake_client_sock_obj(object):
+   def __init__(self, data):
+       self.data = data
+       self.sent = ''
+
+   def recv(self, amount):
+       d, self.data = self.data[:amount], self.data[amount:]
+       return d
+
+   def sendall(self, to_send):
+       self.sent += to_send
+
+   def close(self):
+       pass
+</pre>
+<p>and that we can stuff with data:</p>
+<pre class="literal-block">
+request_data = '''GET / HTTP/1.0\r\nHost: locahost\r\nPort: 5000\r\n\r\n'''
+fake_socket = fake_client_sock_obj(request_data)
+</pre>
+<p>...and since it saves everything sent using 'sendall', we can even inspect
+what was sent:</p>
+<pre class="literal-block">
+# ... run code, etc.
+
+response = fake_socket.sent
+print 'RESPONSE IS:', response
+</pre>
+<p>You can see functioning code here:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab5/">http://class.ged.idyll.org/svn/files/lab5/</a></blockquote>
+</div>
+<div class="section">
+<h1><a id="actually-doing-testing" name="actually-doing-testing">Actually doing testing</a></h1>
+<p>How can you use this on your homework?</p>
+<p>Zeroth, it's not required to do testing on your homework, or to submit
+testing code with the homework.  (It will be, later.)</p>
+<p>First of all, this is a good start for part of the homework.  If you
+integrate this code into your blocking echo server, you'll have
+something that responds to HTTP requests with an HTTP response.  Yay.</p>
+<p>Second of all, it's pretty easy to change things around to test things
+like 'is the socket closed?' and 'am I properly aggregating client data?'
+We can do that in class.</p>
+<p>Third, once you add in request parsing, how hard is it to add in
+checking for the proper response?  Not very -- it's just mucking about
+with strings, which is infinitely easier than dealing with all that socket
+stuff.</p>
+<p>I realize this kind of testing is probably a new concept to a lot of
+you, but I highly recommend spending the time to run the code and figure
+out what's going on here.</p>
+<p>And... how would you test non-blocking server code this way?
+That is left as an exercise (or something to do at the end of class, if
+we have time.</p>
+</div>
+</div>
+</body>
+</html>

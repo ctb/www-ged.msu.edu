@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab #10 -- Code coverage; twill; Jinja2; JavaScript</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-10-code-coverage-twill-jinja2-javascript">
+<h1 class="title">Lab #10 -- Code coverage; twill; Jinja2; JavaScript</h1>
+<p>CSE 491, Nov 5th, 2009.</p>
+<p>I will have FileServer grades to you tonight.</p>
+<p>(NOTE: both figleaf and twill are open source and freely available,
+not to mention written by Yours Truly.)</p>
+<div class="section">
+<h1><a id="code-coverage-analysis-with-figleaf" name="code-coverage-analysis-with-figleaf">Code coverage analysis with figleaf</a></h1>
+<p>figleaf is a tool that, when run on Python source code, tracks
+which lines of code are actually executed.  It then lets you
+annotate your Python files with HTML output.</p>
+<p>Its primary use is to &quot;watch&quot; your code-under-test to see
+what lines of code are actually executed.</p>
+<p>Code that isn't executed is <strong>definitely not tested</strong> and
+is a good candidate for your next test writing effort.</p>
+<p>Even with 100% code coverage, you won't be doing complete
+tests; consider:</p>
+<pre class="literal-block">
+def f(a, b):
+   if a:
+      # path 1
+   else:
+      # path 2
+
+   if b:
+      # path 3
+   else:
+      # path 4
+</pre>
+<p>You get 100% code coverage by calling:</p>
+<pre class="literal-block">
+f(True, True)
+f(False, False)
+</pre>
+<p>but you're only testing paths 1,3 and 2,4, not paths 1,4 or paths 2,3.
+For that you'd need branch coverage, which isn't yet possible with
+Python.</p>
+<p>To run figleaf on adriatic, do your standard</p>
+<pre class="literal-block">
+source ~ctb/python-env.csh
+</pre>
+<p>Then run whatever Python code you want to run like so:</p>
+<pre class="literal-block">
+figleaf &lt;Python code to run&gt;
+</pre>
+<p>e.g.</p>
+<pre class="literal-block">
+figleaf tst.py
+</pre>
+<p>This will record what lines of code are run.</p>
+<p>Finally, run figleaf2html:</p>
+<pre class="literal-block">
+figleaf2html
+</pre>
+<p>which will produce a directory html/.  This directory contains the
+HTML output of the code coverage run.</p>
+<div class="section">
+<h2><a id="some-practical-tips" name="some-practical-tips">Some practical tips</a></h2>
+<p>Practically speaking, you will want to do two things: first, you want
+to run figleaf <strong>on your tests</strong>, inside of nose.  To do that, instead
+of running</p>
+<pre class="literal-block">
+nosetests
+</pre>
+<p>do instead</p>
+<pre class="literal-block">
+figleaf /user/ctb/install/bin/nosetests
+</pre>
+<p>(again on adriatic).</p>
+<p>Also, you'll probably want to put the output directory somewhere where you
+can access it remotely, e.g. your ~/web/ directory.  To do <em>that</em>, first make
+sure you have a world-readable 'web' directory in your home:</p>
+<pre class="literal-block">
+mkdir ~/web/
+chmod -R a+rx ~/web/
+</pre>
+<p>and then tell figleaf2html to put its output there:</p>
+<pre class="literal-block">
+figleaf2html -d ~/web/figleaf
+</pre>
+<p>and make the 'figleaf' directory world-readable</p>
+<pre class="literal-block">
+chmod -R a+rx ~/web/figleaf
+</pre>
+<p>Now your figleaf output should be available as</p>
+<pre class="literal-block">
+http://www.cse.msu.edu/~nermal/figleaf/
+</pre>
+<p>If you get the response &quot;permission denied&quot; when you go to the Web
+page, then you need to do the two chmods up above.</p>
+<p>(I can give you some code to get you started with testing FileServer;
+someone remind me...)</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="functional-web-testing-with-twill" name="functional-web-testing-with-twill">Functional Web testing with twill</a></h1>
+<p>'twill' is a simple, domain specific language for Web testing, implemented
+in Python.</p>
+<p>See <a class="reference" href="http://twill.idyll.org/">http://twill.idyll.org/</a> for basic info, and
+<a class="reference" href="http://twill.idyll.org/commands.html">http://twill.idyll.org/commands.html</a> for a full list of commands.</p>
+<p>The basic idea behind twill is to <strong>enable</strong> <em>functional testing</em> of
+simple Web apps.  For example,</p>
+<pre class="literal-block">
+&gt;&gt; go http://localhost:5000/
+&gt;&gt; code 200
+</pre>
+<p>visits that URL and asserts that an HTTP status code of '200' was returned.</p>
+<pre class="literal-block">
+&gt;&gt; go http://localhost:5000/form.html
+&gt;&gt; formvalue 1 name &quot;titus&quot;
+&gt;&gt; submit
+&gt;&gt; code 200
+</pre>
+<p>fills in the input box named 'name' with titus on first form on the
+page, and verifies that upon form submission an HTTP status code of 200
+is returned.</p>
+<p>The command</p>
+<pre class="literal-block">
+&gt;&gt; find text
+</pre>
+<p>asserts that 'text' is found on the page, and the code</p>
+<pre class="literal-block">
+&gt;&gt; url /form.html
+</pre>
+<p>asserts that the current URL has '/form.html' in it.</p>
+<p>You can use twill interactively (... voila) or you can create little
+twill scripts and run them as</p>
+<pre class="literal-block">
+twill-sh &lt;script&gt;
+</pre>
+<p>One very useful command line argument is '-u', which specifies a starting
+URL:</p>
+<pre class="literal-block">
+twill-sh -u http://localhost:5000/ &lt;script&gt;
+</pre>
+<p>This does a 'go <a class="reference" href="http://localhost:5000/">http://localhost:5000/</a>' <em>before</em> running the script,
+which means you don't need to hardcode your URL into your script,
+which makes your scripts more portable.</p>
+<p>To run twill on adriatic, you'll need to do your standard</p>
+<pre class="literal-block">
+source ~ctb/python-env.csh
+</pre>
+</div>
+<div class="section">
+<h1><a id="jinja2-templating-again" name="jinja2-templating-again">Jinja2 templating again</a></h1>
+<p>If you remember from HW #4 (or the HW #6 solutions,</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/hw6/solutions/">http://class.ged.idyll.org/svn/files/hw6/solutions/</a></blockquote>
+<p>) we implemented template inheritance inside of Jinja2.  For HW #9,
+you need to integrate your OSWD site into 'base.html'.  One way to
+<em>test</em> it -- a question you should <em>always</em> ask... -- is to
+make sure that 'process_form.html' works with the new 'base.html'.</p>
+<p>That is, for whatever OSWD design you chose, the 'content' block
+should replace the content block containing the boilerplate text
+&quot;Lorem ipsum...&quot;, and you can test this by using process_form.</p>
+<p>If you're unsure about your HW #4 templates/ files, just take them
+from the HW #6 solutions.</p>
+<p>The logic in your revised FileServer app (or whatever you want to
+call it...)  should be this:</p>
+<pre class="literal-block">
+if url_file in template directory:
+   render template file with jinja2
+else:
+   try to return file from html directory
+</pre>
+</div>
+<div class="section">
+<h1><a id="some-simple-javascript" name="some-simple-javascript">Some simple JavaScript</a></h1>
+<p>Objective: expose you to JavaScript and JS troubleshooting.</p>
+<p>General JS resources:</p>
+<p><a class="reference" href="http://www.w3schools.com/js/">http://www.w3schools.com/js/</a></p>
+<p><a class="reference" href="http://devguru.com/technologies/javascript/home.asp">http://devguru.com/technologies/javascript/home.asp</a></p>
+<p>---</p>
+<p>Files for this lab are in svn, at:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/">http://class.ged.idyll.org/svn/files/lab10/</a></blockquote>
+<p>---</p>
+<p>Common problems (hat tip to Taylor Marshall):</p>
+<pre class="literal-block">
+'' == '0' //false
+0 == '' // true
+0 == '0' // true
+</pre>
+<p>(== and != are not symmetric, so weird stuff can happen as above; this
+is also possible in Python, note!)</p>
+<p>Recommend using === and !== operators to avoid such tomfoolery.   In
+the above examples, all statements would evaluate to false using ===.</p>
+</div>
+<div class="section">
+<h1><a id="javascript-examples" name="javascript-examples">JavaScript examples</a></h1>
+<p>Simple JS (<a class="reference" href="lab10/ex1.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex1.html">source</a>) :</p>
+<pre class="literal-block">
+&lt;html&gt;
+&lt;body&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;               &lt;--
+document.write(&quot;Hello World!&quot;);
+&lt;/script&gt;                                     &lt;--
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>Hide your JavaScript from non-JS users (<a class="reference" href="lab10/ex2.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex2.html">source</a>) :</p>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+&lt;!--
+document.write(&quot;Hello World!&quot;);
+//--&gt;
+&lt;/script&gt;
+</pre>
+<p>Load JavaScript code from another file (<a class="reference" href="lab10/ex3.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex3.html">source</a> and <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/hello.js">JS source</a>) :</p>
+<pre class="literal-block">
+&lt;script src='hello.js'&gt;&lt;/script&gt;
+</pre>
+<p>Grouping JS statements into blocks with squigglies (<a class="reference" href="lab10/ex4.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex4.html">source</a>) :</p>
+<pre class="literal-block">
+&lt;script type='text/javascript'&gt;
+{
+document.write(&quot;Hello&quot;);
+document.write(&quot; World!&quot;);
+}
+&lt;/script&gt;
+</pre>
+<p>Basic JS prompts (<a class="reference" href="lab10/ex5.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex5.html">source</a>) :</p>
+<pre class="literal-block">
+alert(&quot;something happened!&quot;);
+
+confirm(&quot;may I delete all your files?&quot;);
+
+prompt(&quot;some question&quot;,&quot;defaultvalue&quot;);
+</pre>
+<p>Functions, head/body separation, and element events (<a class="reference" href="lab10/ex6.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex6.html">source</a>) :</p>
+<pre class="literal-block">
+&lt;head&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+function displaymessage()
+{
+alert(&quot;Hello World!&quot;);
+}
+&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;form&gt;
+
+&lt;input type=&quot;button&quot; value=&quot;Click me!&quot; onclick=&quot;displaymessage()&quot; &gt;
+
+&lt;/form&gt;
+&lt;/body&gt;
+</pre>
+<p>'undefined' implicit conversion to strings, &amp; errors (<a class="reference" href="lab10/ex7.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex7.html">source</a>) :</p>
+<pre class="literal-block">
+document.write(&quot;this.bar is: &quot; + this.bar)
+
+document.write(&quot;&lt;p&gt;foo is: &quot; + foo);
+
+document.write(&quot;&lt;p&gt;and hello, world!&quot;);
+</pre>
+<p>(Go look at the Firefox error console.)</p>
+<p>Simple object-oriented programming, and iteration over bags o' properties (<a class="reference" href="lab10/ex8.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab10/ex8.html">source</a>) :</p>
+<pre class="literal-block">
+function some_object_method(param) {
+   document.write(&quot;hello!  This is SomeObject's other param: &quot;);
+   document.write(this.what);
+
+   document.write(&quot;&lt;p&gt; and this is my method param:&quot;);
+   document.write(param);
+}
+
+function SomeObject(what, other_param) {
+   this.foo = &quot;hello&quot;;
+   this.what = other_param;
+   this.method = some_object_method;
+}
+
+/////
+
+x = new SomeObject(&quot;world&quot;, 2);
+
+document.write(x.foo + &quot; &quot; + x.what + &quot;&lt;p&gt;&quot;);
+x.method(&quot;argument to SomeObject.method&quot;);
+
+for (z in x) {
+   document.write('&lt;p&gt;z is ' + z);
+   document.write('&lt;p&gt;x[z] is ' + x[z]);
+}
+</pre>
+<p>Working with HTML elements (<a class="reference" href="lab10/ex9.html">page</a>, <a class="reference" href="http://class.ged.idyll.org/svn/files/lab-10/ex9.html">source</a>) :</p>
+<pre class="literal-block">
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+function change_title() {
+    var x = document.getElementById(&quot;my_input&quot;);
+    document.title = x.value;
+    return false;
+}
+
+document.write(&quot;The title is: &quot; + document.title + &quot;&lt;p&gt;&quot;);
+&lt;/script&gt;
+
+&lt;form onsubmit='return change_title()' method='POST'&gt;
+
+New title: &lt;input type=&quot;text&quot; id='my_input'&gt;
+
+&lt;input type=&quot;submit&quot; value='change title' &gt;
+
+&lt;/form&gt;
+
+&lt;/body&gt;
+</pre>
+<p>---</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,339 @@
+--------------------------------------------
+Lab #6 -- Unit testing with nose, and scopes
+--------------------------------------------
+
+CSE 491, Oct 8th, 2009.
+
+Unit testing and the 'nose' unit testing framework
+--------------------------------------------------
+
+Unit testing frameworks give you a way to organize and
+run your code.  The default unittest framework that comes
+with Python is unittest:
+
+   http://docs.python.org/library/unittest.html
+
+but I prefer 'nose', "nicer testing for Python":
+
+    http://somethingaboutorange.com/mrl/projects/nose/0.11.1/
+
+This is installed in my account on adriatic.
+
+You can read more about the history of unit testing here:
+
+    http://en.wikipedia.org/wiki/Unit_testing
+
+The basic idea is that you want to write and organize many small,
+fairly simple tests; run them in as close to a "clean", isolated
+environment as possible; and get back a useful summary of the results.
+
+The canonical way to structure unit tests is in a class.  This class
+has three types of methods: a set up method, a teardown method, and
+one or more test functions.  The setup and teardown methods are generally
+referred to as 'fixtures' for some reason.  Here's a simple example with
+no setup or teardown functions: ::
+
+   def add(x, y):
+      "The 'function under test'."
+      return x + y
+
+   class Math_Test(object):
+     def test_add_positive(self):
+        assert add(2, 2) == 4
+
+Each test function should make one or more **assertions**, statements
+that some condition is true.  Here are a few more trivial examples
+for 'add':
+
+     def test_add_negative(self):
+        assert add(-2, -2) == 4
+
+     def test_add_zero_zero(self):
+        assert add(0, 0) == 0
+
+     def test_add_zero(self):
+        assert add(0, 4) == 4
+
+The setup and teardown fixtures are run before and after each test
+function.  They are useful for establishing an environment in which
+each test works.  For example, suppose you have an object
+with some internal state, like a class that, each time you call
+it, generates the next number in the Fibonacci series::
+
+  class Fib(object):
+     def __init__(self):
+       self.a = 1
+       self.b = 1
+       self.first = False
+
+     def next(self):
+       if not self.first:
+         self.first = True
+         return 1
+
+       self.a, self.b = self.b, self.a + self.b
+
+Here is an example set of tests for that class::
+
+   class Fib_Test(object):
+      def test_first(self):
+         fib = Fib()
+         assert fib.next() == 1
+
+      def test_second(self):
+         fib = Fib()
+         fib.next()
+         assert fib.next() == 1
+
+      def test_third(self):
+         fib = Fib()
+         fib.next()
+         fib.next()
+         assert fib.next() == 2
+
+but here, you're creating the ``fib`` object each time you run a
+function; since you need to do it for every test function, you can put
+it in setup (and have teardown delete it).
+
+   class Fib_Test(object):
+      def setup(self):		# initialize
+         self.fib = Fib()
+      def teardown(self):	# clean up
+         del self.fib
+
+      def test_first(self):
+         assert self.fib.next() == 1
+
+      def test_second(self):
+         self.fib.next()
+         assert self.fib.next() == 1
+
+      def test_third(self):
+         self.fib.next()
+         self.fib.next()
+         assert self.fib.next() == 2
+
+This is at least slightly neater than before (and becomes even more so
+when you get to longer and more complicated setup functions).  More
+importantly, it keeps code that you're *not* testing -- the creation of
+objects to test, in this case -- separate from the code that you *are*
+testing -- the behavior of 'fib', in this case.
+
+The above code is in lab6/,
+
+   http://class.ged.idyll.org/svn/files/lab6/
+
+files 'fib.py and 'test_fib.py'.
+
+Running your tests
+==================
+
+One thing that might be puzzling you at this point is, how do you actually
+*run* this code!?  It's valid Python, but it doesn't actually contain any
+code to run the tests!
+
+That's what 'nose' is for.  Basically, you just run 'nosetests' in the
+directory containing your test code, and nose figures out what code
+should be run, loads it, and executes it.  It does this by looking for
+files named 'test_*' or 'Test', and then looking for classes with
+'test' in their names.  Then, for each function named 'test_*', it
+creates an object of that class, runs setup, runs the test & records
+its result, and then runs teardown.  (Among other things this lets you
+add tests just by writing a new test function, which is nice.)
+
+Here's what it looks like when you run 'nosetests::
+
+   % nosetests
+   ...
+   ----------------------------------------------------------------------
+   Ran 3 tests in 0.005s
+
+   OK
+
+Not very verbose, eh?
+
+You can also use 'nosetests -v' to get a bit more output::
+
+   % nosetests -v
+   test_fib.Fib_Test.test_first ... ok
+   test_fib.Fib_Test.test_second ... ok
+   test_fib.Fib_Test.test_third ... ok
+   
+   ----------------------------------------------------------------------
+   Ran 3 tests in 0.005s
+   
+   OK
+
+What happens when you have a failing test?  After adding a failing function
+'test_fourth', ::
+
+   % nosetests
+   .F..
+   ======================================================================
+   FAIL: test_fib.Fib_Test.test_fourth
+   ----------------------------------------------------------------------
+   Traceback (most recent call last):
+     File ".../nose-0.11.1-py2.5.egg/nose/case.py", line 183, in runTest
+       self.test(*self.arg)
+     File ".../lab6/test_fib.py", line 25, in test_fourth
+       assert self.fib.next() == 2
+   AssertionError
+   
+   ----------------------------------------------------------------------
+   Ran 4 tests in 0.005s
+   
+   FAILED (failures=1)
+
+The idea is that unit test frameworks in general (and nose is no exception)
+give you the information that *matters* to you -- what test failed -- and
+ignores the "passing" tests."
+
+One more thought -- what happens if I put in a bunch of print statements? ::
+
+   % nosetests
+   .F..
+   ======================================================================
+   FAIL: test_fib.Fib_Test.test_fourth
+   ----------------------------------------------------------------------
+   Traceback (most recent call last):
+     File ".../nose-0.11.1-py2.5.egg/nose/case.py", line 183, in runTest
+       self.test(*self.arg)
+     File ".../lab6/test_fib.py", line 25, in test_fourth
+       assert self.fib.next() == 2
+   AssertionError:
+   -------------------- >> begin captured stdout << ---------------------
+   1
+   1
+   2
+
+   --------------------- >> end captured stdout << ----------------------
+
+   ----------------------------------------------------------------------
+   Ran 4 tests in 0.006s
+   
+   FAILED (failures=1)
+
+In line with my continued suggestions that you put in lots of print
+statements, nose *hides* the print output for tests *unless they
+fail*.  That way you can lard up your test code with all sorts of
+debugging print statements, and you only see them when your code is
+causing problems.  The rest of the time you can ignore htem.
+
+So, the basic idea of unit tests is:
+
+ - you write special test code to test your application code
+
+ - you use a framework (like nose) that lets you just write the code
+   and not worry about how to run it, how to get error reporting or
+   sumamary statistics, etc.
+
+ - you run them every time you make a change to your code.
+
+Using tests for HW #5
+=====================
+
+If you look in hw5/, you'll see some tests:
+
+   http://class.ged.idyll.org/svn/files/hw5/
+
+You can use these tests to help figure out what to implement for HW #5.
+The three tests do the following:
+
+   - one checks to make sure that you're closing the socket in your
+     ``handle_connection`` function;
+
+   - one checks to make sure that the URL is being properly returned in
+     the HTTP response;
+
+   - the third checks to make sure that all of the POST data is being
+     read.
+
+To run them against your code, just run put test-webserve.py in your
+directory and run ``nosetests``.  (You'll need to 'source
+~ctb/python-env.csh' to use my install of nose.)
+
+----
+
+Some notes on scoping
+---------------------
+
+There are two basic scopes for variables: module-global and function-local.
+
+For example, ::
+
+
+   a = 5           # module global
+
+   def f():
+      print a      # prints module global
+
+   def g():
+      a = 10       # function local
+      print a      # prints function local
+
+Calling 'f()' will print '5', and calling 'g()' will print '10' -- and
+'f()' won't overwrite the global 'a', it will just create a local 'a'.
+
+You can get into trouble if you *use* the module-global 'a' and then
+try to assign to it::
+
+   def h():
+      print a
+      a = 10
+      print a
+
+because here Python can track that you're mixing module-global and
+function-local statements.  If you want to assign to module-global,
+declare it::
+
+   def j():
+      global a
+      a = 15
+      print a
+
+which will change the global 'a'.  Note, my main suggested use for
+this is in initializing things, e.g. ::
+
+   _db_handle = None
+   def init():
+      global _db_handle
+      if _db_handle is None:
+         _db_handle = connect_to_db()
+
+Where things get a bit tricky is with *nested functions*::
+
+   a = 5
+
+   def m():
+      a = 10
+
+      def n():
+         print a
+
+      return n
+
+Here, we're defining the function 'n' in the function 'm'.  First, 'n' is
+only available to those who get it from m(), and it doesn't need to be named
+
+
+   fn = m()
+   fn()
+
+What do you think this will return?
+
+How about::
+
+   a = 5
+
+   def m():
+      a = 10
+
+      def n():
+         global a
+         print a
+
+      return n
+
+The heck of it is, I can guess but I don't think it's worth
+remembering.  This is Bad Code.  BAD CODE.  Because you have to think
+about its behavior, and the answer is not clear.

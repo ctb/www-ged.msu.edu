@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lab-3-more-subversion-python-and-templating" name="lab-3-more-subversion-python-and-templating">Lab #3 -- More Subversion, Python, and templating</a></h1>
+<p>CSE 491, Sep 17th, 2009.</p>
+</div>
+<div class="section">
+<h1><a id="homework-notes" name="homework-notes">Homework notes</a></h1>
+<p>Make sure the files you hand in are in the right place in your svn
+archives.  After this first homework there will be zero tolerance
+(i.e. you will get a zero for not having the file in the right place).
+It's just not that hard to check -- and you should e-mail me if you're
+having problems getting things to work.</p>
+<p>Fix the problems I point out.  For example, for HW #2, you have to
+refactor your CGI script.  If it didn't work in HW #1, <em>fix it</em>!</p>
+<p>Please try running the handouts for hw2 EARLY -- sometime before Monday
+evening would be good, please.</p>
+</div>
+<div class="section">
+<h1><a id="subversion-copying-and-copy" name="subversion-copying-and-copy">Subversion: copying, and copy</a></h1>
+<p>First, and foremost: don't drag and drop or otherwise copy directories
+that are under svn control!</p>
+<p>If you look at a directory using 'ls -a', you'll see a '.svn'
+subdirectory.  This subdirectory contains all of the subversion-
+associated information for the directory and the files in the directory.</p>
+<p>If you delete this directory, you no longer have a working copy.</p>
+<p>If you copy this directory into another directory or location,
+subversion can get very confused!</p>
+<p>Again, if you have problems with a working directory, you can always just
+create a new one.</p>
+<p>You can get a free book about subversion here:</p>
+<blockquote>
+<a class="reference" href="http://svnbook.red-bean.com/">http://svnbook.red-bean.com/</a></blockquote>
+<p>---</p>
+<p>Second, I'm going to start asking you to work in a single subdirectory
+of your working copy, 'trunk', and <em>tag</em> branches of that working copy
+for hand-in.  Roughly speaking, you will</p>
+<blockquote>
+<ol class="arabic simple">
+<li>work/commit in the trunk directory until you are ready to hand in
+your work;</li>
+<li>branch trunk/ into a subdirectory hwN/, e.g. hw2/ for this HW.</li>
+<li>continue working in trunk the following week.</li>
+</ol>
+</blockquote>
+<p>Learning to do this right is like eating your Wheaties -- it will pay
+you back in the long term, because this is how everyone actually develops
+in the real world: they all develop on a trunk line of development,
+and then they tag releases for testing and/or shipping.</p>
+<p>You can read more about branching here:</p>
+<blockquote>
+<a class="reference" href="http://svnbook.red-bean.com/en/1.5/svn.branchmerge.whatis.html">http://svnbook.red-bean.com/en/1.5/svn.branchmerge.whatis.html</a></blockquote>
+<p>How do you branch in Subversion?  You use the 'svn copy' command:</p>
+<pre class="literal-block">
+svn copy http://class.ged.idyll.org/svn/nermal/trunk \
+         http://class.ged.idyll.org/svn/nermal/hw2 -m &quot;tagging hw2&quot;
+</pre>
+<p>(Note that '' is just to indicate a line continuation; you can
+actually just type it all on one line.)</p>
+<p>For this to work, you have to have created 'trunk' and added it into
+your repository; the simplest way to do <em>that</em>, <em>before you start working
+on hw2</em>, is to do this:</p>
+<pre class="literal-block">
+svn copy http://class.ged.idyll.org/svn/nermal/hw1 \
+         http://class.ged.idyll.org/svn/nermal/trunk -m &quot;creating trunk&quot;
+</pre>
+<p>If you don't understand what I'm talking about, here is a simple set
+of instructions: start your hw by running the second command (hw1 -&gt;
+trunk) and then work in trunk/.  When you're ready to hand in your
+homework, run the first command (trunk -&gt; hw2).</p>
+<p>Again, pay attention to what your repository should look like at the
+end of your homework.</p>
+<p>Why do you want to do all this 'svn copy' stuff instead of just copying
+the files around!?</p>
+<p>Two reasons, one practical, one both practical and philosophical.</p>
+<p>First, the purely practical one: later on in the class we will be
+working with Selenium, which adds hundreds of little files into your
+Subversion tree.  If you work in trunk and then use 'svn copy' to
+tag your work, you never actually have to do that copy -- subversion
+does it &quot;virtually&quot; and just updates the repository.</p>
+<p>Second, the real reason (for those of you with fast disks ;) is that
+Subversion can track the history and changes of each of your files,
+and this makes it possible to compare your changes across homeworks
+(if, for example, you break something accidentally).  It also lets you
+work separately on multi-programmer projects and then later merge or
+compare source code in a logically consistent way, which is <em>very</em>
+important for any real software effort.</p>
+<p>Oh, and third -- I will grade you on it.</p>
+</div>
+<div class="section">
+<h1><a id="scripts-vs-importable-files" name="scripts-vs-importable-files">Scripts vs importable files</a></h1>
+<p><em>Scripts</em> are Python files that do something more than just define
+stuff -- they contain execution instructions.  E.g.,</p>
+<pre class="literal-block">
+script.py:
+  print 'hello, world'
+</pre>
+<p>The name of a script file can be anything that's a valid filename.  On
+UNIX, this is anything that doesn't contain a forward slash ('/').  On
+Windows, it's something similar.  In general I suggest making things
+cross-OS-friendly and typing-friendly, e.g. no spaces, backslashes, or
+funny characters; 'my-favorite-script-name' is fine.  There's no requirement
+that the filename end in '.py' although if it does than various operating
+systems may let you double-click on it to run it.</p>
+<p>As you've seen, a neat UNIX trick is to put this magic code:</p>
+<pre class="literal-block">
+#! /usr/bin/env python
+</pre>
+<p>at the top of your script file, and then do 'chmod +x scriptfile'.  This
+will make it a shell-executable script than be run simply by doing</p>
+<pre class="literal-block">
+./scriptfile
+</pre>
+<p>There is also an overlapping but distinct concept of a <em>Python module</em>.</p>
+<p><em>Modules</em> are importable Python files.  We can talk later about the
+precise rules that import uses, but things in the same directory as a
+script are generally importable by Python.  However, module files <em>must</em>
+end in '.py' and have to be valid Python identifiers, e.g.</p>
+<pre class="literal-block">
+import modulefile
+</pre>
+<p>or</p>
+<pre class="literal-block">
+import module_file
+</pre>
+<p>will find 'modulefile.py' or 'module_file.py' appropriately, but you can't
+do</p>
+<pre class="literal-block">
+import module-file
+</pre>
+<p>to get 'module-file.py' because that's not a legal Python name ('-' isn't
+allowed in variable names, and modules are imported as Python objects.)</p>
+<p>Generally I recommend writing modules so that they are both modules
+<em>and</em> scripts.  So, for example,</p>
+<pre class="literal-block">
+hello.py:
+ def hello(world):
+   return 'hello ' + world
+
+ print hello()
+</pre>
+<p>will define 'hello' and also run the 'hello()' functiont: it can be imported as a module,</p>
+<pre class="literal-block">
+import hello
+print hello.hello('steve')
+</pre>
+<p>or run as a script:</p>
+<pre class="literal-block">
+% python hello.py
+</pre>
+<p>Of course, you may not always want stuff to be run on import, so you
+can use this trick to differentiate between code that should be
+executed on import vs on command-line execution:</p>
+<pre class="literal-block">
+hello.py:
+ def hello(world):
+    return 'hello ' + world
+
+ if __name__ == '__main__':
+    print hello('eva')
+</pre>
+<p>Here, 'print command will only be run when the file is executed as a
+script by doing</p>
+<pre class="literal-block">
+python hello.py
+</pre>
+<p>This kind of thing is really convenient when you're writing and
+testing code: put your test code at the bottom of the file and then
+just run the module every time you make a change (F5 in IDLE).</p>
+<p>To recap, here's my recommended format for Python modules:</p>
+<pre class="literal-block">
+module.py:
+  #! /usr/bin/env python2.5
+
+  # ... define functions/classes/etc. ...
+
+  if __name__ == '__main__':
+     # ... define tests of functions/classes etc ...
+     #
+     #   OR
+     #
+     # ... define script-like behavior ...
+</pre>
+<p>You'll need to use this for HW #2.</p>
+</div>
+<div class="section">
+<h1><a id="two-more-command-line-thoughts" name="two-more-command-line-thoughts">Two more command-line thoughts</a></h1>
+<p>If you use the '-i' flag to the Python interpreter when running a
+script, you'll be left at the Python prompt after the script runs:</p>
+<pre class="literal-block">
+% python -i scriptfile
+... scriptfile runs ...
+&gt;&gt;&gt;
+</pre>
+<p>This Python prompt will have all your functions defined for interactive
+testing, etc.  Very useful.</p>
+<p>If you want to write an actual script that takes in arguments, use
+'sys.argv'.  It is a list of all of the arguments to your script:</p>
+<pre class="literal-block">
+scriptfile.py:
+  print sys.argv
+</pre>
+<p>so that</p>
+<pre class="literal-block">
+% python scriptfile.py arg1 arg2 arg3 arg4
+</pre>
+<p>will print out</p>
+<pre class="literal-block">
+scriptfile.py arg1 arg2 arg3 arg4
+</pre>
+</div>
+<div class="section">
+<h1><a id="refactoring" name="refactoring">Refactoring</a></h1>
+<p>In the homework, I mention &quot;refactoring&quot;.  Refactoring is one of the
+most useful techniques you can learn; it's the process of slowly
+transforming code while keeping the functionality the same.</p>
+<p>For example, in HW #1 you might have had this code:</p>
+<pre class="literal-block">
+for i in range(0, num):
+   print name
+</pre>
+<p>but now you want to turn that into a function.  So you start by
+indenting everything:</p>
+<pre class="literal-block">
+def print_name():
+  for i in range(0, num):
+    print name
+
+print_name()
+</pre>
+<p>Does the same thing as above, right?</p>
+<p>Next, you pass the variables through the function:</p>
+<pre class="literal-block">
+def print_name(name, num):
+  for i in range(0, num):
+    print name
+
+print_name(name, num)
+</pre>
+<p>Again, does the same thing.</p>
+<p>Finally, you convert the function to concatenate the names instead:</p>
+<pre class="literal-block">
+def print_name(name, num):
+  x = &quot;&quot;
+  for i in range(0 num):
+     x += name + &quot;\n&quot;
+
+  return x
+
+print print_name(x)
+</pre>
+<p>At each point of this refactoring, the code <em>should</em> do the same thing
+-- and later I'll show you how to check that, with automated tests.
+Whether or not you have automated tests, though, each change is small
+and simple enough that you can just look at it and verify that it does
+the same thing.</p>
+<p>Experienced programmers do this all the time, because it reduces errors
+that you get from making large sweeping changes throughout your code base.</p>
+<p>Why do you care?</p>
+<p>First, you will need to do exactly this -- encapsulate your print statement
+in a function -- for HW #2.</p>
+<p>Second, I will soon start grading you on clarity and quality of code,
+and elimination of redundancy in your code, once I define those for
+you ;).  So you should learn how to take a working piece of code and
+&quot;clean it up&quot; iteratively.</p>
+<p>(Why would I be such a jerk?  Cue lecture on writing vs reading code...)</p>
+</div>
+<div class="section">
+<h1><a id="some-brief-notes-on-jinja2-templating" name="some-brief-notes-on-jinja2-templating">Some brief notes on Jinja2 templating</a></h1>
+<p>As part of the homework, you need to modify templating code written in
+the Jinja2 templating language.  Here's an example:</p>
+<pre class="literal-block">
+I have a message for you.  The message is {{ message }}
+</pre>
+<p>If you run this and pass in your locals() dictionary -- see source
+code for hw2 -- this will substitute the value of the variable
+'message' for <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">message</span> <span class="pre">}}</span></tt>.</p>
+<p>You can also do if statements and for loops; for example,</p>
+<pre class="literal-block">
+{% if flag %}
+   Flag is true!
+{% else %}
+   Flag is false!
+{% endif %}
+</pre>
+<p>will evaluate the Python variable 'flag' to print out the succeeding
+text.</p>
+<p>See
+<a class="reference" href="http://jinja.pocoo.org/2/documentation/templates#list-of-control-structures">http://jinja.pocoo.org/2/documentation/templates#list-of-control-structures</a>
+for documentation on exactly how to use these.</p>
+<p>For hw2, please put as many of your control structures as possible --
+if and for loops, in particular -- inside the template.</p>
+<p>Jinja2 is not a standard Python library package, but it is
+straightforward to install.  I've already done so on arctic; to set it up
+for your own use, do</p>
+<pre class="literal-block">
+source ~ctb/python-env.csh
+</pre>
+<p>After that, 'import jinja2' in Python should work.</p>
+<p>This might be one of those things you try today or tonight to make sure
+it works for you...</p>
+</div>
+</div>
+</body>
+</html>

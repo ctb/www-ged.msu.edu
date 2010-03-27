@@ -1,0 +1,60 @@
+-------------------------------------
+Homework 9: Code coverage and testing
+-------------------------------------
+
+Due Tuesday, November 10th, at 4:30pm.
+
+0. Improve your svn hygiene.
+
+ a) Make sure that you're including everything that you need in order to
+ run your code in your svn archive by doing a clean checkout and ensuring
+ that your test_apps.py and webserve*.py files run.  (Hint: check for
+ form.html, templates/, html/.
+
+ (1 point will be deducted for failing to do this.)
+
+ b) Be sure to hand this and all future homeworks in by branching from
+ /trunk using 'svn copy'.
+
+ (1 point will be deducted for failing to do this, in this and future
+ homeworks.)
+
+ Hint: fixing (a) in trunk and then doing (b) to hand in future homeworks
+
+1. Use code coverage (with figleaf) to analyze test_apps.  You should
+   have 100% code coverage of your apps in test_apps.py.  Add tests to
+   your test_apps.py until you do.  (2.5 points)
+
+2. Implement three twill tests in the 'twill/' directory, named
+   'test_hello.twill', 'test_redirect.twill', and 'test_form.twill'.
+   They should do a simple, minimal test of the behavior of hello_app
+   with a URL of '/', form_app with a URL of /foo/bar/baz, and form_app
+   with a POST to /process_form, respectively.
+
+   I must be able to run these against a Web server by doing ::
+
+      twill-sh -u http://localhost:5000/ hw9/twill/*.twill
+
+   (2.5 points)
+
+3. Edit your templates in 'templates/base.html' so that it contains all
+   of the OSWD HTML and CSS formatting from HW #8, and then edit your
+   FileServer app so that it FIRST checks to see if jinja2 can render
+   the given file from your templates directory, and only then look in
+   your ./html directory.  Be sure to create a 'content' block in your
+   base.html template so that content can be swapped out in jinja2.
+
+   I'll give you some code examples and more details on Thursday, but the
+   basic idea is that I should be able to put 'foo.html' in templates/
+   containing ::
+
+    {% block content %}
+    hello, world
+    {% endblock %}
+
+   and see a fully-formatted page with 'hello, world' in the main content
+   block of your page when I visit ::
+
+      http://localhost:5000/foo.html
+
+   in your Web server.

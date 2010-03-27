@@ -1,0 +1,161 @@
+-----------------------------------------
+Lecture 8 -- WSGI design and architecture
+-----------------------------------------
+
+October 20th, 2009.
+
+NOTE: no class on Thursday (22nd).  I have an all-day meeting (site
+visit for an important grant).
+
+HW #6 solutions -- posted.
+
+Homework #7
+-----------
+
+I'll post this tonight; it will be:
+
+ - correct problems with your HW #6 (explicitly, *correct*, not replace
+   with my example code for HW #6 ;)
+
+ - getting your non-blocking Web server working with the WSGI interface,
+   without any per-connection data shared at the global level.
+
+ - serving form.html for URL /form.html.
+
+ - returning 302 redirects to /form.html for all other URLs.
+
+Side note about function: you should plan to have your code work
+with ALL browsers.  That means ADHERING TO THE HTTP SPEC.  My
+tests are incomplete and can even be ignored (although it's a
+bad idea to ignore them WITHOUT UNDERSTANDING).
+
+Top three signs that you've ignored my tests for a bad reason:
+
+ - your code is not in a file named 'webserve.py'
+
+ - your code is not importable
+
+ - your code has some trivial errors in it (typos, or silly bugs) such
+   that the tests don't pass.
+
+Top sign that you are ignoring my request for a not-bad reason:
+
+ - you've argued with me in e-mail about it and I've given up.
+
+Debugging strategies
+--------------------
+
+"Fence off the howling wolf"
+
+and use print statements!!!
+
+Scalability
+-----------
+
+Disaster! New connections coming in faster than existing connections
+can be processed & closed.  Why might this be?
+
+    + many connections / mechanics of setting up a new connection
+      takes a long time relative to processing
+
+    + existing connections are taking a long time to process; why?
+
+      - server side is slow
+
+      - client or connection from client is slow
+
+      - connection to client is slow
+
+how does blocking server respond?
+
+how would current non-blocking server respond?
+
+what are alternatives?
+
+ - further "chunk" non-blocking server
+
+   + wsgi input "on demand"
+   + send wsgi response in chunks
+
+ - multiprocessing (threads or multiple processes)
+
+---
+
+The above discussion answers two FAQs about WSGI:
+
+ - why is 'wsgi.input' a file pointer? (so it can be read "on demand",
+   for e.g. big uploads)
+
+ - why does the WSGI app return an iterable!?  (so that it can return
+   chunks as they are ready, which in return can be chunked by the
+   server)
+
+A third FAQ:
+
+ - why is 'start_response' separate from the rest?
+
+For this, we should revisit the HTTP protocol... the design of the
+HTTP protocol is that *headers* and *request/response* lines get
+sent as quickly as possible, followed by the (potentially quite
+large) content.
+
+---
+
+Designing WSGI for this is actually pretty difficult, because for a
+general interface you need to accomodate *all* (or as many as
+possible) use cases; the interface restricts what is possible!
+
+If the official interface limited you to ::
+
+   http_response = parse_response(request_data)
+
+then you couldn't optimize for specific, tricky situations!
+
+Some design considerations
+--------------------------
+
+Look at the WSGI stack.
+
+The WSGI server talks to the WSGI application object.  The application
+object doesn't know anything about the socket, or the HTTP request, or
+anything like that -- it just knows what URL was requested, what query
+string or POST content was passed in, and one or two other things
+(primarily the headers, which we'll do next week).
+
+So, looking at the WSGI application object, the first thing you want
+to do is ask yourself: if I want to print out the form results from HW #5,
+where does that information come from?
+
+What information do you have?
+
+ - client / url & form information
+
+ - socket information (more data to read? etc)
+
+ - HTTP request information (url, GET, POST, cookies, etc.)
+
+ - HTTP response (headers out, content, etc.)
+
+Why isn't all of this information available to all of the code in the
+webserve module, as module globals? Why can't the application object
+talk directly to the socket?
+
+The whole point of abstractions and separation of concerns is
+encapsulation: you're trying to neatly put things into little black
+boxes with known inputs and outputs so you can stop thinking about
+them.
+
+And why do this?
+
+Crossing boundaries of abstractions: bad.
+
+This reduces encapsulation
+=> makes testing hard, reduces reliability, etc.
+
+Global or cross-module dependencies should be minimized:
+inderdependencies => complexity => bad.
+
+Also makes parallelization & multiprocessing difficult!  (Later.)
+
+Note that after this week, you should never need to mess with
+handle_connection or serve_forever again...

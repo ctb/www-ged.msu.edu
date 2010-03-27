@@ -1,0 +1,208 @@
+------------------------------
+Lecture 2 -- Basics of the Web
+------------------------------
+
+Sep 8th, 2009.
+
+Q re lab; who has their own laptops?
+
+Q re hw; need everyone's MSU account names; whoever is NOT enrolled.
+Email me.
+
+How the Web Works
+-----------------
+
+mechanism for content delivery
+
+client -- your browser
+
+server -- remote computer serving content to your browser
+
+transport between client/server works at several levels
+
+  -  IP
+  -  TCP -- connection oriented protocol
+  -  HTTP -- synchronous protocol over TCP/IP (transaction oriented)
+
+server maintains watch on standard TCP/IP port (agreed upon location,
+defaults to port 80) and response to one or more client requests
+
+what content is delivered?  Server specifies content type; up to client
+to handle.  Client can specify supported content types.
+
+Most typical content: HTML, HyperText Markup Language
+
+Can also be PDF, CSS, or really anything else.  Again, client is responsible
+for handling.
+
+You've all seen HTML ;)
+
+---
+
+What does a client-server conversation look like?
+
+   1. client: Hi, I'd like some content.  (connect; query;)
+   2. server: OK, here you go. (respond; close)
+
+---
+
+How does a client specify what content to get?
+
+URL, uniform resource locator.
+
+Basic URL:
+
+  protocol://machine:port/path/to/file
+
+'/' is *forward* slash, note.
+
+The client is responsible for setting up the protocol and making the
+connection.  The server is entirely responsible for interpreting the
+path.
+
+Note, can also construct relative URLs like UNIX paths, '/path/to/../other/'
+resolves to '/path/other'.
+
+---
+
+There are some additional components to a URL that we will mention
+later, in particular '?', and some others, namely '#', that I won't
+discuss much.
+
+---
+
+OK, so what goes on in these two big black boxes here, the client
+side and the server side?  Well, the client side is (conceptually)
+rather straightforward: it has a limited set of interactions with the
+server, and so it's basically "just" a user interface on top of that
+vocabulary.  In practice, of course, it's much more complicated because
+of all sorts of things like CSS and JavaScript, but we won't be talking
+too much about how to handle that -- we'll just be using it.
+
+The server side, though, is where we'll be spending quite a bit of time,
+because (from the CS perspective) it's much more interesting.
+
+You can break this black box down into two slightly smaller black boxes.
+The first is the network server part, that handles all of the network
+communication; and the second is the application part, that handles
+(loosely) "interpretation of URLs."
+
+Why would you want to break the server side down into two more boxes?
+   - network stuff is specialized and OS-specific, while content
+     production is not OS specific
+   - different talents: network programming is quite different from
+     writing a Web application.
+   - in practice, any time you can break a big blob down into smaller
+     blobs with well-defined interface, you can isolate those blobs for
+     testing and reliability
+   - reductionism
+
+You may have heard of IIS or Apache; they encompass the network server
+part and (optionally) provide tools for helping with content serving
+and production.
+
+An example of the second part?  Your file system.
+
+We'll spend a lot of time opening up these two black boxes and building
+our own.
+
+---
+
+There's something missing in this picture, however.  How does the
+client send information to the server?
+
+URL.
+
+Client headers, which includes cookies.
+
+POST data: arbitrary amount of data, in predefined packaged format,
+streamed over network as part of a special type of query.
+
+That's *it*.  Nothing else.
+
+Implications of this architecture
+---------------------------------
+
+standards -- you can write clients and servers to interact however you
+   want, but if you don't adhere to the standard, then no one else
+   will talk to you.  Power of HTTP is that 95%+ speak it properly.
+
+proxying is easy
+
+redirecting between servers -- static HTML to CGI on another server, etc.
+    storing images on separate server
+
+alternate view of Web as RPC mechanism
+
+Network burden on server for clients not actively connecting to it is
+nil.
+
+Common Gateway Interface (CGI)
+------------------------------
+
+Server side system for running scripts from file system; developed with
+NCSA httpd, => Apache.  Supported in some form by many servers, including
+one built into Python.
+
+The cgi module in Python handles the inputs.
+
+The outputs are headers, and HTML.  The inputs are environment
+variables and stdin.  The Web server (Apache or IIS) does all of the
+parsing of the HTTP headers, and turns them into a standard set of
+environment variables.
+
+CGI was really the first widely used method for producing content
+dynamically on the Web, back in the mid 1990s.
+
+Easy to write a basic CGI script.
+
+Multi-language; scripts can be in any language, as long as they take in
+known inputs and give outputs.
+
+There are security issues, however, because of the way many CGI setups
+used to work.  As you'll see on Thursday and in the homework, CSE lets
+you run your own CGI scripts, which means you're now giving potentially
+anyone the ability to run a script on your server, which in turn can lead
+to big security holes.
+
+CGI is also a performance issue, because it requires a new process
+every time, which is quite expensive for the server.  We'll talk about
+this in more detail later.
+
+These two issues (security and performance) are the main reasons that
+CGI has declined in use.
+
+For the first homework, you'll be writing your own CGI script so that
+we can give you a toe hold into the Web development world and get
+hands on experience with some of the basic concepts.
+
+---
+
+Will post today:
+
+ - python resources etc.
+ - last year's notes
+
+---
+
+.. hw/lab
+
+   subversion accounts
+   getting hello world cgi script working in your account on arctic;
+    - scripts in UNIX
+    - cgitb; script must parse!
+   useful unix techniques; emacs, vi
+   brief Python intro; introspection; repr vs str
+  
+   loading straight HTML Web page
+  
+   cgi script to process some form or other
+  
+    #1.  Get hello, world CGI script working
+    #2.  Write a simple form processor that involves string manipulation:
+         if, for, string slicing, string concatenation, lists?, dicts?
+         cgi module, int, string interpolation
+  
+  next week:
+  
+    running your own CGI server

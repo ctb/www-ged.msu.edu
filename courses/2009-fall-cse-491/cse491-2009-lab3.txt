@@ -1,0 +1,341 @@
+Lab #3 -- More Subversion, Python, and templating
+-------------------------------------------------
+
+CSE 491, Sep 17th, 2009.
+
+Homework notes
+--------------
+
+Make sure the files you hand in are in the right place in your svn
+archives.  After this first homework there will be zero tolerance
+(i.e. you will get a zero for not having the file in the right place).
+It's just not that hard to check -- and you should e-mail me if you're
+having problems getting things to work.
+
+Fix the problems I point out.  For example, for HW #2, you have to
+refactor your CGI script.  If it didn't work in HW #1, *fix it*!
+
+Please try running the handouts for hw2 EARLY -- sometime before Monday
+evening would be good, please.
+
+Subversion: copying, and copy
+-----------------------------
+
+First, and foremost: don't drag and drop or otherwise copy directories
+that are under svn control!
+
+If you look at a directory using 'ls -a', you'll see a '.svn'
+subdirectory.  This subdirectory contains all of the subversion-
+associated information for the directory and the files in the directory.
+
+If you delete this directory, you no longer have a working copy.
+
+If you copy this directory into another directory or location,
+subversion can get very confused!
+
+Again, if you have problems with a working directory, you can always just
+create a new one.
+
+You can get a free book about subversion here:
+
+   http://svnbook.red-bean.com/
+
+---
+
+Second, I'm going to start asking you to work in a single subdirectory
+of your working copy, 'trunk', and *tag* branches of that working copy
+for hand-in.  Roughly speaking, you will
+
+  1) work/commit in the trunk directory until you are ready to hand in
+     your work;
+
+  2) branch trunk/ into a subdirectory hwN/, e.g. hw2/ for this HW.
+
+  3) continue working in trunk the following week.
+
+Learning to do this right is like eating your Wheaties -- it will pay
+you back in the long term, because this is how everyone actually develops
+in the real world: they all develop on a trunk line of development,
+and then they tag releases for testing and/or shipping.
+
+You can read more about branching here:
+
+   http://svnbook.red-bean.com/en/1.5/svn.branchmerge.whatis.html
+
+How do you branch in Subversion?  You use the 'svn copy' command::
+
+   svn copy http://class.ged.idyll.org/svn/nermal/trunk \
+            http://class.ged.idyll.org/svn/nermal/hw2 -m "tagging hw2"
+
+(Note that '\' is just to indicate a line continuation; you can
+actually just type it all on one line.)
+
+For this to work, you have to have created 'trunk' and added it into
+your repository; the simplest way to do *that*, *before you start working
+on hw2*, is to do this::
+
+   svn copy http://class.ged.idyll.org/svn/nermal/hw1 \
+            http://class.ged.idyll.org/svn/nermal/trunk -m "creating trunk"
+
+If you don't understand what I'm talking about, here is a simple set
+of instructions: start your hw by running the second command (hw1 ->
+trunk) and then work in trunk/.  When you're ready to hand in your
+homework, run the first command (trunk -> hw2).
+
+Again, pay attention to what your repository should look like at the
+end of your homework.
+
+Why do you want to do all this 'svn copy' stuff instead of just copying
+the files around!?
+
+Two reasons, one practical, one both practical and philosophical.
+
+First, the purely practical one: later on in the class we will be
+working with Selenium, which adds hundreds of little files into your
+Subversion tree.  If you work in trunk and then use 'svn copy' to
+tag your work, you never actually have to do that copy -- subversion
+does it "virtually" and just updates the repository.
+
+Second, the real reason (for those of you with fast disks ;) is that
+Subversion can track the history and changes of each of your files,
+and this makes it possible to compare your changes across homeworks
+(if, for example, you break something accidentally).  It also lets you
+work separately on multi-programmer projects and then later merge or
+compare source code in a logically consistent way, which is *very*
+important for any real software effort.
+
+Oh, and third -- I will grade you on it.
+
+Scripts vs importable files
+---------------------------
+
+*Scripts* are Python files that do something more than just define
+stuff -- they contain execution instructions.  E.g., ::
+
+ script.py:
+   print 'hello, world'
+
+The name of a script file can be anything that's a valid filename.  On
+UNIX, this is anything that doesn't contain a forward slash ('/').  On
+Windows, it's something similar.  In general I suggest making things
+cross-OS-friendly and typing-friendly, e.g. no spaces, backslashes, or
+funny characters; 'my-favorite-script-name' is fine.  There's no requirement
+that the filename end in '.py' although if it does than various operating
+systems may let you double-click on it to run it.
+
+As you've seen, a neat UNIX trick is to put this magic code: ::
+
+  #! /usr/bin/env python
+
+at the top of your script file, and then do 'chmod +x scriptfile'.  This
+will make it a shell-executable script than be run simply by doing ::
+
+  ./scriptfile
+
+There is also an overlapping but distinct concept of a *Python module*.
+
+*Modules* are importable Python files.  We can talk later about the
+precise rules that import uses, but things in the same directory as a
+script are generally importable by Python.  However, module files *must*
+end in '.py' and have to be valid Python identifiers, e.g. ::
+
+  import modulefile
+
+or ::
+
+  import module_file
+
+will find 'modulefile.py' or 'module_file.py' appropriately, but you can't
+do ::
+
+  import module-file
+
+to get 'module-file.py' because that's not a legal Python name ('-' isn't
+allowed in variable names, and modules are imported as Python objects.)
+
+Generally I recommend writing modules so that they are both modules
+*and* scripts.  So, for example, ::
+
+ hello.py:
+  def hello(world):
+    return 'hello ' + world
+
+  print hello()
+
+will define 'hello' and also run the 'hello()' functiont: it can be imported as a module, ::
+
+  import hello
+  print hello.hello('steve')
+
+or run as a script: ::
+
+  % python hello.py
+
+Of course, you may not always want stuff to be run on import, so you
+can use this trick to differentiate between code that should be
+executed on import vs on command-line execution: ::
+
+ hello.py:
+  def hello(world):
+     return 'hello ' + world
+
+  if __name__ == '__main__':
+     print hello('eva')
+
+Here, 'print command will only be run when the file is executed as a
+script by doing ::
+
+  python hello.py
+
+This kind of thing is really convenient when you're writing and
+testing code: put your test code at the bottom of the file and then
+just run the module every time you make a change (F5 in IDLE).
+
+To recap, here's my recommended format for Python modules: ::
+
+  module.py:
+    #! /usr/bin/env python2.5
+    
+    # ... define functions/classes/etc. ...
+
+    if __name__ == '__main__':
+       # ... define tests of functions/classes etc ...
+       #
+       #   OR
+       #
+       # ... define script-like behavior ...
+
+You'll need to use this for HW #2.
+
+Two more command-line thoughts
+------------------------------
+
+If you use the '-i' flag to the Python interpreter when running a
+script, you'll be left at the Python prompt after the script runs: ::
+
+  % python -i scriptfile
+  ... scriptfile runs ...
+  >>>
+
+This Python prompt will have all your functions defined for interactive
+testing, etc.  Very useful.
+
+If you want to write an actual script that takes in arguments, use
+'sys.argv'.  It is a list of all of the arguments to your script: ::
+
+  scriptfile.py:
+    print sys.argv
+
+so that ::
+
+  % python scriptfile.py arg1 arg2 arg3 arg4
+
+will print out ::
+
+   scriptfile.py arg1 arg2 arg3 arg4
+
+Refactoring
+-----------
+
+In the homework, I mention "refactoring".  Refactoring is one of the
+most useful techniques you can learn; it's the process of slowly
+transforming code while keeping the functionality the same.
+
+For example, in HW #1 you might have had this code: ::
+
+  for i in range(0, num):
+     print name
+
+but now you want to turn that into a function.  So you start by
+indenting everything::
+
+  def print_name():
+    for i in range(0, num):
+      print name
+
+  print_name()
+
+Does the same thing as above, right?
+
+Next, you pass the variables through the function::
+
+  def print_name(name, num):
+    for i in range(0, num):
+      print name
+
+  print_name(name, num)
+
+Again, does the same thing.
+
+Finally, you convert the function to concatenate the names instead::
+
+  def print_name(name, num):
+    x = ""
+    for i in range(0 num):
+       x += name + "\n"
+
+    return x
+  
+  print print_name(x)
+
+At each point of this refactoring, the code *should* do the same thing
+-- and later I'll show you how to check that, with automated tests.
+Whether or not you have automated tests, though, each change is small
+and simple enough that you can just look at it and verify that it does
+the same thing.
+
+Experienced programmers do this all the time, because it reduces errors
+that you get from making large sweeping changes throughout your code base.
+
+Why do you care?
+
+First, you will need to do exactly this -- encapsulate your print statement
+in a function -- for HW #2.
+
+Second, I will soon start grading you on clarity and quality of code,
+and elimination of redundancy in your code, once I define those for
+you ;).  So you should learn how to take a working piece of code and
+"clean it up" iteratively.
+
+(Why would I be such a jerk?  Cue lecture on writing vs reading code...)
+
+Some brief notes on Jinja2 templating
+-------------------------------------
+
+As part of the homework, you need to modify templating code written in
+the Jinja2 templating language.  Here's an example::
+
+  I have a message for you.  The message is {{ message }}
+
+If you run this and pass in your locals() dictionary -- see source
+code for hw2 -- this will substitute the value of the variable
+'message' for ``{{ message }}``.
+
+You can also do if statements and for loops; for example, ::
+
+  {% if flag %}
+     Flag is true!
+  {% else %}
+     Flag is false!
+  {% endif %}
+
+will evaluate the Python variable 'flag' to print out the succeeding
+text.
+
+See
+http://jinja.pocoo.org/2/documentation/templates#list-of-control-structures
+for documentation on exactly how to use these.
+
+For hw2, please put as many of your control structures as possible --
+if and for loops, in particular -- inside the template.
+
+Jinja2 is not a standard Python library package, but it is
+straightforward to install.  I've already done so on arctic; to set it up
+for your own use, do ::
+
+  source ~ctb/python-env.csh
+
+After that, 'import jinja2' in Python should work.
+
+This might be one of those things you try today or tonight to make sure
+it works for you...

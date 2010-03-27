@@ -1,0 +1,44 @@
+---------------------------------------
+Homework 10: Logins and a message board
+---------------------------------------
+
+Due Tuesday, November 24th, at 4:30pm.
+
+1. Write twill tests for login validation, account creation, and message
+   deletion for the meep message board, 
+
+     http://class.ged.idyll.org/svn/files/hw10/
+
+   (2.5 points)
+
+   Login validation should test that only the correct username/password
+   combo can log in.
+
+   Account creation should create an account that can then lead to
+   a successful login.
+
+   Message deletion should (a) remove the message from the list of messages,
+   but (b) only if the Web user deleting the message is logged in.
+
+   Please integrate the meep code into your trunk and hand things in
+   as hw10, as normal.  Put the twill tests in trunk/meep-twill/ and
+   make sure that you can run them like so: ::
+
+    twill-sh -u http://localhost:5000/ meep-twill/*.twill
+
+2. Implement Python code to make the tests pass. (2.5 points)
+
+Note that I will give credit for tests without fully functioning
+Python code, but not vice versa -- so write the tests even if you
+can't get the Python code to fully work!
+
+3. Integrate templates and make it look non-embarrassing. (2.5 points)
+
+Rather than using my hard-coded HTML inside Python, switch to using
+Jinja2 templates that inherit from your OSWD CSS template.  At a
+minimum, please use a Jinja2 template for each HTML page that is
+returned, and use inheritance to inherit from a base template.
+
+(Please ask me for help if I haven't returned comments on your
+templating homework, #9, and you're having trouble getting it to
+work.)

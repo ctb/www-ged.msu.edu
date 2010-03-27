@@ -1,0 +1,32 @@
+-------------------------------------
+Homework 12: Sessions and persistence
+-------------------------------------
+
+Due Thursday, Dec 10th, 4:30pm.
+
+1. Implement sessions for your users.  This will involve creating a
+new dictionary mapping session IDs (as keys) to user IDs (values), and
+storing the session ID rather than the username in the site cookie.
+Be sure to have your AJAX login function from HW #11 work properly and
+securely (i.e. the Web site needs to generate the session ID on login
+and send it to the browser).  (2.5 points)
+
+Note, you can generate random session IDs with the uuid module, like
+so: ::
+
+   uuid.uuid4().hex
+
+Also note: your tests from HW #11 should all still work, right?
+
+2. Implement data persistence for your message board using either
+bsddb or sqlite3.  Messages, users, and sessions should all be
+"persisted" so that when you exit the Web server & start it up again,
+the meep message board has the same data in it.  (2.5 points)
+
+Note: your tests from HW #11 should all still work, right?
+
+3. Make sure that your meepish message board is not vulnerable to SQL
+injection or XSS attacks.  Address the former by using positional
+parameters for SQLite in queries.  Address the latter by using Jinja2
+templating with escaping.  (If you're not using SQL, you don't need to
+worry about SQL injection).  (2.5 points)

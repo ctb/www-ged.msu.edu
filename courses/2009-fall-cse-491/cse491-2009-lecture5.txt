@@ -1,0 +1,248 @@
+------------------------------------------
+Lecture 5 -- Testing; writing a Web server
+------------------------------------------
+
+Sep 29th, 2009.
+
+"I don't do test-driven development; I do stupidity-driven
+testing. When I do something stupid, I write a test to make sure I
+don't do it again." -- Titus Brown
+
+---
+
+Testing
+-------
+
+Want to ensure that your program is correct.
+
+NO GENERAL WAY TO PROVE THIS.
+
+What can we do?
+
+Break it down.
+
+Programs are made up of pieces.  Even complex programs can usually be broken
+down into simple pieces.
+
+For whole to work, these pieces must work.
+
+So, want to ensure that each piece works.
+
+Basically dissect your program into minimally useful chunks and test
+them all.  "Functional decomposition"
+
+(This pulls your problems to a higher level: did you combine the *pieces*
+correctly?)
+
+One useful "piece" size is "function"... hint.
+
+How would you test handle_connection in your non-blocking echo server?
+
+Remember: read once, if error thrown return True; if data returned,
+write and then return True.
+
+Build a fake socket object to test read/write: ::
+
+  class fakesocket(object):
+     def recv(self, size):
+        return "foo"
+     def sendall(self, data):
+        assert data == 'foo'
+
+  sockobj = fakesocket()
+  ret = handle_connection(sockobj)
+  assert ret == True
+
+Basically you set up a fake object that returns exactly what you
+want to test, and then you verify that when you pass that into your
+function under test, you get the right results.
+
+-----
+
+Testing is about exploring the behavior of your code.
+
+Main rule of testing: **be paranoid**.  Code misbehaves.
+
+Automate your testing code so that you can "just run it"!
+
+Benefits of automated testing:
+
+ - good way to force you think about what your code is supposed to do.
+
+ - complex code is hard to test; forces you to simplify your code.
+
+ - lets you explore "edge" cases that might be tough to test in the
+   real world.  you'll see examples of this with web sessions, in
+   particular.
+
+ - you can progressively write tests to cover code you just wrote, or are
+   about to write; this frees you to worry about the code you're *going*
+   to write
+
+ - can help detect *regressions*, situations where you reintroduce a bug
+   that you had before.  This is a bigger problem than you might think.
+
+ - also helps prevent code breakage from later changes, bug fixes.  This
+   is important because of *refactoring*
+
+A bit counterintuitive: write *more* code to see if my *first* code
+works.  Really? Yes: keep second batch of code is easier, simpler;
+keeping your code working is the main point, and automated testing is
+the best way to do that.
+
+Common approach to automated testing:
+
+ - set up conditions (state & input variables)
+ - run function
+ - check for correct & expected changes (new state & output)
+
+When done to small bits of code, this is called "unit testing".  Whole
+new set of terminology that I'll show you on Thursday.
+
+Refactoring
+-----------
+
+Refactoring is the technique of transforming your program's syntax bit
+by bit, while keeping it working at all times.
+
+Refactoring is very, very difficult without automated tests, because
+otherwise you need to worry about all of your edge cases each time you
+make a change.
+
+HTTP and the Web, yet again
+===========================
+
+Reminders:
+
+The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.
+
+URLs:
+
+  http://machine:port/path/to/resource?query_stuff
+
+ - http is the protocol
+ - machine is a DNS name or an IP address
+ - port is a TCP port
+ - /path/to/resource is the on-server path, can be anything you want, although
+   many Web servers have canonical URL schemes (e.g. CGI scripts).
+ - query_stuff is a way of passing in values
+
+The HTTP protocol:
+
+  - synchronous (query, response transaction pairs)
+
+  - client/server in design, not peer to peer (although again
+    JavaScript is changing things)
+
+  - note, all header lines etc. end in <CR><LF> (carriage return/line
+    feed), or ``\r\n``
+
+  - basic protocol: port 80, requests like ::
+
+       <command> <url> <protocol version>\r\n
+       [ <other optional stuff> ]
+
+    ended by blank line; for example ::
+
+       GET / HTTP/0.9\r\n
+       \r\n
+
+  - answer is in format ::
+
+       <protocol> <status code> <message>\r\n
+       <header line(s)>\r\n
+       \r\n
+
+    for example ::
+
+       HTTP/1.1 200 OK\r\n
+       Content-length: 4567\r\n
+       \r\n
+
+  - GET, retrieval of page content; generally full URL is specified.
+
+  - content-type specification (MIME types: 'text/html', 'image/jpeg')
+
+  - data passing via query strings: query_string is set of pairs of :
+
+            name, value
+
+    data, encoded suitably: name=value2&name2=value2
+
+    Obvious limitations for large data (submitting files!)...
+
+  - POST, retrieval of page content AFTER data passing.
+
+    data is passed after the header, as one long encoded stream of bytes.
+
+---
+
+More specifically
+-----------------
+
+HTTP protocol, query: ::
+
+  <method> <url> <protocol>\r\n
+  <header line>\r\n
+  <header line>\r\n
+  [ ... ]
+  \r\n
+  <content>
+
+method can be GET, POST; protocol is usually HTTP/1.0 or 1.1.  Header
+lines are things like 'Content-Length: 500'.
+
+HTTP protocol, response: ::
+
+  <protocol accepted> <numeric code> <corresponding status message>
+  <response header line>\r\n
+  <response header line>\r\n
+  [ ... ]
+  \r\n
+  <content>
+
+protocol accepted is the version of the protocol YOU speak, e.g.
+HTTP/1.0.  numeric code is (for example) '200' for the status message
+'OK'.
+
+GET, POST, and HTML forms
+-------------------------
+
+We've talked a fair bit about how HTTP has GET and POST requests;
+you'll be dealing with both for HW #4.  How do you actually generate
+them?
+
+The HTML to generate a GET request with a query string is this: ::
+
+  <form action='url' method='GET'>
+    k1: <input type='text' name='k1'>
+    k2: <input type='text' name='k2'>
+    <input type='submit'>
+  </form>
+
+If you omit the 'method', it defaults to GET.
+
+The URL is the URL of your Web server, e.g. ::
+
+   http://arctic.cse.msu.edu:5000/
+
+The HTML to generate a POST is nearly identical: ::
+
+  <form action='url' method='POST'>
+    k1: <input type='text' name='k1'>
+    k2: <input type='text' name='k2'>
+    <input type='submit'>
+  </form>
+
+The difference for you in handling a GET and a POST is that a GET places
+everything on the URL as part of a query string, while POST requests
+send everything as a string following the headers.
+
+Try using http://class.ged.idyll.org/svn/files/lecture5/socket-print.py
+to examine the server-side traffic from a POST command.  Note
+especially the 'Content-Length' header: that is what tells you how
+many bytes the POST data is going to be.
+
+Your job for HW #4 is to implement a basic Web server that handles
+GET and POSt data handling.

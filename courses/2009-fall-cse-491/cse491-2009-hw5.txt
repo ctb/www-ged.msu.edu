@@ -1,0 +1,55 @@
+--------------------------------------------------
+Homework 5: Using your Web server to process forms
+--------------------------------------------------
+
+Due Tuesday, October 13th, at 4:30pm (class start).
+
+Handle query strings
+--------------------
+
+Extend your Web servers (both blocking and non-blocking) from HW #4 to
+properly parse the URLs and query strings in GET requests, as well as
+in POST requests.  Test this functionality by making the URL
+
+   /process_form
+
+process the form data into Python, render your Jinja2 template from HW
+#4, and return that HTML.  All other URLs should behave as in HW #4.
+
+Remember, a query string is the part after a '?' in a URL:
+
+   /some/random/url?name=test&name=test2&blah=foo
+
+and query strings in POST requests are in the content that follows
+the ``\r\n\r\n``, if any.  The amount of this content is specified
+in the Content-Length request header.
+
+You can use ``cgi.parse_qs`` to parse the query string/content into a
+``form`` dict-like object.
+
+(7.5 points)
+
+Testing your work
+-----------------
+
+You can use the same 'form.html' from HW #1 and HW #2,
+
+    http://class.ged.idyll.org/svn/files/hw1/form.html
+
+to test the input into your server, only modifying the 'method' to
+(separately) test both GET and POST, and the 'action' to use your Web
+server.
+
+Some unit tests for your Web server are available here: ::
+
+  http://class.ged.idyll.org/svn/files/hw5/test-webserve.py
+
+Put this file in the same directory as your 'webserve.py' file, and
+type 'nosetests' (after sourcing python-env.csh on **adriatic**) to
+run all the tests.
+
+You can also modify your Web server to call 'recv' to request exactly
+1 byte at a time.
+
+Your 'webserve.py' file should pass all of these tests, as well as
+function as above with a real browser and form.

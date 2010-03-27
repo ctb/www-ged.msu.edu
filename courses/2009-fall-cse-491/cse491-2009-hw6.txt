@@ -1,0 +1,59 @@
+----------------------------------------
+Homework 6: Writing a simple WSGI server
+----------------------------------------
+
+Due Tuesday, October 20th, at 4:30pm (class start).
+
+Implement a simple WSGI server
+------------------------------
+
+Implement a partial **blocking** WSGI server that both serves Web pages
+properly AND passes the tests in
+http://class.ged.idyll.org/svn/files/hw6/test_webserve.py.
+
+Briefly,
+
+ - move your existing code into a class in webserve.py named Server, i.e.
+   webserve.Server(...).
+
+ - webserve.Server(...) should take two arguments, a port and a
+   WSGI application object:: 
+
+      server = webserve.Server(5000, app)
+
+   (Note, the constructor to Server shouldn't bind to the given port; leave
+   that to handle_forever(), below.)
+
+ - Server.serve_forever() must bind to the given port and serve HTTP
+   requests on it forever, calling the WSGI app object for each request.
+
+ - Server.handle_connection should still do all of the data handling for
+   each client socket connection.
+
+ - the application object will be as in HW #2, a callable that takes
+   two arguments, calls start_request(...), and returns an iterable
+   over strings.  See 'hello_app' in the tests for an example.
+
+ - The 'environ' argument passed into the application object should
+   (minimally) contain values for REQUEST_METHOD, PATH_INFO,
+   SERVER_PROTOCOL, QUERY_STRING, and wsgi.input.  We'll talk in more
+   detail about these values in the lab on Thursday.
+
+ - Your 'webserve.py' should still work from the command line as in HW
+   #5 -- that is, running it from the command line ::
+
+       python webserve.py 5000
+
+   must start a Web server on port 5000 that responds to most URLs
+   with 'hello, /path' and to '/process_form' by processing the form.
+   This means you should rewrite your application-level code as a WSGI
+   app object (basically as in HW #2, so it's just not that hard,
+   folks).
+
+The full WSGI specification is here:
+
+    http://www.python.org/dev/peps/pep-0333/
+
+(7.5 points)
+
+Next week: a non-blocking Server class, and serving files, templates, etc.

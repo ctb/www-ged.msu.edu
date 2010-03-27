@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 8 -- WSGI design and architecture</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-8-wsgi-design-and-architecture">
+<h1 class="title">Lecture 8 -- WSGI design and architecture</h1>
+<p>October 20th, 2009.</p>
+<p>NOTE: no class on Thursday (22nd).  I have an all-day meeting (site
+visit for an important grant).</p>
+<p>HW #6 solutions -- posted.</p>
+<div class="section">
+<h1><a id="homework-7" name="homework-7">Homework #7</a></h1>
+<p>I'll post this tonight; it will be:</p>
+<blockquote>
+<ul class="simple">
+<li>correct problems with your HW #6 (explicitly, <em>correct</em>, not replace
+with my example code for HW #6 ;)</li>
+<li>getting your non-blocking Web server working with the WSGI interface,
+without any per-connection data shared at the global level.</li>
+<li>serving form.html for URL /form.html.</li>
+<li>returning 302 redirects to /form.html for all other URLs.</li>
+</ul>
+</blockquote>
+<p>Side note about function: you should plan to have your code work
+with ALL browsers.  That means ADHERING TO THE HTTP SPEC.  My
+tests are incomplete and can even be ignored (although it's a
+bad idea to ignore them WITHOUT UNDERSTANDING).</p>
+<p>Top three signs that you've ignored my tests for a bad reason:</p>
+<blockquote>
+<ul class="simple">
+<li>your code is not in a file named 'webserve.py'</li>
+<li>your code is not importable</li>
+<li>your code has some trivial errors in it (typos, or silly bugs) such
+that the tests don't pass.</li>
+</ul>
+</blockquote>
+<p>Top sign that you are ignoring my request for a not-bad reason:</p>
+<blockquote>
+<ul class="simple">
+<li>you've argued with me in e-mail about it and I've given up.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="debugging-strategies" name="debugging-strategies">Debugging strategies</a></h1>
+<p>&quot;Fence off the howling wolf&quot;</p>
+<p>and use print statements!!!</p>
+</div>
+<div class="section">
+<h1><a id="scalability" name="scalability">Scalability</a></h1>
+<p>Disaster! New connections coming in faster than existing connections
+can be processed &amp; closed.  Why might this be?</p>
+<blockquote>
+<ul class="simple">
+<li>many connections / mechanics of setting up a new connection
+takes a long time relative to processing</li>
+<li>existing connections are taking a long time to process; why?<ul>
+<li>server side is slow</li>
+<li>client or connection from client is slow</li>
+<li>connection to client is slow</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>how does blocking server respond?</p>
+<p>how would current non-blocking server respond?</p>
+<p>what are alternatives?</p>
+<blockquote>
+<ul class="simple">
+<li>further &quot;chunk&quot; non-blocking server<ul>
+<li>wsgi input &quot;on demand&quot;</li>
+<li>send wsgi response in chunks</li>
+</ul>
+</li>
+<li>multiprocessing (threads or multiple processes)</li>
+</ul>
+</blockquote>
+<p>---</p>
+<p>The above discussion answers two FAQs about WSGI:</p>
+<blockquote>
+<ul class="simple">
+<li>why is 'wsgi.input' a file pointer? (so it can be read &quot;on demand&quot;,
+for e.g. big uploads)</li>
+<li>why does the WSGI app return an iterable!?  (so that it can return
+chunks as they are ready, which in return can be chunked by the
+server)</li>
+</ul>
+</blockquote>
+<p>A third FAQ:</p>
+<blockquote>
+<ul class="simple">
+<li>why is 'start_response' separate from the rest?</li>
+</ul>
+</blockquote>
+<p>For this, we should revisit the HTTP protocol... the design of the
+HTTP protocol is that <em>headers</em> and <em>request/response</em> lines get
+sent as quickly as possible, followed by the (potentially quite
+large) content.</p>
+<p>---</p>
+<p>Designing WSGI for this is actually pretty difficult, because for a
+general interface you need to accomodate <em>all</em> (or as many as
+possible) use cases; the interface restricts what is possible!</p>
+<p>If the official interface limited you to</p>
+<pre class="literal-block">
+http_response = parse_response(request_data)
+</pre>
+<p>then you couldn't optimize for specific, tricky situations!</p>
+</div>
+<div class="section">
+<h1><a id="some-design-considerations" name="some-design-considerations">Some design considerations</a></h1>
+<p>Look at the WSGI stack.</p>
+<p>The WSGI server talks to the WSGI application object.  The application
+object doesn't know anything about the socket, or the HTTP request, or
+anything like that -- it just knows what URL was requested, what query
+string or POST content was passed in, and one or two other things
+(primarily the headers, which we'll do next week).</p>
+<p>So, looking at the WSGI application object, the first thing you want
+to do is ask yourself: if I want to print out the form results from HW #5,
+where does that information come from?</p>
+<p>What information do you have?</p>
+<blockquote>
+<ul class="simple">
+<li>client / url &amp; form information</li>
+<li>socket information (more data to read? etc)</li>
+<li>HTTP request information (url, GET, POST, cookies, etc.)</li>
+<li>HTTP response (headers out, content, etc.)</li>
+</ul>
+</blockquote>
+<p>Why isn't all of this information available to all of the code in the
+webserve module, as module globals? Why can't the application object
+talk directly to the socket?</p>
+<p>The whole point of abstractions and separation of concerns is
+encapsulation: you're trying to neatly put things into little black
+boxes with known inputs and outputs so you can stop thinking about
+them.</p>
+<p>And why do this?</p>
+<p>Crossing boundaries of abstractions: bad.</p>
+<p>This reduces encapsulation
+=&gt; makes testing hard, reduces reliability, etc.</p>
+<p>Global or cross-module dependencies should be minimized:
+inderdependencies =&gt; complexity =&gt; bad.</p>
+<p>Also makes parallelization &amp; multiprocessing difficult!  (Later.)</p>
+<p>Note that after this week, you should never need to mess with
+handle_connection or serve_forever again...</p>
+</div>
+</div>
+</body>
+</html>

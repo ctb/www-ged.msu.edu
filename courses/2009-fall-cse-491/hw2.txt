@@ -1,0 +1,103 @@
+Homework 2: CGI, refactoring, WSGI, and templating
+--------------------------------------------------
+
+Due Tuesday, September 22nd, at 4:30pm (start of class).
+
+0. Do an 'svn copy' to make a branch of hw1/ in trunk/, e.g. ::
+
+     svn copy http://class.ged.idyll.org/svn/nermal/hw1 http://class.ged.idyll.org/svn/nermal/trunk
+     svn update
+
+   Now, do all your work in the trunk/ directory.
+
+   Only the 'process-hw1-form.cgi' file should be in your trunk/ directory.
+
+1. Refactor the code in 'process-hw1-form.cgi' so that you have
+   encapsulated the "application" logic -- the form processing code --
+   in a function, ::
+
+      def process(form):
+         """
+	 Takes a form (cgi.FieldStorage object) in & returns an HTML string.
+	 """
+
+   that you can call and that returns an HTML string.
+
+   Be sure to use ``if __name__ == '__main__'`` to prevent the code from 
+   being run on import -- see the lab notes.
+
+   The script should still work as a CGI script like before!  (2 points)
+
+2. Download
+
+   http://class.ged.idyll.org/svn/files/hw2/wsgi_process_form.py
+
+   to your trunk/ directory, and run it like so::
+
+       python wsgi_process_form.py
+
+   Verify that you can access the given URL and see 'hello, world'!
+
+3. Integrate the 'process' function from step 1 into the
+   'wsgi_process_form.py' script so that it properly processes the
+   form input data from the hw1 form. (3 points)
+
+4. Look at
+
+      http://class.ged.idyll.org/svn/files/hw2/jinja2_example.py
+
+   and
+
+      http://class.ged.idyll.org/svn/files/hw2/templates/example.html
+
+   and make sure 'jinja2_example.py' works in your account.  (Note
+   that you'll need to run 'source ~ctb/python-env.csh' in order to
+   get them to work; see the lab notes for info.
+
+5. Write a Python script and jinja2 template that mimic the 'process'
+   function from problem #1, i.e. write a Python script with a
+   function 'process' that returns the appropriate HTML when called.
+   Unlike the 'process' function in #1, which takes a
+   'cgi.FieldStorage' form object, this 'process' function should take
+   'name' (a string), 'num' (an int), 'color' (a string), and
+   'convert_to_upper' (a boolean, true or false). ::
+
+       def process(name, num, color, convert_to_upper):
+          ...
+
+   Name the Python script 'jinja2_form.py', and put the jinja2
+   template in 'templates/process_form.html'.  As before, make sure to
+   use ``if __name__ == '__main__'`` to make sure that jinja2_form can
+   be imported without being executed.  Also note that *all* the text
+   construction should be in the jinja2 template -- the Python code
+   should only extract the form values and then load and execute the
+   template, with no string concatenation, print statements, etc.
+   (2.5 points)
+
+   Note that you don't need to use this or run this in any CGI or WSGI
+   script; just write the 'process' function so that it can be called
+   as ``jinja2_form.process(...)``.
+
+6. Once everything is working, do another 'svn copy' to copy trunk/
+   into hw2/ for hand-in -- see step 0.  In future homeworks you'll
+   continue developing in trunk/ and you'll hand things in by copying
+   into hwN/.
+
+At the end, your repository should look like this::
+
+   hw1/  -- files for hw #1, unchanged.
+      process-hw1-form.cgi -- hw1 original
+
+   hw2/
+      process-hw1-form.cgi -- refactored from hw #1 to have a 'process' fn
+      wsgi_process_form.py -- script to serve form processor WSGI app
+      jinja2_form.py       -- script to build a form using jinja2
+      templates/
+         process_form.html -- jinja2 templating form
+
+   trunk/
+      process-hw1-form.cgi -- same as in hw2/
+      wsgi_process_form.py -- same as in hw2/     
+      jinja2_form.py       -- same as in hw2/
+      templates/
+         process_form.html -- same as in hw2/

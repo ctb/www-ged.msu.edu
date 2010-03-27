@@ -1,0 +1,516 @@
+----------------------------------
+Lab #9 -- Files and I/O; Iteration
+----------------------------------
+
+CSE 491, Oct 29th, 2009.
+
+Testing
+-------
+
+At what level do you test things like WSGI apps?
+
+Do you test exact HTML, or not?
+
+OSWD stuff
+----------
+
+Let's look more closely at an example from the OSWD site...
+
+Files, filenames, and paths
+---------------------------
+
+For the next HW, you need to open files from some path -- let's say
+the directory 'files' -- and read them into memory so that you can
+return them in response to HTTP queries.
+
+First, let's create a file and write to it, so that we have something
+to work with:
+
+  >>> fp = open('test-file.txt', 'w')
+  >>> fp.write("hello, world.")
+  >>> fp.close()
+
+OK, now we have a file 'test-file.txt' in the current directory.  How
+do we access it?
+
+  >>> fp = open('test-file.txt')
+  >>> contents = fp.read()
+  >>> print contents
+  hello, world.
+
+Note that 'fp.read()' returns a string containing the entire contents
+of the file.  It can be binary data, too.
+
+For the next HW, you'll be taking file names and paths (directory +
+file names) from users on the Web, e.g. ::
+
+   http://localhost:5000/some/file/name.txt
+
+will return the contents of the file
+
+   ./files/some/file/name.txt
+
+(if it exists).  There are two things you might want to think about here:
+first, can users access any files they shouldn't be able to?  And do
+you want your Web server to work on Windows, too?
+
+The first is a security issue, of course: you don't want to give
+remote users access to just any file on your system!  Generally you
+want to make sure that they can access only files under a certain
+directory.  To do that on UNIX, you need to get rid of any leading '/'
+and then join it into a complete path.  Here is one bit of code
+that might work.
+
+Suppose we want to convert the URL '/some/file/name.txt' into a safe
+path.
+
+  >>> url = '/some/file/name.txt'
+
+First, strip off any leading '/':
+
+  >>> url = url.lstrip('/')
+
+This is important because a '/' at the beginning of a path in UNIX
+means 'start from the root', and you want to use this as a *relative*,
+not an *absolute*, path.
+
+Second, convert the 'files' subdirectory into a full path name:
+
+  >>> import os.path
+  >>> FILES_PATH = os.path.abspath('./files')
+  >>> FILES_PATH
+  '/tmp/files'
+
+Now, join the 'files/' path with the filename:
+
+  >>> fullpath = os.path.join(FILES_PATH, url)
+  >>> fullpath
+  '/tmp/files/some/file/name.txt'
+
+...and that's the path to open!
+
+One last note -- to make this work properly on Windows, you need to
+change the path separator from '/' to '\\'.  Conveniently,
+'os.path.join' will figure out what the right path separator is; since
+URLs always contain forward slashes ('/'), you can just split on them
+and then join the result, like so:
+
+  >>> urllist = url.split('/')
+  >>> path = os.path.join(*urllist)
+
+On Windows, 'path' will now be ``some\file\name.txt``, and on UNIX it
+will correctly be 'some/file/name.txt'.
+
+One last good security check -- get rid of all the '..' and
+double-backslashes by converting the path into an absoute path:
+
+  >>> fullpath = os.path.abspath(fullpath)
+
+and then *check* that it's actually underneath the FILES_PATH:
+
+  >>> assert fullpath.startswith(FILES_PATH)
+
+This will make *sure* that you're not letting remote users stray
+off the reservation.
+
+Iterating over lists and dicts
+------------------------------
+
+As you saw above, you can convert lists and dicts into, well, lists.  How
+would you use this in a loop?
+
+Let's start with a list:
+
+ >>> x = ['a', 'b', 'c']
+
+To iterate over this in a loop, you could imagine doing this:
+
+ >>> i = 0
+ >>> while i < len(x):
+ ...   print x[i]
+ ...   i += 1
+ a
+ b
+ c
+
+but that's grotesque!  How about:
+
+ >>> for i in range(0, len(x)):
+ ...   print x[i]
+ a
+ b
+ c
+
+but it turns out you can actually do something even cleaner:
+
+ >>> for item in x:
+ ...   print item
+ a
+ b
+ c
+
+What if you want the item indices?  Use 'enumerate':
+
+ >>> for n, item in enumerate(x):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+A couple notes on these last two examples.  First, 'enumerate' wraps
+any iterable -- literally, any object which can be iterated over --
+and simply returns each item count along with the item in a tuple.
+Second, we're actually doing something called "tuple unpacking" in the
+last example: you could rewrite it like this, to be more explicit:
+
+ >>> for (n, item) in enumerate(x):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+(but there's no need to put the parantheses in).  Literally this is just
+unpacking the result of the enumerate, which we can see in list form as:
+
+ >>> list(enumerate(x))
+ [(0, 'a'), (1, 'b'), (2, 'c')]
+
+We can do the same sort of thing (iterate with a for loop) to dictionaries,
+except now we're iterating (in no guaranteed order, note!) over the keys:
+
+ >>> y = dict(x=1, y=2, z=3)
+ >>> for key in y:
+ ...   print key, y[key]
+ y 2
+ x 1
+ z 3
+
+The sequence protocol: making things look like lists
+----------------------------------------------------
+
+Before we move on to the iterator protocol, let me show you a really
+neat feature of Python: making your own objects look like lists
+(technically "sequences").
+
+Let's write a class that squares a list handed to it, but only
+when the elements are actually requested.   By defining one special
+method, and '__getitem__', we can make this class behave
+like a list:
+
+ >>> class SquareMe(object):
+ ...   def __init__(self, some_numbers):
+ ...      self.n = some_numbers
+ ...   def __getitem__(self, index):
+ ...      print 'ASKING FOR ITEM', index, 'VALUE', self.n[index]
+ ...      return self.n[index]**2
+
+You can now access this object just as if it's a list:
+
+ >>> x = SquareMe([5, 6, 7])
+ >>> x[2]
+ ASKING FOR ITEM 2 VALUE 7
+ 49
+
+and of course you can also iterate over it:
+
+ >>> for i in x:
+ ...   print i
+ ASKING FOR ITEM 0 VALUE 5
+ 25
+ ASKING FOR ITEM 1 VALUE 6
+ 36
+ ASKING FOR ITEM 2 VALUE 7
+ 49
+ ASKING FOR ITEM 3 VALUE
+
+Note that here Python understands the kind of error returned by
+accessing an invalid index in a list, and the 'for' loops knows to
+quit at that point.  That's why you get the 'ASKING FOR ITEM 3 VALUE'
+message at the end there.
+
+Doing this kind of thing with your own objects is a powerful way to
+extend Python, and we'll make use of it in this class occasionally.
+
+Here's the documentation on what you can or should extend to implement
+a full "container-like" type:
+
+  http://docs.python.org/ref/sequence-types.html
+
+The mapping protocol: making things look like dicts
+---------------------------------------------------
+
+You can also make your own objects look like dictionaries.  This is a bit
+more complicated, because dictionaries have a lot of different methods on
+them, but there is a nice trick to use...
+
+Let's define a dictionary that, if any number under 100 is used as a key,
+returns the square of that number:
+
+ >>> import UserDict
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def keys(self):
+ ...     return range(0, 100)
+ ...   def __getitem__(self, key):
+ ...     print 'ASKED FOR', key
+ ...     return key**2
+
+ >>> x = MySquareDict()
+ >>> x[0]
+ ASKED FOR 0
+ 0
+ >>> x[5]
+ ASKED FOR 5
+ 25
+
+OK, so what's really going on here!?  Well, we're using `DictMixin
+<http://docs.python.org/ref/sequence-types.html>`__, which is a `mixin
+class <http://en.wikipedia.org/wiki/Mixin>`__ that provides a full
+read-only dictionary interface for classes that already possess
+__getitem__ and keys().  (If you provide __delitem__ and __setitem__,
+you get a *full* dictionary interface.)  Here, keys() just returns
+the list of numbers between 0 and 100 (that's what range returns).
+
+This means that not only can you call __getitem__ and keys(), but you
+can ask for other dictionary methods like has_key() that you didn't
+explicitly define:
+
+ >>> x.has_key(20)
+ ASKED FOR 20
+ True
+ >>> x.has_key(99)
+ ASKED FOR 99
+ True
+
+Unfortunately in this case we didn't do a great job of defining this
+class, because keys() only returns a subset (0..99) of the actual legal
+keys:
+
+ >>> x.has_key(101)
+ ASKED FOR 101
+ True
+
+As you can see, when you call has_key(), all it's doing is trying to ask
+for key 101 -- and if __getitem__ doesn't kick up a fuss, well, then it
+obviously has that key!  We can redefine __getitem__ appropriately:
+
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def keys(self):
+ ...     return range(0, 100)
+ ...   def __getitem__(self, key):
+ ...     if key >= 0 and key < 100:
+ ...        return key**2
+ ...     raise KeyError
+
+ >>> x = MySquareDict()
+ >>> x.has_key(101)
+ False
+
+and get the right answer.
+
+One last note -- if we want to pass in a max number through the constructor,
+we can do that, too:
+
+ >>> class MySquareDict(UserDict.DictMixin, object):
+ ...   def __init__(self, max_num):
+ ...     self.max_num = max_num
+ ...   def keys(self):
+ ...     return range(0, self.max_num)
+ ...   def __getitem__(self, key):
+ ...     if key >= 0 and key < self.max_num:
+ ...        return key**2
+ ...     raise KeyError
+
+ >>> x = MySquareDict(500)
+ >>> x.has_key(499)
+ True
+
+Iterators and the iterator protocol
+-----------------------------------
+
+In programming, you frequently want to loop over things -- things in
+lists, or dictionaries, or on disk, in databases, over the Web, whatever.
+So Python has formalized this in an 'iterator' protocol, a way for objects
+to let Python know how to iterate over them.
+
+The iterator protocol is pretty simple, but has a fair amount of syntax
+associated with it.  Your class has to define an __iter__ method, and
+that method has to return an object with a 'next' function on it; then
+to iterate, Python calls the 'next' function until it raises a
+StopIteration exception.  (More on exceptions much later...)
+
+Here's a really simple and not so useful iterator:
+
+  >>> class NullThing(object):
+  ...   def __iter__(self):
+  ...     return self
+  ...   def next(self):
+  ...     raise StopIteration
+
+(Note that here __iter__ is returning the same object, which is a
+convenient way of not having to define two classes...)
+
+  >>> x = NullThing()
+  >>> for y in x:
+  ...   print 'HELLO, WORLD'
+
+Yep, the for loop exits immediately because the 'next' method immediately
+raises StopIteration!
+
+One thing to keep in mind about about iterators is that they do not
+necessarily know anything in advance.  This means that you can't call
+'len' on an iterator, for example...
+
+Any finite iterator can be converted into a list like so:
+
+  >>> list(NullThing())
+  []
+
+Generators and maintaining implicit state
+-----------------------------------------
+
+One of the frustrating things about iterators is that with simple
+iterators, you spend a lot of time *maintaining state* -- that is, if
+you want to just do something to a list, you have to retain the index
+you're using.  For example, consider the following ugly implementation
+of 'enumerate' as an iterator:
+
+ >>> class Enumerator(object):
+ ...   def __init__(self, thing):
+ ...     self.thing = iter(thing)
+ ...     self.count = -1
+ ...   def __iter__(self):
+ ...     return self
+ ...   def next(self):
+ ...     val = self.thing.next()
+ ...     self.count += 1
+ ...     return self.count, val
+
+Sure, it works:
+
+ >>> for n, item in Enumerator(['a', 'b', 'c']):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+but that's a lot of code for something so simple!
+
+Python also has *generator* functions, which help.  These are
+functions that generate re-entrant instances, by which I mean that
+they implicitly hold local state.  Here's a generator version of
+'enumerate':
+
+ >>> def enumerator(thing):
+ ...   count = 0
+ ...   for item in thing:
+ ...     yield count, item
+ ...     count += 1
+
+Here, the 'yield' statement tells Python that the function
+'enumerator' is actually a generator, and that when you call it, you
+should get back an iterator object that will return values from
+'yield'.
+
+See, it works!
+
+ >>> for n, item in enumerator(['a', 'b', 'c']):
+ ...   print n, item
+ 0 a
+ 1 b
+ 2 c
+
+But how does the function know when to exit?  The implicit exit
+condition is in the for loop, which will end when the 'thing' can
+no longer be iterated over.
+
+Literally what is happening is that every time you call 'enumerator',
+Python is making a *new* generator (a.k.a. complicated iterator) out
+of it and storing the values of 'count' and the status of the 'thing'
+iteration in variables local to that instance of the function.
+
+One of the fun things about generators and iterators, incidentally,
+is that they can both be *infinite*: consider this generator,
+
+ >>> def squares():
+ ...   count = 0
+ ...   while 1:
+ ...     yield count**2
+ ...     count += 1
+
+Note the lack of exit condition... you can iterate over that indefinitely!
+You've got to put in your own exit condition:
+
+ >>> for x in squares():
+ ...   print x
+ ...   if x > 20:
+ ...     break
+ 0
+ 1
+ 4
+ 9
+ 16
+ 25
+ 
+Reimplementing 'range'
+----------------------
+
+Just to drive the points home, here are two implementations of the
+same 'range'-like function.
+
+ >>> class RangeAsIterator(object):
+ ...   def __init__(self, min_num, max_num):
+ ...     self.max_num = max_num
+ ...     self.curr = min_num - 1
+ ...   def __iter__(self):
+ ...     return self
+ ...   def next(self):
+ ...     if self.curr < self.max_num - 1:
+ ...        self.curr += 1
+ ...        return self.curr
+ ...     raise StopIteration
+
+ >>> list(RangeAsIterator(0, 5))
+ [0, 1, 2, 3, 4]
+
+ >>> def range_as_generator(min_num, max_num):
+ ...   while min_num < max_num:
+ ...     yield min_num
+ ...     min_num += 1
+
+ >>> list(range_as_generator(0, 5))
+ [0, 1, 2, 3, 4]
+
+List and generator comprehensions, and scope
+--------------------------------------------
+
+A few more cute Python tricks: you can generate a list in-place using
+a list comprehension, which returns a list:
+
+ >>> [ x**2 for x in range(1, 4) ]
+ [1, 4, 9]
+
+or what's called a 'generator comprehension':
+
+ >>> y = ( x**2 for x in range(1, 4) )
+ >>> type(y)
+ <type 'generator'>
+ >>> for item in y:
+ ...   print item
+ 1
+ 4
+ 9
+
+As above with lists and generators, the main difference here is that the
+generator values are not calculated until you ask for them.  One minor
+difference is that of scope: variables used in list comprehensions "leak",
+
+ >>> z = [ x**2 for x in range(0, 100) ]
+ >>> x
+ 99
+
+while variables used in generator comprehensions do not:
+
+ >>> z = list( (x**2 for x in range(0, 500)) )
+ >>> x
+ 99
+

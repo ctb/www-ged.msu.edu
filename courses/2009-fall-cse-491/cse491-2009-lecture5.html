@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 5 -- Testing; writing a Web server</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-5-testing-writing-a-web-server">
+<h1 class="title">Lecture 5 -- Testing; writing a Web server</h1>
+<p>Sep 29th, 2009.</p>
+<p>&quot;I don't do test-driven development; I do stupidity-driven
+testing. When I do something stupid, I write a test to make sure I
+don't do it again.&quot; -- Titus Brown</p>
+<p>---</p>
+<div class="section">
+<h1><a id="testing" name="testing">Testing</a></h1>
+<p>Want to ensure that your program is correct.</p>
+<p>NO GENERAL WAY TO PROVE THIS.</p>
+<p>What can we do?</p>
+<p>Break it down.</p>
+<p>Programs are made up of pieces.  Even complex programs can usually be broken
+down into simple pieces.</p>
+<p>For whole to work, these pieces must work.</p>
+<p>So, want to ensure that each piece works.</p>
+<p>Basically dissect your program into minimally useful chunks and test
+them all.  &quot;Functional decomposition&quot;</p>
+<p>(This pulls your problems to a higher level: did you combine the <em>pieces</em>
+correctly?)</p>
+<p>One useful &quot;piece&quot; size is &quot;function&quot;... hint.</p>
+<p>How would you test handle_connection in your non-blocking echo server?</p>
+<p>Remember: read once, if error thrown return True; if data returned,
+write and then return True.</p>
+<p>Build a fake socket object to test read/write:</p>
+<pre class="literal-block">
+class fakesocket(object):
+   def recv(self, size):
+      return &quot;foo&quot;
+   def sendall(self, data):
+      assert data == 'foo'
+
+sockobj = fakesocket()
+ret = handle_connection(sockobj)
+assert ret == True
+</pre>
+<p>Basically you set up a fake object that returns exactly what you
+want to test, and then you verify that when you pass that into your
+function under test, you get the right results.</p>
+<hr class="docutils" />
+<p>Testing is about exploring the behavior of your code.</p>
+<p>Main rule of testing: <strong>be paranoid</strong>.  Code misbehaves.</p>
+<p>Automate your testing code so that you can &quot;just run it&quot;!</p>
+<p>Benefits of automated testing:</p>
+<blockquote>
+<ul class="simple">
+<li>good way to force you think about what your code is supposed to do.</li>
+<li>complex code is hard to test; forces you to simplify your code.</li>
+<li>lets you explore &quot;edge&quot; cases that might be tough to test in the
+real world.  you'll see examples of this with web sessions, in
+particular.</li>
+<li>you can progressively write tests to cover code you just wrote, or are
+about to write; this frees you to worry about the code you're <em>going</em>
+to write</li>
+<li>can help detect <em>regressions</em>, situations where you reintroduce a bug
+that you had before.  This is a bigger problem than you might think.</li>
+<li>also helps prevent code breakage from later changes, bug fixes.  This
+is important because of <em>refactoring</em></li>
+</ul>
+</blockquote>
+<p>A bit counterintuitive: write <em>more</em> code to see if my <em>first</em> code
+works.  Really? Yes: keep second batch of code is easier, simpler;
+keeping your code working is the main point, and automated testing is
+the best way to do that.</p>
+<p>Common approach to automated testing:</p>
+<blockquote>
+<ul class="simple">
+<li>set up conditions (state &amp; input variables)</li>
+<li>run function</li>
+<li>check for correct &amp; expected changes (new state &amp; output)</li>
+</ul>
+</blockquote>
+<p>When done to small bits of code, this is called &quot;unit testing&quot;.  Whole
+new set of terminology that I'll show you on Thursday.</p>
+</div>
+<div class="section">
+<h1><a id="refactoring" name="refactoring">Refactoring</a></h1>
+<p>Refactoring is the technique of transforming your program's syntax bit
+by bit, while keeping it working at all times.</p>
+<p>Refactoring is very, very difficult without automated tests, because
+otherwise you need to worry about all of your edge cases each time you
+make a change.</p>
+<div class="section">
+<h2><a id="http-and-the-web-yet-again" name="http-and-the-web-yet-again">HTTP and the Web, yet again</a></h2>
+<p>Reminders:</p>
+<p>The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.</p>
+<p>URLs:</p>
+<blockquote>
+<blockquote>
+<a class="reference" href="http://machine:port/path/to/resource?query_stuff">http://machine:port/path/to/resource?query_stuff</a></blockquote>
+<ul class="simple">
+<li>http is the protocol</li>
+<li>machine is a DNS name or an IP address</li>
+<li>port is a TCP port</li>
+<li>/path/to/resource is the on-server path, can be anything you want, although
+many Web servers have canonical URL schemes (e.g. CGI scripts).</li>
+<li>query_stuff is a way of passing in values</li>
+</ul>
+</blockquote>
+<p>The HTTP protocol:</p>
+<blockquote>
+<ul>
+<li><p class="first">synchronous (query, response transaction pairs)</p>
+</li>
+<li><p class="first">client/server in design, not peer to peer (although again
+JavaScript is changing things)</p>
+</li>
+<li><p class="first">note, all header lines etc. end in &lt;CR&gt;&lt;LF&gt; (carriage return/line
+feed), or <tt class="docutils literal"><span class="pre">\r\n</span></tt></p>
+</li>
+<li><p class="first">basic protocol: port 80, requests like</p>
+<pre class="literal-block">
+&lt;command&gt; &lt;url&gt; &lt;protocol version&gt;\r\n
+[ &lt;other optional stuff&gt; ]
+</pre>
+<p>ended by blank line; for example</p>
+<pre class="literal-block">
+GET / HTTP/0.9\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">answer is in format</p>
+<pre class="literal-block">
+&lt;protocol&gt; &lt;status code&gt; &lt;message&gt;\r\n
+&lt;header line(s)&gt;\r\n
+\r\n
+</pre>
+<p>for example</p>
+<pre class="literal-block">
+HTTP/1.1 200 OK\r\n
+Content-length: 4567\r\n
+\r\n
+</pre>
+</li>
+<li><p class="first">GET, retrieval of page content; generally full URL is specified.</p>
+</li>
+<li><p class="first">content-type specification (MIME types: 'text/html', 'image/jpeg')</p>
+</li>
+<li><p class="first">data passing via query strings: query_string is set of pairs of :</p>
+<blockquote>
+<p>name, value</p>
+</blockquote>
+<p>data, encoded suitably: name=value2&amp;name2=value2</p>
+<p>Obvious limitations for large data (submitting files!)...</p>
+</li>
+<li><p class="first">POST, retrieval of page content AFTER data passing.</p>
+<p>data is passed after the header, as one long encoded stream of bytes.</p>
+</li>
+</ul>
+</blockquote>
+<p>---</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="more-specifically" name="more-specifically">More specifically</a></h1>
+<p>HTTP protocol, query:</p>
+<pre class="literal-block">
+&lt;method&gt; &lt;url&gt; &lt;protocol&gt;\r\n
+&lt;header line&gt;\r\n
+&lt;header line&gt;\r\n
+[ ... ]
+\r\n
+&lt;content&gt;
+</pre>
+<p>method can be GET, POST; protocol is usually HTTP/1.0 or 1.1.  Header
+lines are things like 'Content-Length: 500'.</p>
+<p>HTTP protocol, response:</p>
+<pre class="literal-block">
+&lt;protocol accepted&gt; &lt;numeric code&gt; &lt;corresponding status message&gt;
+&lt;response header line&gt;\r\n
+&lt;response header line&gt;\r\n
+[ ... ]
+\r\n
+&lt;content&gt;
+</pre>
+<p>protocol accepted is the version of the protocol YOU speak, e.g.
+HTTP/1.0.  numeric code is (for example) '200' for the status message
+'OK'.</p>
+</div>
+<div class="section">
+<h1><a id="get-post-and-html-forms" name="get-post-and-html-forms">GET, POST, and HTML forms</a></h1>
+<p>We've talked a fair bit about how HTTP has GET and POST requests;
+you'll be dealing with both for HW #4.  How do you actually generate
+them?</p>
+<p>The HTML to generate a GET request with a query string is this:</p>
+<pre class="literal-block">
+&lt;form action='url' method='GET'&gt;
+  k1: &lt;input type='text' name='k1'&gt;
+  k2: &lt;input type='text' name='k2'&gt;
+  &lt;input type='submit'&gt;
+&lt;/form&gt;
+</pre>
+<p>If you omit the 'method', it defaults to GET.</p>
+<p>The URL is the URL of your Web server, e.g.</p>
+<pre class="literal-block">
+http://arctic.cse.msu.edu:5000/
+</pre>
+<p>The HTML to generate a POST is nearly identical:</p>
+<pre class="literal-block">
+&lt;form action='url' method='POST'&gt;
+  k1: &lt;input type='text' name='k1'&gt;
+  k2: &lt;input type='text' name='k2'&gt;
+  &lt;input type='submit'&gt;
+&lt;/form&gt;
+</pre>
+<p>The difference for you in handling a GET and a POST is that a GET places
+everything on the URL as part of a query string, while POST requests
+send everything as a string following the headers.</p>
+<p>Try using <a class="reference" href="http://class.ged.idyll.org/svn/files/lecture5/socket-print.py">http://class.ged.idyll.org/svn/files/lecture5/socket-print.py</a>
+to examine the server-side traffic from a POST command.  Note
+especially the 'Content-Length' header: that is what tells you how
+many bytes the POST data is going to be.</p>
+<p>Your job for HW #4 is to implement a basic Web server that handles
+GET and POSt data handling.</p>
+</div>
+</div>
+</body>
+</html>

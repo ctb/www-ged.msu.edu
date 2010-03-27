@@ -1,0 +1,30 @@
+--------------------------------------
+Homework 7: Non-blocking WSGI and more
+--------------------------------------
+
+Due Thursday, October 29th, at 4:30pm (class start).
+
+1. Fix your existing webserve.py from HW #6 to pass the new tests in
+   test_webserve.py.  Do your best to "dogfood it", that is, modify
+   your existing 'webserve.py' rather than taking my solution set.
+
+   (2.5 points)
+
+2. Refactor your non-blocking Web server from HW #5, 'webserve_nb.py',
+   to be a WSGI server.  Make sure it passes all of the tests in
+   test_nb_webserve.py.
+
+   Also be sure that your server implementation doesn't violate
+   encapsulation (i.e. there's no obstacle to having multiple Server
+   objects running at the same time, each serving a different WSGI
+   app).  The best way to make sure of this is to eliminate *all*
+   references to module-global data structures that are used by
+   Server; e-mail me the URL of your webserve.py file if you want me
+   to take a quick look.
+
+   (2.5 points)
+
+3. Write a new set of tests against the WSGI apps in 'apps.py', and put
+   the tests in the file 'test_apps.py'.  The tests should be modelled
+   on test_webserve.py and test all 'if/else' branches in both apps in
+   'apps.py'. (2.5 points)

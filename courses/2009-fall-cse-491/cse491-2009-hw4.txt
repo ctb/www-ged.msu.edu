@@ -1,0 +1,116 @@
+--------------------------------
+Homework 4: Writing a Web server
+--------------------------------
+
+Due Tuesday, October 6th, at 4:30pm (class start).
+
+Write two simple Web servers
+----------------------------
+
+Using only the socket networking library in Python, write both
+blocking and non-blocking HTTP servers that return 'hello, $URL" to a
+GET or a POST request, where $URL is replaced by the URL path being
+requested.
+
+For example, ::
+
+   python webserve.py <port>
+
+starts a blocking Web server bound to interface '' on port <port>.
+(The non-blocking Web server should be called ``webserve_nb.py``.)
+
+This Web server, when accessed at ::
+
+     http://host:port/some/random/url
+
+returns the string ::
+
+  hello, /some/random/url
+
+The server should respond to both GET and POST requests, and should
+*read* and *ignore* any GET query strings and POST data.
+
+All data processing must take place in a function
+``handle_connection`` that takes at least one parameter and up to
+two::
+
+   def handle_connection(client_sock, stuff=None):
+
+and returns a tuple ``(close_flag, stuff)``, where ``close_flag``
+indicates whether or not this connection should now be closed, and
+``stuff`` is a black box that will be passed into the function
+on calls subsequent to the first call, e.g. ::
+
+   # first time
+   (flag, stuff) = handle_connection(client_sock)
+   
+   # second time (flag was true, so connection was kept & processed)
+   (flag, stuff) = handle_connection(client_sock, stuff)
+
+For example, here's the main loop for your blocking server: ::
+
+   while 1:
+     client_sock, _ = sock.accept()
+     close_flag, stuff = handle_connection(client_sock)
+     while not close_flag:
+        close_flag, stuff = handle_connection(client_sock, stuff)
+
+The same exact ``handle_connection`` function should be used in the
+blocking and the non-blocking server; in fact, you can even import it
+from one module into another.  The purpose of the ``stuff`` object is
+to store intermediate data between calls to handle_connection.
+
+Please remember to make both of these importable scripts, i.e. the
+code that actually starts the Web server should be in a ``if __name__
+== '__main__'`` block.
+
+Also, remember that the Web server should **under no reasonable
+circumstances** fail to return a proper HTTP response; that is, even
+if your code generates an internal exception, a proper HTTP response
+should be returned.  (**Unreasonable** circumstances are things like
+power outages or backhoe-based network connection interruptions.)
+
+Your Web server should be implemented to the point that Firefox can
+talk to it.
+
+(5.0 points)
+
+A suggestion for how to proceed
+-------------------------------
+
+First, write a blocking server that ignores all received data and
+returns a hard-coded "hello, world" HTTP response.
+
+Next, modify that server to parse the HTTP response out of the received
+data, but still return a hard-coded HTTP response.
+
+Third, modify this server to properly handle the HTTP request.
+
+Finally, fix the handle_connection code so that it works with
+non-blocking sockets, too.
+
+We will write some test code for this HW on Thursday.
+
+More Jinja2 madness
+-------------------
+
+Separate your ``templates/process_form.html`` from hw2 into two files,
+``templates/base.html`` and ``templates/process_form.html``.
+
+``base.html`` should define a properly structured HTML file, including
+<html>, <head>, and <body> tags, as well as two blocks: {% title %}
+and {% content %}, one in the <title> area and the other in the <body>
+area.
+
+``process_form.html`` must inherit from ``base.html`` and should
+override the title and content blocks to provide its own content (as
+before, this content should be the form processing code; no change in
+content of actual rendered page is needed apart from the <html>,
+<head>, and <body> tags).
+
+(Your Python code from HW 2 for rendering the Jinja2 templates should
+still work as-is with your revised templates; **no changes are needed
+to the Python code**.)
+
+(2.5 points)
+

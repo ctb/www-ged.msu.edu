@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lecture 10 -- JavaScript; Cookies</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lecture-10-javascript-cookies">
+<h1 class="title">Lecture 10 -- JavaScript; Cookies</h1>
+<p>November 3rd, 2009.</p>
+<div class="section">
+<h1><a id="testing-test-apps" name="testing-test-apps">Testing: test_apps</a></h1>
+<p>Everyone who finished &amp; handed it in did a good job, from what I could
+see.  I want to show you one in particular... see</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lecture10/example/">http://class.ged.idyll.org/svn/files/lecture10/example/</a></blockquote>
+<p>What's the problem?  Multiple tests in one test function:</p>
+<blockquote>
+<ul class="simple">
+<li>don't see results from test in isolation: first 'subtest' to break
+ends the tests.</li>
+<li>contaminated state: what's in wsgi.input?</li>
+</ul>
+</blockquote>
+<p>Can refactor to use setup/teardown to handle that, and separate into
+multiple functions.</p>
+<p>---</p>
+<p>Does anyone have any comments on the Next 6 Weeks document yet?  Be sure
+to e-mail them to me, negative or positive.</p>
+<p>---</p>
+</div>
+<div class="section">
+<h1><a id="javascript" name="javascript">JavaScript</a></h1>
+<p>Language in the browser.</p>
+<p>two basic types of functions:</p>
+<blockquote>
+<ul class="simple">
+<li>affecting look/feel, doing form validation (dynamism within site)</li>
+<li>loading data from elsewhere</li>
+</ul>
+</blockquote>
+<p>Good JS tutorial: <a class="reference" href="http://www.w3schools.com/js/default.asp">http://www.w3schools.com/js/default.asp</a></p>
+<p>JavaScript != Java.  In fact, they're completely different.</p>
+<p>JavaScript == ECMAScript.</p>
+<p>JavaScript adds &quot;behavior&quot; to Web pages:</p>
+<blockquote>
+<ul class="simple">
+<li>dynamic text</li>
+<li>events</li>
+<li>data validation</li>
+<li>cookie creation</li>
+</ul>
+</blockquote>
+<p>Object oriented, dynamic, in-browser scripting language.</p>
+<pre class="literal-block">
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+document.write(&quot;Hello World!&quot;);
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>JS factoids:</p>
+<p>Dynamic.  Interpreted.</p>
+<p>CaseSensitive</p>
+<p>Return of the semicolons!!</p>
+<p>Return of the squigglies: { } used to denote blocks</p>
+<p>// - C++ like comments
+<tt class="docutils literal"><span class="pre">/*</span> <span class="pre">*/</span></tt> - C like comments</p>
+<p>Loosely typed:</p>
+<pre class="literal-block">
+var x
+</pre>
+<p>is now a variable.</p>
+<p>No need to declare a variable, either.  (But it's &quot;good practice&quot;)</p>
+<p>C-like operators (addition, subtraction, etc.) and comparisons (&lt;, &gt;, ==).</p>
+<p>Logical operators are also C like -- &quot;||&quot;, &quot;&amp;&amp;&quot;</p>
+<p>Strings + numbers =&gt; strings.</p>
+<p>Return of the round brackets:</p>
+<pre class="literal-block">
+if (condition) { block to be executed }
+</pre>
+<p>Object-oriented, but in a weird way: &quot;bag of properties&quot; with methods!</p>
+<pre class="literal-block">
+function some_function(...) {
+   ... can reference 'this.foo' ...
+}
+
+function SomeClass(param1) {
+   this.foo = param1;
+   this.method = some_function;
+}
+
+var some_object = new SomeClass(&quot;fib&quot;);
+
+some_object.foo
+some_object.some_function(...)
+</pre>
+<p>(Can do 'for (property in object)' to iterate over properties, incl method)</p>
+<p>Function declaration:</p>
+<pre class="literal-block">
+function name(var1, var2, ...) { block }
+</pre>
+<p>For loops as in C: for (var = starval; var &lt; endval; var = var + inc) { }</p>
+<p>While: while (condition) { ... }</p>
+<p>do-while: do { ... } while (condition);</p>
+<p>break/continue</p>
+<p>for-in: for (variable in object) { ... } - loops through array, or
+properties of an object.</p>
+<p>JS properties on HTML elements:</p>
+<pre class="literal-block">
+onload and onUnload
+onFocus, onBlur
+onSubmit
+onMouseOver and onMouseOut
+</pre>
+<p>try/catch/throw:</p>
+<pre class="literal-block">
+try { ... } catch (x) { ... use x ... }
+</pre>
+<p>throw can throw any type of object, which can then be caught &amp; used.</p>
+<p>Object model</p>
+<blockquote>
+<ul class="simple">
+<li>properties</li>
+<li>methods</li>
+</ul>
+</blockquote>
+<p>&quot;undefined&quot;</p>
+<p>useful classes: String, Date, Array, Boolean, Math, RegExp</p>
+<p>Accessing the Document Object Model (DOM):</p>
+<pre class="literal-block">
+ function change_title() {
+     var x = document.getElementById(&quot;my_input&quot;);
+     document.write('my value is ' + x.value);
+     document.title = x.value;
+ }
+
+document.write(&quot;The title is: &quot; + document.title + &quot;&lt;p&gt;&quot;);
+&lt;/script&gt;
+
+&lt;form&gt;
+
+New title: &lt;input type=&quot;text&quot; id='my_input'&gt;
+&lt;input type=&quot;submit&quot; value='change title' onclick='change_title()' &gt;
+
+&lt;/form&gt;
+</pre>
+<div class="section">
+<h2><a id="practical-issues" name="practical-issues">Practical issues</a></h2>
+<p>JS code in &lt;head&gt; of document guaranteed to be executed before anything
+in &lt;body&gt;.</p>
+<p>Can load scripts from elsewhere:</p>
+<pre class="literal-block">
+&lt;script src='hello.js'&gt;&lt;/script&gt;
+</pre>
+<p>JavaScript security: sandbox model.</p>
+<blockquote>
+<a class="reference" href="http://www.windowsitlibrary.com/Content/1160/22/1.html">http://www.windowsitlibrary.com/Content/1160/22/1.html</a></blockquote>
+<p>Running arbitrary programs written by other people on your local computer
+is dangerous (duh).</p>
+<p>For example, JS could redirect your page to your bank's login page,
+intercept your username and password and send them to someone else
+while logging you into your bank site, and then unload itself.  Yay,
+your bank account for everyone!</p>
+<p>(I'm not kidding.)</p>
+<p>Sandbox model prevents this.</p>
+<p>No access to local file systems, user data, or network capabilities, either.
+(Exception to this discussed next week, &quot;AJAX&quot;)</p>
+<p>&quot;Same-Origin policy&quot; - scripts loaded from one Web site <em>cannot</em> access
+data from pages loaded from another Web site.</p>
+<pre class="literal-block">
+var w = window.open(&quot;http://www.google.com&quot;);
+
+// Now wait a while, hoping they'll start using the newly opened window.
+// After 10 seconds, let's try to see what URL they're looking at!
+
+var snoopedURL;
+setTimeout(&quot;snoopedURL = w.location.href)&quot;, 10 * 1000);
+</pre>
+<p>(Can still reference external scripts, which will come in handy next
+week.)</p>
+<p>What about &quot;site farms&quot;, e.g. the CSE user accounts?  Yes,
+'www.cse.msu.edu' counts as the same site, so my Web page vs your Web
+page can do nasty things to each other.</p>
+<p>Also, cross-site scripting (XSS) becomes an interesting problem... examples
+in a few weeks.</p>
+<p>Can also bomb browsers:</p>
+<blockquote>
+<ul class="simple">
+<li>infinite loops</li>
+<li>memory hog</li>
+<li>infinite recursion of frame elements</li>
+<li>annoyances!  (popup windows, etc.)</li>
+</ul>
+</blockquote>
+<p>This is why Google Chrome runs browser tabs in different processes!</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="concluding-thoughts-on-javascript-the-language" name="concluding-thoughts-on-javascript-the-language">Concluding thoughts on JavaScript-the-language</a></h1>
+<div class="section">
+<h2><a id="negatives" name="negatives">Negatives</a></h2>
+<p>(Taken without apology from: <a class="reference" href="http://www.phonk.net/Gedachten/JavaScript">http://www.phonk.net/Gedachten/JavaScript</a>)</p>
+<p>JS can make Web pages and forms behave very differently from user
+expectations.  One of the big reasons that the Web was adopted so
+quickly is that the user interface is relatively straightforward
+and simple; JS can change that.  It also means that in order to write
+an interesting Web site you need to become a UI designer, too, and
+frankly most programmers suck at UI design.</p>
+<p>Content generation via JS can make it more difficult to &quot;reduce&quot; Web
+pages into searchable archives of information.</p>
+<p>Scripting JS-heavy Web pages gets quite ugly, as you'll see with
+Selenium next week.</p>
+<p>Tying behavior into the browser so closely makes it difficult to build
+browser-neutral and <em>platform</em>-neutral sites (think mobile phones).
+The solution seems to be to build bigger &amp; more powerful cell phones
+:)</p>
+<p>It's easy to hack stuff together in JS, but to build anything big
+requires Real Programming.</p>
+<p>JavaScript security is always something to think about.</p>
+</div>
+<div class="section">
+<h2><a id="positives" name="positives">Positives</a></h2>
+<p>JS removes (or, with AJAX, reduces) the latency inherent in having to
+do a page request to a remote server by putting the behavior on the page.</p>
+<p>It's the only cross-platform cross-browser solution to doing this, and
+(unlike Flash) it's also open source, so you can go reverse-engineer
+other people's Web pages.  (Definitely good for the growth of the Web!)</p>
+<p>You guys already know how to program, so the Real Programming requirement
+isn't a problem for you.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="transferring-information-across-multiple-requests" name="transferring-information-across-multiple-requests">Transferring information across multiple requests</a></h1>
+<p>options?</p>
+<blockquote>
+<ul class="simple">
+<li>cookies</li>
+<li>carrying within URL</li>
+<li>carrying within each form on page</li>
+<li>going by IP address</li>
+<li>???</li>
+</ul>
+</blockquote>
+<p>---</p>
+</div>
+<div class="section">
+<h1><a id="cookies" name="cookies">Cookies</a></h1>
+<p>'Cookies' are bits of data (&quot;morsels&quot;) that are set by the server on
+a particular path, stored client-side, and sent to the server whenever
+that path is hit by the client.</p>
+<p>So, for example, your browser could have a cookie linked to</p>
+<blockquote>
+server 'google.com'</blockquote>
+<p>and every time you went to '<a class="reference" href="http://google.com">http://google.com</a>', your browser would
+send that cookie in the headers.</p>
+<p>Cookies are the basic mechanism used for retaining user authentication
+and storing <em>small</em> pieces of information in a user's browser.</p>
+<p>To set a cookie, the server issues a 'Set-Cookie' header as part of
+its response to a client's HTTP request.  In the response headers,
+then, you might see:</p>
+<pre class="literal-block">
+Set-Cookie: user=foo
+</pre>
+<p>If the client supports cookies, then any further requests -- now or later --
+to the same server should result in the client sending the cookie back
+to the server.  So, in the client headers sent with each request, you
+would expect to see:</p>
+<pre class="literal-block">
+Cookie: user=foo
+</pre>
+<p>This allows the server to link state across multiple requests without
+encoding it in the URL or in form variables.  The benefits of this
+approach are that it carries across IP addresses and connections, and
+can be specific to each account or user on a computer.</p>
+<p>Servers can specify additional cookie metadata like an expiration date
+(via the 'Expires' tag) and a limiting path on the server (via the
+'Path' tag)</p>
+<p>Cookies are the primary way that Web servers track user information across
+visits.</p>
+<p>One question to ask: what prevents users from simply fabricating their
+own cookies in their own browser?  (Nothing!  The client has complete
+control over the client cookies.)  We'll talk about how to deal with
+that later.)</p>
+</div>
+<div class="section">
+<h1><a id="message-board-design-brainstorming" name="message-board-design-brainstorming">Message board design, brainstorming</a></h1>
+<p>What are the essential components of a message board?</p>
+</div>
+</div>
+</body>
+</html>

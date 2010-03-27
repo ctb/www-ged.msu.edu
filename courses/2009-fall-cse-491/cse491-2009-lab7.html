@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Lab #7 -- Refactoring to WSGI</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="lab-7-refactoring-to-wsgi">
+<h1 class="title">Lab #7 -- Refactoring to WSGI</h1>
+<p>CSE 491, Oct 15th, 2009.</p>
+<div class="section">
+<h1><a id="classes" name="classes">Classes</a></h1>
+<p>Classes are defined in a 'class' block:</p>
+<pre class="literal-block">
+class ClassName(object):
+  def __init__(self, arg1, arg2, arg3, ...):     # constructor
+     # do initialization stuff to 'self'
+
+  def method(self, argX, argY, argZ, ...):       # method
+     # ...
+</pre>
+<p>and you create an object of a particular class by calling it,</p>
+<pre class="literal-block">
+obj = ClassName(arg1, arg2, arg3, ...)
+</pre>
+<p>'self' is implicitly passed into all method calls on obj:</p>
+<pre class="literal-block">
+obj.method(argX, argY, argZ, ...)
+</pre>
+<p>is equivalent to ClassName.method(obj, argX, argY, argZ).</p>
+<p>For basic purposes you can think of 'method' as a function that just
+implicitly takes 'self' as the first argument, and 'self' as just a
+separate namespace for variables.  For example, here the function
+'hello' is retrieving the attribute 'name' from the object of type
+'A':</p>
+<pre class="literal-block">
+class A(object):
+   def __init__(self, name):
+      self.name = name
+
+   def hello(self):
+      print self.name
+
+a = A('bill punch')
+a.hello()
+</pre>
+<p>so this is equivalent to</p>
+<pre class="literal-block">
+==&gt; a.name = 'bill.punch'
+    print a.name
+</pre>
+</div>
+<div class="section">
+<h1><a id="everything-s-an-object-including-functions" name="everything-s-an-object-including-functions">Everything's an object, including functions</a></h1>
+<p>You can pass functions around and then call them,</p>
+<pre class="literal-block">
+def myfunc():
+   print 'hello, world'
+
+def calls_fn(x):
+   x()
+</pre>
+<p>so</p>
+<pre class="literal-block">
+calls_fn(myfunc)
+</pre>
+<p>just executes</p>
+<pre class="literal-block">
+myfunc()
+</pre>
+<p>and prints out 'hello, world'.</p>
+<p>Now, you can always &quot;call&quot; a function here -- by applying parantheses
+to it and passing in arguments -- which makes functions a special case
+of a more general type of object, <strong>callables</strong>.  Callables are just
+objects with a <tt class="docutils literal"><span class="pre">__call__</span></tt> method:</p>
+<pre class="literal-block">
+class B(object):
+   def __call__(self):
+     print 'I am B, and I have been called!'
+
+c = B()    # create an object of type B, calling __init__
+
+c()        # and 'call' it, equivalent to executing the __call__ function
+</pre>
+<p>Here you can pass in whatever arguments you like, as you might expect:</p>
+<pre class="literal-block">
+class D(object):
+   def __call__(self, arg1, arg2, arg3):
+      print 'args are', arg1, arg2, arg3
+
+e = D()           # calls __init__
+
+e(1, 2, 3)        # calls D.__call__(e, 1, 2, 3)
+</pre>
+</div>
+<div class="section">
+<h1><a id="callables-in-wsgi" name="callables-in-wsgi">Callables in WSGI</a></h1>
+<p>The HW this week has two examples of callables in it: first, the WSGI
+application object, which is used to generate content; and second,
+the 'start_response' callback, which is <em>passed into</em> the WSGI application
+object and is used to tell the WSGI server that a response is starting.</p>
+<p>For reference, here's a 'hello, world' WSGI application function:</p>
+<pre class="literal-block">
+def wsgi_app(environ, start_response):
+   headers = [('Content-type', 'text/html')]
+   status = '200 OK'
+
+   start_response(status, headers)
+
+   return [&quot;Hello, world&quot;]
+</pre>
+<p>and the equivalent callable object:</p>
+<pre class="literal-block">
+class WSGIAppObject(object):
+   def __call__(self, environ, start_response):
+      headers = [('Content-type', 'text/html')]
+      status = '200 OK'
+
+      start_response(status, headers)
+
+      return [&quot;Hello, world&quot;]
+</pre>
+<p>and the equivalent callable class:</p>
+<pre class="literal-block">
+class WSGIAppClass(object):
+   def __init__(self, environ, start_response):
+      self.environ = environ
+      self.start_response = start_response
+
+   def __iter__(self):
+      headers = [('Content-type', 'text/html')]
+      status = '200 OK'
+
+      self.start_response(status, headers)
+
+      return iter([&quot;Hello, world&quot;])
+</pre>
+</div>
+<div class="section">
+<h1><a id="wsgi" name="wsgi">WSGI</a></h1>
+<p>So, what is WSGI, again?</p>
+<p>WSGI is the Web Services Gateway Interface, and it specifies an interface
+between a <strong>server</strong> and an <strong>application</strong>.  The server talks to the socket
+and &quot;speaks&quot; HTTP,</p>
+<pre class="literal-block">
+sockets &lt;--&gt; WSGI server
+</pre>
+<p>and the application &quot;takes&quot; Web requests from the WSGI server and processes
+them,</p>
+<pre class="literal-block">
+WSGI server &lt;--&gt; WSGI application
+</pre>
+<p>On Tuesday I talked a bit about separation of concerns.  WSGI
+separates the concerns into a server and an application: the WSGI
+server only cares about talking to the socket and speaking HTTP, while
+the WSGI application is responsible for generating content and
+&quot;speaking&quot; HTML and other things.</p>
+<p>Here the interface can be viewed as a programmatic abstraction of HTTP
+itself: rather than dealing with the messiness of socket reading and
+strings and HTTP, you have functions that pass around Python objects.</p>
+<p>How does this work?</p>
+<p>The WSGI server:</p>
+<blockquote>
+<ul class="simple">
+<li>reads the HTTP request from the socket</li>
+<li>parses it into method, URL, headers, and content</li>
+<li>calls the WSGI application object and gives it a callback function,
+'start_response'</li>
+<li>receives status and headers from the WSGI application object via
+'start_response'</li>
+<li>reads data from the WSGI application object and sends it back via the
+socket until the WSGI application object is done.</li>
+</ul>
+</blockquote>
+<p>The WSGI application, on the other side of this,</p>
+<blockquote>
+<ul class="simple">
+<li>figures out what its response is going to be (i.e. status, headers)</li>
+<li>calls 'start_response' with the appropriate parameters</li>
+<li>returns data (content).</li>
+</ul>
+</blockquote>
+<p>Your job is to refactor your HW #5 blocking server so that it &quot;speaks&quot;
+the WSGI interface.  In particular, this means that you need to make
+your handle_connection function <strong>call a WSGI application object</strong> and
+return the results as a HTTP response.</p>
+<p>The basic requirements are laid out in the homework.  You need to</p>
+<blockquote>
+<ul>
+<li><p class="first">move your existing code into a class, 'webserve.Server', that takes
+two arguments: a port, and a WSGI application object.</p>
+<p>You can look at webserve_test.py in</p>
+<blockquote>
+<p><a class="reference" href="http://class.ged.idyll.org/svn/files/hw6/">http://class.ged.idyll.org/svn/files/hw6/</a></p>
+</blockquote>
+<p>in the test function _run_fake_socket to see how this is used.</p>
+</li>
+<li><p class="first">in the parse_request function (or whatever you called the function
+that parses the HTTP request and generates a response), build a
+dictionary 'environ' that has the following key/values stored in it:</p>
+<pre class="literal-block">
+environ['REQUEST_METHOD'] -- 'GET' or 'POST'
+
+environ['PATH_INFO '] -- the url, without the query string
+
+environ['SERVER_PROTOCOL'] - the protocol spoken by the browser
+    (this is the third component of the request line)
+
+environ['QUERY_STRING'] -- the 'GET' query string, if any; empty otherwise
+
+environ['wsgi.input'] -- a file-like object containing the POST data (if any)
+</pre>
+<p>For 'wsgi.input', you can just use the class 'StringIO' from the
+module 'cStringIO' and do</p>
+<pre class="literal-block">
+environ['wsgi.input'] = StringIO(post_data)
+</pre>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li><p class="first">again in the parse_request function, build a callable,
+'start_response', that takes 'status' and 'headers' and
+saves them.  One way to do this is:</p>
+<pre class="literal-block">
+class StartResponse(object):
+    def __call__(self, status, headers):
+       self.status = status
+       self.headers = headers
+
+start_response = StartResponse()
+</pre>
+<p>Now, when 'start_response(status, headers)' is called,</p>
+<pre class="literal-block">
+start_response.status
+</pre>
+<p>and</p>
+<pre class="literal-block">
+start_response.headers
+</pre>
+<p>will store the status and headers for you.</p>
+</li>
+<li><p class="first">rewrite your current content-generation code (probably in
+parse_request) into the form of a WSGI application.  Hint, hint,
+you have most of it from HW #2...</p>
+</li>
+<li><p class="first">write a method 'Server.serve_forever()' that does your main while loop.</p>
+</li>
+<li><p class="first">change your __main__ block to run Server.serve_forever() on the
+appropriate port.</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>As usual, look at the tests.  If the tests work, you will have the majority
+of the &quot;hard stuff&quot; done, I think.</p>
+</div>
+<div class="section">
+<h1><a id="doing-the-homework" name="doing-the-homework">Doing the homework</a></h1>
+<p>Here are some suggested steps.  If you come to office hours I will ask
+you why you haven't done them in this order... and tell you to go away
+and do them in this order.</p>
+<p>First, refactor your existing code into a class.  (This is as simple as
+putting 'self' at the beginning of every function call, and indenting
+them into a 'class' block.)</p>
+<p>Next, get your 'serve_forever' and <tt class="docutils literal"><span class="pre">__main__</span></tt> code working (it
+should all still work as in HW #5).</p>
+<p>Third, write a server-side WSGI interface and get it working with
+a 'hello, world' WSGI app.  (This is what the tests test.)  You will
+need to have <tt class="docutils literal"><span class="pre">Server.__init__</span></tt> take the right parameters here.</p>
+<p>Fourth, modify your server-side WSGI interface to create the 'environ'
+and 'start_response' objects properly for 'GET' requests.</p>
+<p>Fifth, rewrite your code from HW #5 to work as a WSGI application object
+that takes the GET query string from &quot;environ['QUERY_STRING']&quot;.</p>
+<p>And sixth, deal with POST requests.  Look above for the tip on wsgi.input,
+and look at HW #2 for information on how to deal with it on the WSGI
+application side.</p>
+<p>Seventh, look over your code and make sure it still works as it should
+for HW #5, too!</p>
+</div>
+<div class="section">
+<h1><a id="some-design-considerations" name="some-design-considerations">Some design considerations</a></h1>
+<p>Look at the WSGI stack.</p>
+<p>The WSGI server talks to the WSGI application object.  The application
+object doesn't know anything about the socket, or the HTTP request, or
+anything like that -- it just knows what URL was requested, what query
+string or POST content was passed in, and one or two other things
+(primarily the headers, which we'll do next week).</p>
+<p>So, looking at the WSGI application object, the first thing you want
+to do is ask yourself: if I want to print out the form results from HW #5,
+where does that information come from?</p>
+<p>What information do you have?</p>
+<blockquote>
+<ul class="simple">
+<li>client / url &amp; form information</li>
+<li>socket information (more data to read? etc)</li>
+<li>HTTP request information (url, GET, POST, cookies, etc.)</li>
+<li>HTTP response (headers out, content, etc.)</li>
+</ul>
+</blockquote>
+<p>Why isn't all of this information available to all of the code in the
+webserve module, as module globals? Why can't the application object
+talk directly to the socket?</p>
+<p>The whole point of abstractions and separation of concerns is
+encapsulation: you're trying to neatly put things into little black
+boxes with known inputs and outputs so you can stop thinking about
+them.</p>
+<p>And why do this?</p>
+<p>Crossing boundaries of abstractions: bad.  This reduces encapsulation
+=&gt; makes testing hard, reduces reliability, etc.  Global or
+cross-module dependencies should be minimized: inderdependencies =&gt;
+complexity =&gt; bad.</p>
+<p>---</p>
+</div>
+<div class="section">
+<h1><a id="last-point-how-to-use-tests" name="last-point-how-to-use-tests">Last point: how to use tests</a></h1>
+<p>The test code is in Python, and self-contained.  You can always just
+pull out a particularly annoying test into a standalone file and
+manipulate it to figure out what's going on.  Don't sit there and
+stare at the code; that's not going to help you understand it all that
+much.  Pull it out, run it, modify it, put print statements in,
+etc. etc.</p>
+</div>
+</div>
+</body>
+</html>

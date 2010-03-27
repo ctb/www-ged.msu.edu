@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document">
+<div class="section">
+<h1><a id="lab-2-getting-started-with-subversion-cgi-and-python" name="lab-2-getting-started-with-subversion-cgi-and-python">Lab #2 -- Getting started with Subversion, CGI, and Python</a></h1>
+<p>CSE 491, Sep 10th, 2009.</p>
+</div>
+<div class="section">
+<h1><a id="subversion" name="subversion">Subversion</a></h1>
+<p>Subversion is a version control system that keeps track of file
+contents and directory structures across time and between multiple
+developers (and in other ways, too, such as across multiple &quot;branches&quot;
+of development).</p>
+<p>Subversion is a <em>centralized</em> version control system, much like its
+predecessor, CVS.  This means that there is a single &quot;master&quot;
+repository through which everything is coordinated.  In contrast,
+version control systems such as git, Mercurial ('hg'), and bazaar
+('bzr') are <em>distributed</em> -- no centralized coordination is required.</p>
+<p>The two central concepts in Subversion are the <strong>repository</strong> and the
+<strong>working directory</strong>.  Working directories (or working copies) are
+snapshots of some part of the repository, taken from a particular
+part of the Subversion repository at a particular time.</p>
+<p>As the name implies, working directories are where you do all your work;
+the central repository, is where you commit changes whenever you want to
+save them.</p>
+<p>The most important point for people new to version control is this:
+<strong>as long as you have committed something to the repository, you can
+retrieve it at any point in the future.</strong> As an individual developer,
+you <em>cannot</em> permanently delete things in the central repository, even
+by accident!  This means that you should commit stuff as often as
+possible -- whenever you make any progress at all -- because it
+gives you an indestructible checkpoint of your progress that you can
+return to on demand.</p>
+<p>Note that I will only really look at your repositories when homework
+is due; you won't be graded on how you develop, or how infrequently
+you commit, or anything like that.</p>
+<div class="section">
+<h2><a id="subversion-accounts" name="subversion-accounts">subversion accounts</a></h2>
+<p>Your Subversion server is accessible via (what else?) a URL:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/nermal">http://class.ged.idyll.org/svn/nermal</a></blockquote>
+<p>Here, replace 'nermal' with your MSU NetID.</p>
+<p>You should able to go to this URL in a Web browser and enter your
+username and password and see an empty repository.  Note that this
+view is, by default, a view of the very latest commit to the
+repository; it's a good way to check that you've handed in the
+right thing on your homework, hint.</p>
+</div>
+<div class="section">
+<h2><a id="basic-subversion" name="basic-subversion">basic subversion</a></h2>
+<p>From the arctic.cse.msu.edu command line, type</p>
+<pre class="literal-block">
+svn checkout &lt;url&gt;
+</pre>
+<p>to get a working copy.  Note that Subversion URLs are hierarchical, so
+you can get a working copy of a subdirectory of your repository by
+adding on a subdirectory, e.g. fFor hw1, your URL will be hw1/</p>
+<p>Now, do</p>
+<pre class="literal-block">
+svn checkout &lt;url&gt; cse491
+</pre>
+<p>to get a working directory named 'cse491'.  Now do</p>
+<pre class="literal-block">
+cd cse491
+mkdir lab1
+svn add lab1
+</pre>
+<p>to add lab1/ into svn's list of &quot;files I need to know about&quot;.  Next,</p>
+<pre class="literal-block">
+cd lab1
+echo hello, world &gt; README.txt
+svn add README.txt
+svn commit -m &quot;my first commit&quot;
+</pre>
+<p>to add the file 'README.txt' into svn, and commit all of these
+changes to the central repository.  You should now ou can view it
+on the Web here,</p>
+<pre class="literal-block">
+http://class.ged.idyll.org/svn/nermal/lab1
+</pre>
+<p>You can also do</p>
+<pre class="literal-block">
+svn log
+</pre>
+<p>to get a history of changes, and also (in another directory)</p>
+<blockquote>
+svn checkout <a class="reference" href="http://class.ged.idyll.org/nermal/lab1">http://class.ged.idyll.org/nermal/lab1</a></blockquote>
+<p>which will create a new working 'lab1' in that directory, linked
+to the same repository as the other 'lab1'.  You can make changes
+here, commit them, and then 'svn update' in the other directory
+to retrieve them.</p>
+<p>Note that you can always create a new working directory if you
+are upset with changes, or you can use 'svn revert' to selectively
+revert to the last version you committed.</p>
+<p>IF YOU BREAK A WORKING COPY (I'll show you one way, next week) then
+just back it up, check out a new copy, and try not to break that new
+copy ;).</p>
+<p>For homework, you need to create a directory 'hw1' and put the source
+code for your CGI script in there.  Note #2, it's easy to check to see
+if you've got the right code in your repository: LOOK VIA YOUR WEB
+BROWSER.</p>
+<p>For office hours, please CHECK IN (COMMIT) the scripts you're
+having trouble with before you come to see me.  <strong>(Physical media is
+soooooo 1990s.)</strong></p>
+</div>
+</div>
+<div class="section">
+<h1><a id="getting-cgi-to-work" name="getting-cgi-to-work">Getting CGI to work</a></h1>
+<p>Basic UNIX scripts are text files with a 'shebang' line (#!), at the top,
+indicating what program should be used to run the script.  For example,</p>
+<pre class="literal-block">
+#! /bin/bash
+echo hello, world
+</pre>
+<p>is a script that will be run with bash -- one of the common UNIX shells.</p>
+<p>Try putting this text into the script 'hello.sh', and then running it like this:</p>
+<pre class="literal-block">
+./hello.sh
+</pre>
+<p>You should get &quot;permission denied&quot;.  Huh!?  That's because you didn't
+tell UNIX that this text file was supposed to be executable!  You
+need to change the file permissions to make it executable: do</p>
+<pre class="literal-block">
+chmod +x hello.sh
+</pre>
+<p>and try running it again.</p>
+<p>The same principle applies to Python scripts.  A good #! line for Python is</p>
+<pre class="literal-block">
+#! /usr/bin/env python
+</pre>
+<p>which says 'go find the first program named python in my path, and run
+that'.</p>
+<p>So, try making a simple Python 'hello, world' script: note, just</p>
+<pre class="literal-block">
+print 'hello, world'
+</pre>
+<p>works fine in Python ;).</p>
+<p>--</p>
+<p>OK, so in class I told you that CGI scripts are just scripts that are
+executed by the Web server and take in/pass out a certain set of
+information.  So let's make your first CGI script!  Put this in a
+a file somewhere, named 'hello.cgi':</p>
+<pre class="literal-block">
+#! /usr/bin/env python
+print 'Content-type: text/html\n\nHello, world'
+</pre>
+<p>Now make it executable (<tt class="docutils literal"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">hello.cgi</span></tt>) and try running it:</p>
+<pre class="literal-block">
+./hello.cgi
+</pre>
+<p>Does that work?</p>
+<p>OK, it should print out three lines, but does it look like a Web page?
+Well, yes and no.  The thing is, the output of this CGI script is meant
+for the Web <em>server</em>, not your tender eyes -- the Web server that ran
+the script will read in what the script produces, parse it, and then spit
+proper HTTP back at the Web client that requested the URL that led to
+the CGI script.</p>
+<p>To do that, you need to put it in a special directory on arctic:</p>
+<pre class="literal-block">
+/user/cgi/nermal
+</pre>
+<p>So, try that:</p>
+<blockquote>
+cp hello.cgi /user/cgi/nermal</blockquote>
+<p>Make sure the permissions are correct, too:</p>
+<blockquote>
+chmod 755 /user/cgi/nermal/hello.cgi</blockquote>
+<p>Now, glory of glories, try running it through the Web at the extra-super-
+magical URL,</p>
+<blockquote>
+<a class="reference" href="http://www.cse.msu.edu/cgi-user/nermal/hello.cgi">http://www.cse.msu.edu/cgi-user/nermal/hello.cgi</a></blockquote>
+<p>BTW, it does work; check out mine, at</p>
+<blockquote>
+<a class="reference" href="http://www.cse.msu.edu/cgi-user/ctb/hello.cgi">http://www.cse.msu.edu/cgi-user/ctb/hello.cgi</a></blockquote>
+<p>!</p>
+<p>OK, so that's how you get CGI scripts to work.  Congratulations, you're
+now officially a Web programmer!</p>
+<p>One last convenient trick that will come back to haunt many of you,
+hopefully in a useful way: the 'cgitb' module.  In your hello.cgi script
+(or a new file) put:</p>
+<pre class="literal-block">
+#! /usr/bin/env python
+import cgitb
+cgitb.enable()
+int('this is not a number')
+</pre>
+<p>Now try running THAT script via the Web (or try</p>
+<blockquote>
+<a class="reference" href="http://www.cse.msu.edu/cgi-user/ctb/tb.cgi">http://www.cse.msu.edu/cgi-user/ctb/tb.cgi</a></blockquote>
+<p>).  You should see a traceback -- why is this cool?  Well, if you take
+out the cgitb.enable() call, you'll see that your script fails in a
+singularly unhelpful way whenever there's an error: try out</p>
+<blockquote>
+<a class="reference" href="http://www.cse.msu.edu/cgi-user/ctb/no-tb.cgi">http://www.cse.msu.edu/cgi-user/ctb/no-tb.cgi</a></blockquote>
+<p>The reasons why this happens are legion, but for now, just take it for
+a given -- getting useful information out of a busted CGI script is
+much easier with 'cgitb'.</p>
+<p>There is one situation where cgitb can't help you, and that's when
+your Python script is simply invalid Python: you forgot to close a
+quote, or you screwed up whitespace.  Conveniently, you can just run
+'python nermalscript.cgi' to see if a given file (in this case,
+nermalscript.cgi) can be parsed by Python properly.</p>
+<p>So, to debug your Python CGI script for this week's HW,</p>
+<blockquote>
+<ul class="simple">
+<li>FIRST, check to make sure it's valid Python by running Python on it;</li>
+<li>SECOND, enable the 'cgitb' module.</li>
+</ul>
+</blockquote>
+<p>A few other notes on the HW:</p>
+<blockquote>
+<ul>
+<li><p class="first">the homework files are on an open Subversion server.  You can get
+them in one of two ways: either by doing a 'svn checkout', or by
+browsing through the Web interface.  Same thing.</p>
+<p>Just be sure to do an 'svn update' if you have done a checkout already
+I send out an e-mail saying that there's a new version of the file...
+that's how you can get the latest version into an existing repository.</p>
+</li>
+<li><p class="first">the homework tells you to make a CGI script that takes in form input
+values and Does Something to make HTML.  But how do you actually
+point your form at the CGI script!?  Save the HTML form in the
+svn repository for hw1/ and look at the 'action' component of the
+&lt;form&gt; element.  You can just edit that, open the file on your local
+computer, and voila.</p>
+<p>You can <em>also</em> put files in your <tt class="docutils literal"><span class="pre">~/web/</span></tt> directory on arctic,
+and then access them in a Web browser at
+<a class="reference" href="http://www.cse.msu.edu/~nermal/">http://www.cse.msu.edu/~nermal/</a>.  Just make sure that you do a
+<tt class="docutils literal"><span class="pre">chmod</span> <span class="pre">-R</span> <span class="pre">a+r</span> <span class="pre">~/web/</span></tt> so that the files are world-accessible.</p>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="a-whirlwind-tour-of-some-unix-techniques" name="a-whirlwind-tour-of-some-unix-techniques">A whirlwind tour of some UNIX techniques</a></h1>
+<p>Learning to use UNIX well is a good idea.  You'll probably need it
+later in life, and as your friendly local UNIX-y professor, I'm here
+to help by forcing it on you!</p>
+<p>Getting good (fast, reliable) at using <em>any</em> computer system is
+important for programmers.  Like it or not, programming happens ON
+an operating system and IN a environment... so the better you get,
+the faster you'll be able to get on with doing the interesting stuff.</p>
+<p>A few quick tips.</p>
+<p>First, there are many freely available implementations of UNIX for you
+to download and install.  I suggest Ubuntu, <a class="reference" href="http://www.ubuntu.com/">http://www.ubuntu.com/</a>.</p>
+<p>---</p>
+<p>Second, on most modern UNIXes, you can use your arrow keys to move
+around in the prompt.  Up arrow gives you previous command in your
+history, down goes to next, left and right move around a particular
+command, backspace/delete etc. etc.</p>
+<p>Why is this useful? Let's face it -- you're probably not all that
+reliable a typist, so having to retype old commands is going to
+be error prone.  Why not just hit up arrow once?  And if you need
+to enter a new command that looks a lot like an old one, it may
+be simpler to just edit it.</p>
+<p>Bottom line: minimize errors by reusing command lines.</p>
+<p>---</p>
+<p>Third, learn a UNIX editor.  I'm not talking about one of those shiny
+graphical editors (although you can use one if you insist) - I'm
+talking about emacs or vim, both of which are installed on arctic.</p>
+<p>Emacs comes with a built in tutorial; type 'CTRL-H', 't' to access it.</p>
+<p>Here's a vim tutorial:</p>
+<p><a class="reference" href="http://blog.interlinked.org/tutorials/vim_tutorial.html">http://blog.interlinked.org/tutorials/vim_tutorial.html</a></p>
+<p>Both of these editors have an extensive set of keystroke commands
+that you can use to do <em>everything</em>.  Moving the mouse around is
+wasted time.</p>
+<p>---</p>
+<p>Fourth, learn to use multiple windows into your UNIX system.  I
+suggest having an editor open in one, and a command line open in
+another.  Then you can edit a file, switch window, run command,
+switch window, edit, etc. -- think like you're playing pingpong ;).</p>
+<p>Why?</p>
+<p>All windowing environments have a way to toggle between windows
+quickly, using just the keyboard -- ALT-TAB in Windows,
+COMMAND-backquote on Mac OS X (betcha didn't know that!), and ALT-TAB
+in Linux.  If you can switch quickly between your windows, then you
+can shorten the test-fix-test cycle considerably, and that will save
+you hundreds of hours of time over the next decade of your life --
+or at least several hours for this class.</p>
+<p>Remember, moving the mouse around is a waste of time.  Any every additional
+second it takes you to do something is time for you to OH SHINY, PRON!</p>
+<p>(Yes, I was a student once, too.)</p>
+<p>If people want, I can give an &quot;semi-advanced emacs&quot; tutorial one day.</p>
+<p>---</p>
+<p>Fifth, learn to use UNIX jobs control: briefly, from any long running
+UNIX process,</p>
+<blockquote>
+<p>CTRL-Z suspends the process</p>
+<p>'fg' rejoins the process</p>
+<p>'bg' tells it to go run in the background until it needs keyboard input</p>
+<p>'jobs' tells you what you have running</p>
+<p>'&amp;' starts things running in the background (equiv to run, CTRL-Z, bg)</p>
+</blockquote>
+<p>In particular, this lets you run in one-window mode: emacs, edit, save,
+CTRL-Z, run program, fg, edit, repeat.</p>
+</div>
+<div class="section">
+<h1><a id="your-10-minute-python-intro" name="your-10-minute-python-intro">Your 10 minute Python intro</a></h1>
+<p>Run 'python' to get a Python interpreter.</p>
+<div class="section">
+<h2><a id="data-types" name="data-types">Data types</a></h2>
+<p>Basic data types are strings, ints, floats.</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; a = 5
+&gt;&gt;&gt; print a
+5
+&gt;&gt;&gt; type(a)
+&lt;type 'int'&gt;
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; b = &quot;foo&quot;
+&gt;&gt;&gt; print b
+foo
+&gt;&gt;&gt; type(b)
+&lt;type 'str'&gt;
+</pre>
+</blockquote>
+<p>and so on.</p>
+<p>You can interconvert between types by using the type names:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = '5'
+&gt;&gt;&gt; type(c)
+&lt;type 'str'&gt;
+&gt;&gt;&gt; d = int(c)
+&gt;&gt;&gt; type(d)
+&lt;type 'int'&gt;
+&gt;&gt;&gt; e = str(d)
+&gt;&gt;&gt; type(e)
+&lt;type 'str'&gt;
+</pre>
+</blockquote>
+<p>Note that 'print' automatically converts things to strings, so</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print c
+5
+&gt;&gt;&gt; print d
+5
+</pre>
+</blockquote>
+<p>gives the same result!  This can be a problem -- how do you debug problems
+caused by type confusion!?  There are a couple of ways; my favorite trick is
+to convert things into a tuple, so that the string conversion doesn't work:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print (c, d,)
+('5', 5)
+</pre>
+</blockquote>
+<p>The quotes tell you that 'c' is a string; the lack of quotes tells you that
+'d' is an integer.  We can explain this a bit more later.</p>
+<p>Lists are another really useful data type: you can create an empty list,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = []
+</pre>
+</blockquote>
+<p>and then add stuff to it with 'append'</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x.append(5)
+&gt;&gt;&gt; x.append('foo')
+&gt;&gt;&gt; x
+[5, 'foo']
+</pre>
+</blockquote>
+<p>Lists have lengths,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; len(x)
+2
+</pre>
+</blockquote>
+<p>and elements can be indexed with numbers,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x[0]
+5
+</pre>
+</blockquote>
+<p>Dictionaries are even more useful; think of them as C++ maps, if you must,
+but way cooler.  Dictionaries map <em>key</em> to <em>values</em>:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y = {}
+&gt;&gt;&gt; y['foo'] = 5
+&gt;&gt;&gt; y['bar'] = 6
+</pre>
+</blockquote>
+<p>Now you can retrieve values by key:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y['foo']
+5
+</pre>
+</blockquote>
+<p>Also you can get a list of keys,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y.keys()
+['foo', 'bar']
+</pre>
+</blockquote>
+<p>or values,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y.values()
+[5, 6]
+</pre>
+</blockquote>
+<p>or key-value pairs,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; y.items()
+[('foo', 5), ('bar', 6)]
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="control-structures" name="control-structures">Control structures</a></h2>
+<p>'if' tries to do the right thing, logically speaking.  If a Python
+variable is zero or has zero length, it is False, otherwise it is
+True; you can test this by asking 'bool' to convert things into
+True/False for you:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; bool(0)
+False
+&gt;&gt;&gt; bool(1)
+True
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; bool([])          # zero length
+False
+&gt;&gt;&gt; bool([0])         # not zero length
+True
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; bool('0')         # not zero; it's a string
+True
+</pre>
+</blockquote>
+<p>'for' iterates over things; the canonical C-style 'for' loop is written
+like this:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in range(0, 3):
+...   print i
+0
+1
+2
+</pre>
+</blockquote>
+<p>This mimics 'for (i = 0; i &lt; 3; i++)'.</p>
+<p>Here, 'range' is actually producing a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; range(0, 3)
+[0, 1, 2]
+</pre>
+</blockquote>
+<p>so you can see that what Python is <em>actually</em> doing is iterating over
+a list.  (There's actually a more general statement -- Python iterates
+over <em>iterators</em>, but we'll talk more about that later.)</p>
+<p>So, you can also use 'for' to iterate over lists,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for i in [0, 'foo', 'baz', 3.14159]:
+...   print i
+0
+foo
+baz
+3.14159
+</pre>
+</blockquote>
+<p>and dictionaries (which in fact iterates over keys).</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; for k in { 'foo' : 5, 'bar' : 6 }:
+...    print k
+foo
+bar
+</pre>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="strings" name="strings">Strings</a></h2>
+<p>For Web programming, strings are pretty important, and you'll need to
+use them a lot for your first homework.  So, what can you do with strings?</p>
+<p>Check for equality:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; &quot;a&quot; == 'b'
+False
+&gt;&gt;&gt; &quot;a&quot; == 'a'
+True
+</pre>
+</blockquote>
+<p>Concatenate them:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; &quot;a&quot; + &quot;b&quot;
+'ab'
+</pre>
+</blockquote>
+<p>Get their length:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; len('ab')
+2
+</pre>
+</blockquote>
+<p>Upper and lowercase them:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; 'ab'.upper()
+'AB'
+&gt;&gt;&gt; 'AB'.lower()
+'ab'
+</pre>
+</blockquote>
+<p>One cute trick for building a big string with many components is to
+use the string method 'join' on a list:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = [ 'foo', 'bar', 'baz' ]
+&gt;&gt;&gt; &quot;&quot;.join(x)
+'foobarbaz'
+</pre>
+</blockquote>
+<p>So, for example, you could build 'x' in a for loop, and then join.</p>
+<p>Another neat trick that might come in handy for hw1 is string interpolation:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; s = &quot;Replace %s with something&quot; % 'something'
+&gt;&gt;&gt; s
+'Replace something with something'
+&gt;&gt;&gt; t = &quot;Replace %s with something, and %s with other&quot; % ('something', 'foo')
+&gt;&gt;&gt; t
+'Replace something with something, and foo with other'
+</pre>
+</blockquote>
+<p>This is by no means exhaustive -- I'll show you how to figure out more,
+in a bit.</p>
+</div>
+<div class="section">
+<h2><a id="importing-and-using-modules" name="importing-and-using-modules">Importing and using modules</a></h2>
+<p>Briefly,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import sys
+</pre>
+</blockquote>
+<p>imports the 'sys' module, at which point you can do lots of stuff with it. ;)</p>
+<p>There are tons and tons of Python modules that come with Python -- one
+for almost everything you can imagine.  See <a class="reference" href="http://docs.python.org/library/">http://docs.python.org/library/</a>
+for a nice searchable list with full docs.</p>
+</div>
+<div class="section">
+<h2><a id="some-advanced-stuff" name="some-advanced-stuff">Some advanced stuff</a></h2>
+<p>Python can learn things about Python objects by using <em>introspection</em>.
+For example, what methods does a list object have?</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = []
+&gt;&gt;&gt; dir(x)
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__str__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+</pre>
+</blockquote>
+<p>Well, what do they all do?!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; help(x.remove)
+Help on built-in function remove:
+&lt;BLANKLINE&gt;
+remove(...)
+    L.remove(value) -- remove first occurrence of value
+&lt;BLANKLINE&gt;
+</pre>
+</blockquote>
+<p>'dir' and 'help' are useful when you have some basic idea of what you're
+looking for but can't remember the name or the arguments.</p>
+<p>---</p>
+<p>---</p>
+<p>A common gotcha for new C++ programmers is the default
+'pass-by-reference' rule -- in Python, functions pass basic data
+types by value, and all others by reference.  So, you get results
+that look wonky if you modify passed in values sometimes:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def f(a, b):  # a is an int, b is a list
+...    a = 5
+...    b.append(10)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = 3
+&gt;&gt;&gt; y = [5, 6, 7]
+&gt;&gt;&gt; f(x, y)
+&gt;&gt;&gt; x
+3
+&gt;&gt;&gt; y
+[5, 6, 7, 10]
+</pre>
+</blockquote>
+<p>A good trick to use at the beginning is to do something like this:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; def g(a, b):
+...   a = 5
+...   b = list(b)             # make a copy
+...   b.append(10)
+...   return a, b
+</pre>
+</blockquote>
+<p>Now you can do</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x, y = g(x, y)
+&gt;&gt;&gt; x
+5
+&gt;&gt;&gt; y
+[5, 6, 7, 10, 10]
+</pre>
+</blockquote>
+<p>---</p>
+<p>You can define multi-line strings using triple quotes:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; x = &quot;&quot;&quot;
+... foo
+... bar
+... &quot;&quot;&quot;
+&gt;&gt;&gt; x
+'\nfoo\nbar\n'
+</pre>
+</blockquote>
+<p>---</p>
+<p>Aaaaaaand back to string stuff: before I showed you how &quot;inspect&quot; types
+visually, by using a tuple constructor,</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print ('5', 5)
+('5', 5)
+</pre>
+</blockquote>
+<p>You can also just use 'repr', which unlike 'str' retains type signifiers:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; a = 5
+&gt;&gt;&gt; b = '5'
+&gt;&gt;&gt; print repr(a), repr(b)
+5 '5'
+</pre>
+</blockquote>
+<p>Trust me, these techniques will come in handy sooner rather than later!</p>
+</div>
+<div class="section">
+<h2><a id="the-cgi-module" name="the-cgi-module">The CGI module</a></h2>
+<p>Here's how you use the CGI module to read in form values:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; import cgi
+&gt;&gt;&gt; form = cgi.FieldStorage()
+</pre>
+</blockquote>
+<p>Here, 'form' is a dictionary-like object.  You can use your own
+resources to figure out what the keys and values are... think of
+it as a detective hunt!</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="useful-debugging-techniques" name="useful-debugging-techniques">Useful debugging techniques</a></h1>
+<p>I've prepared some, ahem, challenges for you all here:</p>
+<blockquote>
+<a class="reference" href="http://class.ged.idyll.org/svn/files/lab1/">http://class.ged.idyll.org/svn/files/lab1/</a></blockquote>
+<p>In your free time remaining in lab, try running them and see if you
+can figure out why they don't work.  I want to use these as vehicles to
+introduce you to some debugging techniques:</p>
+<blockquote>
+<ul class="simple">
+<li>use print, a lot</li>
+<li>deleting lines can help tell you where the error ISN'T</li>
+<li>use 'type', remember?</li>
+<li>factor expressions into variables so that you can pinpoint the
+error</li>
+<li>have you actually tested <em>all</em> the branches of your code?</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+===================
+Network programming
+===================
+
+Most of you are familiar with the virtues of a programmer. There are three, of course: laziness, impatience, and hubris. -- Larry Wall
+
+Brief code review
+-----------------
+
+Let's take a look at this file:
+
+      http://class.ged.idyll.org/svn/files/lecture4/fixme.cgi
+
+Are there any bugs?
+
+How would you neaten up the code?
+
+Debugging any language in the world
+-----------------------------------
+
+Take a look at:
+
+      http://class.ged.idyll.org/svn/files/lab1/deftuple.py
+
+If you didn't immediately spot the problem, how would you debug this?
+
+TCP/IP and network programming -- basic concepts
+------------------------------------------------
+
+IP (v4)
+  - "Internet Protocol"
+  - send packets/datagrams containing data
+  - abstraction allows these packets to be routed over many types of networks
+    (think cell phones...)
+  - connectionless: no circuit needs to be established before sending
+  - unreliable (data corruption, out-of-order, duplicates, lost/dropped)
+  - header is checksummed
+  - addressing and routing: there be dragons
+
+Internet addresses: dotted quad (A.B.C.D) of 8-bit numbers.  Left to right,
+increasing resolution of network/host.
+
+UDP
+  - "User Datagram Protocol" a.k.a. "Unreliable Datagram Protocol"
+  - built on top of IP
+  - no guarantees
+  - applications: DNS (name service; below); VoIP; games (NetTrek)
+  - stateless; broadcast; multicast
+  - app-to-app communication through ports (as with TCP)
+
+TCP
+  - "Transmission Control Protocol"
+  - stream-oriented: send multiple bytes through channel, TCP handles
+    encoding etc.
+  - applications: HTTP, SMTP, SSH, etc.
+  - app-to-app communication through ports (as with UDP, but different ports!)
+  - reliable, guaranteed order, **easy to program** (relatively speaking)
+
+DNS
+  - names to IP addresses
+
+Special IP addresses: 127.0.0.1 (localhost); 192.168.x.y and 10.0.x.y (private networks)
+
+Gateways, firewalls, and NAT (network address translation); going in vs
+coming out.
+
+ping and traceroute
+
+Connecting to hosts
+
+Specifying a port, "reserved" ports, and "standard" ports
+
+ - bind a port to define an "address"
+ - ports under 1024 are reserved for administrative users.  Generally "regular" users cannot bind to these ports, because they are reserved for admin services.
+ - ports of interest: ::
+   SMTP (mail) - 25
+   HTTP (Web) - 80
+   ssh - 22
+   HTTPS (secure Web) - 443
+
+Some comments re Network *latency* vs *throughput* - latency is how long
+data takes to go through, throughput is how much data goes through once
+it arrives.
+
+Mechanics of processing network connections
+-------------------------------------------
+
+(socket module in Python; see http://docs.python.org/lib/socket-objects.html)
+
+Creating a socket - 'socket', SOCK_STREAM or SOCK_DGRAM 
+
+Binding to an address - 'bind', host & port
+
+Listening for connections - 'listen', backlog
+
+Handling new connections synchronously and asynchronously
+
+  - connection comes in
+  - while processing data for that conn, another connection attempt is
+    made; what now?
+  - can handle:
+     - "in order", or synchronously (send; receive; send; receive);
+     - asynchronously (send 1; receive 2; send 2; receive 1; etc.)
+  - synchronous programming is more *predictable*
+  - asynchronous programming is more difficult but can be much more
+    efficient (next week!)
+
+In order for data to be processed, *a program must be running on the 
+server side*, as well as on the client side.
+
+In the case of the CGI stuff, the Apache Web server was running in the
+background.
+
+In the case of the WSGI stuff, *you* were running the server that was
+doing the handling.
+
+Networking
+==========
+
+Blocking vs non-blocking I/0
+
+  - blocking I/O **blocks** the thread of execution until input/output
+    is available.  This means that you must use multiple threads of
+    execution (threading, multiprocess) OR special monitoring functions
+    (select) to handle multiple connections with blocking I/O in a single
+    thread of execution.
+
+  - non-blocking I/O doesn't block, but returns immediately with data
+    OR aborts and signals an error ("no data available, boss").
+
+    (how do you distinguish between "data available" and error? guesses?)
+
+Synchronous vs asynchronous I/O
+
+  - synchronous is like a conversation: you speak, then I speak.
+
+  - asynchronous is like an unfriendly argument: everyone speaking at
+    once.
+
+Synchronous vs asynchronous **processing**
+
+  - synchronous processing waits for one "conversation" to be over before
+    starting another one.
+
+  - synchronous processing is BAD: inefficient, doesn't scale,
+    resource intensive...
+
+  - asynchronous processing relies on built-in language or OS features
+    to "keep track" of several connections at once.  It can be done
+    inefficiently (see HW #3, "busy wait") or efficiently
+    (threading/processes, or select); the latter depends more on
+    language/OS features.
+
+(Some diagrams...)
+
+Non-blocking network I/O
+========================
+
+By default, sockets are *blocking*.  When you try to read from them,
+your program will hang until some event (data is available; connection
+closed; etc.)
+
+For the next HW, you must use ``socket.setblocking(0)`` on all
+of your sockets to make a non-blocking echo server.  This need to
+be done on the bound socket as well as on all client connection sockets.
+
+If you set the sockets to non-blocking, then you will get an exception
+almost every time you try to accept a connection or read from a connection:
+that is, ::
+
+  sock.recv(...)
+
+will raise a ``socket.error``.  That is because there is no data available
+and rather than returning an empty string, Python throws an exception.
+
+To handle this case, wrap it in a try/except statement body: ::
+
+  try:
+     sock.recv(...)
+  except socket.error:
+     # handle error
+
+The code in the 'except block ('handle error') can be whatever you
+want it to be; see below for three examples.

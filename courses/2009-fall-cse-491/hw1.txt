@@ -1,0 +1,48 @@
+Homework 1: CGI scripts
+-----------------------
+
+Due Tuesday, September 15th, at 4:30pm (start of class).
+
+
+1. Take the file 'hello.cgi' (from the class svn server for HW files,
+http://class.ged.idyll.org/svn/files/hw1/hello.cgi) and install it
+under your CGI directory so that it is accessible as
+'http://www/cse.msu.edu/cgi-user/$USER/hello.cgi' (replace
+$USER with your CSE account name).  You shouldn't need to make any
+modifications to the script itself other than making it executable.
+(2.5 points)
+
+2. Write a CGI script that takes in POST data from this form:
+http://class.ged.idyll.org/svn/files/hw1/form.html, and processes it
+to dynamically produce output like this:
+http://class.ged.idyll.org/svn/files/hw1/form-output.html.  That is,
+the CGI script should printing out "Number" copies of "Name" on
+separate lines, in the given color, with conversion of the name to
+uppercase or lowercase as specified. Use the 'cgi' module to parse the
+input data.  Your CGI script should be named 'hw1/process-hw1-form.cgi'.
+(5.0 points)
+
+Handing in Homework
+-------------------
+
+You will be using the Subversion ('svn') server at
+
+   http://class.ged.idyll.org/svn/
+
+with your MSU username.  I'll send out a link for setting up your
+SVN accounts between now and Thursday, and we'll discuss how to use
+Subversion in class on Thursday.
+
+A few notes:
+
+ * Make sure to name your HW files exactly as specified in the HW itself.
+   This makes it easy for us to find.
+
+   So, for the second part of the homework, you should make SURE that your
+   homework file is accessible as
+
+       http://class.ged.idyll.org/svn/$USER/hw1/process-hw1-form.cgi
+
+ * Also make sure that what is checked in, works; the best way to do
+   this is to check it back out in a different directory, and then try
+   running it, hint.

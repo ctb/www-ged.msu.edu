@@ -1,0 +1,345 @@
+---------------------------------------------------
+Lab #10 -- Code coverage; twill; Jinja2; JavaScript
+---------------------------------------------------
+
+CSE 491, Nov 5th, 2009.
+
+I will have FileServer grades to you tonight.
+
+(NOTE: both figleaf and twill are open source and freely available,
+not to mention written by Yours Truly.)
+
+Code coverage analysis with figleaf
+-----------------------------------
+
+figleaf is a tool that, when run on Python source code, tracks
+which lines of code are actually executed.  It then lets you
+annotate your Python files with HTML output.
+
+Its primary use is to "watch" your code-under-test to see
+what lines of code are actually executed.
+
+Code that isn't executed is **definitely not tested** and
+is a good candidate for your next test writing effort.
+
+Even with 100% code coverage, you won't be doing complete
+tests; consider: ::
+
+   def f(a, b):
+      if a:
+         # path 1
+      else:
+         # path 2
+
+      if b:
+         # path 3
+      else:
+         # path 4
+
+You get 100% code coverage by calling: ::
+
+   f(True, True)
+   f(False, False)
+
+but you're only testing paths 1,3 and 2,4, not paths 1,4 or paths 2,3.
+For that you'd need branch coverage, which isn't yet possible with
+Python.
+
+To run figleaf on adriatic, do your standard ::
+
+   source ~ctb/python-env.csh
+
+Then run whatever Python code you want to run like so: ::
+
+   figleaf <Python code to run>
+
+e.g. ::
+
+   figleaf tst.py
+
+This will record what lines of code are run.
+
+Finally, run figleaf2html: ::
+
+   figleaf2html
+
+which will produce a directory html/.  This directory contains the
+HTML output of the code coverage run.
+
+Some practical tips
+~~~~~~~~~~~~~~~~~~~
+
+Practically speaking, you will want to do two things: first, you want
+to run figleaf **on your tests**, inside of nose.  To do that, instead
+of running ::
+
+  nosetests
+
+do instead ::
+
+  figleaf /user/ctb/install/bin/nosetests
+
+(again on adriatic).
+
+Also, you'll probably want to put the output directory somewhere where you
+can access it remotely, e.g. your ~/web/ directory.  To do *that*, first make
+sure you have a world-readable 'web' directory in your home: ::
+
+  mkdir ~/web/
+  chmod -R a+rx ~/web/
+
+and then tell figleaf2html to put its output there: ::
+
+  figleaf2html -d ~/web/figleaf
+
+and make the 'figleaf' directory world-readable ::
+
+  chmod -R a+rx ~/web/figleaf
+
+Now your figleaf output should be available as ::
+
+  http://www.cse.msu.edu/~nermal/figleaf/
+
+If you get the response "permission denied" when you go to the Web
+page, then you need to do the two chmods up above.
+
+(I can give you some code to get you started with testing FileServer;
+someone remind me...)
+
+Functional Web testing with twill
+---------------------------------
+
+'twill' is a simple, domain specific language for Web testing, implemented
+in Python.
+
+See http://twill.idyll.org/ for basic info, and
+http://twill.idyll.org/commands.html for a full list of commands.
+
+The basic idea behind twill is to **enable** *functional testing* of
+simple Web apps.  For example, ::
+
+ >> go http://localhost:5000/
+ >> code 200
+
+visits that URL and asserts that an HTTP status code of '200' was returned. ::
+
+ >> go http://localhost:5000/form.html
+ >> formvalue 1 name "titus"
+ >> submit
+ >> code 200
+
+fills in the input box named 'name' with titus on first form on the
+page, and verifies that upon form submission an HTTP status code of 200
+is returned.
+
+The command ::
+
+ >> find text
+
+asserts that 'text' is found on the page, and the code ::
+
+ >> url /form.html
+
+asserts that the current URL has '/form.html' in it.
+
+You can use twill interactively (... voila) or you can create little
+twill scripts and run them as ::
+
+ twill-sh <script>
+
+One very useful command line argument is '-u', which specifies a starting
+URL: ::
+
+ twill-sh -u http://localhost:5000/ <script>
+
+This does a 'go http://localhost:5000/' *before* running the script,
+which means you don't need to hardcode your URL into your script,
+which makes your scripts more portable.
+
+To run twill on adriatic, you'll need to do your standard ::
+
+  source ~ctb/python-env.csh
+
+Jinja2 templating again
+-----------------------
+
+If you remember from HW #4 (or the HW #6 solutions,
+
+   http://class.ged.idyll.org/svn/files/hw6/solutions/
+
+) we implemented template inheritance inside of Jinja2.  For HW #9,
+you need to integrate your OSWD site into 'base.html'.  One way to
+*test* it -- a question you should *always* ask... -- is to
+make sure that 'process_form.html' works with the new 'base.html'.
+
+That is, for whatever OSWD design you chose, the 'content' block
+should replace the content block containing the boilerplate text
+"Lorem ipsum...", and you can test this by using process_form.
+
+If you're unsure about your HW #4 templates/ files, just take them
+from the HW #6 solutions.
+
+The logic in your revised FileServer app (or whatever you want to
+call it...)  should be this: ::
+
+   if url_file in template directory:
+      render template file with jinja2
+   else:
+      try to return file from html directory
+
+Some simple JavaScript
+----------------------
+
+Objective: expose you to JavaScript and JS troubleshooting.
+
+General JS resources:
+
+http://www.w3schools.com/js/
+
+http://devguru.com/technologies/javascript/home.asp
+
+---
+
+Files for this lab are in svn, at:
+
+   http://class.ged.idyll.org/svn/files/lab10/
+
+---
+
+Common problems (hat tip to Taylor Marshall): ::
+
+  '' == '0' //false
+  0 == '' // true
+  0 == '0' // true
+
+(== and != are not symmetric, so weird stuff can happen as above; this
+is also possible in Python, note!)
+
+Recommend using === and !== operators to avoid such tomfoolery.   In
+the above examples, all statements would evaluate to false using ===.
+
+JavaScript examples
+-------------------
+
+Simple JS (`page <lab10/ex1.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex1.html>`__) : ::
+
+  <html>
+  <body>
+  <script type="text/javascript">		<--
+  document.write("Hello World!");
+  </script>					<--
+  </body>
+  </html>
+
+Hide your JavaScript from non-JS users (`page <lab10/ex2.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex2.html>`__) : ::
+
+   <script type="text/javascript">
+   <!--
+   document.write("Hello World!");
+   //-->
+   </script>
+
+Load JavaScript code from another file (`page <lab10/ex3.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex3.html>`__ and `JS source <http://class.ged.idyll.org/svn/files/lab10/hello.js>`__) : ::
+
+   <script src='hello.js'></script>
+
+Grouping JS statements into blocks with squigglies (`page <lab10/ex4.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex4.html>`__) : ::
+
+   <script type='text/javascript'>
+   {
+   document.write("Hello");
+   document.write(" World!");
+   }
+   </script>
+
+
+Basic JS prompts (`page <lab10/ex5.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex5.html>`__) : ::
+
+   alert("something happened!");
+
+   confirm("may I delete all your files?");
+
+   prompt("some question","defaultvalue");
+
+Functions, head/body separation, and element events (`page <lab10/ex6.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex6.html>`__) : ::
+
+  <head>
+  <script type="text/javascript">
+  function displaymessage()
+  {
+  alert("Hello World!");
+  }
+  </script>
+  </head>
+
+  <body>
+  <form>
+
+  <input type="button" value="Click me!" onclick="displaymessage()" >
+
+  </form>
+  </body>
+
+
+'undefined' implicit conversion to strings, & errors (`page <lab10/ex7.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex7.html>`__) : ::
+
+   document.write("this.bar is: " + this.bar)
+
+   document.write("<p>foo is: " + foo);
+
+   document.write("<p>and hello, world!");
+
+(Go look at the Firefox error console.)
+
+Simple object-oriented programming, and iteration over bags o' properties (`page <lab10/ex8.html>`__, `source <http://class.ged.idyll.org/svn/files/lab10/ex8.html>`__) : ::
+
+  function some_object_method(param) {
+     document.write("hello!  This is SomeObject's other param: ");
+     document.write(this.what);
+  
+     document.write("<p> and this is my method param:");
+     document.write(param);
+  }
+  
+  function SomeObject(what, other_param) {
+     this.foo = "hello";
+     this.what = other_param;
+     this.method = some_object_method;
+  }
+
+  /////
+  
+  x = new SomeObject("world", 2);
+  
+  document.write(x.foo + " " + x.what + "<p>");
+  x.method("argument to SomeObject.method");
+  
+  for (z in x) {
+     document.write('<p>z is ' + z);
+     document.write('<p>x[z] is ' + x[z]);
+  }
+
+Working with HTML elements (`page <lab10/ex9.html>`__, `source <http://class.ged.idyll.org/svn/files/lab-10/ex9.html>`__) : ::
+
+  <script type="text/javascript">
+  
+  function change_title() {
+      var x = document.getElementById("my_input");
+      document.title = x.value;
+      return false;
+  }
+  
+  document.write("The title is: " + document.title + "<p>");
+  </script>
+  
+  <form onsubmit='return change_title()' method='POST'>
+  
+  New title: <input type="text" id='my_input'>
+  
+  <input type="submit" value='change title' >
+  
+  </form>
+  
+  </body>
+
+---

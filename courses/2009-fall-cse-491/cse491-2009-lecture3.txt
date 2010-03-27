@@ -1,0 +1,285 @@
+-------------------------------------
+Lecture 3 -- CGI and WSGI; templating
+-------------------------------------
+
+Sep 15th, 2009.
+
+---
+
+A few thoughts re the homework from e-mail & office hours.
+
+First, there are at least four  locations:
+  
+  the files/ repository, which is where I put class materials.
+
+  your copy of the files/ repository, to which you do NOT have write
+  access ;)
+
+  your repository, which is how you communicate files to me.
+
+  cgi directory, where you actually execute your CGI scripts.
+
+  home directory, where you develop.
+
+After this week there will be no more cgi directory; that was an
+unexpected amount of pain.
+
+---
+
+Second, *start with a working script*.
+
+Easy to move from working script to working script; not so easy to
+start from scratch!
+
+---
+
+How many people used a weird content-type on their hello.cgi script?
+
+Most browsers try to *download* file if they don't know what else to
+do with it.
+
+---
+
+Double-check the lab notes; re-skim them later.  Sometimes I answer
+questions you will actually have...
+
+---
+
+HTTP and the Web
+================
+
+The Web uses HTTP (hypertext transport protocol) as its primary
+transport protocol.  Note, HTTP can be used to transport any content,
+not just "hypertext" (e.g. HTML) but also things like large
+files. However, HTTP servers are usually optimized for many
+connections sending fairly small loads of data.
+
+URLs:
+
+  http://machine:port/path/to/resource?query_stuff
+
+ - http is the protocol
+ - machine is a DNS name or an IP address
+ - port is a TCP port
+ - /path/to/resource is the on-server path, can be anything you want, although
+   many Web servers have canonical URL schemes (e.g. CGI scripts).
+ - query_stuff is a way of passing in values
+
+The HTTP protocol:
+
+  - synchronous (query, response transaction pairs); AJAX adds
+    asynchrony.
+
+  - client/server in design, not peer to peer (although again
+    JavaScript is changing things)
+
+  - note, all header lines etc. end in <CR><LF> (carriage return/line
+    feed), or `\r\n`
+
+  - basic protocol: port 80, requests like ::
+
+       <command> <url> <protocol version>\r\n
+       [ <other optional stuff> ]
+
+    ended by blank line; for example ::
+
+       GET / HTTP/0.9\r\n
+       \r\n
+
+  - answer is in format ::
+
+       <protocol> <status code> <message>\r\n
+       <header line(s)>\r\n
+       \r\n
+
+    for example ::
+
+       HTTP/1.1 200 OK\r\n
+       Content-length: 4567\r\n
+       \r\n
+
+  - GET, retrieval of page content; generally full URL is specified.
+
+  - content-type specification (MIME types: 'text/html', 'image/jpeg')
+
+  - data passing via query strings: query_string is set of pairs of 
+
+            name, value
+
+    data, encoded suitably: name=value2&name2=value2
+
+    Obvious limitations for large data (submitting files!)...
+
+  - POST, retrieval of page content AFTER data passing.
+
+    data is passed after the header, as one long encoded stream of bytes.
+
+  - "cookies" are small bits of data that are specific to a URL
+    hierarchy, and are a name,value pair.  They are stored on the
+    client side -- really the *only* persistent thing stored on the
+    client.
+
+  - markup, html, forms
+
+  - HTML ("HyperText Markup Language") is a bastardized XML-ish language: ::
+
+       <markup_tag option1='value' option2='value2'>plain text</markup_tag>
+
+    There's a specific document format that we will mostly be ignoring ::
+
+      <html>
+       <head>
+         <title>...</title>
+         [ other stuff ]
+       </head>
+       <body>
+         [ actual content ]
+       </body>
+      </html>
+
+  - note, HTTP is actually a very simple protocol, and HTML is quite
+    simple (and "open source").  This drove the spread of both!
+
+Statelessness
+-------------
+
+HTTP is designed around *statelessness* -- the only persistent state
+on the client side is in the cookies, and those contain only data
+relevant to the *server* (so you can e.g. switch IP addresses and
+clients easily).  Connections are designed to be transient (request,
+receive, end) although there are optimizations on top of that now
+(HTTP/1.1).
+
+See Wikipedia, tateless server
+<http://en.wikipedia.org/wiki/Stateless_server>_; each transaction
+is treated independently, with cookies being the only thing kept
+across conversations.  Thus HTTP is actually not just a synchronous
+protocol/conversation, it is a very *brief* conversation :).
+
+CGI
+---
+
+So let's go back to CGI.  With your form processing in CGI, you saw ::
+
+  client -> Web server -> CGI script
+  ^^^^^^                  ^^^^^^^^^^
+
+where you wrote or at least designed the ^^^ parts.
+
+In CGI, all of the stuff in the protocol section above gets communicated
+to the script in two ways:
+
+ 1. in environment variables
+ 2. in stdin input (as if typing @ keyboard)
+
+Then the output of CGI gets communicated back, ::
+
+  Content-type: text/html
+
+  (content goes here)
+
+and the Web server that *called* the script is responsible for parsing
+the headers (everything above 'content goes here') and turning it back into
+HTTP.
+
+Reasonably good way to execute things, except for
+
+ - executing a new process for each Web call.
+
+ - security & permissions: everything runs as unprivileged user.
+
+WSGI
+----
+
+"Web Services Gateway Interface", part of the Python language now.
+
+wsgiref is a reference implementation that comes in the stdlib.
+
+WSGI is a Python-specific programmatic way of doing the same thing --
+translating HTTP data into a callable (function, class, whatever) and
+returning HTTP + content.
+
+Less parsing involved, because we're dealing with richer data types
+(multiple strings, rather than just one in and one out!)
+
+WSGI is laid out in a long and reasonably technical Python Enhancement
+Proposal, PEP 333 (http://www.python.org/dev/peps/pep-0333/).  Worth
+skimming to get a feel for it.
+
+We will implement a complete (though simple) WSGI framework in the next
+few classes.
+
+Here's a simple WSGI application: ::
+
+  def simple_app(environ, start_response):
+      """Simplest possible application object"""
+      status = '200 OK'
+      response_headers = [('Content-type','text/plain')]
+      start_response(status, response_headers)
+      return ['Hello world!\n']
+
+How does this work?
+
+ 1. The Web server calls 'simple_app' and passes it a mapping (dictionary)
+    of environment variables, 'environ', and a function, 'start_response'.
+
+ 2. The app prepares (thinks, processes, opens dbs, etc. etc.)
+
+ 3. When the app is ready to begin responding -- that is, it knows
+    what its status is and what it's going to return -- it calls
+    'start_response' with the response code ("200 OK" and others)
+    and a list of response headers ("Content-type", "text/plain")
+
+ 4. It then returns a chunks of text in an *iterable*.
+
+Think of this as a "programmatic CGI", no script involved, just Python
+code and functions.
+
+Points:
+
+ - this mechanism can support apps that are functions (as above), or
+   your own classes/object -- technically, "callables", things that 
+   can be called.
+
+ - also supports *incremental return* of large documents.  This is
+   good for situations e.g. where it may "cost" a lot of time to
+   construct the document but you want to send something back to the
+   user quickly.
+
+ - also supports *middleware*, wrapper functions that sit in between
+   server and application.
+
+ - think about *dispatch* -- the idea that a single "app" object will
+   look at the input URL (in 'environ') and then *decide* what function
+   to call.  Again, more later.
+
+We'll start with WSGI by reimplementing the form processing code you just
+handed in as a WSGI app object for the next homework.
+
+Templating
+==========
+
+In HW #1, you constructed HTML by hand, with 'print' or string
+concatenation.
+
+This gets inconvenient and error-prone for large HTML files.
+
+Templates are a mechanism by which you can do things like chunk out
+HTML directives and page layout while substituting in only the content
+that differs between pages.  "Programming in HTML" ;)
+
+Templates offer many conveniences:
+
+ - separation between content and style.
+
+ - some control constructs for limited programming, to take care of
+   simple stuff.
+
+ - on-the-fly editing and reloading (unlike Python code)
+
+ - hierarchical layout of files and style.
+
+ - tools to help you encode and escape text for HTML display.
+
+We'll be using jinja2, a simple templating engine that lets you do some
+simple and neat things.  More in lab, HW.

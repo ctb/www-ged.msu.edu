@@ -1,0 +1,129 @@
+--------------------------------
+Lecture 9 -- MIME types and more
+--------------------------------
+
+October 27th, 2009.
+
+Some design considerations: encapsulation
+-----------------------------------------
+
+Look at the WSGI stack.
+
+The WSGI server talks to the WSGI application object.  The application
+object doesn't know anything about the socket, or the HTTP request, or
+anything like that -- it just knows what URL was requested, what query
+string or POST content was passed in, and the headers.
+
+Why isn't all of this information available to all of the code in the
+webserve module, as module globals? Why can't the application object
+talk directly to the socket?
+
+The whole point of abstractions and separation of concerns is
+encapsulation: you're trying to neatly put things into little black
+boxes with known inputs and outputs so you can stop thinking about
+them.
+
+And why do this?
+
+Crossing boundaries of abstractions: bad.  This reduces encapsulation
+=> makes parallelization, testing hard, reduces reliability, etc.
+Global or cross-module dependencies should be minimized:
+inderdependencies => complexity => bad.
+
+Running multiple servers, and multiple WSGI apps, at the same time,
+requires good encapsulation (or at least it does if you're sane).
+
+Non-blocking tests for HW #7
+----------------------------
+
+What do the non-blocking tests for HW #7 really test?
+
+Server.handle_connection only, not Server.serve_forever!
+
+(yep, tests encapsulation!)
+
+Testing: code branches
+----------------------
+
+What tests should you write for HW #7?
+
+Make sure all if/else branches "work" when entered.  What does "work"
+mean?  You tell me in your tests.  Your tests will *definitely* need
+to execute all branches.
+
+You can test at the socket level OR at the app level.
+
+How many branches are there here? ::
+
+  if a:
+    print 'hello'
+
+  print 'goodbye'
+
+
+HTML, CSS, and JavaScript: a brief introduction
+-----------------------------------------------
+
+HTML: all the squiggly brackets.  Specifies content and other resources
+to load -- including CSS and JavaScript.  HTML is pretty standardized.
+
+CSS, "cascading style sheets": modifies the display properties of
+HTML.  Looks something like this: ::
+
+   body {
+     font-family:arial, verdana, helvetica, sans-serif;
+     font-size:12px;
+     color:#AAAAAA;
+     background-color:#FFFFFF
+   }
+
+i.e. lots of squiggly brackets.  We will discuss in more detail on
+Thursday.  CSS is interestingly broken in various browsers but we'll
+only be working on it within Firefox.
+
+JavaScript, a programming language built into the browser.  JS has
+access to data loaded into the browser and can also direct the loading
+of data from the originating Web site.  JavaScript is where the majority
+of interesting new Web behavior is being developed.
+
+AJAX, Asynchronous JAvascript+Xml builds on top of JavaScript to provide
+loading of data from the originating Web site.  It lets you incrementally
+load or access large data sets.
+
+We'll be talking about JS and AJAX next week and thereafter.
+
+JS and AJAX are reasonably standardized, and we'll be using the jQuery
+library to provide a compatibility layer between your code and the 
+browser.
+
+MIME types (and images)
+-----------------------
+
+Content-Type headers emitted by server tell client how to interpret the
+data::
+
+ text/html
+ image/jpeg
+ text/plain
+
+But how does the server know what content type to choose for each page?
+
+Answer: it's up to the server. For static files, here's a lookup table
+based on extension; c.f. Apache and IIS Web servers, MIME types...
+You have to implement this yourself.
+
+More duck typing: lists, dicts, and iterables
+---------------------------------------------
+
+duck typing/iterables
+
+Special methods on classes:
+
+    + making it look like a list: ``__getitem__(n)`` and ``__len__()``
+
+    + making it look like a dict: ``__getitem__(k)`` and ``keys()``.
+
+    + more general 'iterables': ``__iter__()`` and ``next()``
+
+The idea is that you can use these to dynamically calculate list elements,
+rather than pre-calculating them.

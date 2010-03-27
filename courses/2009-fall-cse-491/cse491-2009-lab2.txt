@@ -1,0 +1,691 @@
+Lab #2 -- Getting started with Subversion, CGI, and Python
+----------------------------------------------------------
+
+CSE 491, Sep 10th, 2009.
+
+Subversion
+----------
+
+Subversion is a version control system that keeps track of file
+contents and directory structures across time and between multiple
+developers (and in other ways, too, such as across multiple "branches"
+of development).
+
+Subversion is a *centralized* version control system, much like its
+predecessor, CVS.  This means that there is a single "master"
+repository through which everything is coordinated.  In contrast,
+version control systems such as git, Mercurial ('hg'), and bazaar
+('bzr') are *distributed* -- no centralized coordination is required.
+
+The two central concepts in Subversion are the **repository** and the
+**working directory**.  Working directories (or working copies) are
+snapshots of some part of the repository, taken from a particular
+part of the Subversion repository at a particular time.
+
+As the name implies, working directories are where you do all your work;
+the central repository, is where you commit changes whenever you want to
+save them.
+
+The most important point for people new to version control is this:
+**as long as you have committed something to the repository, you can
+retrieve it at any point in the future.** As an individual developer,
+you *cannot* permanently delete things in the central repository, even
+by accident!  This means that you should commit stuff as often as
+possible -- whenever you make any progress at all -- because it
+gives you an indestructible checkpoint of your progress that you can
+return to on demand.
+
+Note that I will only really look at your repositories when homework
+is due; you won't be graded on how you develop, or how infrequently
+you commit, or anything like that.
+
+subversion accounts
+~~~~~~~~~~~~~~~~~~~
+
+Your Subversion server is accessible via (what else?) a URL:
+
+     http://class.ged.idyll.org/svn/nermal
+
+Here, replace 'nermal' with your MSU NetID.
+
+You should able to go to this URL in a Web browser and enter your
+username and password and see an empty repository.  Note that this
+view is, by default, a view of the very latest commit to the
+repository; it's a good way to check that you've handed in the
+right thing on your homework, hint.
+
+basic subversion
+~~~~~~~~~~~~~~~~
+
+From the arctic.cse.msu.edu command line, type ::
+
+   svn checkout <url>
+
+to get a working copy.  Note that Subversion URLs are hierarchical, so
+you can get a working copy of a subdirectory of your repository by
+adding on a subdirectory, e.g. fFor hw1, your URL will be hw1/
+
+Now, do ::
+
+    svn checkout <url> cse491
+
+to get a working directory named 'cse491'.  Now do ::
+
+        cd cse491
+        mkdir lab1
+        svn add lab1
+
+to add lab1/ into svn's list of "files I need to know about".  Next, ::
+
+        cd lab1
+        echo hello, world > README.txt
+        svn add README.txt
+        svn commit -m "my first commit"
+
+to add the file 'README.txt' into svn, and commit all of these
+changes to the central repository.  You should now ou can view it
+on the Web here, ::
+
+        http://class.ged.idyll.org/svn/nermal/lab1
+
+You can also do ::
+
+        svn log
+
+to get a history of changes, and also (in another directory)
+
+        svn checkout http://class.ged.idyll.org/nermal/lab1
+
+which will create a new working 'lab1' in that directory, linked
+to the same repository as the other 'lab1'.  You can make changes
+here, commit them, and then 'svn update' in the other directory
+to retrieve them.
+
+Note that you can always create a new working directory if you
+are upset with changes, or you can use 'svn revert' to selectively
+revert to the last version you committed.
+
+IF YOU BREAK A WORKING COPY (I'll show you one way, next week) then
+just back it up, check out a new copy, and try not to break that new
+copy ;).
+
+For homework, you need to create a directory 'hw1' and put the source
+code for your CGI script in there.  Note #2, it's easy to check to see
+if you've got the right code in your repository: LOOK VIA YOUR WEB
+BROWSER.
+
+For office hours, please CHECK IN (COMMIT) the scripts you're
+having trouble with before you come to see me.  **(Physical media is
+soooooo 1990s.)**
+
+Getting CGI to work
+-------------------
+
+Basic UNIX scripts are text files with a 'shebang' line (#!), at the top, 
+indicating what program should be used to run the script.  For example, ::
+
+  #! /bin/bash
+  echo hello, world
+
+is a script that will be run with bash -- one of the common UNIX shells.
+
+Try putting this text into the script 'hello.sh', and then running it like this: ::
+
+  ./hello.sh
+
+You should get "permission denied".  Huh!?  That's because you didn't
+tell UNIX that this text file was supposed to be executable!  You
+need to change the file permissions to make it executable: do ::
+
+   chmod +x hello.sh
+
+and try running it again.
+
+The same principle applies to Python scripts.  A good #! line for Python is ::
+
+   #! /usr/bin/env python
+
+which says 'go find the first program named python in my path, and run
+that'.
+
+So, try making a simple Python 'hello, world' script: note, just ::
+
+   print 'hello, world'
+
+works fine in Python ;).
+
+--
+
+OK, so in class I told you that CGI scripts are just scripts that are
+executed by the Web server and take in/pass out a certain set of
+information.  So let's make your first CGI script!  Put this in a
+a file somewhere, named 'hello.cgi': ::
+
+   #! /usr/bin/env python
+   print 'Content-type: text/html\n\nHello, world'
+
+Now make it executable (``chmod +x hello.cgi``) and try running it: ::
+
+   ./hello.cgi
+
+Does that work?
+
+OK, it should print out three lines, but does it look like a Web page?
+Well, yes and no.  The thing is, the output of this CGI script is meant
+for the Web *server*, not your tender eyes -- the Web server that ran
+the script will read in what the script produces, parse it, and then spit
+proper HTTP back at the Web client that requested the URL that led to
+the CGI script.
+
+To do that, you need to put it in a special directory on arctic: ::
+
+   /user/cgi/nermal
+
+So, try that:
+
+   cp hello.cgi /user/cgi/nermal
+
+Make sure the permissions are correct, too:
+
+   chmod 755 /user/cgi/nermal/hello.cgi
+
+Now, glory of glories, try running it through the Web at the extra-super-
+magical URL,
+
+   http://www.cse.msu.edu/cgi-user/nermal/hello.cgi
+
+BTW, it does work; check out mine, at
+
+   http://www.cse.msu.edu/cgi-user/ctb/hello.cgi
+
+!
+
+OK, so that's how you get CGI scripts to work.  Congratulations, you're
+now officially a Web programmer!
+
+One last convenient trick that will come back to haunt many of you,
+hopefully in a useful way: the 'cgitb' module.  In your hello.cgi script
+(or a new file) put: ::
+
+   #! /usr/bin/env python
+   import cgitb
+   cgitb.enable()
+   int('this is not a number')
+
+Now try running THAT script via the Web (or try
+
+   http://www.cse.msu.edu/cgi-user/ctb/tb.cgi
+
+).  You should see a traceback -- why is this cool?  Well, if you take
+out the cgitb.enable() call, you'll see that your script fails in a
+singularly unhelpful way whenever there's an error: try out
+
+   http://www.cse.msu.edu/cgi-user/ctb/no-tb.cgi
+
+The reasons why this happens are legion, but for now, just take it for
+a given -- getting useful information out of a busted CGI script is
+much easier with 'cgitb'.
+
+There is one situation where cgitb can't help you, and that's when
+your Python script is simply invalid Python: you forgot to close a
+quote, or you screwed up whitespace.  Conveniently, you can just run
+'python nermalscript.cgi' to see if a given file (in this case,
+nermalscript.cgi) can be parsed by Python properly.
+
+So, to debug your Python CGI script for this week's HW,
+
+ - FIRST, check to make sure it's valid Python by running Python on it;
+
+ - SECOND, enable the 'cgitb' module.
+
+A few other notes on the HW:
+
+ - the homework files are on an open Subversion server.  You can get
+   them in one of two ways: either by doing a 'svn checkout', or by
+   browsing through the Web interface.  Same thing.
+
+   Just be sure to do an 'svn update' if you have done a checkout already
+   I send out an e-mail saying that there's a new version of the file...
+   that's how you can get the latest version into an existing repository.
+
+ - the homework tells you to make a CGI script that takes in form input
+   values and Does Something to make HTML.  But how do you actually
+   point your form at the CGI script!?  Save the HTML form in the
+   svn repository for hw1/ and look at the 'action' component of the
+   <form> element.  You can just edit that, open the file on your local
+   computer, and voila.
+
+   You can *also* put files in your ``~/web/`` directory on arctic,
+   and then access them in a Web browser at
+   http://www.cse.msu.edu/~nermal/.  Just make sure that you do a
+   ``chmod -R a+r ~/web/`` so that the files are world-accessible.
+
+A whirlwind tour of some UNIX techniques
+----------------------------------------
+
+Learning to use UNIX well is a good idea.  You'll probably need it
+later in life, and as your friendly local UNIX-y professor, I'm here
+to help by forcing it on you!
+
+Getting good (fast, reliable) at using *any* computer system is
+important for programmers.  Like it or not, programming happens ON
+an operating system and IN a environment... so the better you get,
+the faster you'll be able to get on with doing the interesting stuff.
+
+A few quick tips.
+
+First, there are many freely available implementations of UNIX for you
+to download and install.  I suggest Ubuntu, http://www.ubuntu.com/.
+
+---
+
+Second, on most modern UNIXes, you can use your arrow keys to move
+around in the prompt.  Up arrow gives you previous command in your
+history, down goes to next, left and right move around a particular
+command, backspace/delete etc. etc.
+
+Why is this useful? Let's face it -- you're probably not all that
+reliable a typist, so having to retype old commands is going to
+be error prone.  Why not just hit up arrow once?  And if you need
+to enter a new command that looks a lot like an old one, it may
+be simpler to just edit it.
+
+Bottom line: minimize errors by reusing command lines.
+
+---
+
+Third, learn a UNIX editor.  I'm not talking about one of those shiny
+graphical editors (although you can use one if you insist) - I'm
+talking about emacs or vim, both of which are installed on arctic.
+
+Emacs comes with a built in tutorial; type 'CTRL-H', 't' to access it.
+
+Here's a vim tutorial:
+
+http://blog.interlinked.org/tutorials/vim_tutorial.html
+
+Both of these editors have an extensive set of keystroke commands
+that you can use to do *everything*.  Moving the mouse around is
+wasted time.
+
+---
+
+Fourth, learn to use multiple windows into your UNIX system.  I
+suggest having an editor open in one, and a command line open in
+another.  Then you can edit a file, switch window, run command,
+switch window, edit, etc. -- think like you're playing pingpong ;).
+
+Why?
+
+All windowing environments have a way to toggle between windows
+quickly, using just the keyboard -- ALT-TAB in Windows,
+COMMAND-backquote on Mac OS X (betcha didn't know that!), and ALT-TAB
+in Linux.  If you can switch quickly between your windows, then you
+can shorten the test-fix-test cycle considerably, and that will save
+you hundreds of hours of time over the next decade of your life --
+or at least several hours for this class.
+
+Remember, moving the mouse around is a waste of time.  Any every additional
+second it takes you to do something is time for you to OH SHINY, PRON!
+
+(Yes, I was a student once, too.)
+
+If people want, I can give an "semi-advanced emacs" tutorial one day.
+
+---
+
+Fifth, learn to use UNIX jobs control: briefly, from any long running
+UNIX process,
+
+   CTRL-Z suspends the process
+
+   'fg' rejoins the process
+
+   'bg' tells it to go run in the background until it needs keyboard input
+
+   'jobs' tells you what you have running
+
+   '&' starts things running in the background (equiv to run, CTRL-Z, bg)
+
+In particular, this lets you run in one-window mode: emacs, edit, save,
+CTRL-Z, run program, fg, edit, repeat.
+
+Your 10 minute Python intro
+---------------------------
+
+Run 'python' to get a Python interpreter.
+
+Data types
+~~~~~~~~~~
+
+Basic data types are strings, ints, floats.
+
+  >>> a = 5
+  >>> print a
+  5
+  >>> type(a)
+  <type 'int'>
+
+  >>> b = "foo"
+  >>> print b
+  foo
+  >>> type(b)
+  <type 'str'>
+
+and so on.
+
+You can interconvert between types by using the type names:
+
+  >>> c = '5'
+  >>> type(c)
+  <type 'str'>
+  >>> d = int(c)
+  >>> type(d)
+  <type 'int'>
+  >>> e = str(d)
+  >>> type(e)
+  <type 'str'>
+
+Note that 'print' automatically converts things to strings, so
+
+  >>> print c
+  5
+  >>> print d
+  5
+
+gives the same result!  This can be a problem -- how do you debug problems
+caused by type confusion!?  There are a couple of ways; my favorite trick is
+to convert things into a tuple, so that the string conversion doesn't work:
+
+  >>> print (c, d,)
+  ('5', 5)
+
+The quotes tell you that 'c' is a string; the lack of quotes tells you that
+'d' is an integer.  We can explain this a bit more later.
+
+Lists are another really useful data type: you can create an empty list,
+
+  >>> x = []
+
+and then add stuff to it with 'append'
+
+  >>> x.append(5)
+  >>> x.append('foo')
+  >>> x
+  [5, 'foo']
+
+Lists have lengths,
+
+  >>> len(x)
+  2
+
+and elements can be indexed with numbers,
+
+  >>> x[0]
+  5
+
+Dictionaries are even more useful; think of them as C++ maps, if you must,
+but way cooler.  Dictionaries map *key* to *values*:
+
+  >>> y = {}
+  >>> y['foo'] = 5
+  >>> y['bar'] = 6
+
+Now you can retrieve values by key:
+
+  >>> y['foo']
+  5
+
+Also you can get a list of keys,
+
+  >>> y.keys()
+  ['foo', 'bar']
+
+or values,
+
+  >>> y.values()
+  [5, 6]
+
+or key-value pairs,
+
+  >>> y.items()
+  [('foo', 5), ('bar', 6)]
+
+Control structures
+~~~~~~~~~~~~~~~~~~
+
+'if' tries to do the right thing, logically speaking.  If a Python
+variable is zero or has zero length, it is False, otherwise it is
+True; you can test this by asking 'bool' to convert things into
+True/False for you:
+
+  >>> bool(0)
+  False
+  >>> bool(1)
+  True
+
+  >>> bool([])		# zero length
+  False
+  >>> bool([0])		# not zero length
+  True
+
+  >>> bool('0')		# not zero; it's a string
+  True
+
+'for' iterates over things; the canonical C-style 'for' loop is written
+like this:
+
+  >>> for i in range(0, 3):
+  ...   print i
+  0
+  1
+  2
+
+This mimics 'for (i = 0; i < 3; i++)'.
+
+Here, 'range' is actually producing a list:
+
+  >>> range(0, 3)
+  [0, 1, 2]
+
+so you can see that what Python is *actually* doing is iterating over
+a list.  (There's actually a more general statement -- Python iterates
+over *iterators*, but we'll talk more about that later.)
+
+So, you can also use 'for' to iterate over lists,
+
+  >>> for i in [0, 'foo', 'baz', 3.14159]:
+  ...   print i
+  0
+  foo
+  baz
+  3.14159
+
+and dictionaries (which in fact iterates over keys).
+
+  >>> for k in { 'foo' : 5, 'bar' : 6 }:
+  ...    print k
+  foo
+  bar
+
+Strings
+~~~~~~~
+
+For Web programming, strings are pretty important, and you'll need to 
+use them a lot for your first homework.  So, what can you do with strings?
+
+Check for equality:
+
+  >>> "a" == 'b'
+  False
+  >>> "a" == 'a'
+  True
+
+Concatenate them:
+
+  >>> "a" + "b"
+  'ab'
+
+Get their length:
+
+  >>> len('ab')
+  2
+
+Upper and lowercase them:
+
+  >>> 'ab'.upper()
+  'AB'
+  >>> 'AB'.lower()
+  'ab'
+
+One cute trick for building a big string with many components is to
+use the string method 'join' on a list:
+
+  >>> x = [ 'foo', 'bar', 'baz' ]
+  >>> "".join(x)
+  'foobarbaz'
+
+So, for example, you could build 'x' in a for loop, and then join.
+
+Another neat trick that might come in handy for hw1 is string interpolation:
+
+  >>> s = "Replace %s with something" % 'something'
+  >>> s
+  'Replace something with something'
+  >>> t = "Replace %s with something, and %s with other" % ('something', 'foo')
+  >>> t
+  'Replace something with something, and foo with other'
+
+This is by no means exhaustive -- I'll show you how to figure out more,
+in a bit.
+
+Importing and using modules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Briefly,
+
+   >>> import sys
+
+imports the 'sys' module, at which point you can do lots of stuff with it. ;)
+
+There are tons and tons of Python modules that come with Python -- one
+for almost everything you can imagine.  See http://docs.python.org/library/
+for a nice searchable list with full docs.
+
+Some advanced stuff
+~~~~~~~~~~~~~~~~~~~
+
+Python can learn things about Python objects by using *introspection*.
+For example, what methods does a list object have?
+
+  >>> x = []
+  >>> dir(x)
+  ['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__str__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+
+Well, what do they all do?!
+
+  >>> help(x.remove)
+  Help on built-in function remove:
+  <BLANKLINE>
+  remove(...)
+      L.remove(value) -- remove first occurrence of value
+  <BLANKLINE>
+
+'dir' and 'help' are useful when you have some basic idea of what you're
+looking for but can't remember the name or the arguments.
+
+---
+
+---
+
+A common gotcha for new C++ programmers is the default
+'pass-by-reference' rule -- in Python, functions pass basic data
+types by value, and all others by reference.  So, you get results
+that look wonky if you modify passed in values sometimes:
+
+  >>> def f(a, b):  # a is an int, b is a list
+  ...    a = 5
+  ...    b.append(10)
+
+  >>> x = 3
+  >>> y = [5, 6, 7]
+  >>> f(x, y)
+  >>> x
+  3
+  >>> y
+  [5, 6, 7, 10]
+
+A good trick to use at the beginning is to do something like this:
+
+  >>> def g(a, b):
+  ...   a = 5
+  ...   b = list(b)		# make a copy
+  ...   b.append(10)
+  ...   return a, b
+
+Now you can do
+
+  >>> x, y = g(x, y)
+  >>> x
+  5
+  >>> y
+  [5, 6, 7, 10, 10]
+
+
+---
+
+You can define multi-line strings using triple quotes:
+
+  >>> x = """
+  ... foo
+  ... bar
+  ... """
+  >>> x
+  '\nfoo\nbar\n'
+
+---
+
+Aaaaaaand back to string stuff: before I showed you how "inspect" types
+visually, by using a tuple constructor,
+
+  >>> print ('5', 5)
+  ('5', 5)
+
+You can also just use 'repr', which unlike 'str' retains type signifiers:
+
+  >>> a = 5
+  >>> b = '5'
+  >>> print repr(a), repr(b)
+  5 '5'
+
+Trust me, these techniques will come in handy sooner rather than later!
+
+The CGI module
+~~~~~~~~~~~~~~
+
+Here's how you use the CGI module to read in form values:
+
+  >>> import cgi
+  >>> form = cgi.FieldStorage()
+
+Here, 'form' is a dictionary-like object.  You can use your own
+resources to figure out what the keys and values are... think of
+it as a detective hunt!
+
+Useful debugging techniques
+---------------------------
+
+I've prepared some, ahem, challenges for you all here:
+
+   http://class.ged.idyll.org/svn/files/lab1/
+
+In your free time remaining in lab, try running them and see if you
+can figure out why they don't work.  I want to use these as vehicles to
+introduce you to some debugging techniques:
+
+ - use print, a lot
+ - deleting lines can help tell you where the error ISN'T
+ - use 'type', remember?
+ - factor expressions into variables so that you can pinpoint the
+   error
+ - have you actually tested *all* the branches of your code?

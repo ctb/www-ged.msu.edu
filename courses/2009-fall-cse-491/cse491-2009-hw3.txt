@@ -1,0 +1,79 @@
+Homework 3: Network clients and server
+--------------------------------------
+
+Due Tuesday, September 29th, at 4:30pm.
+
+**Please do not use any Python network libraries other than 'socket'
+for this assignment.  Python comes with network libraries for
+SMTP, Web serving, Web clients, etc; don't use them!**
+
+I.  Write a spambot
+-------------------
+
+1. Write a command-line program that uses the socket library connect
+to a specified server on the SMTP port (port 25) and send an e-mail
+from you to a specified address; the e-mail should contain a specified
+word.  The program should be named 'send-email' and be in the 'hw3/'
+subdirectory of your svn archive.  So, for example, the following
+command ::
+
+  python hw3/send-email teckla.idyll.org titus@cse491.msu.idyll.org blarny
+
+would send an e-mail containing the word 'blarny' to
+'titus@cse491.msu.idyll.org' using the mail server 'teckla.idyll.org'.
+
+I've created addresses for each of you:
+``nermal@cse491.msu.idyll.org``, when sent through the mail server
+``teckla.idyll.org``, will send the message on to ``nermal@msu.edu``.
+
+You don't need to do any error trapping or handling.
+
+You can use ``sys.argv`` to retrieve command-line parameters.
+
+II.  Write blocking and non-blocking TCP servers
+------------------------------------------------
+
+2. Create a Python echo server that, when run, binds to the specified
+port and echoes whatever data is sent to it back to the sender, up
+until a simple ``\n.\n`` is received, at which point the connection is
+terminated.  This echo server should take two arguments on the command
+line: the host IP address and the port to which to bind.  For example,
+::
+
+  python hw3/echo-server localhost 4199
+
+You can (and should) process connections synchronously and do blocking
+I/O; there's no need to handle multiple connections in parallel.
+
+The echo server should echo *exactly* what it receives, with no
+interpretation or parsing other than the end period.
+
+Hint: you can use the spambot from section I to test your echo-server
+without writing a new Python program; just set the spambot program to
+print whatever it receives to the console, so you can verify that the
+echo server is working properly.
+
+3. **Next,** write a non-blocking version of the TCP echo server that can
+accept and handle multiple connections **without using threads or
+multiple processes**.
+
+You should use ``sockobj.setblocking(0)`` to set your sockets to
+non-blocking.  Remember that 'accept' creates a *new* socket that
+may not be set to non-blocking.
+
+The code that handles reading and writing should be separated into a
+function ``handle_connection(sockobj)``.  That is, you should have a
+main block that deals with accepting new connections and then calls
+the ``handle_connection`` function to do read/write.
+
+``handle_connection`` should take precisely one argument and return
+``True`` if the connection remains open and ``False`` otherwise.
+
+Be sure to test that your program can handle 2 or more connections
+simultaneously.  Feel free to ask on the mailing list for
+suggestions on how to test this...
+
+The echo server should be in your hw3 directory and called
+'hw3/echo-server-nb', and take host and port as arguments::
+
+  python hw3/echo-server-nb <host> <port>

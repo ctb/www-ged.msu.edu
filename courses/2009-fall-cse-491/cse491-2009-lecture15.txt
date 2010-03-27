@@ -1,0 +1,159 @@
+-----------------------------------------------------
+Lecture 15 -- Meep layers; SSL; the Quixote framework
+-----------------------------------------------------
+
+discussion of homework:
+
+  testing things like delete (twill tests)
+
+  common user expectations could have been better met...
+     - creating account => logging in
+
+next hw:
+
+  quick database overview
+    - things to think about:
+           when to add;
+           when update;
+           when to save;
+           if to delete;
+           how do you keep things in memory "clean"?
+
+  CRUD in bsddb
+    - how to create, update, delete
+
+  CRUD in sqlite
+    - how to create, update, delete
+
+  modifying meeplib for persistence:
+
+    - should be possible to modify meeplib without modifying any of your
+      Web code
+
+    - multiple layers: presentation, content, data persistence:
+
+      * positives: data hiding
+      * negatives: multi-layer changes when adding stuff
+
+    - try not to contaminate the interface "above" meeplib with persistence info
+
+  session workflow:
+
+    - purpose of sessions (viz. Thursday)
+    - brief workflow
+    - create a new session for each log in (don't reuse session IDs)
+    - expiring session: removing the cookie is not enough (why would the
+        browser need to listen to you? **don't trust the browser!**):
+
+        * remove cookie from internal table
+        * what happens when you get a cookie but it's not in your session table?
+
+security: SSL
+
+   - "standard" encryption (symmetric) is based on shared keys.
+      * randomness in shared keys is good
+      * most secure: CDs/DVDs full of atmospheric noise, geiger counter static,
+            etc.
+      * how would you use that for internet communication??
+      * **no way to secretly convey keys between client, server**:
+
+        - eavesdropping
+        - "man in the middle" attack
+
+      * this is known as the key distribution problem...
+
+   - asymmetric encryption relies on a public/private key pair.
+
+      * anyone can encrypt something with the public key
+      * only the holder of the private key can decrypt it
+      * so, a server holds both pairs, and distributes the public key
+        openly
+      * a browser wishing to communicate with the server downloads the
+        public key, 
+
+   - what are the prime factors of 6586079? hard to compute!
+     (1861, 3539)
+
+   - what is the product of 1861, 3539?  easy to compute!
+
+   - factoring (finding prime factors) is *computationally difficult*
+
+   - this computational asymmetry is at the root of asymmetric encryption
+
+   - protects against eavesdropping ...but how does it protect against
+     "man in the middle"??
+
+   - actually **another level** of public/private key pairs, in which
+     someone else (e.g. network solutions) certifies that key X
+     belongs to domain Y.  Then the certificate public keys are
+     distributed with Firefox, etc., allowing Firefox to validate
+     site certificates.
+
+   - so your browser:
+
+     * connects to a site
+     * downloads public key with certification ("site certificate")
+     * certification is validated against internal browser cert information
+     * if OK, then public/private key is used to send a secret for further symmetric communication.  **(why?)**
+     * voila, your credit card info is safe with me...
+
+   - vulnerabilities, anyone?
+
+Frameworks:
+
+  - why not WSGI?? 
+
+    * annoying, repetitive manipulations to e.g. map URLs to functions
+    * ...rather low level:
+
+      * most people don't care about GET vs POST, they just want the data!
+      * cookie setting, session handling, database connection management,
+        etc. can all be handled by layers on top of WSGI; why not standardize?
+
+    * WSGI purpose is to support underlying interface *for frameworks to talk
+      to servers*
+
+Quixote:
+
+One of many frameworks.  Considered an "object publisher": you set up
+an object hierarchy mirroring your URL hierarchy and go from there.
+
+  - quixote simple example:
+
+    	    http://class.ged.idyll.org/svn/files/lecture15/quixote_example1.py
+
+            see more at http://class.ged.idyll.org/svn/files/lecture15/
+
+  - questions I always ask:
+
+    * how access form input
+    * how static files, other content
+    * how cookies/sessions work
+    * how database access works
+    * how scaling?
+
+  - quixote, more complicated examples:
+
+    * form data
+    * content setting
+    * file serving
+    * cookie access
+    * sessions built in
+    * database access **up to you**
+    * scaling: very well, thank you (we'll discuss scaling on Thursday)
+    * simple recursion stuff
+    * templates
+
+Thursday:
+
+  - class evaluation forms, survey filling, etc. (15 min)
+  - Django intro
+  - multitasking discussion + skit (~5 volunteers)
+
+Monday:
+
+  - 5:45-7:45 in regular classroom
+  - pizza & soda (Hungry Howie's?)
+  - "summative experience"
+  - bitch session / discussion of class evaluation
+  - BWW meetup?

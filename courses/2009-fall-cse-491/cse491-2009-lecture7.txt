@@ -1,0 +1,165 @@
+-----------------------
+Lecture 7 -- WSGI again
+-----------------------
+
+October 13th, 2009.
+
+HW issues
+=========
+
+__main__ vs import
+
+'Speaking' HTTP - request AND response, vs:
+
+ - just writing content to the socket
+ - no status code
+
+Being skeptical about code even without automated tests.
+
+Minor errors ('find', etc.)
+
+See http://class.ged.idyll.org/svn/files/lecture6/ for examples.
+
+Reading e-mail:
+
+ - read it, yo
+ - digest mode may not be what you're looking for.
+
+New HW requirements & tests; see
+
+   http://class.ged.idyll.org/svn/files/hw5/
+
+WSGI
+====
+
+The Web Services Gateway Interface gives you a way to separate the
+"boring" socket/HTTP logic from the "interesting" application-specific
+behavior.  (full spec here: http://www.python.org/dev/peps/pep-0333/)
+
+Think about HW #5 -- there are two very distinct chunks to the
+homework.  First, you need to parse the HTTP request, read in the POST
+data if it's there, and respond with a valid HTTP response.  Second,
+you need to check to see if the URL is '/process_form', and handle
+that; or otherwise return 'hello, /path'.  These are *completely*
+separable: if you define a "URL handling" function that takes in the
+URL and any form data, that function can Do Its Stuff without worrying
+at all about sockets, network communication, or proper HTTP syntax.
+
+WSGI separates the two concerns into a **server** and an **application**.
+
+If you remember the "Hello, World" function from HW #2,  ::
+
+  def app(environ, start_response):
+      status = '200 OK'
+      headers = [('Content-type', 'text/html')]
+
+      start_response(status, headers)
+
+      # Return an iterable of strings.
+      return ["Hello World"]
+
+then that's an example of a WSGI application.  A WSGI *server* is
+something that receives an HTTP request, translates it into a call
+into an application object, and then takes the response of that
+application object and turns it into an HTTP response.
+
+The WSGI interface definition lets you swap servers and applications
+(almost) interchangeably.
+
+For HW #6, I'm asking you to turn your blocking server code into a
+partial WSGI server.  We'll go over a number of details to help you
+do this in lab on Thursday.
+
+HTTP responses: redirect
+========================
+
+One topic we haven't discussed much is that of HTTP **response** codes.
+
+So far, almost everything you've been returning is "200 OK", which tells
+the browser that it is getting back content.  What are other codes?
+
+I've mentioned "404 Not Found", and "500 Internal server error".
+
+Another nice code is '302 Found', which is used to *redirect* the
+client.  That is, upon receiving a "302 Found" HTTP response, the
+client should go to another URL.
+
+How is this URL specified?
+
+In the response headers, of course, as the value for the "Location:" header.
+
+Form options
+============
+
+There are three attributes that affect how a form is handled:
+**action**, **method**, and **enctype**.
+
+'method' is either GET or POST.
+
+'action' is the URL to which to submit the form.
+
+'enctype' specifies *how the client submitting the form should encode the
+data*, e.g. as & separated k=v pairs.  The default (&-separated k=v pairs,
+parsed by cgi.parse_qs, is ::
+
+       application/x-www-form-urlencoded
+
+But there's another enctype, 'multipart/form-data', that you **must**
+use if you want to upload files.  This is a much richer encoding that
+we might discuss later.
+
+Garbage collection
+==================
+
+Python is a memory-managed language, which means that memory space and
+object life is managed by the language rather than by the user.
+Python uses **reference counting** and **mark and sweep** during
+**garbage collection** to keep memory usage from blowing up.  Consider
+this loop:: 
+
+  while 1:
+     x = object()
+
+vs this loop::
+
+  z = []
+  while 1:
+     x = object()
+     z.append(x)
+
+both loops create the same number of objects -- but only the second one
+runs out of memory.  Why?
+
+Python keeps track of references automatically.  In the second case,
+each distinct 'x' created in the loop is referred to by 'z', and so it
+cannot be freed until z itself is freed.  This freeing is done during
+**garbage collection** which you can not count on being run at any
+particular time.
+
+If you have an object that is part of *two* lists: ::
+
+  y = []
+  z = []
+
+  x = object()
+  y.append(x)
+  z.append(x)
+
+then x will not go away until *both* y *and* z go away.
+
+Note that *living in a namespace/scope* is a reference...
+
+There are some interest effects of this fact.
+
+Consider this loop::
+
+  while 1:
+     client_sock, _ = sock.accept()
+
+     # process client_sock
+
+When does the reference to 'client_sock' go away??
+
+This is one reason why client sockets should be explicitly closed;
+otherwise you're at the mercy of garbage collection to clean up
+the socket object (which, among other things, means closing it).
