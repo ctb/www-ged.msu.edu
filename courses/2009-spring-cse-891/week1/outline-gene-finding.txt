@@ -1,0 +1,281 @@
+Lecture notes, Gene Finding
+===========================
+
+CSE 891
+
+Jan 15, 2009
+
+Basic molecular biology
+-----------------------
+
+Central dogma: ::
+
+  DNA -> RNA -> protein
+
+(99% truth :)
+
+DNA -> RNA is "transcription", off of genomic DNA into RNA, by polymerase.
+("RNA pol II", typically.)
+
+In prokaryotes, RNA is transcribed and then translated unmodified.
+
+In eukaryotes, nuclear RNA is spliced, poly-A(denylated), and exported
+into the cytoplasm as "messenger" RNA.
+
+Ribosomes then translate mRNA into protein.
+
+At each stage, points of regulation and modification:
+
+ - regulation of transcriptional initiation
+ - regulation of transcriptional "pausing"
+ - regulation of splicing of nuclear RNA (euk)
+ - regulation of poly-A and export (euk)
+ - differential degradation of mRNA
+ - differential rate of translation initiation (mRNA -> protein)
+ - post-translational modifications (phosphorylation, for example)
+ - differential stability of protein
+ - localization of proteins to different components of the cytoplasm
+     (nuclear vs cytoplasm vs cell wall vs export...)
+
+Some portions of mRNA are not translated ("untranslated regions", UTRs)
+
+Orientation of DNA: 5' ("left") and 3' ("right"), so 5' and 3' UTRs.
+
+Triplet code: 64 triplet codons; 24 amino acids, plus 3 "stop" codons:
+TAG, TGA, TAA.
+
+Redundancy tends to be in third base of codon: ::
+
+  Leucine (L) is coded for by
+
+     TTA
+     TTG
+     CTT
+     CTC
+     CTA
+     CTG
+
+this leads to "third base wobble" where mutations in third base of
+codons are selectively neutral, and hence can be used to assess rates
+of molecular evolution, among other things.
+
+Sequence Signals
+----------------
+
+Much of the above regulation etc. is accomplished via signals in the
+genomic DNA (and on messages, and in proteins).
+
+Biochemical signals:
+
+ - on DNA, methylation: CG -> CpG, p == methyl group
+ - on chromatin (DNA + histone proteins; eukaryotic) acetylation
+
+Sequence signals may or may not target biochemical modifications, but
+they definitely target other stuff.  For example,
+
+"promoter", transcriptional initiation site; weak & abundant genomic
+signals that nonetheless are often present for polymerase to bind.
+
+ - bacteria, -35 and -10 sequences lie (yes) 35 and 10 bases from
+   transcript start site
+ - TATA box (yes, "T, A, T, A") and many others, proximal to start
+   of eukaryotic transcripts.
+
+Kozak sequence - ``(gcc)gccRccAUGG`` - place where ribosome binds to
+(eukaryotic) message (RNA) to start translation, proximal to and
+upstream of ATG.
+
+"Strength" of fuzzy signals matters: strong Kozak sequences drive more
+translation per mRNA, for example.  Stronger promoters -> more
+transcription.
+
+Protein-coding genes always start with ATG (codes for methionine, M).
+
+Where da genes at?
+------------------
+
+
+
+Prokaryotes
+~~~~~~~~~~~
+
+Here's 5 million base pairs of DNA from a prokaryotic genome?
+Where are all the protein coding genes?
+
+(Fact: typically prokaryotes are ~80% protein coding, and typical
+genome size is around 5 mb.)
+
+Well,
+
+ - every gene starts with an ATG and ends with a stop codon (one of
+   three triplets)
+ - why not just look for those?
+
+"Open Reading Frames" (ORF) == things that look like they could be genes
+because they have an ATG and don't have any stop codons for a while.
+
+Hmm, what's statistically significant in an ORF?? ::
+
+  p(generating a stop codon) = 3/64
+  p(not generating a stop codon) = 1 - 3/64
+
+  p(3L-length sequence doesn't have a stop codon) = 1 - (1 - 3/64)^L
+
+    which expands to
+
+  p(3L-length sequence doesn't have a stop codon) = 3L / 64
+
+so if you see an ATG followed by, say, 100 non-stop codons, it's
+statistically unlikely to have been generated at random.
+
+Conveniently genes are often ~500bp or longer (> ~120 aa)... but you
+still miss short genes this way.  Unclear how big a problem that is.
+
+OK, so, in prokaryotic genomes you can pretty much just look for
+things that could be genes based on sequence signals and statistics,
+and "guess".
+
+And ... that's just what you do!  See "Glimmer" paper.
+
+Aside: when you have a clear **statistical signature**, life is good.
+Valid coding, of a certain length, starting with ATG... etc.
+
+Eukaryotes
+~~~~~~~~~~
+
+Eukaryotic genomes are much, much, much larger than prokaryotic genomes.
+
+C. elegans - 100mb
+Drosophila - 200mb
+Sea urchin - 800mb
+Chicken - 1.2gb
+Human - 3gb
+
+...and yet C. elegans and Drosophila have fewer genes than sea urchin,
+and chicken and human have approximately the same!)
+
+~20k genes, +/- 5k, in an animal genome.  Where does that leave us in
+genomic sequence / gene?
+
+(Celera share price... heh.)
+
+Genes are not necessarily *significantly* longer in eukaryotes than in
+prokaryotes (variance is higher, that's all).
+
+Remember splice step?
+
+genome -> nuclear RNA -> (spliced) mRNA -> protein.
+
+In practice much of the genomic DNA in the larger genomes is:
+
+ - complex intergenic (larger inter-gene regions), both non-functional
+   and functional (talk about this later)
+
+ - intronic (inbetween "exons", protein coding sections of genes on genomic
+   DNA)
+
+ - repetitive intergenic sequence.
+
+Have to take into account **splice sites** when you think about eukaryotic
+genes!
+
+Splice donor: ::
+
+   [CG]GT[AG]
+
+Splice acceptor: ::
+
+   AAGG
+
+...but these aren't very long and hence aren't very specific.
+
+Gene finders are lousy at finding UTRs, too... no clear statistical
+signature!
+
+Can also improve gene finding algorithms by incorporating
+evolutionary evidence (alignments etc.) - see Twinscan paper.
+
+But... what *is* a gene, anyway?
+--------------------------------
+
+Genetic "locus" vs protein coding gene: two ends of spectrum.
+
+Genetics defined genes as "things that have a measurable phenotype when
+you poke them.", a.k.a. genetic loci.
+
+Molecular biologists defined genes as "things that code for proteins".
+
+The more we know the more confused we get (typical for biology).
+
+ - genetic loci can include things like regulatory control sequences
+   that fit no one's definition of a "gene" -- more of a traffic signal
+   than an actual actor.
+
+ - there are many more molecular "actors" than just things that code
+   for proteins, like RNAs that regulate other RNAs.  (non-coding RNA
+   is probably the most inclusive term; more later in class.)
+
+So, for this week, "gene" == "protein coding gene that fits majority
+preconceptions".
+
+The real secret to gene finding
+-------------------------------
+
+If you have a genomic sequence but have no more money (see below), then
+you can often go by **sequence similarity** or homology.
+
+Basically,
+
+ - take all known genes from other genomes
+ - use a sequence search algorithm to look for things that are similar
+ - note that you want to look for *protein* similarity, not nt similarity --
+   codon wobble.
+
+BLAST works by identifying significant points of similarity and then expanding
+out from there.  (We can talk about this in more detail later if people want.)
+
+A few problems, though:
+
+ - you only find things that you already knew about.
+ - fast-evolving genes may escape your search because they don't look
+   like anything else.
+ - may not find precise positions of introns/exons, which can be important
+   for other kinds of purposes (ncRNA analysis, for example).
+
+Even genes that have nearly identical function can look quite different
+at the protein sequence level: it's structure that matters, not sequence.
+(Recurring theme.)  Genes with sequence similarity as low as 20% may still
+be homologs... how to find?
+
+Can also use "profile" searches that take into account positions of
+key amino acids, but these are limited to specific protein domains,
+rather than exons etc.
+
+Combine evidence: look for homology and splice sites and run several
+gene finders, then ask for "consensus" on what's a gene.
+
+The real secret to gene finding, part 2.
+----------------------------------------
+
+Eukaryotic gene finders are *so* unreliable that you basically don't
+use them on respectable genomes.  (See SNAP paper.)
+
+So, just sequence all the RNA!
+
+ESTs/cDNA sequencing: select poly-A mRNA in the cytoplasm, sequence!
+
+"ESTs" == expressed sequence tags, partial & low-quality sequencing
+reads off of (DNA-translated) mRNA.
+
+"cDNA", often "full-length cDNA" == higher-quality, multiple reads
+from (DNA-translated) mRNA.
+
+You still miss other kinds of non-protein coding genes (ncRNA): can
+devise biochemical ways to isolate and enrich those genes.
+
+You also miss genes that aren't expressed when you're looking!  Or
+are difficult to reverse transcribe from RNA back into DNA.  Or that
+degrade really quickly, or exist at low expression levels.  Or are really
+short. Or ...
+
+This is why you want to *combine* computation and experiment.

@@ -1,0 +1,143 @@
+--------------------------------------------
+Large scale mRNA expression analysis (wk 13)
+--------------------------------------------
+
+April 9th, 2009
+
+CSE 891
+
+---
+
+Measure mRNA on a whole-cell/whole-tissue basis: time courses,
+different conditions, various perturbations.
+
+Techniques
+----------
+
+Microarrays:
+
+ - oligo arrays
+ - EST arrays
+ - oligo tiling arrays
+
+SAGE ("Serial Analysis of Gene Expression")
+
+Next gen sequencing: DGE, RNAseq.
+
+Issues:
+ - prior knowledge, ex-post-facto knowledge
+ - splice isoforms
+ - dynamic range
+ - sensitivity & amount of input material
+
+What are you trying to measure?
+-------------------------------
+
+mRNA levels are relatively easy to measure, ...
+
+...but quite a bit of mRNA isn't functional until it is translated.
+
+mRNA level <-> protein level correspondence?  (Ming will talk about
+this on Tuesday.)
+
+What's the point?
+-----------------
+
+(First, digest into numbers.)
+
+Clustering/covariance, "guilt by association".  What genes change together?
+
+Gene discovery for pathways.
+
+Looking for regulatory mechanisms (e.g. t.f. binding sites.)
+
+Basic data processing issues
+----------------------------
+
+Standardization; relative levels.  Absolute vs relative measurements.
+
+Normalizing: shifting the distribution to fit some standard (Is this
+the same as standardization?)
+
+Converting to rank vs using the numbers straight.   (Noise control method?)
+
+Significance/p-value calculation??
+
+Identifying genes and functions
+-------------------------------
+
+> 20,000 genes in an animal; how many of them do you know by name?
+
+(Microbiologists have a slightly easier time of it - ~1-3k genes.)
+
+Annotations on genes -- human readable, or machine readable, or both?
+
+How do you convert?  What are the uses?
+
+"Controlled vocabulary." -- unambiguous terminology.
+
+Gene Ontology: ::
+
+  [Term]
+  id: GO:0016021
+  name: integral to membrane
+  namespace: cellular_component
+  def: "Penetrating at least one phospholipid bilayer of a membrane.
+     May also refer to the state of being buried in the bilayer with
+     no exposure outside the bilayer. When used to describe a protein,
+     indicates that all or part of the peptide sequence is embedded in
+     the membrane." [GOC:go_curators]
+  subset: gosubset_prok
+  synonym: "transmembrane" EXACT []
+  xref: Wikipedia:Transmembrane_protein
+  is_a: GO:0031224 ! intrinsic to membrane
+
+Three "namespaces": biological processes, molecular functions, and
+cellular components.
+
+Arranged in a "Directed Acyclic Graph", or DAG - each node has one or
+more parents, no "cycles" (node cannot be ancestor of itelf).  This
+makes it easy to computationally "digest" data and provide both
+shallow/broad and deep/specific views of gene expression.
+
+Individual genome consortia provide mappings between proteins and GO
+IDs.
+
+Issues:
+
+ - assignment of GO function based on homology/orthology.  (...
+   and paralogy/orthology issues)
+
+ - who makes the GO annotations, and what are they based on?
+
+     "Inferred from Electronic Annotation"
+
+   vs
+
+     "Inferred from Experiment"
+
+   vs
+
+     "Non-traceable author statement"
+
+ - transitivity of annotations.  To quote Erich Schwarz, Wormbase:
+
+  """
+  [For IEA], ... you want to make sure that these transitive
+  inferences are not, themselves, done from terms whose status is IEA
+  or ISS.  Otherwise, you get into an infinite regress of GO
+  annotation by similarity of X to Y, which in turn was annotated by
+  similarity to Z, and Z by similarity to Theta, and ...  eventually
+  you have a urochordate gene being annotated by a five-steps removed
+  similarity to an *actually observed* function in Bacillus subtilis.
+  And the B. subtilis paper describing this function was 20 years ago.
+  And the first author was sort of delusional.  That sort of botch-up
+  can really put the OHMygod into genOHMics, if you know what I mean.
+  """
+
+Any guesses as to where the bulk of GO annotations come from?
+
+--
+
+Open ended question: what kind of annotations do we want on genes?
+Human or "machine" readable?

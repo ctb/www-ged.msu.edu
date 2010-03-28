@@ -1,0 +1,175 @@
+-------------------
+Metagenomics (wk 7)
+-------------------
+
+Feb 26th, 2009
+
+CSE 891
+
+---
+
+.. nat review on metagenomics?
+
+.. nature gordon lab on lean & obese twins
+
+Metagenomics -- big issues
+--------------------------
+
+Population
+
+(Neutral) evolution & sequence swapping
+
+What is in genomes may not be expressed
+ (--> metatranscriptomics)
+
+Kinds of analyses
+-----------------
+
+So, someone hands you 100,000 sequences that are 450 bases in length.
+Now what?
+
+(Note, more data generated from metagenomics than for all sequenced
+bacterial genomes, as of 2007.  Now, there's even more.)
+
+Our original questions: diversity and (functional) content.
+
+Assembly:
+
+ - diversity can be immense; little or no idea of how much sequencing
+   is required
+
+ - high polymorphism within population (much worse than haplotype problem
+   in animals!)
+
+ - one sequencing approach: fosmid (large plasmid) creation, then
+   sequencing of each fosmid (think pooled BAC approach, as in sea
+   urchin)
+
+ - can try to "paint" onto nearby genomes by homology search.
+    - but what's a nearby genome?
+    - what are you missing?
+    - is this reliable?
+
+Separating species by nt features
+
+ - codon and G/C bias in organisms is quite strong, somewhat uniform across
+   genome, & species dependent
+ - can get "word count" statistics and try to separate sequences into
+   "bins"
+ - way of estimating # of species (lower bound)
+ - doesn't work very well for short sequences, because signal is too low.
+ - back to assembly...
+
+De novo gene prediction
+
+ - it didn't work in animals very well, you may recall; but it worked
+   ok in bacteria.
+ - now we have shorter traces...
+ - what sequence features did they use in bacteria -- and are they
+   likely to be there in metagenomic data?
+   (Need longer contigs)
+ - back to assembly...
+
+Phylogenetic assessment with MEGAN
+
+ - map proteins onto known proteins with BLAST
+ - look at top scoring hits & extract taxonomic identity of originating species
+ - map position onto taxonomic tree and take inclusive node as "highest 
+   resolution" phylogenetic assignment
+ - seems to make sense when I look at the data...
+ - ...but one big problem... what is it?
+
+"Dark sequence"
+---------------
+
+~60-80% of sequence from metagenomics projects doesn't look like any known
+genes when BLAST is used.
+
+What is it??
+
+ - new, unknown genes
+
+   (implication: huge diversity)
+
+ - non-genic crud
+
+   (that's odd, most bacterial genomes seem to be full of genes... 80%!)
+
+ - very divergent genes
+
+Some evidence that they're divergent genes of known function.
+
+Functional annotation
+---------------------
+
+Briefly -- how do proteins work?  (The 1000 foot view/80% correct)
+
+Strings of functional domains attached with spacers
+
+ - the function of proteins is tied to folding structure
+
+ - protein sequence can often vary substantially and still be functional
+   (20-30% identity => same function!)
+
+Homology searches (BLAST) tend to work because rate of sequence change
+in evolution is rather slow.  *Implication: quite a lot of sequence
+conservation in proteins is "accidental", and does not necessarily
+imply function.*
+
+This also means that BLAST may not be the best way to assign function.
+
+More sensitive searches include HMMER, which essentially uses a
+position-specific scoring matrix to look at key important residues.
+But it needs much more information up front... take sequence
+alignments from multiple organisms, generate PSSM.
+
+Inferring function:
+
+Homology search with BLAST.
+
+ - homology: orthology (speciation) vs paralogy (gene duplication)
+ - often substrate specificity for enzymatic reactions is tied to
+   slight functional divergence in sequence of domains, so you have to
+   worry about specific thresholds.
+
+(KEGG pathway searches.)
+
+Protein domain search (e.g. PFAM) is a more sensitive way to detect domains.
+
+It's also 1000s of times slower.
+
+Most efforts saw ~30-50% assignment of function to genes
+(e.g. Sargasso Sea paper).  Bork paper (2007; assigned reading for Th)
+discusses techniques for additional functional assignment: all stuff
+you've seen before,
+
+ 1. high similarity to, or close to, known gene of highly specific function
+ 2. similarity to known gene w/o highly specific function
+ 3. similarity to known gene of unknown function
+ 4. no similarity to anything known
+
+They look only at predicted ORFs, so they eliminate lots of crappy data
+at the expense of slightly higher false negatives.
+
+Can assign ~80%, comparable to the results of their pipeline on known
+genomes.
+
+Back to the original question(s)
+--------------------------------
+
+Assessing diversity.
+
+Assessing content.
+
+Assessing rate of evolution!?
+
+This is a very open field ;).  Most of the interesting stuff is going to
+be going on in three areas, IMO:
+
+ - functional testing of hypotheses and/or serious correlation assays
+   between similar microbial environments, using metagenomics
+
+ - metatranscriptomics
+
+ - protein domain analysis and other "hard to discover" sequence features
+   (ncRNA?)

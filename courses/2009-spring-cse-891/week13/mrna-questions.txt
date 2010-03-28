@@ -1,0 +1,15 @@
+Questions on mRNA analysis (wk 13)
+----------------------------------
+
+Due Tuesday Apr 14th; please hand your answers in at the start of class.
+
+
+1. For the limb regeneration paper (Monaghan et al.), what
+   mathematical technique (standardization, normalization, etc.) was
+   used to compare the samples?  Separately, do you see any problems
+   with the 454 quantification approach they used?
+
+2. For the pattern detection paper (Dequeant et al., 2008), which
+   method had the highest false positive rate, and how did they
+   demonstrate that?  (For example, does figure 1 address the FP
+   rate?)

@@ -1,0 +1,169 @@
+-------------------
+Metagenomics (wk 6)
+-------------------
+
+Feb 19th, 2009
+
+CSE 891
+
+.. (ben)
+
+---
+
+Review 454 duplicates paper & questions.
+
+Review Shendure paper.
+
+---
+
+Metagenomics
+------------
+
+Est 99% of microbes cannot be cultured in a lab, either because we
+don't know what they live on OR they need a partner.  Yet we know
+that there are many very interesting microbial communities, and
+we want to understand them.
+
+(Think: Soil.  Gut and mouth bacteria.  Ocean communities.  Termite
+guts.)
+
+So if they do important and/or interesting things (digest cellulose;
+eat our teeth; help digest food; contribute to acquired immunity; fix
+nitrogen) we have a hard time studying them.
+
+**Corollary:** we have little idea what the diversity of bacterial communities *actually is*.
+
+"Metagenomics" -- sequencing & analyzing environmental or community
+samples containing multiple genomes.
+
+Apply Next-gen Sequencing
+-------------------------
+
+With Sanger sequencing, too expensive to sequence widely.
+
+Still, early metagenomics practices did use Sanger sequencing: basic
+subcloning & random sequencing, followed by attempts at assembly.  (See
+Venter paper.)
+
+454 technology is good for basic assessment; long-ish reads (100-450
+bases), lots of them, no cloning required: just extract DNA &
+sequence.
+
+Assessing diversity with directed tag sequencing
+------------------------------------------------
+
+Sample a specific part of the metagenomes (ribosomal RNA, for example;
+or a single copy gene that you think is representative) and then build
+a phylogeny using those tags, or compare them all in some way.
+
+Claim you have that many species ;).
+
+What is a species, anyway??
+
+ - some arbitrary cutoff -- 3%?
+ - can you identify species?  or map organisms onto the phylogenetic tree of
+   known bacteria, at least?
+
+OTUs, Operational Taxonomic Unit.
+
+What use is a species identification?
+ - impressive numbers
+ - may give you a hint as to likely function of species
+   (or does it?)
+
+See Sogin paper, next week.
+
+(Is this metagenomics??)
+
+Metagenomics -- big issues
+--------------------------
+
+Population
+
+(Neutral) evolution & sequence swapping
+
+What is in genomes may not be expressed
+ (--> metatranscriptomics)
+
+Kinds of analyses
+-----------------
+
+So, someone hands you 100,000 sequences that are 450 bases in length.
+Now what?
+
+Our original questions: diversity and (functional) content.
+
+Assembly:
+
+ - diversity can be immense; little or no idea of how much sequencing
+   is required
+
+ - high polymorphism within population (much worse than haplotype problem
+   in animals!)
+
+ - one sequencing approach: fosmid (large plasmid) creation, then
+   sequencing of each fosmid (think pooled BAC approach, as in sea
+   urchin)
+
+ - can try to "paint" onto nearby genomes.
+    - but what's a nearby genome?
+    - what are you missing?
+    - is this reliable?
+
+Separating species by nt features
+
+ - codon and G/C bias in organisms is quite strong, somewhat uniform across
+   genome, & species dependent
+ - can get "word count" statistics and try to separate sequences into
+   "bins"
+ - way of estimating # of species (lower bound)
+ - doesn't work very well for short sequences, because signal is too low.
+ - back to assembly...
+
+De novo gene prediction
+
+ - it didn't work in animals very well, you may recall; but it worked
+   ok in bacteria.
+ - now we have shorter traces...
+ - I'm skeptical, but people have done it.
+ - Need longer contigs
+ - back to assembly...
+
+Phylogenetic assessment with MEGAN
+
+ - we'll cover this next week
+
+KEGG pathway searches.
+
+ - we'll cover this next week
+
+Protein domain search.
+
+ - we'll cover this next week
+
+Challenges
+----------
+
+Lots of data.
+
+Lots of variability.
+
+Errors?!
+
+Back to the original question(s)
+--------------------------------
+
+Assessing diversity.
+
+Assessing content.
+
+This is a very open field ;).  Most of the interesting stuff is going to
+be going on in three areas, IMO:
+
+ - functional testing of hypotheses and/or serious correlation assays
+   between similar microbial environments, using metagenomics
+
+ - metatranscriptomics
+
+ - protein domain analysis and other "hard to discover" sequence features
+   (ncRNA?)

@@ -1,0 +1,271 @@
+-----------------
+Genome Annotation
+-----------------
+
+Feb 4, 2010
+
+CSE 891
+
+So, you've got a genome.  What now?
+-----------------------------------
+
+Useless without correlating it with known or suspected information
+
+What are your goals?
+
+Selfish:
+
+ - make genome useful for yourself
+ - integrate other people's data and information into your 
+
+Enlightened:
+
+ - make genomic information readily available to other people
+
+What are the (dis)advantages of being enlightened?
+
+ - lots and lots of work
+ - have to strike a balance between getting data out there and
+   making sure it's correct; e.g. do you want to post a raw microarray
+   data set, or a validated one with interpretations?
+ - making information available may make it harder to publish.
+ - other scientists can weigh in on your data and agree/disagree with it
+
+Striking the right balance here is challenging. A few factoids:
+
+ - NIH requires that you post publicly funded large-scale sequencing
+   data; this applies mainly to sequencing centers.
+
+ - the "data to publication" cycle is 2-4 years...
+
+ - there is basically no requirement to make your published data available in
+   a form that is easy to incorporate into a genome database
+
+NCBI is the closest thing we have to a central repository for all of
+biology.
+
+SGD (Yeast), Wormbase, Flybase, ZFIN, MGD (mouse) are the major model
+organism databases.
+
+"Data" vs "Information"
+-----------------------
+
+Important distinction :)
+
+Data is raw and error-ful.
+
+Information is processed but usually more useful.
+
+For example, FANTOM mRNA collection: raw sequences are "data".
+
+"Information" is produced by processing, cleaning, and integrating the
+data into something that is (probably) consistent.
+
+In the processing steps, *assumptions are made*.
+
+Some of them are probably pretty good: "genomic DNA is transcribed in
+one direction, so discard end-sequencing tags that are on opposite
+strands."
+
+Some of them might not be: "put no length restriction on the size of
+a transcript between two tags" ==> 10 mb transcripts...
+
+Understanding these assumptions is important if you're make to systematic
+use of a large data set.  "Garbage In/Garbage Out" applies not only to
+data but the processing of it.
+
+What next?
+----------
+
+How is information created, then?
+
+One, by large-scale operations (genome sequencing: "finished sequence")
+
+Two, by individual investigator/small experiments (knockout this gene,
+see this effect, publish).
+
+Three, by small consortia (sequence cDNA, or do a microarray, or ...)
+or individual investigators using community resources.
+
+(The boundaries are always shifting)
+
+How do we make the information available (in-house, or out-of-house)?
+
+Annotation
+----------
+
+What is (genome) annotation?
+
+Basically, putting information on genomic sequence, or "annotating"
+the sequence with information.
+
+What kinds of information!?
+
+a. Purely computational (gene predictions, conservation)
+
+b. Large-scale data sets (biological data => information)
+
+c. Human-curated (paper X finds gene Y does Z)
+
+d. Human UN-curated (Joe-Bob says he thinks gene M does N)
+
+Which are valuable, and which are scalable??
+
+Model Organism Databases and NCBI
+---------------------------------
+
+Major MODBs are starting to converge on GMOD, a large
+framework/library largely developed for Wormbase but now extending to
+others.
+
+GMOD provides a central framework for sequence storage and display;
+lots of add ons for microarray data, etc.
+
+GMOD is developed by a very loose-knit consortium, with few standards
+and not much in the way of maintenance work.  Being re-developed for
+v2 or v3.  Kind of FUBARed.
+
+How is this information stored and presented?
+---------------------------------------------
+
+"Sequence" view
+
+Most often stored in SQL databases.
+
+Think of SQL dbs as "pivot tables" in Excel, or human-resource
+database-type records. ::
+
+  "Person"
+    |-     address
+    |-     child1
+    |-     child2
+
+SQL databases do a good job of representing 1-1, 1-many, and many-many
+relationships, like in a situation where you have a lot of discrete
+records.  Optimized for this.
+
+Not so good at representing interval or inheritance relations: storage
+and retrieval sucks.  Think about storing mRNAs with shared exons.
+
+Interval and splice graph relations:
+
+ - "this exon goes from x to y"
+ - "this exon is part of splice isoform a, b, and c"
+
+(Query: "is there an exon on this interval", "what mRNAs does this
+exon belong to")
+
+Inheritance: ::
+
+ - this is a transcript
+       |- this is a transcript that makes a protein coding gene
+        |- this protein coding gene is a transcription factor
+
+each inherited element contains new information but ALSO contains all
+the old information.  Storing this kind of information is also difficult
+to do well in a SQL database.
+
+So, lots of genomic data doesn't fit well into standard SQL db schemas,
+yet those types of DBs are the most used and generally
+fastest. Attempts to use another type of DB have foundered because now
+you're not just developing a genome database, you're writing a whole
+new database.
+
+Personally I think the reliance on SQL is stifling research.
+
+(Yes, this is a research interest of mine :)
+
+Humans vs the machines
+----------------------
+
+What kinds of information are useful to humans?  To computers?
+
+For humans, readable digests of e.g. gene function or protein family
+info are most immediately useful.  (See above: paper X says gene Y
+does Z.)
+
+Structured information with metadata is hard for humans to interpret,
+but very useful for computers.
+
+What is X? Y? Z?
+ - impact factor of journal for X
+ - unambiguous identification of Y
+ - what kind of function is Z?
+
+Ontologies and classification schemes.
+
+Often structured in a "directed acyclic graph" (which has some nice
+theoretical properties).  Think "tree" but with multiple parents for
+each node.
+
+ "This is a nuclear protein"
+ "It is a transcription factor" AND "It is an intracellular domain"
+ "It is a positive regulator"
+
+Gene Ontology, Mammalian Phenotype Ontology, etc.
+
+Retrieval
+---------
+
+How do you make the data available?
+
+On small scale, Web site and interface.
+
+On large scale, most information is made available in text files
+(largely unstructured -- think Excel spread sheets) and SQL database
+dumps (minimally structured data).
+
+How useful is first for computational people who need to query 100s of
+genes?  (Not very.)
+
+How useful is second for experimental people who need to query 100s of
+genes? (Not very.)
+
+Authorship and trust
+--------------------
+
+Who is Joe-Bob? ((d), above)
+
+Well, who is interpreting paper X ((c), above)?
+
+And who is paper X authored by?
+
+And do you really trust reviewers that much?
+
+(Yeah, it's an imperfect system.)
+
+**Q: Should indicators of trust, or authorship, be placed on info and
+annotations?**
+
+**Q: How can such indicators be interpreted by people outside of the
+field?**
+
+(User interface issue!)
+
+This is a bigger issue than with genome databases!  Think Wikipedia.
+
+(And what about wikifying genome dbs?)
+
+The de facto decision now *seems* to be that a formal distinction will
+be made between curated and uncurated data, with the latter being
+marked as "untrustworthy but maybe useful".
+
+There are relatively few tools for "layering" your own information onto
+genome DBs privately. Such tools would be good for several reasons --
+
+ - enable individual labs with little computational expertise to make
+   better use of genomic resources
+
+ - make it possible to "one-click" make your lab's information public
+   upon publication
+
+(Yes, this is a research interest of mine :)
+
+Cost-benefit
+------------
+
+How much does an MODB cost to run?
+
+.. Calculating homologs
+.. Sequence conservation
+

@@ -1,0 +1,155 @@
+Lecture notes, Machine Learning for Gene Finding
+================================================
+
+CSE 891
+
+Jan 22nd, 2009
+
+A non-biological example
+------------------------
+
+John and Jane are friends that live on opposite sides of town.  John
+is a boring person and only does three activities: he walks, he shops,
+and he cleans.  He prefers to walk when it's sunny, and he prefers to
+clean when it's rainy.  Jane wants to know what the weather is each day,
+but doesn't want to ask John that straight out; instead, she waits for
+John to tell her what he did each day and then tries to guess what the
+weather was.
+
+(Yes, it's a contrived example.  So?)
+
+Three questions:
+
+ - how likely is a particular sequence of activities? (day 1: walk;
+   day 2: shop; day 3: shop; etc.)
+
+ - given a sequence of activities, what is the most likely sequence of
+   weather?  (or, what is the probability of the weather having been
+   X, Y, Z?)
+
+ - given a sequence of activities, what are John's preferences for
+   doing things, and how frequently does the weather change,
+   e.g. rainy day after a sunny day?
+
+The weather is "hidden", the events are "output".
+
+As long as what John does depends only on the current weather and not
+on previous days (i.e. whether or not he goes for a walk doesn't
+depend at all on whether it rained the last three days, only on
+today's weather) this is a Markov process that can be modelled by a
+Markov model; because Jane can't observe the weather directly, it's a
+Hidden Markov model (HMM).
+
+Machine Learning
+----------------
+
+HMMs are a class of machine learning algorithms.  What do I mean
+by ML?
+
+ML techniques take a *model* and some sample *input* and *output*
+data, and then try to fit the model parameters to the input and output
+data that you see.  (As above, you may be lacking input (weather) or
+output (activities) data, too.)
+
+So, ::
+
+  sample input & output data ==> TRAINING ==> "black box" model
+
+Now take "black box" model, ::
+
+  novel input ==> BLACK BOX ==> novel results
+
+Two particularly simple kinds of black boxes.
+
+One is a large hard drive that just stores everything you stuff into it
+and spits it back out on command.  It is 100% accurate on everything it's
+seen before and 100% inaccurate on everything else.
+
+Another is a large model that contains a very general model with many,
+many parameters that you can accurately fit to an arbitrarily
+complicated set of data.  (Analogy with curve fitting, anyone?) As with
+the first kind of black box, it doesn't "learn".
+
+Both are useless, of course.  Neither one gives you anything new, any
+insight into the structure of the problem!
+
+Machine learning techniques, or more generally statistical models, are
+only useful if they can **accurately generalize**.  By training this
+model, are you learning anything about the structure of the data, or
+summarizing it in some useful way?  If not, then that approach is unlikely
+to be useful.
+
+(Another curve fitting analogy: drawing a line through a set of
+points, in the presence of random (measurement) noise.)
+
+So, choosing a good model is *key*.
+
+Digression: How do you evaluate your ML technique/algorithm??
+-------------------------------------------------------------
+
+Four basic measurements: true pos, false pos, false neg, true neg.
+
+Two common summary measurements:  ::
+
+  sensitivity is: TP / (FN + TP)     -- how much do you catch?
+
+  specificity is: TN / ( FP + TN)    -- how much was correctly caught?
+
+Digression x digression
+~~~~~~~~~~~~~~~~~~~~~~~
+
+How do you build intuition for simple mathematical formulas?
+
+ - Set various things to zero, or one.
+
+ - Ask what the numbers would mean in the context of a specific problem.
+
+Back to SN/SP
+~~~~~~~~~~~~~
+
+Which one is more important?
+
+As a experimentalist, would you prefer to do an experiment based on a highly
+sensitive prediction, or on a highly specific one?
+
+As a computationalist, would you prefer to do a whole "gene-ome" comparison
+based on high SN, or high SP?
+
+Yes, it's a tradeoff!  Usually you can adjust SN/SP relatively by
+adjusting thresholds... so you sort of have to choose a sweet spot.
+That may depend on the question(s) you're asking, however.
+
+One infuriating computationalist behavior is the pretence that there
+is only one sweet spot and THEY'RE going to be the ones to evaluate
+that :).  Socially and culturally, biologists often hate that, and prefer
+to be able to tweak it themselves.
+
+Back to gene finding
+~~~~~~~~~~~~~~~~~~~~
+
+SNAP uses a HMM.  (Check out the transition diagram.)
+
+Is SNAP a good model?
+
+ - treat it as a black box
+ - throw some controls at it.  (don't believe the manufacturer!)
+ - what is hard in gene finding?? (sources of likely noise or poor signal)
+ - what aspects of reality does the model capture?
+
+(More generally, this is how to evaluate any computational technique.
+...but why would you need to do that?)
+
+For SNAP, no model of
+
+ - branchpoint sequence
+ - exonic splice enhancers
+ - alternative splicing
+
+Why not??
+
+Does it matter?
+
+This is why you need to have a grasp of the biology and the
+computation both.  And the science/research aspect is figuring out
+(well, often **guessing** at) what matters and what doesn't, and
+running with it.

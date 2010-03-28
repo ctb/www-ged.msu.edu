@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>ncRNA (wk 8)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="ncrna-wk-8">
+<h1 class="title">ncRNA (wk 8)</h1>
+<p>Mar 17th, 2009</p>
+<p>CSE 891</p>
+<p>---</p>
+<div class="section">
+<h1><a id="non-coding-rna" name="non-coding-rna">non-coding RNA</a></h1>
+<p>Widepread transcription (remember FANTOM paper?)</p>
+<p>Much of transcribed sequences does not contain protein
+coding sequence...?</p>
+<p>(human genome: 1% coding, 4-9% transcribed but non-coding!)</p>
+<p>Some spliced, some not.</p>
+<p>Scant evidence <em>for</em> function of much of this; why?</p>
+<blockquote>
+<ul class="simple">
+<li>difficult to detect, study<ul>
+<li>post-transcription effects are much harder to study than
+transcription (think modulation of protein sequence, prevention
+of translation)</li>
+<li>functional &quot;targets&quot; may be harder to &quot;hit&quot; (processing of big into
+small, for example)</li>
+</ul>
+</li>
+<li>may have &quot;tuning&quot; effects, relatively minor phenotypes</li>
+<li>may be junk, the result of noisy transcription</li>
+</ul>
+</blockquote>
+<p>Function?  Complementation and reactivity: RNA can complement ss RNA/DNA.</p>
+</div>
+<div class="section">
+<h1><a id="types-of-ncrna" name="types-of-ncrna">Types of ncRNA</a></h1>
+<p>snRNA - small nuclear RNA</p>
+<blockquote>
+<ul class="simple">
+<li>involved in splicing, bound up in ribonucleoprotein complexes</li>
+<li>complementarity and sequence recognition?</li>
+</ul>
+</blockquote>
+<dl class="docutils">
+<dt>siRNA - small interfering RNA</dt>
+<dd><ul class="first last simple">
+<li>aka RNAi</li>
+<li>long sense+antisense processed into short, double-stranded sequences</li>
+<li>targets sequences for inhibition (plants) or destruction (animals)</li>
+<li>Dicer/Argonaute</li>
+<li>can <em>also</em> target transcriptional inhibition</li>
+</ul>
+</dd>
+<dt>miRNA - micro RNA</dt>
+<dd><ul class="first last simple">
+<li>hairpin recognition of sequences in 3' UTR</li>
+<li>target RNAse III enzymes to RNA</li>
+<li>Dicer/Drosha</li>
+<li>target sequences in 3' UTRs, so genes with long 3' UTRs (~50%)...</li>
+</ul>
+</dd>
+<dt>piRNA - Piwi-interacting RNAs</dt>
+<dd><ul class="first last simple">
+<li>epigenetic silencing of mobile elements in the genome</li>
+<li>stabilize the genome</li>
+</ul>
+</dd>
+<dt>lncRNA - large/long non-coding RNAs</dt>
+<dd><ul class="first last">
+<li><p class="first">generally mysterious ;)</p>
+</li>
+<li><p class="first">large variety of functions: splice blocking, epigenetic silencing (Xist),
+heterochromatin nucleation, etc.</p>
+</li>
+<li><dl class="first docutils">
+<dt>defined as &gt; 200 bp, no obvious coding functionality</dt>
+<dd><p class="first last">(RED FLAG)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section">
+<h1><a id="vignettes" name="vignettes">Vignettes</a></h1>
+<p>Will cover si/miRNAs on Thursday.</p>
+<div class="section">
+<h2><a id="pirna-piwi-interacting-rnas" name="pirna-piwi-interacting-rnas">piRNA, Piwi-interacting RNAs</a></h2>
+<p>Transposons (retrotransposons and DNA transposons) hop around the genome,
+disrupting function and generally being annoying.</p>
+<p>(Big problem: ~50% of human genome is this kind of sequence!)</p>
+<p>Mechanism for sequence evolution, but also something that must be protected
+against.</p>
+<p>The problem is that you enter a coevolutionary arms race where as immunity
+to one specific transposon element emerges, the tranposon element faces
+pressure to evolve away from the recognition on which the immunity is
+based.  So a single protective mechanism is not sufficient.</p>
+<p>How to deal with this?</p>
+<p>One mechanism:</p>
+<p>Piwi interacting RNAs (initially discovered through their association with
+an Argonaute homolog in Drosophila) seem to work by &quot;laying in wait&quot; in
+specific loci.  When transposons invade that locus, piRNA processing
+takes place and RNA complementary to the transposon is produced; piRNA
+is then used to target (silence) that transposon sequence throughout the
+genome, both transcriptionally and post-transcriptionally.  mRNA destruction
+can then lead to additional piRNA-style targetting molecules.</p>
+<p>piRNAs are germ-line associated, repeat-associated in Drosophila.</p>
+<p>Piwi-protein knockouts in Drosophila lead to germ-line defects and
+transposon mobilization.</p>
+<p>One way they were found is that piRNAs are associated with sequences
+present in &quot;transposon graveyards&quot;, repeat-rich regions of the genome
+that no longer contain functionally active transposons.</p>
+<p>(Function in mammals is more obscure, since these piRNAs are not associated
+with repeats.)</p>
+</div>
+<div class="section">
+<h2><a id="lncrnas" name="lncrnas">lncRNAs</a></h2>
+<p>&gt; 200bp, transcribed, no obvious coding.</p>
+<p>44k transcript clusters, 180k distinct mouse cDNA molecules!</p>
+<p>Only ~20k protein coding loci.</p>
+<p>Three classes, roughly:</p>
+<blockquote>
+<ul class="simple">
+<li>intergenic</li>
+<li>intragenic/sense</li>
+<li>intragenic/antisense</li>
+</ul>
+</blockquote>
+<p>For intragenic classes, there are some clear hypotheses: complementarity
+and/or processing remnants.</p>
+<p>Complementarity is known mechanism for regulation (si/miRNA).</p>
+<p>Estimate that ~30% of identified intragenic ncRNA are crud left over
+from mRNA processing.</p>
+<p>Intergenic is harder to understand...!?</p>
+<p>Null hypothesis: transcriptional noise?  But, general features:</p>
+<blockquote>
+<ul class="simple">
+<li>are they regulated in expression?</li>
+<li>do they show evidence of constraint?</li>
+</ul>
+</blockquote>
+<p>Constraint is expressed as preferential conservation of nt over background;
+protein coding genes ~10% (90% less likely to be mutated than other
+sequence), while intergenic ncRNA is ~90-95% (very weak signal).</p>
+<p>So, probably not <em>just</em> transcriptional noise, but unclear what.</p>
+<p>Scant specific evidence for widespread functionality, still, but new
+evidence comes in every day... diversity of effects, including
+heterochromatin assembly and alternative splice isoform generation.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="whence-complexity" name="whence-complexity">Whence complexity?</a></h1>
+<p>Many organisms, vastly different apparent levels of complexity.  How??</p>
+<p>Naive argument: it's the size of the genome.</p>
+<p>Problem: no strong correlation between size of genome and apparent complexity
+and/or phylogenetic position.  (Seems to correlate more with lifestyle,
+if anything: small, rapidly reproducing organisms =&gt; small genomes.)</p>
+<p>Naive argument #2: it's the number of genes.</p>
+<p>Problem: Drosophila, C. elegans, and human do not have vastly different
+#s of genes (15-18k, 20k).  Whups.</p>
+<p>So...??</p>
+<p>The RNA argument:</p>
+<blockquote>
+<p>There are a lot of undetected ncRNAs in the genome, and they contribute
+to substantial functional complexity.</p>
+<p>... but: see lncRNA, function unknown, above.  If they are so important,
+shouldn't they be more highly conserved??  And shouldn't we have found
+them with knockout screens?</p>
+<p>Bottom line: evidence supporting this hypothesis is still poor.</p>
+</blockquote>
+<p>Competing arguments:</p>
+<blockquote>
+<ul>
+<li><p class="first">the alternative splicing hypothesis: it's not the # of genes that
+matters, it's the number of different combinations of exons that
+make different proteins.</p>
+<p>(Some evidence for functional novelty in alternative splicing)</p>
+</li>
+<li><p class="first">the cis-regulatory network hypothesis: it's not the # of genes that
+matters, it's the way they're deployed in combination.</p>
+<p>(Some evidence for this from evolutionary developmental biology,
+where a common &quot;toolkit&quot; of genes is used and reused in a variety
+of developmental processes.)</p>
+</li>
+</ul>
+</blockquote>
+<p>The debate goes on.</p>
+</div>
+<div class="section">
+<h1><a id="some-ncrna-conclusions" name="some-ncrna-conclusions">Some ncRNA conclusions</a></h1>
+<p>On general conclusion: no evidence for RNA invading the double helix.</p>
+<p>Why did it take so long to find??  Few strong/widespread knockout
+effects; lots of nuclear RNA (introns) and mRNA to confuse the issue.</p>
+</div>
+</div>
+</body>
+</html>

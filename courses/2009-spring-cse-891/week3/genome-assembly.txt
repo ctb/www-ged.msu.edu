@@ -1,0 +1,165 @@
+------------------
+Sequencing Genomes
+------------------
+
+CSE 891
+
+Jan 28th, 2009
+
+So, you want to know what's in a genome, eh?
+
+Genes!
+
+Genes
+-----
+
+Why not just sequence the genes??  (cDNA and EST projects)
+
+ - non-coding RNA
+ - regulatory DNA
+ - linkages between genes and other genomic features
+ - genome evolution, rearrangements
+ - large-scale architecture etc.
+ - all the other stuff that we *don't* know about yet...
+
+Basically, genomes are a, if not *the*, prime component of inheritance.
+If we want to know what makes a man a man and a yeast a yeast, we need
+to sequence their genomes.
+
+(...if I haven't convinced you yet that sequencing a genome isn't
+*sufficient* for understanding, though, I give up on you... as you've
+seen more information may lead to more confusion!)
+
+OK... so how do you sequence a genome??
+---------------------------------------
+
+Digression: basics of cloning
+
+ - a way to make a large amount of single-clone DNA: reliable amplification
+ - take a piece of DNA, attach bacterial replication info to it, put in
+   bacteria
+ - can do to random bits of DNA on a large scale, and then separate out
+   ("shotgun cloning")
+
+Basics of (Sanger) sequencing
+
+ - read 600-1000 bases into DNA *from a known starting point*, e.g.
+   known bacterial sequence.  Signal degrades towards end.
+ - need a large quantity of pure DNA (see cloning, above).  Relies on
+   signal pileup.
+
+Note, "genome walking" is inefficient and expensive
+
+One way to sequence a genome:
+ - subclone large bits
+ - map their locations
+ - sequence unique bits
+
+Slooooow.  Frankly, it's an utterly insane way to sequence a genome
+(but was once the only way!)
+
+Had some cultural "bonuses": fit into the divide-and-conquer strategy
+where each lab could be an important contributor with their *own* bit
+of genome.  Bleah.
+
+Mathematicians enter the picture: "whole genome shotgun"
+
+Assemble based on overlaps!
+
+Digression: sequence matching & uniqueness
+
+probability of random match between two sequences of length L is
+
+   1/4 ^ L (or 1/4 ** L), 1/4 to the power of L.
+
+For L == 5, this is 1/1024: each 5-mer matches once a kb, per strand.
+(For double stranded, can simply double the length of the sequence, or
+double the probability: so 1/4^L * 2.)
+
+For L == 10, this is 1 / 1048576, or roughly 1 / 1,000,000 - one in a million.
+
+So if you can find matches of even 10 or 15 bases, you have an overlap
+and you can construct a contig from two reads!
+
+Aim for 6-20x coverage to generate more overlaps, reduce errors, etc.
+Also, coverage not uniform, of course: it's random!
+
+**Not so fast:** genomes aren't entirely random; there are sequencing
+errors; there are repeats; there's natural variation.  These are
+things to worry about later, though.
+
+Some additional good tricks to help out:
+
+Use paired end sequencing, where you *know* how far apart two pieces of
+DNA should be.
+
+Use several libraries with variable insert sizes, e.g.
+
+  3kb library
+  5kb library
+  10kb library
+
+to get coverage of difficult-to-sequence regions.
+
+This known spacing lets you assemble based on end overlap, connect things.
+
+"Scaffold", collection of ordered and oriented contigs with some gaps
+where sequence is missing.
+
+Why would sequence be missing!?
+
+Problems:
+ - small or large-scale repeats
+ - heterochromatin
+ - uncloneable sequence (bacteria don't like)
+ - heterozygosity & polymorphisms
+
+Some of these can be addressed with big insert libraries (fosmids,
+BACs, YACs)
+
+Still, uncloneable stuff; repeats; islands; etc.
+
+Heterozygosity is a bitch: "same" sequence looks different because
+of intra-species variation and/or community variation.
+
+Various strategies for getting past this; see two polymorphism papers
+(for Tuesday).  Neat bio+mathematical strategies for getting past the
+issue!
+
+Note, genome sequencing w/Sanger is *expensive*...
+
+So you have your genome sequence... now what?
+---------------------------------------------
+
+OK... what's actually in a genome?  How do you find it?  How do you annotate
+it?  What information do you want to know?  What use is it?
+
+We will cover this a bit on Tuesday.
+
+Question of the week: **how has genome sequencing changed biology**?
+
+(I'll give you the skeptics view and then you can watch people shoot
+me down.  It'll be fun.)
+
+Papers
+------
+
+migs.pdf -- skim, it just talks about what sort of information you
+            need to know about a genome's origin.
+
+elegans-genome.pdf -- read as thoroughly as you can, i.e. skim with effort :)
+
+In some ways one "bleeding edge" of genome assembly is in assembly of
+polymorphic genomes, genomes with high heterozygosity.  This is
+because many "real world" organisms have high heterozygosity!  (Marine
+organisms esp, but really anything that can't be cultured in an
+isolation chamber easily.)
+
+Does anyone want to present these two papers?
+
+assembly-of-polymorphic-genomes-ciona 
+
+sea-urchin-bac-tiling
+
+We will touch on this topic again in metagenomics and in next-gen
+sequencing.

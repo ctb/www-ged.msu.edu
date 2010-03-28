@@ -1,0 +1,20 @@
+Questions on gene finding papers
+--------------------------------
+
+Due Tuesday, Jan 20th, at the start of class; by e-mail is fine.
+
+(Please answer these questions with at least a short paragraph.  Try to
+justify your answer; it doesn't have to be "correct" but I'd like a sense
+of your thought process.)
+
+1. The sensitivity and specificity of the SNAP gene finder (Korf, BMC
+Bioinformatics, 2004) was measured on several genomes and compared to
+the performance of several other gene finders.  Why are the nucleotide
+numbers generally so much better than the exon numbers, and the exon
+numbers better than the gene numbers?
+
+2. Consider the improvement of GLIMMER 2.0 over GLIMMER 1.0 with
+respect to resolving overlapping genes.  Given what you know about
+gene start signals, and the description of how GLIMMER's parameters
+are estimated from training data, what is the most likely cause of the
+"false positives" for gene start signals?

@@ -1,0 +1,67 @@
+======================
+A Summative Experience
+======================
+
+CSE 891, Apr 30, 2009.
+
+---
+
+Biology keeps on truckin'
+-------------------------
+
+A brief timeline of some important advances in biological tools (courtesy Erich
+Schwarz, Wormbase):
+
+   1970-1980 -- development and early spread of molecular cloning 
+                 and DNA sequencing, with proliferation of better tools
+                 continuing until at least 1990
+
+   1985-1990 -- invention and commercialization of PCR
+
+   1994-1998 -- invention and development of GFP as a reagent
+
+   1995-2001 -- shotgun whole-genome sequencing
+
+   1997-2001 -- discovery of RNAi and miRNAs
+
+   2005+     -- Next-gen sequencing
+
+(I would add "microarrays" in there, too -- 1995-2005?)
+
+--
+
+We can ask more questions, and broader questions, every year.
+
+The people, mindsets, training, and tools lag behind the cutting edge,
+for obvious reasons.
+
+One of the tools that has only gotten more important every year is
+computational data analysis; each new technique generates more data,
+and offers new opportunities for attacking questions based on integrated
+information.
+
+So you should know how to think about computational data analysis, even if you
+don't know how to write the tools yourself; conversely, if you're interested
+in writing the tools, you should know how to think about the biology.
+
+In hindsight, my goals with this class were to:
+
+ - expose you to a variety of genome-scale technologies and biological
+   questions.
+
+ - ...and incidentally describe some of the computational techniques used
+   to analyze the results.
+
+ - show you that both experimental and computational data have significant
+   drawbacks, and you have to think about both.
+
+ - highlight some of issues with specific types of genomic approaches and
+   computational tools.
+
+ - suggest that you want to think about what biological problem to answer,
+   not (just) what technology is most convenient for you to use to do so.
+
+If you have suggestions or comments (both GOOD and BAD) please put them on the
+SIRS forms, and also send them to either George Stockman <stockman@cse.msu.edu>
+or Bob Hausinger <hausinge@msu.edu>.  They'll anonymize them and pass them on
+to me.  I'll appreciate pretty much anything you have to say.

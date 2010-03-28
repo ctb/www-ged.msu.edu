@@ -1,0 +1,33 @@
+==============================================
+CSE 891 s 002: Open Problems in Bioinformatics
+==============================================
+
+Spring 2010
+
+Week 1
+------
+
+`Lecture outline <week1-gene-finding/outline-gene-finding.html>`__
+
+`Homework questions <week1-gene-finding/questions-gene-finding.html>`__
+
+Week 2
+------
+
+`Lecture outline <week2-genome-assembly/genome-assembly.html>`__
+
+`Homework questions <week2-genome-assembly/questions-genome-assembly.html>`__
+
+Week 4
+------
+
+`Genome annotation <week4-databases/genome-annotation.html>`__
+
+`Questions for week4 <week4-databases/questions-week4.html>`__
+
+Week 5
+------
+
+(Reproducibility!)
+
+`Questions for week 5 <week5-reproducibility/questions-week5.html>`__

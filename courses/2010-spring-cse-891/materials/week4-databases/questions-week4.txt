@@ -1,0 +1,23 @@
+Questions on Genome Annotation
+------------------------------
+
+CSE 891 / Spring 2010
+
+Due Tues Feb 9; please print out & hand in in class.
+
+0. Read http://www.nature.com/nrg/journal/v9/n9/abs/nrg2414.html and
+and http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1891709/ (the whole
+paper).
+
+1.  In Lincoln Stein's paper on integration biological databases, he
+identifies three kinds of integration approaches.  Suppose you were
+setting up a lab and wanted to put together an in-lab system to help
+you correlate your own private data (gene sequencing, knockouts and
+mutations, strains, etc.)  with public data.  Which of Lincoln Stein's
+three strategies do you think would be a good strategy for such a
+per-lab system to use (and why)?
+
+2. Pick one of the first four main computational approaches to
+determining protein function computationally, and discuss a potential
+drawback, either for your organism(s) of interest or with respect to
+the computational technique used.

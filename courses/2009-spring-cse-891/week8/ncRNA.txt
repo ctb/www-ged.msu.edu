@@ -1,0 +1,209 @@
+------------
+ncRNA (wk 8)
+------------
+
+Mar 17th, 2009
+
+CSE 891
+
+---
+
+non-coding RNA
+--------------
+
+Widepread transcription (remember FANTOM paper?)
+
+Much of transcribed sequences does not contain protein
+coding sequence...?
+
+(human genome: 1% coding, 4-9% transcribed but non-coding!)
+
+Some spliced, some not.
+
+Scant evidence *for* function of much of this; why?
+
+ - difficult to detect, study
+
+   + post-transcription effects are much harder to study than
+     transcription (think modulation of protein sequence, prevention
+     of translation)
+
+   + functional "targets" may be harder to "hit" (processing of big into
+     small, for example)
+
+ - may have "tuning" effects, relatively minor phenotypes
+
+ - may be junk, the result of noisy transcription
+
+Function?  Complementation and reactivity: RNA can complement ss RNA/DNA.
+
+Types of ncRNA
+--------------
+
+snRNA - small nuclear RNA
+
+ - involved in splicing, bound up in ribonucleoprotein complexes
+ - complementarity and sequence recognition?
+
+siRNA - small interfering RNA
+ - aka RNAi
+ - long sense+antisense processed into short, double-stranded sequences
+ - targets sequences for inhibition (plants) or destruction (animals)
+ - Dicer/Argonaute
+ - can *also* target transcriptional inhibition
+
+miRNA - micro RNA
+ - hairpin recognition of sequences in 3' UTR
+ - target RNAse III enzymes to RNA
+ - Dicer/Drosha
+ - target sequences in 3' UTRs, so genes with long 3' UTRs (~50%)...
+
+piRNA - Piwi-interacting RNAs
+ - epigenetic silencing of mobile elements in the genome
+ - stabilize the genome
+
+lncRNA - large/long non-coding RNAs
+ - generally mysterious ;)
+ - large variety of functions: splice blocking, epigenetic silencing (Xist),
+   heterochromatin nucleation, etc.
+ - defined as > 200 bp, no obvious coding functionality
+      (RED FLAG)
+
+Vignettes
+---------
+
+Will cover si/miRNAs on Thursday.
+
+piRNA, Piwi-interacting RNAs
+============================
+
+Transposons (retrotransposons and DNA transposons) hop around the genome,
+disrupting function and generally being annoying.
+
+(Big problem: ~50% of human genome is this kind of sequence!)
+
+Mechanism for sequence evolution, but also something that must be protected
+against.
+
+The problem is that you enter a coevolutionary arms race where as immunity
+to one specific transposon element emerges, the tranposon element faces
+pressure to evolve away from the recognition on which the immunity is
+based.  So a single protective mechanism is not sufficient.
+
+How to deal with this?
+
+One mechanism:
+
+Piwi interacting RNAs (initially discovered through their association with
+an Argonaute homolog in Drosophila) seem to work by "laying in wait" in
+specific loci.  When transposons invade that locus, piRNA processing
+takes place and RNA complementary to the transposon is produced; piRNA
+is then used to target (silence) that transposon sequence throughout the
+genome, both transcriptionally and post-transcriptionally.  mRNA destruction
+can then lead to additional piRNA-style targetting molecules.
+
+piRNAs are germ-line associated, repeat-associated in Drosophila.
+
+Piwi-protein knockouts in Drosophila lead to germ-line defects and
+transposon mobilization.
+
+One way they were found is that piRNAs are associated with sequences
+present in "transposon graveyards", repeat-rich regions of the genome
+that no longer contain functionally active transposons.
+
+(Function in mammals is more obscure, since these piRNAs are not associated
+with repeats.)
+
+lncRNAs
+=======
+
+> 200bp, transcribed, no obvious coding.
+
+44k transcript clusters, 180k distinct mouse cDNA molecules!
+
+Only ~20k protein coding loci.
+
+Three classes, roughly:
+
+ - intergenic
+ - intragenic/sense
+ - intragenic/antisense
+
+For intragenic classes, there are some clear hypotheses: complementarity
+and/or processing remnants.
+
+Complementarity is known mechanism for regulation (si/miRNA).
+
+Estimate that ~30% of identified intragenic ncRNA are crud left over
+from mRNA processing.
+
+Intergenic is harder to understand...!?
+
+Null hypothesis: transcriptional noise?  But, general features:
+
+ - are they regulated in expression?
+ - do they show evidence of constraint?
+
+Constraint is expressed as preferential conservation of nt over background;
+protein coding genes ~10% (90% less likely to be mutated than other
+sequence), while intergenic ncRNA is ~90-95% (very weak signal).
+
+So, probably not *just* transcriptional noise, but unclear what.
+
+Scant specific evidence for widespread functionality, still, but new
+evidence comes in every day... diversity of effects, including
+heterochromatin assembly and alternative splice isoform generation.
+
+Whence complexity?
+------------------
+
+Many organisms, vastly different apparent levels of complexity.  How??
+
+Naive argument: it's the size of the genome.
+
+Problem: no strong correlation between size of genome and apparent complexity
+and/or phylogenetic position.  (Seems to correlate more with lifestyle,
+if anything: small, rapidly reproducing organisms => small genomes.)
+
+Naive argument #2: it's the number of genes.
+
+Problem: Drosophila, C. elegans, and human do not have vastly different
+#s of genes (15-18k, 20k).  Whups.
+
+So...??
+
+The RNA argument:
+
+ There are a lot of undetected ncRNAs in the genome, and they contribute
+ to substantial functional complexity.
+
+ ... but: see lncRNA, function unknown, above.  If they are so important,
+ shouldn't they be more highly conserved??  And shouldn't we have found
+ them with knockout screens?
+
+ Bottom line: evidence supporting this hypothesis is still poor.
+
+Competing arguments:
+
+ - the alternative splicing hypothesis: it's not the # of genes that
+   matters, it's the number of different combinations of exons that
+   make different proteins.
+
+   (Some evidence for functional novelty in alternative splicing)
+
+ - the cis-regulatory network hypothesis: it's not the # of genes that
+   matters, it's the way they're deployed in combination.
+
+   (Some evidence for this from evolutionary developmental biology,
+   where a common "toolkit" of genes is used and reused in a variety
+   of developmental processes.)
+
+The debate goes on.
+
+Some ncRNA conclusions
+----------------------
+
+On general conclusion: no evidence for RNA invading the double helix.
+
+Why did it take so long to find??  Few strong/widespread knockout
+effects; lots of nuclear RNA (introns) and mRNA to confuse the issue.

@@ -1,0 +1,19 @@
+Questions on Genome Annotation
+------------------------------
+
+CSE 891 / Spring 2010
+
+Due Tues Feb 9; please print out & hand in in class.
+
+0. Read `peer usage vs peer review <./peer%20usage%20vs%20peer%20review.pdf>`__ and
+`the trouble with replication <./trouble%20with%20replication%20nature.pdf>`__.
+
+1. Suppose that you are working with a Korean collaborator on a
+large-scale study of gene expression in stem cells and you find that
+you cannot replicate her results: you find a completely different set
+of genes that are up-regulated under treatment with Prozac than she
+does.  What are at least four reasons why this could happen?  (Any
+type of reason is fine -- computational, experimental, ethical, etc.)
+And for each of the four reasons, how would you figure out whether
+or not that particular reason was the (or at least a) reason behind
+the difference?

@@ -1,0 +1,131 @@
+----------------------------------
+Transcriptional regulation (wk 14)
+----------------------------------
+
+April 16th, 2009
+
+CSE 891
+
+---
+
+central dogma: ::
+
+   DNA -> RNA -> protein
+
+Transcription is necessary for all the rest, and it is also often the
+rate limiting step in development (based on experiments done in the
+70s and 80s).
+
+I'll talk about transcriptional regulation in two biological processes
+in particular: microbial physiology, and developmental biology.
+
+The basic idea
+--------------
+
+Want:
+
+ - coordinate expression of multiple genes in response to one gene
+ - logical operations (AND, NOT, OR) that process multiple inputs
+
+Mediate through *transcription factors*
+
+ - bind to DNA, specifically to short, degenerate "words".  Will discuss later.
+
+ - transcription factors, when bound, either directly or indirectly promote or
+   repress transcription
+
+ - transcription factors can be "bi" (plus or minus); their action can
+   depend on phosphorylation state, co-factors, relative position of binding
+   sites, partners, etc. etc.
+
+One example: lac operon / E. coli
+---------------------------------
+
+beta-gal digests lactose into glucose, permitting E. coli to use
+lactose as an energy source.  lac operon is a suite of genes that
+contains beta-gal.
+
+Straight glucose is a more efficient energy source if available.
+
+So, you want:
+
+ - lac operon OFF (not being transcribed) when glucose is present (with or
+   without lactose)
+
+ - lac operon OFF (not being transcribed) when neither glucose nor lactose is
+   present
+
+ - lac operon ON when glucose is not present but lactose is present
+
+Two transcription factors: lacI (negative), CRP (positive).
+
+CRP **binds** if glucose is **not** present
+
+lacI **binds** if lactose is **not** present
+
+So:
+
+ - no glucose, no lactose: lacI bound, CRP not bound
+ - glucose, lactose: lacI not bound, CRP not bound
+ - glucose, no lactose: lacI bound, CRP not bound
+ - no glucose, lactose: lacI not bound, CRP bound
+
+What does this actually look like?
+
+(drawing of promoter; binding sites; regulatory logic)
+
+CRP and DNA looping.
+
+Another example: sea urchin development
+---------------------------------------
+
+cyIIIa expressed *only* in the aboral ectoderm.  One of the first genes
+expressed in this territory.
+
+How does cyIIIa get turned on in this territory??
+
+Two mechanisms operating at different times:
+
+ - pan-ectodermal positive gene (P1) with oral-ectoderm negative protein
+   (P3A2)
+
+ - embryo-wide positive gene with specific repressors in other territories.
+
+(drawing of promoter)
+
+"Information processing" concept...
+
+DNA bending and architecture
+
+Blue collar v white collar
+
+Some basic regulatory "motifs"
+------------------------------
+
+AND
+
+NOT AND
+
+signalling interactions: "switch" behavior
+
+Transcription factor binding sites
+----------------------------------
+
+Combinatorics
+
+Spacing and position matter:
+
+ - helical phasing of DNA
+ - physical "space" on the DNA
+ - DNA looping
+
+Technologies for assaying t.f. binding
+--------------------------------------
+
+gel shifts ("Electrophoretic mobility shift assay")
+
+DNAse protection assays
+
+ChIP (QPCR; -chip; -seq)
+
+Reporter assays.

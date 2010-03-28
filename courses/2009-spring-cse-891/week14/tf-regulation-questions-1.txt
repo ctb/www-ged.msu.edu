@@ -1,0 +1,13 @@
+Questions on transcriptional regulation, #1 (wk 14)
+---------------------------------------------------
+
+Due Tuesday Apr 21st; please hand your answers in at the start of class.
+
+1. From the Stormo (2000) paper, what are the reasons for the
+   so-called "binding site catastrophe"?
+
+2. From the Setty et al. paper (2003), why might the lacZYA promoter
+   have avoided the "optimal" AND/OR functionality that would be so
+   easy to generate?
+
+(Ed Kabara will present the ChIP-seq paper.)

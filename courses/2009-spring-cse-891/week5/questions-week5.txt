@@ -1,0 +1,26 @@
+Questions on Next Gen Sequencing
+--------------------------------
+
+Due Tues Feb 17; please print out & hand in in class.
+
+Everyone should read the Church paper and we will discuss it in class.
+This is the basis for the SOLiD sequencing protocol.  There is also
+some reading in the questions, below.
+
+I'm looking for someone to present the RNAseq article on Tuesday.
+
+Questions:
+
+1. Read this protocol on tag-based counting of RNA molecules: ::
+
+    http://awcgs.massey.ac.nz/seqserver/solexa-faq.htm#dge-tp
+
+Now, suppose someone hands you a bunch of DGE data.  What are two
+features of the data that you could use to validate a tag as "real" or
+"not real"?
+
+2. Skim the (just submitted!) paper from the Schmidt Lab here at MSU
+on duplicate read issues with 454 data.  Think about what I've told
+you about the 454 protocol -- what do you think is the origin of the
+duplicates?  (They talk about this in the paper -- do you believe
+them? ;)

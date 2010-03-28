@@ -1,0 +1,22 @@
+Questions on genome assembly
+----------------------------
+
+Due Tuesday, Feb 2nd, at the start of class.
+
+0. Read the sea urchin genome paper
+(http://www.sciencemag.org/cgi/content/short/314/5801/941) and the
+Ciona polymorphic assembly paper
+(http://genome.cshlp.org/content/15/8/1127.long).
+
+Answer #1, and either #2 or #3:
+
+1. How is the N50 number determined for genomic contigs, and what is one
+reason why it is important?  What is one strategy for improving the N50?
+
+2. Think about the various polymorphism handling approaches in the
+Ciona paper discussion section and name at least one advantage and one
+disadvantage of the approach.
+
+3. How does the CAPSS strategy used in sea urchin sequencing address
+concerns of high polymorphism (equiv. heterozygosity) in the sea urchin
+genome?

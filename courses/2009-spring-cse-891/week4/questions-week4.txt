@@ -1,0 +1,15 @@
+Questions on Genome Annotation
+------------------------------
+
+Due Tues Feb 10; please print out & hand in in class.
+
+1. In class, I spoke about the idea of a per-lab system that would let
+labs work privately with genome-scale data sets and annotations.  In
+Lincoln Stein's paper on integration biological databases, he identifies
+three kinds of integration approaches.  Which do you think would be 
+a good strategy or strategies for such a per-lab system to use?
+
+2. Pick one of the first four main computational approaches to
+determining protein function computationally, and discuss a potential
+drawback, either for your organism(s) of interest or with respect to
+the computational technique used.

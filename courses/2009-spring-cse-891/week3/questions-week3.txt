@@ -1,0 +1,27 @@
+Questions on genome sequencing & assembly papers papers (wk3)
+-------------------------------------------------------------
+
+Due Tuesday, Feb 3rd, at the start of class.
+
+1. In the MIGS paper, a distinction is made between "primary, curated
+information" and "secondary, or derived, information".  What is the
+difference between these types of information? (Give a concrete
+example.) Thinking back to the mammalian gene content paper, what kind
+of information did *that* yield and how would it fit into the MIGS
+proposal?
+
+2. The C. elegans genome paper describes the immense effort to sequence
+and annotate the C. elegans genome.
+
+If you're a bench biologist, how would (or does) having such a
+resource (a well-annotated, thoroughly explored genome) change the way
+you do experiments?  Note down your primary organism so I have some idea
+of where you're coming from.
+
+If you're a computational person, how would you envision making use of
+the C. elegans genome sequence in building tools?  And (thinking about
+the FANTOM and sORF papers from last week) how much do you trust the
+biological annotations and information discussed in this paper?
+
+(Yes, these are wishy-washy questions.  That's OK, I'm not asking for a
+hard answer, either :)

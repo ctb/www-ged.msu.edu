@@ -1,0 +1,25 @@
+Questions on Metagenomics (wk 6)
+--------------------------------
+
+Due Tues Feb 24th; please hand your answers in in class.
+
+Please read the Sargasso Sea paper and the PNAS/Sogin paper for
+class on Tuesday.
+
+1. In the PNAS paper by Pernthaler et al. (2008), the authors did a
+computational analysis of 454 data.  Looking at the computational part
+of the supplemental material (you don't need to read the whole
+paper!),
+
+    http://www.pnas.org/content/105/19/7052/suppl/DCSupplemental
+
+and bearing in mind some of the 454 issues we've discussed, did the
+authors properly account for these issues in their computational
+analysis?
+
+2. Look at the Sargasso Sea paper, and think about the two new
+Shewanella species that were identified in the paper.  What
+characteristics of the data from these species suggests that they did
+not, in fact, come from the Sargasso Sea?
+
+(You'll need to look at the supplemental material.)

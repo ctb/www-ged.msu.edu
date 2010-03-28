@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Sequencing Genomes</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="sequencing-genomes">
+<h1 class="title">Sequencing Genomes</h1>
+<p>CSE 891</p>
+<p>Jan 28th, 2009</p>
+<p>So, you want to know what's in a genome, eh?</p>
+<p>Genes!</p>
+<div class="section">
+<h1><a id="genes" name="genes">Genes</a></h1>
+<p>Why not just sequence the genes??  (cDNA and EST projects)</p>
+<blockquote>
+<ul class="simple">
+<li>non-coding RNA</li>
+<li>regulatory DNA</li>
+<li>linkages between genes and other genomic features</li>
+<li>genome evolution, rearrangements</li>
+<li>large-scale architecture etc.</li>
+<li>all the other stuff that we <em>don't</em> know about yet...</li>
+</ul>
+</blockquote>
+<p>Basically, genomes are a, if not <em>the</em>, prime component of inheritance.
+If we want to know what makes a man a man and a yeast a yeast, we need
+to sequence their genomes.</p>
+<p>(...if I haven't convinced you yet that sequencing a genome isn't
+<em>sufficient</em> for understanding, though, I give up on you... as you've
+seen more information may lead to more confusion!)</p>
+</div>
+<div class="section">
+<h1><a id="ok-so-how-do-you-sequence-a-genome" name="ok-so-how-do-you-sequence-a-genome">OK... so how do you sequence a genome??</a></h1>
+<p>Digression: basics of cloning</p>
+<blockquote>
+<ul class="simple">
+<li>a way to make a large amount of single-clone DNA: reliable amplification</li>
+<li>take a piece of DNA, attach bacterial replication info to it, put in
+bacteria</li>
+<li>can do to random bits of DNA on a large scale, and then separate out
+(&quot;shotgun cloning&quot;)</li>
+</ul>
+</blockquote>
+<p>Basics of (Sanger) sequencing</p>
+<blockquote>
+<ul class="simple">
+<li>read 600-1000 bases into DNA <em>from a known starting point</em>, e.g.
+known bacterial sequence.  Signal degrades towards end.</li>
+<li>need a large quantity of pure DNA (see cloning, above).  Relies on
+signal pileup.</li>
+</ul>
+</blockquote>
+<p>Note, &quot;genome walking&quot; is inefficient and expensive</p>
+<dl class="docutils">
+<dt>One way to sequence a genome:</dt>
+<dd><ul class="first last simple">
+<li>subclone large bits</li>
+<li>map their locations</li>
+<li>sequence unique bits</li>
+</ul>
+</dd>
+</dl>
+<p>Slooooow.  Frankly, it's an utterly insane way to sequence a genome
+(but was once the only way!)</p>
+<p>Had some cultural &quot;bonuses&quot;: fit into the divide-and-conquer strategy
+where each lab could be an important contributor with their <em>own</em> bit
+of genome.  Bleah.</p>
+<p>Mathematicians enter the picture: &quot;whole genome shotgun&quot;</p>
+<p>Assemble based on overlaps!</p>
+<p>Digression: sequence matching &amp; uniqueness</p>
+<p>probability of random match between two sequences of length L is</p>
+<blockquote>
+1/4 ^ L (or 1/4 ** L), 1/4 to the power of L.</blockquote>
+<p>For L == 5, this is 1/1024: each 5-mer matches once a kb, per strand.
+(For double stranded, can simply double the length of the sequence, or
+double the probability: so 1/4^L * 2.)</p>
+<p>For L == 10, this is 1 / 1048576, or roughly 1 / 1,000,000 - one in a million.</p>
+<p>So if you can find matches of even 10 or 15 bases, you have an overlap
+and you can construct a contig from two reads!</p>
+<p>Aim for 6-20x coverage to generate more overlaps, reduce errors, etc.
+Also, coverage not uniform, of course: it's random!</p>
+<p><strong>Not so fast:</strong> genomes aren't entirely random; there are sequencing
+errors; there are repeats; there's natural variation.  These are
+things to worry about later, though.</p>
+<p>Some additional good tricks to help out:</p>
+<p>Use paired end sequencing, where you <em>know</em> how far apart two pieces of
+DNA should be.</p>
+<p>Use several libraries with variable insert sizes, e.g.</p>
+<blockquote>
+3kb library
+5kb library
+10kb library</blockquote>
+<p>to get coverage of difficult-to-sequence regions.</p>
+<p>This known spacing lets you assemble based on end overlap, connect things.</p>
+<p>&quot;Scaffold&quot;, collection of ordered and oriented contigs with some gaps
+where sequence is missing.</p>
+<p>Why would sequence be missing!?</p>
+<dl class="docutils">
+<dt>Problems:</dt>
+<dd><ul class="first last simple">
+<li>small or large-scale repeats</li>
+<li>heterochromatin</li>
+<li>uncloneable sequence (bacteria don't like)</li>
+<li>heterozygosity &amp; polymorphisms</li>
+</ul>
+</dd>
+</dl>
+<p>Some of these can be addressed with big insert libraries (fosmids,
+BACs, YACs)</p>
+<p>Still, uncloneable stuff; repeats; islands; etc.</p>
+<p>Heterozygosity is a bitch: &quot;same&quot; sequence looks different because
+of intra-species variation and/or community variation.</p>
+<p>Various strategies for getting past this; see two polymorphism papers
+(for Tuesday).  Neat bio+mathematical strategies for getting past the
+issue!</p>
+<p>Note, genome sequencing w/Sanger is <em>expensive</em>...</p>
+</div>
+<div class="section">
+<h1><a id="so-you-have-your-genome-sequence-now-what" name="so-you-have-your-genome-sequence-now-what">So you have your genome sequence... now what?</a></h1>
+<p>OK... what's actually in a genome?  How do you find it?  How do you annotate
+it?  What information do you want to know?  What use is it?</p>
+<p>We will cover this a bit on Tuesday.</p>
+<p>Question of the week: <strong>how has genome sequencing changed biology</strong>?</p>
+<p>(I'll give you the skeptics view and then you can watch people shoot
+me down.  It'll be fun.)</p>
+</div>
+<div class="section">
+<h1><a id="papers" name="papers">Papers</a></h1>
+<dl class="docutils">
+<dt>migs.pdf -- skim, it just talks about what sort of information you</dt>
+<dd>need to know about a genome's origin.</dd>
+</dl>
+<p>elegans-genome.pdf -- read as thoroughly as you can, i.e. skim with effort :)</p>
+<p>In some ways one &quot;bleeding edge&quot; of genome assembly is in assembly of
+polymorphic genomes, genomes with high heterozygosity.  This is
+because many &quot;real world&quot; organisms have high heterozygosity!  (Marine
+organisms esp, but really anything that can't be cultured in an
+isolation chamber easily.)</p>
+<p>Does anyone want to present these two papers?</p>
+<p>assembly-of-polymorphic-genomes-ciona</p>
+<p>sea-urchin-bac-tiling</p>
+<p>We will touch on this topic again in metagenomics and in next-gen
+sequencing.</p>
+</div>
+</div>
+</body>
+</html>

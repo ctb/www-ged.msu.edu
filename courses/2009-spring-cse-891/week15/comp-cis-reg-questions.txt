@@ -1,0 +1,26 @@
+Computational cis-regulatory analysis (wk 15)
+---------------------------------------------
+
+Due Tues Apr 28th; please hand your answers in at the start of class.
+
+(Last HW, hooray!)
+
+Class notes for the week are simply the "computational approaches"
+paper... I wrote it once, I don't need to write it again in outline
+form ;)
+
+1. From the Pennacchio et al. (2006) paper, what are three different
+reasons that the 55% of the non-functional conserved elements might
+not function as positive enhancers?
+
+2. In the Eisen paper (Petersen et al., 2009), the authors present an
+argument for why comparative sequence analysis does not work well for
+finding regulatory elements in Drosophila.  This argument relies on
+their statement that most non-coding DNA in Drosophila is well
+conserved, but doesn't this contradict the Pennacchio paper (above),
+which shows that conservation is a good guide to regulatory function?
+Please suggest a way to resolve this contradiction.
+
+(Luis should present the Cameron et al. PNAS paper. Elijah may be
+briefly presenting Brown & Callan, with reference to the conservation
+arguments made in Cameron et al.)

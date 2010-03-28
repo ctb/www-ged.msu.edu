@@ -1,0 +1,8 @@
+Questions on Metagenomics, #2 (wk 7)
+------------------------------------
+
+Due Tues Mar 3rd; please hand your answers in in class.
+
+For the Bork 2007 paper, what is the strongest argument they have
+that their pipeline for functional assignment is valid?  And are there
+any drawbacks to this validation technique?

@@ -1,0 +1,87 @@
+What's an HMM?
+
+Do you need to know?
+
+What kinds of questions can you ask even if you don't know what an HMM is?
+ - how much of an improvement did they get over previous results?
+ - how significant are their results?
+ - what kind of information did they use to generate their results?
+
+Hidden Markov Models are a kind of supervised learning technique.  What
+that means is that they rely on training a computational model of the
+signals with a specific data set, and then applying that trained model
+to new data sets.
+
+This is a very common type of machine learning.  Think of it as a big black
+box:
+
+  X + [ box ] -> [ trained box ]
+
+  Y -> [ trained box ] -> results
+
+How do you evaluate how well the training worked?
+
+1. Feed in the same data you used to train it; what's the recall like?
+
+  (what's the problem with this approach? overtraining: perfect memory!)
+
+2. Split your data up; use a subset to train, and then evaluate on that.
+
+  (what's the problem with this approach? overtraining; and you only
+  detect things you already "know how to find".  the former is a
+  technical issue, the latter is methodological.)
+
+3. ???
+
+How do *you* evaluate how well the training worked?
+
+1. Compare to known biological data.
+
+2. Think about other (computational) ways to validate.
+
+3. Compare to experiment.
+
+What ultimately matters?
+
+What *new* information is predicted, and how reliable that new information
+is.
+
+---
+
+Sensitivity and specificity:
+
+from Wikipedia, ::
+
+   Sensitivity and specificity are statistical measures of the
+   performance of a binary classification test. Sensitivity (also
+   called recall rate in some fields) measures the proportion of
+   actual positives which are correctly identified as such (e.g. the
+   percentage of sick people who are identified as having the
+   condition). Specificity measures the proportion of negatives which
+   are correctly identified (e.g. the percentage of healthy people who
+   are identified as not having the condition).
+
+Specificity:
+
+  true negatives / (true negatives + false positives)
+
+Sensitivity:
+  
+  true positives / (true positives + false negatives)
+
+---
+
+Is there anything that jumps out at you with respect to gene finding
+in microbes vs gene finding in eukaryotes?
+
+---
+
+How to read a paper (30 second tutorial):
+
+in order,
+
+ - read abstract
+ - read conclusions
+ - understand figures
+ - read discussion
+ - read methods

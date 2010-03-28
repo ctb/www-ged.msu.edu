@@ -1,0 +1,18 @@
+Questions on gene finding papers (wk2)
+--------------------------------------
+
+Due Tuesday, Jan 27th, at the start of class; please hand in, in
+class.
+
+1. In the Hanada et al. paper on finding novel coding genes in
+Arabidopsis, the abstract states: "we identified 7159 sORFs that are
+likely coding sequences with the CI measure at the 1% false-positive
+rate."  What do they mean by "1% false-positive rate", and do you
+believe that all but 8 of the sORFs they find are "real"?  You might
+also think about what other evidence they offer...
+
+2. In the FANTOM consortium paper (Science, 2005), they define
+"transcriptional units" (TUs), "transcriptional frameworks" (TKs), and
+"transcriptional forests".  Can you sketch an example of a few mRNAs
+that, when grouped, create one TU but multiple TKs?  Think about what
+a transcriptional forest would look like, too.
