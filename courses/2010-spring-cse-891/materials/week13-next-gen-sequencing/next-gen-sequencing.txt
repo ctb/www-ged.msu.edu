@@ -1,0 +1,203 @@
+--------------------------
+Next-generation Sequencing
+--------------------------
+
+Apr 8th, 2010
+
+CSE 891
+
+--
+
+Sanger sequencing - cloning, growing, etc.
+
+Bias issues: going thru bacteria.
+
+Scales poorly.
+
+Read length ~900 bp
+
+Used for most sequencing to date, still used for nasty whole-genome
+sequencing.
+
+New technologies
+================
+
+New technologies emerge over the last few years.
+
+the primary basic strategy (454, Illumina, SOLiD, Polonator)
+
+ - Isolate individual DNA molecules
+ - Use PCR to generate "PCR colonies", or polonies
+ - Replicate one more time, but with fluorescent nucleotides
+ - Image at each nucleotide addition
+
+454
+---
+
+Most mature technology, along with Solexa.
+
+Prone to errors in reading long homopolymer runs.
+
+Paired-end sequencing: one strategy is circularization, selection,
+digestion, sequencing from new ligated pairs.
+
+Titanium read stats: 500 bp mode, 400k (?) reads
+
+~$10k
+
+Solexa(/Illumina)
+-----------------
+
+Very mature.
+
+Immobilization and growth on solid substrate.
+
+25-40m reads, 25-40 bp.  Soon up to 70bp?
+
+Paired-end is readily available.
+
+~$10k
+
+SOLiD
+-----
+
+Ligation-based sequencing
+
+Construct oligos with mostly "wild cards" and all possible 2-mers in
+the middle ::
+ 
+    NNNNNNNNNNN-AA-NNNNNNNNNNN
+    NNNNNNNNNNN-AT-NNNNNNNNNNN
+    NNNNNNNNNNN-AC-NNNNNNNNNNN
+    NNNNNNNNNNN-AG-NNNNNNNNNNN
+    NNNNNNNNNNN-TA-NNNNNNNNNNN
+
+and label each one with a different fluorescent tag.  Ligate.  The tag
+that shows up in a particular polony tells you what sequence is in the
+middle.
+
+Helicos
+-------
+
+Not polony based -- single-molecule sequencing.
+
+poly-A tail immobilization followed by fluorescent "quad" incorporation &
+imaging.
+
+25-90 megabase/hr according to PR
+
+20 Gb/run.
+
+Polonator
+---------
+
+"Open source" polony machine: open hardware, open software. You pay for
+the hardware and get full instructions on modification.
+
+Currently mainly for biochemistry enthusiasts :)
+
+Pacific Biosciences
+-------------------
+
+Not polony based -- single molecule sequencing.
+
+Image actual polymerase putting tags on.  Not in production yet, but
+promises to deliver ~1-10kb reads, circular.
+
+The only sequencing technique that may not have nonsense-read problems.
+
+What use are these techniques?
+==============================
+
+Cheap!
+
+Massively parallel.
+
+Easily (?) scalable.
+
+Many, many simultaneous samples.
+
+...but?
+-------
+
+Shorter reads (tho improving).
+
+Error models & biases not well understood.
+
+Substantial number of "error" reads (mixed polonies, etc.?)
+
+Can now generate more data than can easily be analyzed.
+
+Uses
+----
+
+Re-sequencing: looking for SNPs, copy number variation, indels, etc.
+
+Large-scale RNA sequencing
+
+Counting molecules: useful for
+
+ - expression assay
+ - ChIP assay
+ - overlap assay (?)
+
+Sequencing "from the wild", or environmental sequencing
+
+Genome sequencing?
+
+--
+
+Thinking about use & features:
+
+ - for indels (insertion-deletion analysis), want long reads OR paired-end
+   reads
+
+ - for de novo sequencing, longer reads are better: otherwise no way to
+   identify sequence, because you can't map it to known genome.
+
+ - for *counting*, as long as reads long enough to be mappable, want
+   as many samples as possible.  (Think stddev.)
+
+Computational analysis of all this data is still a tricky business.
+(...because algorithms seldom scale linearly with the amount of data to
+be analyzed.)
+
+So is storage -- quote from ABI rep, paraphrased: "we discard the
+raw image data after initial processing into sequence, because storing
+the raw data is more expensive than re-running the sample."
+
+Analysis
+--------
+
+Assembly is a bitch.
+
+Mapping can be a problem for short reads, too.
+
+ - cannot map across even tiny repetitive elements w/o paired end
+
+ - "nonsense" reads confuse the situation: if 40% of the reads aren't
+   mappable...??
+
+Quite a bit of mapping and analysis software out there, but it's all
+hard to use :)
+
+Vast amounts of data are difficult for biologists to deal with, and
+complicate things for computational people too.
+
+Why isn't mapping in-del aware?
+-------------------------------
+
+Naive versus slightly smarter sequence matching.
+
+
+VIDEOS:
+-------
+
+http://www.illumina.com/Media/flash_player.ilmn?dirname=systems&swfname=GA_workflow_vid&width=780&height=485&iframe
+
+http://www.pacificbiosciences.com/video_lg.html
+
+http://marketing.appliedbiosystems.com/images/Product_Microsites/Solid_Knowledge_MS/video/SOLiD_video_final.wmv
+
+http://www.helicosbio.com/Technology/TrueSingleMoleculeSequencing/tabid/64/Default.aspx
+
