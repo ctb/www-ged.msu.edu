@@ -1,0 +1,92 @@
+Connecting sequence to biology
+------------------------------
+
+So we have some sequence, usually genomic.  Perhaps lots of it.
+
+And we want to know how a particular disease or condition "works" so
+that we can "fix" it.
+
+We've talked about:
+
+ - finding genes and ncRNAs
+ - connection gene to (putative) function
+ - looking at gene expression
+ - finding variation in genomes
+
+but the end goal is to move towards a knowledge of *function*.
+
+Function requires many genes working together!
+
+So inevitably you start talking about networks of genes.
+
+Lots and lots of genes.
+
+The Magic Bullet hypothesis (discredited)
+=========================================
+
+There's a fat gene!
+
+There's a kidney gene!
+
+Explanation: necessity vs sufficiency.
+
+ - e.g. polII  vs chromatin vs tissue-specific transcription factor
+
+(...and what makes something interesting?)
+
+What do gene networks look like?
+================================
+
+Feed forward.
+
+Feed back.
+
+Redundancy.
+
+What do you do with a big network with lots of connections??
+
+Drunks, and street lamps
+========================
+
+Ease of measuring something leads to lots of measurements of that thing.
+
+Stripped of context or hypothesis ==> ??
+
+So we have lots of certain kinds of data (protein-protein interaction,
+microarrays, genome sequences etc.) and lots of people dedicated to
+producing more of it, but (repetitious, I know) intelligent analysis
+capability is lacking.
+
+Correlation vs causality; shadow effects
+========================================
+
+Have genomic change that is in 1000/1000 people who have six toes, and no
+others.
+
+Is it responsible for making six toes?
+
+ - are they closely related?
+ - how narrowly have you pinpointed the effect, genomically?
+
+Have expression difference that is in 1000/1000 people with six toes.
+
+Is *it* responsible?
+
+Looking for both gives you increased predictive power.  Why?
+
+cis-regulatory gene networks
+============================
+
+Binding sites provide direct evidence of interaction, that is easily
+testable / falsifiable.
+
+But:
+
+ computational methods don't work that well at pinpointing binding sites
+
+ redundancy in binding sites
+
+ necessity vs sufficiency again.
+
+ not everything is transcriptional regulation (but a lot of time that's all
+ we're looking at anyway, that and post-transcriptional, with microarrays)
