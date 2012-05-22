@@ -6,8 +6,7 @@
 
 <p>
 
-<h2>Title: A single pass approach to reducing sampling variation, removing
-errors, and scaling de novo assembly of shotgun sequences</h2>
+<h2>Title: A Reference-Free Algorithm for Computational Normalization of Shotgun Sequencing Data</h2>
 <p>
 C. Titus Brown, Adina Howe, Qingpeng Zhang, Alexis B. Pyrkosz,
 and Timothy H. Brom
@@ -15,48 +14,40 @@ and Timothy H. Brom
 <A href='http://arxiv.org/abs/1203.4802'>arXiv preprint</a>
 <p>
 <blockquote>
-   Deep shotgun sequencing and analysis of genomes, transcriptomes,
-   amplified single-cell genomes, and metagenomes enable the sensitive
-   investigation of a wide range of biological phenomena. However, it is
-   increasingly difficult to deal with the volume of data emerging from
-   deep short-read sequencers, in part because of random and systematic
-   sampling variation as well as a high sequencing error rate.  These
-   challenges have led to the development of entire new classes of
-   short-read mapping tools, as well as new <i>de novo</i> assemblers.
-   Even newer assembly strategies for dealing with transcriptomes,
-   single-cell genomes, and metagenomes have also emerged.  Despite these
-   advances, algorithms and compute capacity continue to be challenged by
-   the continued improvements in sequencing technology throughput.  We
-   here describe an approach we term digital normalization, a single-pass
-   computational algorithm that discards redundant data and both sampling
-   variation and the number of errors present in deep sequencing data
-   sets. Digital normalization substantially reduces the size of data
-   sets and accordingly decreases the memory and time requirements for
-   <i>de novo</i> sequence assembly, all without significantly impacting
-   content of the generated contigs.  In doing so, it converts high
-   random coverage to low systematic coverage.  Digital normalization is
-   an effective and efficient approach to normalizing coverage, removing
-   errors, and reducing data set size for shotgun sequencing data sets.
-   It is particularly useful for reducing the compute requirements for
-   <i>de novo</i> sequence assembly.  We demonstrate this for the assembly
-   of microbial genomes, amplified single-cell genomic data, and
-   transcriptomic data.  The software is freely available for use and
-   modification.
+Deep shotgun sequencing and analysis of genomes, transcriptomes,
+amplified single-cell genomes, and metagenomes has enabled
+investigation of a wide range of organisms and ecosystems.  However,
+sampling variation in short-read data sets and high sequencing
+error rates of modern sequencers present many new computational
+challenges in data interpretation.  These challenges have led to the
+development of new classes of mapping tools and <i>de novo</i>
+assemblers.  These algorithms are challenged by the
+continued improvement in sequencing throughput.  We here describe
+digital normalization, a single-pass computational algorithm that
+systematizes coverage in shotgun sequencing data sets, thereby
+decreasing sampling variation, discarding redundant data, and removing
+the majority of errors.  Digital normalization substantially reduces
+the size of shotgun data sets and decreases the memory and time
+requirements for <i>de novo</i> sequence assembly, all without
+significantly impacting content of the generated contigs.  We apply
+digital normalization to the assembly of microbial genomic data,
+amplified single-cell genomic data, and transcriptomic data.  Our
+implementation is freely available for use and modification.
 </blockquote>
 
 Online resources and data:
 <ul>
 <li> <a href='http://ged.msu.edu/angus/diginorm-2012/tutorial.html'>A tutorial for running khmer on microbial genomes and eukaryotic transcriptomes</a>.
 <p>
-<li> Git repository for khmer: <a href='https://github.com/ctb/khmer/tree/2012-paper-diginorm'>github.com/ctb/khmer/tree/2012-paper-diginorm</a>
+<li> Git repository for khmer: <a href='https://github.com/ged-lab/khmer/tree/2012-paper-diginorm'>github.com/ged-lab/khmer/tree/2012-paper-diginorm</a>
 <p>
-<li> Git repository for paper & data analysis pipeline: <A href='https://github.com/ctb/2012-paper-diginorm'>github.com/ctb/2012-paper-diginorm</a>
+<li> Git repository for paper & data analysis pipeline: <A href='https://github.com/ged-lab/2012-paper-diginorm'>github.com/ged-lab/2012-paper-diginorm</a>
 <p>
 <li> <a href='http://ged.msu.edu/angus/diginorm-2012/pipeline-notes.html'>Instructions on running the paper analysis pipeline & reproducing the paper</a>
 <p>
-<li> <a href='notebook/'>HTML view</a> or <a href='diginorm.pdf'>PDF printout</a> of the <a href='http://ipython.org/ipython-doc/stable/whatsnew/version0.12.html'>ipython notebook</a> containing code and scripts to reproduce the figures in the paper.  (See the <a href='http://ged.msu.edu/angus/diginorm-2012/pipeline-notes.html'>pipeline notes</a> for a runnable version.)
+<li> <a href='notebook/'>HTML view</a> of the <a href='http://ipython.org/ipython-doc/stable/whatsnew/version0.12.html'>ipython notebook</a> containing code and scripts to reproduce the figures in the paper.  (See the <a href='http://ged.msu.edu/angus/diginorm-2012/pipeline-notes.html'>pipeline notes</a> for a runnable version.)
 <p>
-<li> <a href='https://s3.amazonaws.com/public.ged.msu.edu/2012-paper-diginorm/pipeline-data.tar.gz'>Data required to run the pipeline</a> (.tar.gz, 2.5gb)
+<li> <a href='https://s3.amazonaws.com/public.ged.msu.edu/2012-paper-diginorm/pipeline-data.tar.gz'>Data required to run the pipeline</a> (.tar.gz, 7.9gb)
 <p>
 <li> <a href='https://s3.amazonaws.com/public.ged.msu.edu/2012-paper-diginorm/assembly-data.tar.gz'>Assembled microbial genomes and eukaryotic transcriptomes</a> (.tar.gz, 110 mb)
 </ul>
