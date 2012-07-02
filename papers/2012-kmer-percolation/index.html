@@ -1,0 +1,30 @@
+<!--#include file="_header.html" -->
+<!--#include file="_bodyhead.html" -->
+
+<div id="container">
+<div id="content">
+
+<p>
+
+<h2>Title: Scaling metagenome sequence assembly with probabilistic de Bruijn graphs</h2>
+<p>
+Jason Pell, Arend Hintze, Rosangela Canino-Koning, Adina Howe, James M. Tiedje, C. Titus Brown
+<p>
+<A href='http://arxiv.org/abs/1112.4193'>arXiv preprint</a>
+<p>
+<blockquote>
+The memory requirements for de novo assembly of short-read shotgun sequencing data from complex microbial populations are an increasingly large practical barrier to environmental studies. Here we introduce a memory-efficient graph representation with which we can analyze the k-mer connectivity of metagenomic samples, allowing us to reduce the size of the de novo assembly process for metagenomes with a "divide and conquer" algorithm. This graph representation is based on a probabilistic data structure, a Bloom filter, that allows us to store assembly graphs in as little as 4 bits per k-mer. We use this approach to achieve a 20-fold decrease in memory for the assembly of a soil metagenome sample.
+</blockquote>
+
+Online resources and data:
+<ul>
+<p>
+<li> Git repository for khmer: <a href='https://github.com/ged-lab/khmer/tree/2012-paper-kmer-percolation'>github.com/ged-lab/khmer/tree/2012-paper-kmer-percolation</a> (See khmer/figuregen/README for instructions on how to generate tables/figures from paper)
+<p>
+<li> <a href='https://s3.amazonaws.com/public.ged.msu.edu/2012-paper-kmer-percolation/paper-data.tar.gz'>Data from paper</a> (.tar.gz, 8gb)
+</ul>
+</div>
+</div>
+
+<!--#include file="_bodyfoot.html" -->
+
